@@ -1,6 +1,6 @@
 <template>
 	<view class="login-page">
-		<view class="title">立即注册</view>
+		<view class="title">身份验证</view>
 		<form class="form" @submit.prevent="login">
 			<view class="form-item">
 				<label for="email">邮箱：</label>
@@ -18,10 +18,8 @@
 				<label for="code">请输入验证码：</label>
 				<u-code-input mode="line" :space="20" :maxlength="4" hairline></u-code-input>
 			</view>
-
-
 			<view class="button">
-				<button type="submit" @click="toSetPassword()">下一步</button>
+				<button type="submit" @click="toResetPassword2()">下一步</button>
 			</view>
 		</form>
 	</view>
@@ -43,6 +41,11 @@
 			toSetPassword() {
 				uni.navigateTo({
 					url: './setPassword?email='+this.email.toString(),
+				})
+			},
+			toResetPassword2() {
+				uni.navigateTo({
+					url: './resetPassword2?email='+this.email.toString(),
 				})
 			},
 			codeChange(text) {

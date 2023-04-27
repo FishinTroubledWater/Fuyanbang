@@ -17,6 +17,7 @@
 				"enablePullDownRefresh": true
 			}
 		},
+		//登陆注册部分页面注册
 		{
 			"path": "pages/login/passwordLogin",
 			"style": {
@@ -33,6 +34,24 @@
 			"path": "pages/login/setPassword",
 			"style": {
 				"navigationBarTitleText": "设置密码"
+			}
+		},
+		{
+			"path": "pages/login/resetPassword1",
+			"style": {
+				"navigationBarTitleText": "忘记密码"
+			}
+		},
+		{
+			"path": "pages/login/resetPassword2",
+			"style": {
+				"navigationBarTitleText": "忘记密码"
+			}
+		},
+		{
+			"path": "pages/login/test",
+			"style": {
+				"navigationBarTitleText": "邮箱验证码测试"
 			}
 		},
 		// "my"部分的页面

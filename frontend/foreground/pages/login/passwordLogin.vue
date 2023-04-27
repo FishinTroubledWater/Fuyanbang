@@ -12,7 +12,7 @@
 			</view>
 			<view class="handoff">
 				<text @click="toRegister()">立即注册</text>
-				<text class="resetPassword">忘记密码</text>
+				<text class="resetPassword" @click="toResetPassword()">忘记密码</text>
 			</view>
 			<view class="button">
 				<button type="submit" @click="login()">登录</button>
@@ -45,6 +45,11 @@
 			toRegister() {
 				uni.navigateTo({
 					url: './register'
+				})
+			},
+			toResetPassword() {
+				uni.navigateTo({
+					url: './resetPassword1'
 				})
 			}
 		}
