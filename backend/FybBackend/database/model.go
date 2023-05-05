@@ -48,3 +48,18 @@ type News struct {
 	UserID      int    `gorm:"column:userID"`
 	Type        string `gorm:"column:type"`
 }
+
+type Major struct {
+	ID                    int    `gorm:"primaryKey;comment:专业id"`
+	Name                  string `gorm:"column:_name;comment:专业名称"`
+	Code                  string `gorm:"column:_code;comment:专业代码"`
+	Profile               string `gorm:"comment:专业简介"`
+	JobOrientation        string `gorm:"column:jobOrient;comment:专业就业方向"`
+	JobProspect           string `gorm:"column:jobProspect;comment:专业就业前景"`
+	SubjectCategory       string `gorm:"column:subjectCategory;comment:专业学科门类"`
+	FirstLevelDiscipline  string `gorm:"column:firstLevelDiscipline;comment:专业一级学科"`
+	SecondLevelDiscipline string `gorm:"column:secondLevelDiscipline;comment:专业二级学课"`
+}
+
+type Post struct {
+}

@@ -2,6 +2,7 @@ package main
 
 import (
 	fybDatabase "FybBackend/database"
+	"FybBackend/routers"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -44,8 +45,9 @@ func main() {
 	db := fybDatabase.InitDB()
 	r := gin.Default()
 	r.Use(Cors())
-	initFrontend(r, db)
-	initBackend(r, db)
+
+	routers.InitFrontend(r, db)
+	routers.InitBackend(r, db)
 
 	if err := r.Run(":8088"); err != nil {
 		fmt.Println("startup service failed, err:%v\n", err)

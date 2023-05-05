@@ -8,21 +8,27 @@ import (
 	"gorm.io/gorm"
 )
 
+type responseItem struct {
+	State string `json:"state"`
+}
+
 func PasswordLogin(e *gin.Engine, db *gorm.DB) {
-	e.GET("/v1/frontend/user/passwordLogin", func(context *gin.Context) {
+	e.POST("/v1/frontend/user/passwordLogin", func(context *gin.Context) {
 		var errors error
 		var mp map[string]interface{}
 
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
-		user, count, err3 := fybDatabase.SelectSingleUserByCondition(db, mp)
+		_, count, err3 := fybDatabase.SelectSingleUserByCondition(db, mp)
 		errors = multierror.Append(errors, err1, err2, err3)
 
 		if count == 1 {
 			context.JSON(200, gin.H{
 				"code":    200,
-				"message": "login success!",
-				"data":    user,
+				"message": "登陆成功",
+				"data": responseItem{
+					"true",
+				},
 			})
 		} else {
 			context.JSON(404, gin.H{

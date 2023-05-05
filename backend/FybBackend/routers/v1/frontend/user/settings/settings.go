@@ -20,7 +20,7 @@ func Settings(e *gin.Engine, db *gorm.DB) {
 		mp2["account"] = account
 		delete(mp1, "account")
 
-		count, err3 := fybDatabase.UpdateSingleUserBy(db, mp1, mp2)
+		count, err3 := fybDatabase.UpdateSingleUserByCondition(db, mp1, mp2)
 		errors = multierror.Append(errors, err1, err2, err3)
 
 		if count > 0 {

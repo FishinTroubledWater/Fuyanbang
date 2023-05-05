@@ -8,8 +8,14 @@ import (
 	"gorm.io/gorm"
 )
 
+type responseItem struct {
+	Id      int    `json:"id"`
+	Account string `json:"account"`
+	Token   string `json:"token"`
+}
+
 func Login(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/user/passwordLogin", func(context *gin.Context) {
+	e.POST("/v1/backend/user/login", func(context *gin.Context) {
 		var errors error
 		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
@@ -21,7 +27,11 @@ func Login(e *gin.Engine, db *gorm.DB) {
 			context.JSON(200, gin.H{
 				"code":    200,
 				"message": "frontend login success!",
-				"data":    user,
+				"data": responseItem{
+					user.ID,
+					user.Account,
+					"jdioasjdiojewq",
+				},
 			})
 		} else {
 			context.JSON(404, gin.H{
