@@ -5,7 +5,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func SearchByRegionLevelType(db *gorm.DB, region string, level string, _type string) (error, []Academy, int64) {
+func SearchAcademyByRegionLevelType(db *gorm.DB, region string, level string, _type string) (error, []Academy, int64) {
 	var academy []Academy
 	var result error
 	err := db.Table("academy").Where("region=? AND level=? AND type=?", region, level, _type).Find(&academy).Error
@@ -14,6 +14,21 @@ func SearchByRegionLevelType(db *gorm.DB, region string, level string, _type str
 	}
 	var count int64
 	err2 := db.Table("academy").Where("region=? AND level=? AND type=?", region, level, _type).Count(&count).Error
+	if err2 != nil {
+		result = multierror.Append(result, err2)
+	}
+	return result, academy, count
+}
+
+func SearchAcademyByName(db *gorm.DB, name string) (error, []Academy, int64) {
+	var academy []Academy
+	var result error
+	err := db.Table("academy").Where("name=?", name).Find(&academy).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	var count int64
+	err2 := db.Table("academy").Where("name=?", name).Find(&academy).Count(&count).Error
 	if err2 != nil {
 		result = multierror.Append(result, err2)
 	}
