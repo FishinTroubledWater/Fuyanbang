@@ -2,6 +2,7 @@ package login
 
 import (
 	fybDatabase "FybBackend/database"
+	"FybBackend/routers/v1/backend/user/token"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
@@ -14,23 +15,29 @@ type responseItem struct {
 	Token   string `json:"token"`
 }
 
+// func checkLogin()
 func Login(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/user/login", func(context *gin.Context) {
-		var errors error
-		mp := make(map[string]interface{})
+	e.POST("/v1/backend/login", func(context *gin.Context) {
+		var errors *multierror.Error
+		mp1 := make(map[string]interface{})
 		b, err1 := context.GetRawData()
-		err2 := json.Unmarshal(b, &mp)
-		user, count, err1 := fybDatabase.SelectSingleUserByCondition(db, mp)
-		errors = multierror.Append(errors, err1, err2)
+		err2 := json.Unmarshal(b, &mp1)
+		admin, _, err1 := fybDatabase.SelectSingleAdminByCondition(db, mp1)
 
-		if count == 1 {
+		errors = multierror.Append(errors, err1, err2)
+		//bcrypt.CompareHashAndPassword([]byte(m.HashedPassword), []byte(inputPassword))
+		if errors.ErrorOrNil() == nil {
+			mp2 := make(map[string]interface{})
+			token, _ := token.GenerateToken(admin)
+			mp2["token"] = token
+			fybDatabase.UpdateSingleAdminByCondition(db, mp1, mp2)
 			context.JSON(200, gin.H{
 				"code":    200,
 				"message": "frontend login success!",
 				"data": responseItem{
-					user.ID,
-					user.Account,
-					"jdioasjdiojewq",
+					admin.ID,
+					admin.Account,
+					token,
 				},
 			})
 		} else {

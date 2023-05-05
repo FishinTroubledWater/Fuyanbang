@@ -55,6 +55,17 @@ func SelectSingleUserByCondition(db *gorm.DB, where map[string]interface{}) (Use
 	err := db.Where(where).First(&user).Count(&count).Error
 	return user, count, err
 }
+func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Admin, int64, error) {
+	var count int64 = 0
+	var admin Admin
+	err := db.Where(where).First(&admin).Count(&count).Error
+	return admin, count, err
+}
+func UpdateSingleAdminByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("admin").Where(where).Updates(update).Count(&count).Error
+	return count, err
+}
 func SelectAllUserByCondition(db *gorm.DB, where map[string]interface{}) ([]User, int64, error) {
 	var count int64 = 0
 	var users []User
