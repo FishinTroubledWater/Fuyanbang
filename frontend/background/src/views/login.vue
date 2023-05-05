@@ -2,12 +2,13 @@
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
       <h3 class="title">福研帮管理系统</h3>
-      <el-form-item prop="username">
+      <el-form-item prop="account">
         <el-input
-            v-model="loginForm.username"
+            v-model="loginForm.account"
             type="text"
             auto-complete="off"
             placeholder="账号"
+            prefix-icon="el-icon-user-solid"
         >
         </el-input>
       </el-form-item>
@@ -17,11 +18,12 @@
             type="password"
             auto-complete="off"
             placeholder="密码"
+            prefix-icon="el-icon-lock"
         >
         </el-input>
       </el-form-item>
       <el-row :gutter="20">
-      <el-col :span="6" :offset="2"><el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox></el-col>
+      <el-col :span="6" :offset="2"><el-checkbox v-model="loginForm.rememberMe" style="margin:0 0 25px 0;">记住密码</el-checkbox></el-col>
         <el-col :span="6" :offset="10"><el-link to="/">忘记密码</el-link></el-col>
       </el-row>
 
@@ -52,40 +54,62 @@ export default {
   name: "Login",
   data() {
     return {
+      //表单数据绑定对象
       loginForm: {
-        username: "admin",
+        account: "admin",
         password: "admin123",
-        rememberMe: false,
       },
+      //表单验证规则
       loginRules: {
-        username: [
-          {required: true, trigger: "blur", message: "请输入您的账号"}
+        account: [
+          {required: true, trigger: "blur", message: "请输入您的账号"},
+          {min: 3, max: 10, trigger: "blur", message: "长度在3到10个字符"}
         ],
         password: [
-          {required: true, trigger: "blur", message: "请输入您的密码"}
+          {required: true, trigger: "blur", message: "请输入您的密码"},
+          {min: 6, max: 20, trigger: "blur", message: "长度在6到20个字符"}
         ],
       },
       loading: false,
-      // 验证码开关
-      captchaEnabled: false,
-      // 注册开关
-      register: false,
-      redirect: undefined
+
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$router.push("/Main");
-        } else {
-          this.$message.error('请输入正确用户名或密码!');
-          return false;
-        }
-      });
-    },
+    // submitForm(formName) {
+    //   this.$refs[formName].validate((valid) => {
+    //     if (valid) {
+    //       this.$router.push("/Main");
+    //     } else {
+    //       this.$message.error('请输入正确用户名或密码!');
+    //       return false;
+    //     }
+    //   });
+    // },
     handleLogin() {
-      this.$router.push({path:'/home'})
+      this.$refs.loginForm.validate(async valid =>{
+        if(!valid) return;
+        this.$router.push({path:'/home'})
+      });
+    // handleLogin() {
+    //   this.$refs.loginForm.validate(async valid =>{
+    //       if(!valid) return;
+    //       const {data:res} = await this.axios.post('user/login',this.loginForm);
+    //       console.log(res);
+    //       // if(res.meta.status != 200) return this.$message.error('登录失败！');
+    //       // this.$message.success('登录成功');
+    //       // window.sessionStorage.setItem("token",res.data.token);
+    //       // this.$router.push({path:'/home'})
+    //   });
+      // handleLogin() {
+      //   this.$refs.loginForm.validate(async valid =>{
+      //     if(!valid) return;
+      //     const {data:res} = await this.axios.post('login',this.loginForm);
+      //     console.log(res);
+      //     if(res.meta.status != 200) return this.$message.error('登录失败！');
+      //     this.$message.success('登录成功');
+      //     window.sessionStorage.setItem("token",res.data.token);
+      //     this.$router.push({path:'/home'})
+      //   });
     }
   }
 }
@@ -101,7 +125,7 @@ export default {
   background-size: cover;
 }
 .title {
-  margin: 0px auto 30px auto;
+  margin: 0 auto 30px auto;
   text-align: center;
   font-weight: bold;
   color: #f88181;
