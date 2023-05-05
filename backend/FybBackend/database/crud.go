@@ -20,6 +20,20 @@ func SearchByRegionLevelType(db *gorm.DB, region string, level string, _type str
 	return result, academy, count
 }
 
+func SelectSingleNewsByCondition(db *gorm.DB, where map[string]interface{}) (News, int64, error) {
+	var count int64 = 0
+	var news News
+	err := db.Where(where).First(&news).Count(&count).Error
+	return news, count, err
+}
+
+func SelectAllNewsByCondition(db *gorm.DB, where map[string]interface{}) ([]News, int64, error) {
+	var count int64 = 0
+	var newses []News
+	err := db.Where(where).Find(&newses).Count(&count).Error
+	return newses, count, err
+}
+
 func SelectSingleUserByCondition(db *gorm.DB, where map[string]interface{}) (User, int64, error) {
 	var count int64 = 0
 	var user User
@@ -32,7 +46,7 @@ func SelectAllUserByCondition(db *gorm.DB, where map[string]interface{}) ([]User
 	err := db.Where(where).Find(&users).Count(&count).Error
 	return users, count, err
 }
-func UpdateSingleUserBy(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
+func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
 	var count int64 = 0
 	err := db.Table("user").Where(where).Updates(update).Count(&count).Error
 	return count, err

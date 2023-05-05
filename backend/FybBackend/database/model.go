@@ -19,14 +19,14 @@ type User struct {
 }
 
 type Admin struct {
-	ID          int
+	ID          int `gorm:"primaryKey"`
 	Account     string
 	Password    string
 	PhoneNumber string
 }
 
 type Academy struct {
-	ID       int
+	ID       int `gorm:"primaryKey"`
 	Name     string
 	Code     string
 	Guide    string
@@ -37,4 +37,14 @@ type Academy struct {
 	LineType string
 	Profile  string
 	Region   string
+}
+
+type News struct {
+	ID          int `gorm:"primaryKey"`
+	Author      string
+	Title       string
+	Content     string
+	PublishTime string `gorm:"column:publishTime"`
+	UserID      int    `gorm:"column:userID"`
+	Type        string `gorm:"column:type"`
 }
