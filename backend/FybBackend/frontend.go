@@ -11,11 +11,12 @@ import (
 	"gorm.io/gorm"
 )
 
-func initFrontend(e *gin.Engine, db *gorm.DB) {
-	academy.SearchByRule(e)
-	login.PasswordLogin(e, db)
-	selectUsers.SelectUsers(e, db)
-	userInfo.BasicUserInfo(e, db)
-	settings.Settings(e, db)
-	newsInfo.NewsInfo(e, db)
+func initFrontend(r *gin.Engine, db *gorm.DB) {
+	academy.SearchByRule(r)
+	login.PasswordLogin(r, db)
+	selectUsers.SelectUsers(r, db)
+	userInfo.BasicUserInfo(r, db)
+	settings.Settings(r, db)
+	newsInfo.NewsInfo(r, db)
+	academy.SearchByName(r)
 }

@@ -6,6 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-func initBackend(e *gin.Engine, db *gorm.DB) {
-	login.Login(e, db)
+func initBackend(r *gin.Engine, db *gorm.DB) {
+	login.Login(r, db)
 }
