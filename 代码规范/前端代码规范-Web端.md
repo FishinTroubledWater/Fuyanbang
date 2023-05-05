@@ -1,0 +1,99 @@
+# Vue项目代码规范
+
+## 一、UI框架及css预处理器选择
+
+1、PC端Vue项目UI框架：ElementUI（优先）、iView
+
+2、移动端Vue项目UI框架：mint-ui（优先）、vant
+
+3、sass/scss、less、stylus ?????
+推荐less：less相对比sass更简洁，而stylus的语法灵活性开放性过大，不利于团队协作开发。
+
+
+## 二、脚手架、插件选择
+
+1、脚手架：vue-cli2.0
+
+2、网络请求：axios
+
+3、时间格式化插件：momentjs
+
+4、富文本编辑器：ueditor
+
+5、图片剪裁插件：cropperjs
+
+6、图表：echarts
+
+
+## 三、命名规范
+
+1、项目名
+全部采用小写方式， 以短横线分隔。例：my-project-name。
+
+2、目录名
+参照项目命名规则，有复数结构时，要采用复数命名法。例：docs、assets、components、directives、mixins、utils、views。
+
+3、Vue 组件命名
+
+1）单文件组件名
+文件扩展名为 .vue 的 single-file components (单文件组件)。单文件组件名应该始终是单词大写开头(PascalCase)。
+
+2）完整单词的组件名
+组件名应该倾向于而不是缩写。编辑器中的自动补全已经让书写长命名的代价非常之低了，而其带来的明确性却是非常宝贵的。不常用的缩写尤其应该避免。
+如：components/|- StudentDashboardSettings.vue|- UserProfileOptions.vue
+
+4、id和class的命名原则
+应反映该元素的功能或使用通用名称，而不要用抽象的晦涩的命名（原则：见名知其义）
+
+5、文件夹、文件名、id、class具体命名规范:驼峰命名法
+
+6、id和class命名越精简越好，只要足够表达意思，这样有助于理解，同时也能提高代码效率
+
+7、命名嵌套问题
+书写css要注意先后顺序和嵌套问题，从性能上考虑尽量减少选择器的层级
+
+8、命名中尽量避免使用中文拼音，应该采用更简明有语义的英文单词进行组合
+
+
+## 四、代码格式
+
+
+1、大括号的使用约定。
+如果是大括号内为空，则简洁地写成{}即可，不需要换行
+例：{}
+
+非空代码块则:
+（1）左大括号前不换行有空格；
+（2）左大括号后换行；
+（3）右大括号前换行；
+（4）右大括号后还有else等代码则不换行;
+（5）表示终止的右大括号后必须换行。
+
+例：
+```
+methods: {
+	testFunc () {
+		console.log('测试方法');
+		var flag = false;
+		if (this.num === 0) {
+			flag = true;
+		} else {
+			flag = false;
+		}
+	}
+}
+```
+
+
+2、左右小括号与中间字符之间不出现空格。
+例：
+```
+if (this.num === 0) {  // 左右小括号()中间字符直接不出现空格
+	flag = true;
+}
+```
+
+3、注释的双斜线与注释内容之间有且只有一个空格
+
+
+4、在 if/else/for/while/do 语句中必须使用大括号。即使只有一行代码，避免采用 单行的编码方式:if (condition) statements;
