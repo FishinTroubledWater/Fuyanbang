@@ -44,6 +44,7 @@ func main() {
 	db := fybDatabase.InitDB()
 	r := gin.Default()
 	r.Use(Cors())
+
 	initFrontend(r, db)
 	initBackend(r, db)
 

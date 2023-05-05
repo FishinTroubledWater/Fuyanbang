@@ -26,7 +26,7 @@ func SearchByRule(e *gin.Engine) {
 		_type := m["type"]
 		var responseBody []fybDatabase.Academy
 		var count int64
-		err, responseBody, count = fybDatabase.SearchByRegionLevelType(db, region.(string), level.(string), _type.(string))
+		err, responseBody, count = fybDatabase.SearchAcademyByRegionLevelType(db, region.(string), level.(string), _type.(string))
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
