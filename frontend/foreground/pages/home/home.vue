@@ -4,9 +4,9 @@
     <!-- 倒计时 -->
     <uni-section class="header-box" title="" sub-title="" type="">
 
-      <u-row customStyle="margin: 2px 8px">
+      <u-row customStyle="margin: 2px 12px">
         <u-col span="4">
-          <u--text text="260天" size="40px" color="#ffffff"></u--text>
+          <u--text :text="RemainingTime" size="40px" color="#ffffff"></u--text>
         </u-col>
       </u-row>
 
@@ -18,12 +18,12 @@
           <u--text></u--text>
         </u-col>
         <u-col span="4">
-          <u--text text="2024考研倒计时" size="16px"></u--text>
+          <u--text text="2024考研倒计时" size="16px" color="#000"></u--text>
         </u-col>
       </u-row>
 
-      <u-row style="margin: 16rpx 8rpx; padding: 0rpx 8rpx;">
-        <u--text :line="2" text="满怀激情地投入到对事理的探究中来，至于建筑变成了自然而然的结果" size="14px"></u--text>
+      <u-row style="margin: 16rpx 8rpx; padding: 0rpx 12rpx;">
+        <u--text :line="2" text="满怀激情地投入到对事理的探究中来，至于建筑变成了自然而然的结果" size="13px" lineHeight="24rpx" color="#000"></u--text>
       </u-row>
 
       <!-- 时间轴 -->
@@ -34,7 +34,7 @@
     </uni-section>
 
     <!-- 标签按钮 -->
-    <uni-card :is-shadow="true" style="opacity: 0.6;width: 86%;">
+    <uni-card :is-shadow="true" style="opacity: 0.6;width: 620rpx;">
       <view class="tabs-box">
         <view class="tabs-box-item" style="margin-right: 22px;">
           <u-icon label="院校" labelPos="bottom" labelSize="20px" labelColor="#000" margin="2" size="40"
@@ -154,7 +154,37 @@
         ]
       }
     },
+    computed: {
+      // 考研倒计时
+      RemainingTime() {
+        //date1当前时间
+        let date1 = new Date();
+        console.log(date1);
+        //date2结束时间
+        let date2 = new Date(date1.getFullYear(), "11", "25", date1.getHours(), date1.getMinutes(), date1.getSeconds(),
+          date1.getMilliseconds());
+        console.log(date2);
+        const diff = date2.getTime() - date1.getTime(); //目标时间减去当前时间
+        console.log(diff);
+        const diffDate = diff / (24 * 60 * 60 * 1000); //计算当前时间与结束时间之间相差天数
+        console.log(diffDate);
+        if (diffDate < 0) diffDate + 365;
+        return diffDate + "天";
+      },
+    },
     onLoad() {},
+    mounted() {
+      // 基本用法，注意：get请求的参数以及配置项都在第二个参数中
+      uni.$u.http.get('/posts/4', {
+        params: {
+
+        }
+      }).then(res => {
+        console.log(res);
+      }).catch(err => {
+
+      })
+    },
     methods: {
       // 页面跳转
       gotoPage(url) {
@@ -198,6 +228,7 @@
   .header-box {
     margin: 10rpx 0rpx;
     border-radius: 10rpx;
+    width: 690rpx;
     opacity: 0.8;
     /* 背景图片 */
     background: url('../../static/FZU_building.jpg') no-repeat;
@@ -207,7 +238,7 @@
 
   /* 时间轴 */
   .timeline {
-    margin: 16rpx 0rpx;
+    margin: 24rpx 0rpx;
   }
 
   /* 标签栏样式 */
