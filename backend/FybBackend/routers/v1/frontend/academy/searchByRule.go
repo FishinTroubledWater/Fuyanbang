@@ -11,7 +11,7 @@ import (
 func SearchByRule(e *gin.Engine) {
 	db := fybDatabase.InitDB()
 	e.POST("/v1/frontend/academy/searchByRule", func(context *gin.Context) {
-		var result error
+		var result *multierror.Error
 		data, err := context.GetRawData()
 		if err != nil {
 			result = multierror.Append(result, err)
@@ -30,7 +30,7 @@ func SearchByRule(e *gin.Engine) {
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
-		if count > 0 {
+		if count > 0 && result.ErrorOrNil() == nil {
 			context.JSON(http.StatusOK, gin.H{
 				"code":    200,
 				"message": "院校筛选成功",

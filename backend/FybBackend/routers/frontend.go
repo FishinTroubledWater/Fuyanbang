@@ -19,4 +19,5 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	settings.Settings(r, db)
 	newsInfo.NewsInfo(r, db)
 	academy.SearchByName(r)
+	academy.SelectAcademyByCode(r)
 }
