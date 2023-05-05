@@ -5,7 +5,7 @@
 			<text class="cell-more yticon icon-you"></text>
 			<text>></text>
 		</view>
-		<view class="list-cell b-b" @click="gotoPage('/pages/my/userInfo')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell b-b" @click="gotoPage('/pages/my/accountSecurity')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">账号与安全</text>
 			<text class="cell-more yticon icon-you"></text>
 			<text>></text>
