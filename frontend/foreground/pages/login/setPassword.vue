@@ -1,19 +1,17 @@
 <template>
 	<view class="login-page">
-		<view class="title">欢迎登录</view>
+		
 		<form class="form" @submit.prevent="login">
+			<view class="title">设置密码</view>
 			<view class="form-item">
-				<label for="phoneNumber">手机号：</label>
-				<input type="text" id="phoneNumber" v-model="phoneNumber">
+				<view class="label">密码：</view>
+				<input class="input" v-model="password" type="password" placeholder="请输入密码" />
 			</view>
-			<view class="button">
-				<button type="submit" @click="toVerify">下一步</button>
+			<view class="form-item">
+				<view class="label">确认密码：</view>
+				<input class="input" v-model="confirmPassword" type="password" placeholder="请再次输入密码" />
 			</view>
-			<view class="handoff">
-				<text @click="toPasswordLogin()">账号密码登录</text>
-				<text class="register">立即注册</text>
-			</view>
-
+			<button class="button" type="primary" @tap="submitForm">注册</button>
 		</form>
 	</view>
 </template>
@@ -22,28 +20,27 @@
 	export default {
 		data() {
 			return {
-				phoneNumber: ""
+				password: '',
+				confirmPassword: ''
 			};
 		},
 		methods: {
-			login() {
-				// 在这里添加登录逻辑
-				console.log("用户名：" + this.phoneNumber);
-				console.log("密码：" + this.password);
-			},
-			toVerify() {
-				uni.navigateTo({
-					url: './verify'
-				});
-			},
-			toPasswordLogin() {
-				uni.navigateTo({
-					url: './passwordLogin'
-				});
+			submitForm() {
+				if (this.password !== this.confirmPassword) {
+					uni.showToast({
+						title: '两次输入的密码不一致',
+						icon: 'none'
+					});
+					return;
+				}
+
+				// 如果两次密码一致，可以在这里进行注册逻辑
+				// ...
 			}
 		}
 	};
 </script>
+
 
 <style>
 	.login-page {
@@ -76,7 +73,17 @@
 		display: flex;
 		flex-direction: column;
 		margin-bottom: 20rpx;
+		margin-top: 50rpx;
+	}
 
+	.sendCode {
+		/* flex: 1 0 auto; */
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		/* align-self: flex-end; */
+		padding: 20px;
+		justify-content: center;
 	}
 
 	.button {
@@ -96,10 +103,6 @@
 		/* align-items: center; */
 		margin-top: 50rpx;
 		margin-left: -10rpx;
-	}
-
-	.register {
-		margin-top: 20px;
 	}
 
 	label {
