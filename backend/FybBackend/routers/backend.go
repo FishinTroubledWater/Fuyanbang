@@ -1,4 +1,4 @@
-package main
+package routers
 
 import (
 	"FybBackend/routers/v1/backend/user/login"
@@ -6,6 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-func initBackend(r *gin.Engine, db *gorm.DB) {
+func InitBackend(r *gin.Engine, db *gorm.DB) {
 	login.Login(r, db)
 }

@@ -1,4 +1,4 @@
-package main
+package routers
 
 import (
 	"FybBackend/routers/v1/frontend/academy"
@@ -11,7 +11,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func initFrontend(r *gin.Engine, db *gorm.DB) {
+func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	academy.SearchByRule(r)
 	login.PasswordLogin(r, db)
 	selectUsers.SelectUsers(r, db)
