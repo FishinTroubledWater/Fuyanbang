@@ -50,6 +50,7 @@ func main() {
 	r := gin.Default()
 	r.Use(Cors())
 	academy.SearchByRule(r)
+	academy.SearchByName(r)
 	login.PasswordLogin(r, db)
 	selectUsers.SelectUsers(r, db)
 	userInfo.BasicUserInfo(r, db)
