@@ -7,31 +7,25 @@ import (
 	"net/http"
 )
 
-func SearchByName(e *gin.Engine) {
+func SelectAcademyByCode(e *gin.Engine) {
 	db := fybDatabase.InitDB()
-	e.GET("/v1/frontend/academy/searchByName/:Name", func(context *gin.Context) {
+	e.GET("/v1/frontend/academy/detail/:code", func(context *gin.Context) {
 		var result *multierror.Error
-		Name := context.Param("Name")
+		code := context.Param("code")
 
-		err, responseBody, count := fybDatabase.SearchAcademyByName(db, Name)
+		err, responseBody, count := fybDatabase.SearchAcademyByCode(db, code)
 		result = multierror.Append(result, err)
 		if count > 0 && result.ErrorOrNil() == nil {
 			context.JSON(http.StatusOK, gin.H{
 				"code":    200,
-				"message": "院校搜索成功",
-				"data": map[string]interface{}{
-					"num":  count,
-					"list": responseBody,
-				},
+				"message": "用户查看院校成功",
+				"data":    responseBody,
 			})
 		} else {
 			context.JSON(http.StatusNotFound, gin.H{
 				"code":    404,
 				"message": result.Error(),
-				"data": map[string]interface{}{
-					"num":  count,
-					"list": responseBody,
-				},
+				"data":    responseBody,
 			})
 		}
 	})

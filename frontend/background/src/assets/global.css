@@ -3,4 +3,17 @@ html,body,#app {
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: "PingFang SC";
+}
+.round15{
+    border-radius: 15px;
+}
+.mg{
+    margin: 10px;
+}
+.pd{
+    padding: 10px;
+}
+.whiteback{
+    background-color: #fff;
 }

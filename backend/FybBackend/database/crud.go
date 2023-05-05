@@ -35,6 +35,36 @@ func SearchAcademyByName(db *gorm.DB, name string) (error, []Academy, int64) {
 	return result, academy, count
 }
 
+func SearchAcademyByCode(db *gorm.DB, code string) (error, Academy, int64) {
+	var academy Academy
+	var result error
+	err := db.Table("academy").Where("code=?", code).Find(&academy).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	var count int64
+	err2 := db.Table("academy").Where("code=?", code).Find(&academy).Count(&count).Error
+	if err2 != nil {
+		result = multierror.Append(result, err2)
+	}
+	return result, academy, count
+}
+
+func SearchScore(db *gorm.DB, code string) (error, Academy, int64) {
+	var academy Academy
+	var result error
+	err := db.Table("academy").Where("code=?", code).Find(&academy).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	var count int64
+	err2 := db.Table("academy").Where("code=?", code).Find(&academy).Count(&count).Error
+	if err2 != nil {
+		result = multierror.Append(result, err2)
+	}
+	return result, academy, count
+}
+
 func SelectSingleNewsByCondition(db *gorm.DB, where map[string]interface{}) (News, int64, error) {
 	var count int64 = 0
 	var news News
