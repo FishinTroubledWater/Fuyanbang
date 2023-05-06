@@ -69,6 +69,24 @@
 	    "navigationBarTitleText": "帮助反馈",
 	    "enablePullDownRefresh": false
 	  }
+	},	{
+	  "path": "pages/my/userInfo",
+	  "style": {
+	    "navigationBarTitleText": "个人资料",
+	    "enablePullDownRefresh": false
+	  }
+	},	{
+	  "path": "pages/my/accountSecurity",
+	  "style": {
+	    "navigationBarTitleText": "账号与安全",
+	    "enablePullDownRefresh": false
+	  }
+	},{
+	  "path": "pages/my/aboutUs",
+	  "style": {
+	    "navigationBarTitleText": "关于我们",
+	    "enablePullDownRefresh": false
+	  }
 	}
 	
   ],

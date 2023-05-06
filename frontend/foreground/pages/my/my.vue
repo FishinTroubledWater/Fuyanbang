@@ -29,7 +29,7 @@
 			<u-cell icon="rmb-circle" title="我的学币" isLink url="/pages/my/coin"></u-cell>
 			<u-cell icon="star" title="我的收藏" isLink url="/pages/my/favorites"></u-cell>
 			<u-gap height="15" bg-color="#f9f9f9"></u-gap>
-			<u-cell icon="question-circle" title="帮助反馈" isLink url="/pages/my/help"></u-cell>
+			<u-cell icon="question-circle" title="帮助" isLink url="/pages/my/help"></u-cell>
 		</u-cell-group>
 
 	</view>

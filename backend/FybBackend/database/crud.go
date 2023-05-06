@@ -65,6 +65,16 @@ func SearchScore(db *gorm.DB, code string) (error, Academy, int64) {
 	return result, academy, count
 }
 
+func SearchScoreByTypeFirstSecondLevel(db *gorm.DB, where map[string]interface{}) (error, []string) {
+	var result *multierror.Error
+	var imgUrl []string
+	err := db.Table("major").Where(where).Select("scoreUrl").Find(&imgUrl).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return result, imgUrl
+}
+
 func SelectSingleNewsByCondition(db *gorm.DB, where map[string]interface{}) (News, int64, error) {
 	var count int64 = 0
 	var news News
