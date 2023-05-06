@@ -1,0 +1,13 @@
+{
+  "name": "福研帮",
+  "version": "1.0.0",
+  "devDependencies": {
+    "browserslist": "^4.21.5",
+    "caniuse-lite": "^1.0.30001481"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "qs.js": "^0.1.12",
+    "uview-ui": "^2.0.36"
+  }
+}
