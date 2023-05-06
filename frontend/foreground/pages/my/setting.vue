@@ -20,7 +20,7 @@
 			<text class="cell-tip">105.4M</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
-		<view class="list-cell b-b" @click="gotoPage('/pages/my/userInfo')"hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell b-b" @click="gotoPage('/pages/my/aboutUs')"hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">关于我们</text>
 			<text class="cell-more yticon icon-you"></text>
 			<text>></text>

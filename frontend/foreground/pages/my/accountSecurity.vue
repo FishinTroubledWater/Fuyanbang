@@ -6,13 +6,13 @@
 					<text class="notion">旧密码</text>
 				</view>
 				<u-cell>
-					<input slot="value" v-model="oldPassword" placeholder="请输入旧密码"></input>
+					<input slot="value"  password="true" v-model="oldPassword" placeholder="请输入旧密码"></input>
 				</u-cell>
 				<view class="division">
 					<text class="notion">新密码</text>
 				</view>
 				<u-cell>
-					<input slot="value" v-model="newPassword" placeholder="请输入新密码"></input>
+					<input slot="value"  password="true" v-model="newPassword" placeholder="请输入新密码"></input>
 				</u-cell>
 				<button class="Btn" @click="changePassword()">确定</button>
 			</view>
@@ -29,7 +29,6 @@
 			<view class="division">
 				<text class="notion">绑定邮箱账号 ( 有助于账号找回 )</text>
 			</view>
-
 			<u-cell>
 				<text slot="title">绑定邮箱</text>
 				<input  class="right" slot="value" v-model="user.email" placeholder="请输入邮箱"></input>
@@ -60,15 +59,28 @@
 			},
 			changePassword() {
 				//核对旧密码输入是否正确 即oldPassword ?=user.password
-				//如果错误，提示旧密码不正确
-				//如果正确，修改user.password=newPassword 并关闭弹窗
-				uni.showToast({
-					title: '修改成功',
-					//将值设置为 success 或者直接不用写icon这个参数
-					icon: 'success',
-					//显示持续时间为 2秒
-					duration: 1500
-				}) 
+				if(this.oldPassword==this.user.password)//如果正确，修改user.password=newPassword 并关闭弹窗
+				{
+					uni.showToast({
+						title: '修改成功',
+						//将值设置为 success 或者直接不用写icon这个参数
+						icon: 'success',
+						//显示持续时间为 2秒
+						duration: 1500
+					})
+					this.show = false;
+					this.user.password=this.newPassword;
+					console.log(this.user.password);
+				}
+				else{	//如果错误，提示旧密码不正确
+					uni.showToast({
+						title: '旧密码错误',
+						//将值设置为 success 或者直接不用写icon这个参数
+						icon:'error',
+						//显示持续时间为 2秒
+						duration: 1500
+					})
+				}
 			},
 			close() {
 				this.show = false
