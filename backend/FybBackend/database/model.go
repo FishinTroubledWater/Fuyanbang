@@ -23,6 +23,7 @@ type Admin struct {
 	Account     string
 	Password    string
 	PhoneNumber string
+	Token       string
 }
 
 type Academy struct {
