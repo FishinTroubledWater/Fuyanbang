@@ -3,15 +3,15 @@
 		<view class="title">欢迎登录</view>
 		<form class="form" @submit.prevent="login">
 			<view class="form-item">
-				<label for="phoneNumber">手机号：</label>
-				<input type="text" id="phoneNumber" v-model="phoneNumber">
+				<label for="email">邮箱：</label>
+				<input type="text" id="email" v-model="email">
 			</view>
 			<view class="form-item">
 				<label for="password">密码：</label>
 				<input type="password" id="password" v-model="password">
 			</view>
 			<view class="handoff">
-				<text @click="toSMS()">短信登陆</text>
+				<text @click="toRegister()">立即注册</text>
 				<text class="resetPassword">忘记密码</text>
 			</view>
 			<view class="button">
@@ -25,20 +25,27 @@
 	export default {
 		data() {
 			return {
-				phoneNumber: "",
-				password: ""
+				email: "",
+				password: "",
+				
 			};
 		},
 		methods: {
 			login() {
 				// 在这里添加登录逻辑
-				console.log("手机号：" + this.phoneNumber);
+				console.log("邮箱：" + this.email);
 				console.log("密码：" + this.password);
+				
 			},
-			toSMS() {
+			toHome() {
+				uni.switchTab({
+					url: '../home/home'
+				})
+			},
+			toRegister() {
 				uni.navigateTo({
-					url: './SMSLogin'
-				});
+					url: './register'
+				})
 			}
 		}
 	};

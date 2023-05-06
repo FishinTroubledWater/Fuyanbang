@@ -1,6 +1,6 @@
 <template>
 	<view class="login-page">
-		
+		<view class="title">立即注册</view>
 		<form class="form" @submit.prevent="login">
 			<view class="title">设置密码</view>
 			<view class="form-item">
@@ -36,6 +36,9 @@
 
 				// 如果两次密码一致，可以在这里进行注册逻辑
 				// ...
+				uni.navigateTo({
+					url: './passwordLogin'
+				})
 			}
 		}
 	};
