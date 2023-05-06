@@ -10,6 +10,14 @@
 			}
 		},
 		{
+			"path": "pages/my/my",
+			"style": {
+				// custorm 取消顶部的 navBar 显示
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path": "pages/login/passwordLogin",
 			"style": {
 				"navigationBarTitleText": "密码登录"
