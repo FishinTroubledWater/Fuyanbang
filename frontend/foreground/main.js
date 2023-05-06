@@ -30,6 +30,8 @@ const app = new Vue({
     ...App
 })
 
+// 引入请求封装，将app参数传递到配置中
+require('./common/request.js')(app)
 
 // http拦截器，将此部分放在new Vue()和app.$mount()之间，才能App.vue中正常使用
 // import httpInterceptor from '@/common/http.interceptor.js'

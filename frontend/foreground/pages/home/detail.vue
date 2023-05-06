@@ -1,6 +1,6 @@
 <template>
   <view>
-    <uni-card :is-shadow="false">
+    <uni-card :is-shadow="true">
       <u--text :text="title" size="24" lineHeight="24" margin="4px"></u--text>
       <span style="margin: 16px 16px;font-size: 14px;line-height: 24px;">{{author}}</span>
       <span style="margin-right: 16px;font-size: 14px;float: right;">{{time}}</span>

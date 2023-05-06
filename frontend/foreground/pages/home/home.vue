@@ -18,7 +18,7 @@
           <u--text></u--text>
         </u-col>
         <u-col span="4">
-          <u--text text="2024考研倒计时" size="16px" color="#000"></u--text>
+          <u--text :text="ExamYear" size="16px" color="#000"></u--text>
         </u-col>
       </u-row>
 
@@ -140,6 +140,9 @@
           title: 'STA'
         }],
 
+        // 院校名字
+        academyName: '福州大学',
+
         // 最新动态
         cover: 'https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
         avatar: 'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
@@ -159,26 +162,24 @@
       RemainingTime() {
         //date1当前时间
         let date1 = new Date();
-        console.log(date1);
         //date2结束时间
         let date2 = new Date(date1.getFullYear(), "11", "25", date1.getHours(), date1.getMinutes(), date1.getSeconds(),
           date1.getMilliseconds());
-        console.log(date2);
         const diff = date2.getTime() - date1.getTime(); //目标时间减去当前时间
-        console.log(diff);
         const diffDate = diff / (24 * 60 * 60 * 1000); //计算当前时间与结束时间之间相差天数
-        console.log(diffDate);
         if (diffDate < 0) diffDate + 365;
         return diffDate + "天";
+      },
+      ExamYear() {
+        let date = new Date();
+        return date.getFullYear() + "考研倒计时"
       },
     },
     onLoad() {},
     mounted() {
       // 基本用法，注意：get请求的参数以及配置项都在第二个参数中
-      uni.$u.http.get('/posts/4', {
-        params: {
+      uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
 
-        }
       }).then(res => {
         console.log(res);
       }).catch(err => {
