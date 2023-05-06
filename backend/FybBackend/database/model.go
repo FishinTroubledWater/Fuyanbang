@@ -1,33 +1,33 @@
 package database
 
 type User struct {
-	ID            int `gorm:"primaryKey"`
+	ID            int64 `gorm:"primaryKey"`
 	Account       string
 	Password      string
-	PhoneNumber   string
-	NickName      string
+	PhoneNumber   string `gorm:"column:phoneNumber"`
+	NickName      string `gorm:"column:nickName"`
 	Major         string
-	AvatarUrl     string
+	AvatarUrl     string `gorm:"column:avatarUrl"`
 	Sex           string
 	Area          string
 	Year          int64
-	TargetCollege string
-	TargetMajor   string
+	TargetCollege string `gorm:"column:targetCollege"`
+	TargetMajor   string `gorm:"column:targetMajor"`
 	Slogan        string
-	Balance       int
+	Balance       int64
 	College       string
 }
 
 type Admin struct {
-	ID          int `gorm:"primaryKey"`
+	ID          int64 `gorm:"primaryKey"`
 	Account     string
 	Password    string
-	PhoneNumber string
+	PhoneNumber string `gorm:"phoneNumber"`
 	Token       string
 }
 
 type Academy struct {
-	ID       int `gorm:"primaryKey"`
+	ID       int64 `gorm:"primaryKey"`
 	Name     string
 	Code     string
 	Guide    string
@@ -41,17 +41,17 @@ type Academy struct {
 }
 
 type News struct {
-	ID          int `gorm:"primaryKey"`
+	ID          int64 `gorm:"primaryKey"`
 	Author      string
 	Title       string
 	Content     string
 	PublishTime string `gorm:"column:publishTime"`
-	UserID      int    `gorm:"column:userID"`
+	UserID      int64  `gorm:"column:userID"`
 	Type        string `gorm:"column:type"`
 }
 
 type Major struct {
-	ID                    int    `gorm:"primaryKey;comment:专业id"`
+	ID                    int64  `gorm:"primaryKey;comment:专业id"`
 	Name                  string `gorm:"column:_name;comment:专业名称"`
 	Code                  string `gorm:"column:_code;comment:专业代码"`
 	Profile               string `gorm:"comment:专业简介"`

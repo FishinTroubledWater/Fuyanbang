@@ -85,11 +85,11 @@ export default {
     //     }
     //   });
     // },
-    handleLogin() {
-      this.$refs.loginForm.validate(async valid =>{
-        if(!valid) return;
-        this.$router.push({path:'/home'})
-      });
+    // handleLogin() {
+    //   this.$refs.loginForm.validate(async valid =>{
+    //     if(!valid) return;
+    //     this.$router.push({path:'/home'})
+    //   });
     // handleLogin() {
     //   this.$refs.loginForm.validate(async valid =>{
     //       if(!valid) return;
@@ -100,16 +100,16 @@ export default {
     //       // window.sessionStorage.setItem("token",res.data.token);
     //       // this.$router.push({path:'/home'})
     //   });
-      // handleLogin() {
-      //   this.$refs.loginForm.validate(async valid =>{
-      //     if(!valid) return;
-      //     const {data:res} = await this.axios.post('login',this.loginForm);
-      //     console.log(res);
-      //     if(res.meta.status != 200) return this.$message.error('登录失败！');
-      //     this.$message.success('登录成功');
-      //     window.sessionStorage.setItem("token",res.data.token);
-      //     this.$router.push({path:'/home'})
-      //   });
+      handleLogin() {
+        this.$refs.loginForm.validate(async valid =>{
+          if(!valid) return;
+          const {data:res} = await this.axios.post('login',this.loginForm);
+          console.log(res);
+          if(res.meta.status != 200) return this.$message.error('登录失败！');
+          this.$message.success('登录成功');
+          window.sessionStorage.setItem("token",res.data.token);
+          this.$router.push({path:'/home'})
+        });
     }
   }
 }

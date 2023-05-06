@@ -1,7 +1,6 @@
 package token
 
 import (
-	fybDatabase "FybBackend/database"
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -9,29 +8,28 @@ import (
 )
 
 type MyClaims struct {
-	Admin              fybDatabase.Admin
+	Account            string
+	PhoneNumber        string
 	jwt.StandardClaims // 标准Claims结构体，可设置8个标准字段
 }
 
 var (
-	//自定义的token秘钥
-	secret = []byte("16849841325189456f487")
-	//token有效时间（纳秒）
-	ExpireDuration = 3 * time.Minute
+	secret         = []byte("31231dasdaseqwkjcozx") //秘钥
+	ExpireDuration = 3 * time.Minute                //秘钥有效时间
+	expirationTime = time.Now().Add(ExpireDuration)
+	issuer         = "Fyb" //签发人
 )
 
-func GenerateToken(adminInfo fybDatabase.Admin) (string, error) {
-	expirationTime := time.Now().Add(ExpireDuration) // 两个小时有效期
+func GenerateToken(account string, phoneNumber string) (string, error) {
 	claims := &MyClaims{
-		Admin: adminInfo,
+		Account:     account,
+		PhoneNumber: phoneNumber,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
-			Issuer:    "Fyb",
+			Issuer:    issuer,
 		},
 	}
-	// 生成Token，指定签名算法和claims
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	// 签名
 	if tokenString, err := token.SignedString(secret); err != nil {
 		return "", err
 	} else {
@@ -39,19 +37,16 @@ func GenerateToken(adminInfo fybDatabase.Admin) (string, error) {
 	}
 }
 
-// 验证token
 func JwtVerify(c *gin.Context) error {
 	token := c.GetHeader("token")
 	if token == "" {
-		return errors.New("token not exist")
+		return errors.New("token not exists")
 	}
-	//验证token，并存储在请求中
-	myClaims, _ := parseToken(token)
-	c.Set("admin", myClaims)
-	return nil
+	myClaims, err1 := parseToken(token)
+	c.Set("claims", myClaims)
+	return err1
 }
 
-// 解析Token
 func parseToken(tokenString string) (*MyClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &MyClaims{}, func(t *jwt.Token) (interface{}, error) {
 		return secret, nil
@@ -62,25 +57,5 @@ func parseToken(tokenString string) (*MyClaims, error) {
 	if claims, ok := token.Claims.(*MyClaims); ok && token.Valid {
 		return claims, nil
 	}
-	return nil, errors.New("token无法解析")
-}
-
-// 更新token
-func Refresh(tokenString string) (string, error) {
-	jwt.TimeFunc = func() time.Time {
-		return time.Unix(0, 0)
-	}
-	token, err := jwt.ParseWithClaims(tokenString, &MyClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return secret, nil
-	})
-	if err != nil {
-		panic(err)
-	}
-	claims, ok := token.Claims.(*MyClaims)
-	if !ok {
-		panic("token is valid")
-	}
-	jwt.TimeFunc = time.Now
-	claims.StandardClaims.ExpiresAt = time.Now().Add(24 * time.Hour).Unix()
-	return GenerateToken(claims.Admin)
+	return nil, errors.New("token can't be parsed or is not valid")
 }

@@ -10,7 +10,7 @@ import (
 )
 
 type responseItem struct {
-	Id      int    `json:"id"`
+	Id      int64  `json:"id"`
 	Account string `json:"account"`
 	Token   string `json:"token"`
 }
@@ -28,7 +28,7 @@ func Login(e *gin.Engine, db *gorm.DB) {
 		//bcrypt.CompareHashAndPassword([]byte(m.HashedPassword), []byte(inputPassword))
 		if errors.ErrorOrNil() == nil {
 			mp2 := make(map[string]interface{})
-			token, _ := token.GenerateToken(admin)
+			token, _ := token.GenerateToken(admin.Account, admin.PhoneNumber)
 			mp2["token"] = token
 			fybDatabase.UpdateSingleAdminByCondition(db, mp1, mp2)
 			context.JSON(200, gin.H{
