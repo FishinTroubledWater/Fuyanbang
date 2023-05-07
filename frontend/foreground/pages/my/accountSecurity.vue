@@ -86,6 +86,8 @@
 				this.show = false
 			},
 			upInfo() {
+				//TODO:
+				//如果新旧密码不同则提示
 				uni.showToast({
 					title: '成功',
 					//将值设置为 success 或者直接不用写icon这个参数
@@ -113,6 +115,12 @@
 				// 		console.log(err)
 				// 	}
 				// })
+				this.timer = setInterval(() => {
+				    //TODO 
+					uni.navigateBack({
+							delta:1,//返回层数，2则上上页
+						})
+				}, 1500);
 			}
 			
 		}

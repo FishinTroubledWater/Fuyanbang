@@ -211,25 +211,31 @@
 					duration: 1500
 				}) 
 				// 点击上传信息按钮触发的方法
-				var that = this
-				uni.request({
-					//api地址
-					url: 'http://localhost:3000/web/api/rest/user/',
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					method: 'POST',
-					data: {
-						// 将json数据转化成字符串格式进行上传
-						information: JSON.stringify(that.user)
-					},
-					success: (res) => {
-						console.log(res)
-					},
-					error(err) {
-						console.log(err)
-					}
-				})
+				// var that = this
+				// uni.request({
+				// 	//api地址
+				// 	url: 'http://localhost:3000/web/api/rest/user/',
+				// 	header: {
+				// 		'content-type': 'application/x-www-form-urlencoded'
+				// 	},
+				// 	method: 'POST',
+				// 	data: {
+				// 		// 将json数据转化成字符串格式进行上传
+				// 		information: JSON.stringify(that.user)
+				// 	},
+				// 	success: (res) => {
+				// 		console.log(res)
+				// 	},
+				// 	error(err) {
+				// 		console.log(err)
+				// 	}
+				// })
+				this.timer = setInterval(() => {
+				    //TODO 
+					uni.navigateBack({
+							delta:1,//返回层数，2则上上页
+						})
+				}, 1500);
 			}
 
 		}
