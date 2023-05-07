@@ -20,9 +20,15 @@
 	export default {
 		data() {
 			return {
+				email: '',
 				password: '',
 				confirmPassword: ''
 			};
+		},
+		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数
+			// console.log(option.email); //打印出上个页面传递的参数。
+			this.email = option.email;
+			// console.log('123'+this.email); //打印出上个页面传递的参数。
 		},
 		methods: {
 			submitForm() {
