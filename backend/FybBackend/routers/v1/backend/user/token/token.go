@@ -38,7 +38,7 @@ func GenerateToken(account string, phoneNumber string) (string, error) {
 }
 
 func JwtVerify(c *gin.Context) error {
-	token := c.GetHeader("token")
+	token := c.GetHeader("Authorization")
 	if token == "" {
 		return errors.New("token not exists")
 	}

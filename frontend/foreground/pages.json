@@ -1,145 +1,290 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页
+  "pages": [ //pages数组中第一项表示应用启动页
+//登陆注册部分页面注册
+{
+  "path": "pages/login/passwordLogin",
+  "style": {
+    "navigationBarTitleText": "密码登录"
+  }
+},
+{
+  "path": "pages/login/register",
+  "style": {
+    "navigationBarTitleText": "注册"
+  }
+},
+{
+  "path": "pages/login/setPassword",
+  "style": {
+    "navigationBarTitleText": "设置密码"
+  }
+},
+{
+  "path": "pages/login/resetPassword1",
+  "style": {
+    "navigationBarTitleText": "忘记密码"
+  }
+},
+{
+  "path": "pages/login/resetPassword2",
+  "style": {
+    "navigationBarTitleText": "忘记密码"
+  }
+},
+{
+  "path": "pages/login/test",
+  "style": {
+    "navigationBarTitleText": "邮箱验证码测试"
+  }
+},
+    {
+      "path": "pages/data/activityDetail/activityDetail",
+      "style": {
+        "navigationBarTitleText": "21天攒图计划",
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "pages/data/newsDetails/newsDetails",
+      "style": {
+        "navigationBarTitleText": "详情",
+        "enablePullDownRefresh": true
+      }
+    },{
+      "path": "pages/data/questionsDetails/questionsDetails",
+      "style": {
+        "navigationBarTitleText": "求助详情",
+        "enablePullDownRefresh": true
+      }
+    },{
+      "path": "pages/data/data",
+      "style": {
+        "navigationBarTitleText": "圈子",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/home/home",
+      "style": {
+        // custorm 取消顶部的 navBar 显示
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/home/news",
+      "style": {
+        "navigationBarTitleText": "资讯",
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "pages/home/detail",
+      "style": {
+        "navigationBarTitleText": "资讯详情",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/home/major",
+      "style": {
+        "navigationBarTitleText": "专业",
+        "enablePullDownRefresh": true,
+        "app-plus": {
+          "titleNView": {
+            "buttons": [{
+              "float": "right",
+              "fontSize": "32rpx",
+              // "fontSrc": "/static/academy-icons/iconfont.ttf",
+              "text": "搜索"
+            }]
+          }
+        }
+      }
+    }, {
+      "path": "pages/home/professional/professional",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "backgroundColor": "#E7ECFF"
+      }
+    }, {
+      "path": "pages/home/professional/introduction",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/home/professional/line",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "backgroundColor": "#E7ECFF"
+      }
+    }, {
+      "path": "pages/home/professional/prospect",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "backgroundColor": "#E7ECFF"
+      }
+    }, {
+      "path": "pages/home/professional/search",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false,
+        "backgroundColor": "#E7ECFF"
+      }
+    }, {
+      "path": "pages/home/academy",
+      "style": {
+        "navigationBarTitleText": "院校",
+        "enablePullDownRefresh": true,
+        "app-plus": {
+          "titleNView": {
+            "buttons": [{
+              "float": "right",
+              "fontSize": "32rpx",
+              // "fontSrc": "/static/academy-icons/iconfont.ttf",
+              "text": "搜索"
+            }]
+          }
+        }
+      }
+    }, {
+      "path": "pages/home/university/university",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/home/university/introduction",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/home/university/brochures",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/home/university/line",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/home/university/said",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/home/university/web",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/home/university/search",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+        // "my"部分的页面
+    {
+      "path": "pages/my/my",
+      "style": {
+        // custorm 取消顶部的 navBar 显示
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true
+      }
+    },
 
-		{
-			"path": "pages/home/home",
-			"style": {
-				// custorm 取消顶部的 navBar 显示
-				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/my/my",
-			"style": {
-				// custorm 取消顶部的 navBar 显示
-				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
-			}
-		},
-		//登陆注册部分页面注册
-		{
-			"path": "pages/login/passwordLogin",
-			"style": {
-				"navigationBarTitleText": "密码登录"
-			}
-		},
-		{
-			"path": "pages/login/register",
-			"style": {
-				"navigationBarTitleText": "注册"
-			}
-		},
-		{
-			"path": "pages/login/setPassword",
-			"style": {
-				"navigationBarTitleText": "设置密码"
-			}
-		},
-		{
-			"path": "pages/login/resetPassword1",
-			"style": {
-				"navigationBarTitleText": "忘记密码"
-			}
-		},
-		{
-			"path": "pages/login/resetPassword2",
-			"style": {
-				"navigationBarTitleText": "忘记密码"
-			}
-		},
-		{
-			"path": "pages/login/test",
-			"style": {
-				"navigationBarTitleText": "邮箱验证码测试"
-			}
-		},
-		// "my"部分的页面
-		{
-		  "path": "pages/my/setting",
-		  "style": {
-		    "navigationBarTitleText": "设置",
-		    "enablePullDownRefresh": false
-		  }
-		}, {
-		  "path": "pages/my/posts",
-		  "style": {
-		    "navigationBarTitleText": "我的创作",
-		    "enablePullDownRefresh": true
-		  }
-		},{
-		  "path": "pages/my/coin",
-		  "style": {
-		    "navigationBarTitleText": "我的学币",
-		    "enablePullDownRefresh": true
-		  }
-		},{
-		  "path": "pages/my/favorites",
-		  "style": {
-		    "navigationBarTitleText": "我的收藏",
-		    "enablePullDownRefresh": true
-		  }
-		},{
-		  "path": "pages/my/help",
-		  "style": {
-		    "navigationBarTitleText": "帮助反馈",
-		    "enablePullDownRefresh": false
-		  }
-		},	{
-		  "path": "pages/my/userInfo",
-		  "style": {
-		    "navigationBarTitleText": "个人资料",
-		    "enablePullDownRefresh": false
-		  }
-		},	{
-		  "path": "pages/my/accountSecurity",
-		  "style": {
-		    "navigationBarTitleText": "账号与安全",
-		    "enablePullDownRefresh": false
-		  }
-		},{
-		  "path": "pages/my/aboutUs",
-		  "style": {
-		    "navigationBarTitleText": "关于我们",
-		    "enablePullDownRefresh": false
-		  }
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	},
-	"tabBar": {
-		"color": "#000",
-		"selectedColor": "#f5a623",
-		"list": [
-			{
-				"iconPath": "/static/tabbar-icons/home.png",
-				"selectedIconPath": "/static/tabbar-icons/home_active.png",
-				"text": "首页",
-				"pagePath": "pages/home/home"
-			},
-			{
-				"iconPath": "/static/tabbar-icons/data.png",
-				"selectedIconPath": "/static/tabbar-icons/data_active.png",
-				"text": "资料",
-				"pagePath": "pages/data/data"
-			},
-			{
-				"iconPath": "/static/tabbar-icons/my.png",
-				"selectedIconPath": "/static/tabbar-icons/my_active.png",
-				"text": "我的",
-				"pagePath": "pages/my/my"
-			}
-		]
-	},
-	"easycom": {
-		"autoscan": true,
-		// 下载安装的方式需要前面的"@/"，npm安装的方式无需"@/"
-		// "^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
-		// npm安装方式
-		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
-	}
+    {
+      "path": "pages/my/setting",
+      "style": {
+        "navigationBarTitleText": "设置",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/my/posts",
+      "style": {
+        "navigationBarTitleText": "我的创作",
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "pages/my/coin",
+      "style": {
+        "navigationBarTitleText": "我的学币",
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "pages/my/favorites",
+      "style": {
+        "navigationBarTitleText": "我的收藏",
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "pages/my/help",
+      "style": {
+        "navigationBarTitleText": "帮助反馈",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/my/userInfo",
+      "style": {
+        "navigationBarTitleText": "个人资料",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/my/accountSecurity",
+      "style": {
+        "navigationBarTitleText": "账号与安全",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/my/aboutUs",
+      "style": {
+        "navigationBarTitleText": "关于我们",
+        "enablePullDownRefresh": false
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#000",
+    "selectedColor": "#f5a623",
+    "list": [{
+        "iconPath": "/static/tabbar-icons/home.png",
+        "selectedIconPath": "/static/tabbar-icons/home_active.png",
+        "text": "首页",
+        "pagePath": "pages/home/home"
+      },
+      {
+        "iconPath": "/static/tabbar-icons/data.png",
+        "selectedIconPath": "/static/tabbar-icons/data_active.png",
+        "text": "圈子",
+        "pagePath": "pages/data/data"
+      },
+      {
+        "iconPath": "/static/tabbar-icons/my.png",
+        "selectedIconPath": "/static/tabbar-icons/my_active.png",
+        "text": "我的",
+        "pagePath": "pages/my/my"
+      }
+    ]
+  },
+  "easycom": {
+    "autoscan": true,
+    // 下载安装的方式需要前面的"@/"，npm安装的方式无需"@/"
+    // "^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+    // npm安装方式
+    "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+  }
 }

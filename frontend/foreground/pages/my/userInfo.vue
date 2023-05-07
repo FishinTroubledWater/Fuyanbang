@@ -4,12 +4,12 @@
 		<u-cell-group>
 			<u-cell>
 				<text slot="title">修改头像</text>
-				<u-image @click="changeHead()" width='100rpx' height='100rpx' slot="value" :src="avatarUrl"
+				<u-image @click="changeHead()" width='100rpx' height='100rpx' slot="value" :src="user.avatarUrl"
 					shape="circle"></u-image>
 			</u-cell>
 			<u-cell>
 				<text slot="title">修改昵称</text>
-				<input class="right" slot="value" v-model="user.nickName" placeholder="请输入内容"></input>
+				<input class="right" slot="value" v-model="user.nickName" placeholder="请输入内容">{{user.nickName}}</input>
 			</u-cell>
 
 
@@ -45,8 +45,7 @@
 
 			<u-cell>
 				<text slot="title">考研年份</text>
-				<input class="right" slot="value" v-model="user.year" placeholder="请输入考研年份"></input>
-				<text>{{user.year}}</text>
+				<input class="right" slot="value" v-model="user.year" placeholder="请输入考研年份">{{user.year}}</input>
 			</u-cell>
 
 			<picker :range="colleges" @confirm="bindTargetCollegeChange($event)"
@@ -59,7 +58,7 @@
 
 			<view class="box">
 				<text class="slogan">个性签名</text>
-				<u--textarea v-model="user.slogan" placeholder="请在此处编辑您的个性签名" count></u--textarea>
+				<u--textarea v-model="user.slogan" placeholder="请在此处编辑您的个性签名" count>{{user.slogan}}</u--textarea>
 			</view>
 			<button class="upButton" @click="upInfo()">保存</button>
 		</u-cell-group>
@@ -70,11 +69,11 @@
 	export default {
 		data() {
 			return {
-				account: "",
-				avatarUrl: '/static/my-assets/泰裤辣.png',
+				id: "",
 				user: {
+					avatarUrl: '/static/my-assets/泰裤辣.png',
 					nickName: "",
-					sex: "性别",
+					sex: "不明",
 					area: "",
 					college: "",
 					major: "",
@@ -82,6 +81,8 @@
 					targetCollege: "",
 					slogan: ""
 				},
+				
+				//选择器数据
 				sex: ['男', '女'],
 				colleges: ['福州大学', '清华大学', '贵州大学', '上海大学', '北京大学', '北京大学', '清华大学', '清华大学', '清华大学', '清华大学', '清华大学', '清华大学',
 					'南京大学',
@@ -211,25 +212,31 @@
 					duration: 1500
 				}) 
 				// 点击上传信息按钮触发的方法
-				var that = this
-				uni.request({
-					//api地址
-					url: 'http://localhost:3000/web/api/rest/user/',
-					header: {
-						'content-type': 'application/x-www-form-urlencoded'
-					},
-					method: 'POST',
-					data: {
-						// 将json数据转化成字符串格式进行上传
-						information: JSON.stringify(that.user)
-					},
-					success: (res) => {
-						console.log(res)
-					},
-					error(err) {
-						console.log(err)
-					}
-				})
+				// var that = this
+				// uni.request({
+				// 	//api地址
+				// 	url: 'http://localhost:3000/web/api/rest/user/',
+				// 	header: {
+				// 		'content-type': 'application/x-www-form-urlencoded'
+				// 	},
+				// 	method: 'POST',
+				// 	data: {
+				// 		// 将json数据转化成字符串格式进行上传
+				// 		information: JSON.stringify(that.user)
+				// 	},
+				// 	success: (res) => {
+				// 		console.log(res)
+				// 	},
+				// 	error(err) {
+				// 		console.log(err)
+				// 	}
+				// })
+				this.timer = setInterval(() => {
+				    //TODO 
+					uni.navigateBack({
+							delta:1,//返回层数，2则上上页
+						})
+				}, 1500);
 			}
 
 		}

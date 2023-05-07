@@ -62,7 +62,7 @@
 				mathematicalType: '数学类型',
 				foreignLanguageType: '外语类型',
 				firstLevelDiscipline: '一级学科',
-				type: '院校类型'
+				type: '学科门类'
 			};
 		},
 		onNavigationBarButtonTap:function(e){
@@ -86,7 +86,7 @@
 			bindPickerChange1: function(e) {
 				this.index1 = e.target.value;
 				this.jg = this.array1[this.index1];
-				this.region = this.array1[this.index1];
+				this.type = this.array1[this.index1];
 				console.log(this.mathematicalType);
 				console.log(this.foreignLanguageType);
 				console.log(this.firstLevelDiscipline);
@@ -95,17 +95,17 @@
 			bindPickerChange2: function(e) {
 				this.index2 = e.target.value;
 				this.jg = this.array2[this.index2];
-				this.level = this.array2[this.index2];
+				this.firstLevelDiscipline = this.array2[this.index2];
 			},
 			bindPickerChange3: function(e) {
 				this.index3 = e.target.value;
 				this.jg = this.array3[this.index3];
-				this.type = this.array3[this.index3];
+				this.mathematicalType = this.array3[this.index3];
 			},
 			bindPickerChange4: function(e) {
 				this.index4 = e.target.value;
 				this.jg = this.array4[this.index4];
-				this.type = this.array4[this.index4];
+				this.foreignLanguageType = this.array4[this.index4];
 			},
 			goProfessional() {
 				uni.navigateTo({
