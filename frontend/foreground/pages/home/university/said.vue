@@ -37,6 +37,34 @@
 </template>
 
 <script>
+	export default{
+		data() {
+			return {
+				mes: [],
+				code: 0,
+			}
+		},
+		methods: {
+
+		},
+		onShow() {
+			// console.log('eee')
+		},
+		created() {
+			uni.$on('code',res=>{
+				this.code = res
+				uni.$u.http.get('/v1/frontend/academy/detail/' + this.code, {
+				
+				}).then(res => {
+					this.mes = res.data.data;
+					console.log("成功4")
+					console.log(this.mes);
+				}).catch(err => {
+					console.log("失败")
+				})
+			})
+		},
+	}
 </script>
 
 <style lang="scss">

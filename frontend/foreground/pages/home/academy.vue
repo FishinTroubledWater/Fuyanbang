@@ -19,19 +19,20 @@
 				共搜索到 <text class="searchNum">{{mes.num}}</text> 所院校
 			</text>
 		</view>
-		<uni-list>
-			<view  class="viewAcademy" bindtap="click" @click="goUniverity" @touchstart="touchStart" @touchend="touchEnd" :style="active">
+		<view>
+			<view  class="viewAcademy" v-for="m in mes.list" @click="goUniverity(m.Code)" @touchstart="touchStart" @touchend="touchEnd" :style="active">
 				<image class="academyLogo" src="@/static/academy-icons/北大.png"></image>
 				<view class="viewText">
-					<text class="academyName">北京大学</text>
+					<text class="academyName">{{m.Name}}</text>
 					<view class="academyType">
-						<view class="typeOfScoreLine">自划线</view>
-						<text class="typeOfInstitution">985</text>
+						<view class="typeOfScoreLine">{{m.LineTtpe}}</view>
+						<text class="typeOfInstitution">{{m.Level}}</text>
 					</view>
 				</view>
-				<text class="lacation">北京</text>
+				<text class="lacation">{{m.Region}}</text>
 			</view>
-			<view  class="viewAcademy" bindtap="click" @click="goUniverity">
+			
+<!-- 			<view class="viewAcademy" v-for="m in mes.list" bindtap="click" @click="goUniverity">
 				<image class="academyLogo" src="@/static/academy-icons/清华大学.png"></image>
 				<view class="viewText">
 					<text class="academyName">清华大学</text>
@@ -41,8 +42,9 @@
 					</view>
 				</view>
 				<text class="lacation">北京</text>
-			</view>
-		</uni-list>
+			</view> -->
+			
+		</view>
 	</view>
 </template>
 
@@ -77,7 +79,6 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 			};
 		},
 		onNavigationBarButtonTap:function(e){
-		    console.log(e.text);//提交
 			uni.navigateTo({
 				url: "/pages/home/university/search"
 			})
@@ -167,17 +168,43 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 		
 		
 		},
-		onShow() {
-		    uni.$off('searchContent')//建议先销毁一次监听，再进行新的一次监听，否则会出现重复监听的现象
-			uni.$once('searchContent',function(data){
-				if(data != '') {
-					console.log("bbbb");
-					console.log(data);
-				}
-				
-				//这的data就是B页面传递过来的数据
-			})
+		
+		onShow(){  
+			let pages = getCurrentPages();
+			let currPage = pages[pages.length - 1];
+			if(currPage.searchContent) {
+				this.academyName = currPage.searchContent;
+				uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+							
+				}).then(res => {
+				  this.mes = res.data.data;
+				  console.log(this.mes);
+				}).catch(err => {
+							
+				})
+			}
 		},
+
+		// onShow() {
+		//     // uni.$off('searchContent')//建议先销毁一次监听，再进行新的一次监听，否则会出现重复监听的现象
+		// 	uni.$once('searchContent',function(data){
+		// 		console.log("bbbb");
+		// 		console.log(data);
+		// 		this.academyName = data;
+		// 		uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+							
+		// 		}).then(res => {
+		// 		  this.mes = res.data.data;
+		// 		  this.mes.num = 1;
+		// 		  console.log(this.mes.num);
+		// 		  console.log(this.mes);
+		// 		}).catch(err => {
+							
+		// 		})
+		// 		//这的data就是B页面传递过来的数据
+		// 	})
+		// 	this.$forceUpdate();
+		// },
 		methods: {
 			touchStart(){
 				this.active="background-color:#e6eff9"
@@ -209,10 +236,11 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				console.log(this.level);
 				console.log(this.type);
 			},
-			goUniverity() {
+			goUniverity(c) {
 				uni.navigateTo({
-					url: "/pages/home/university/university"
+					url: "/pages/home/university/university?code=" + c
 				})
+				uni.$emit('code1',c)
 			},
 		},
 		mounted() {
@@ -220,7 +248,8 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 			//      uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
 			
 			//      }).then(res => {
-			//        console.log(res.data);
+			//        console.log(res.data.data);
+			//        this.mes = res.data.data;
 			//      }).catch(err => {
 			
 			//      })
