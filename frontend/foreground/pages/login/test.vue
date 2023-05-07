@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { getEmailCode } from '@/api'
+// import { getEmailCode } from '@/api'
 export default {
   data() {
     return {
