@@ -18,7 +18,7 @@ func NewsInfo(e *gin.Engine, db *gorm.DB) {
 		if count > 0 {
 			context.JSON(200, gin.H{
 				"code":    200,
-				"message": "get basicUserInfo success!",
+				"message": "get all newsInfo success!",
 				"data":    newses,
 			})
 		} else {
