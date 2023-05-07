@@ -19,7 +19,6 @@ func BasicUserInfo(e *gin.Engine, db *gorm.DB) {
 	e.GET("/v1/frontend/user/basicUserInfo", func(context *gin.Context) {
 		var errors *multierror.Error
 		mp := make(map[string]interface{})
-		mp["account"] = context.DefaultQuery("account", "")
 		user, _, err := fybDatabase.SelectSingleUserByCondition(db, mp)
 		errors = multierror.Append(errors, err)
 		if errors.ErrorOrNil() == nil {
