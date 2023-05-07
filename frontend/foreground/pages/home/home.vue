@@ -28,7 +28,7 @@
 
       <!-- 时间轴 -->
       <view class="timeline">
-        <uni-steps :options="list" active-icon="flag" :active="active" />
+        <uni-steps :options="TimeList" active-icon="flag" :active="active" />
       </view>
 
     </uni-section>
@@ -59,47 +59,13 @@
       </view>
       <u-line color="#000000"></u-line>
       <u-list @scrolltolower="scrolltolower">
-        <u-list-item>
-          <uni-card :is-shadow="true" title="快讯!2023年考研国家线发布" sub-title="教育部" extra="2023年03月10日"
-            thumbnail="/static/building.png" class="trends-box-item" @click="gotoPage('/pages/home/detail')">
-            <u--text :lines="1" text="近日，教育部部署2023年全国硕士研究生招生复试录取工作..."></u--text>
+        <u-list-item v-for="(item, index) in indexList" :key="index">
+          <uni-card :is-shadow="true" :title="item.title" :sub-title="item.subTitle" :extra="item.publishTime"
+            :thumbnail="item.pageImage" class="trends-box-item" @click="gotoPage('/pages/home/detail', item.id)">
+            <u--text :lines="1" :text="item.content"></u--text>
           </uni-card>
         </u-list-item>
 
-        <u-list-item>
-          <uni-card :is-shadow="true" title="快讯!2023年考研国家线发布" sub-title="教育部" extra="2023年03月10日"
-            thumbnail="/static/building.png" class="trends-box-item">
-            <u--text :lines="1" text="近日，教育部部署2023年全国硕士研究生招生复试录取工作..."></u--text>
-          </uni-card>
-        </u-list-item>
-
-        <u-list-item>
-          <uni-card :is-shadow="true" title="快讯!2023年考研国家线发布" sub-title="教育部" extra="2023年03月10日"
-            thumbnail="/static/building.png" class="trends-box-item">
-            <u--text :lines="1" text="近日，教育部部署2023年全国硕士研究生招生复试录取工作..."></u--text>
-          </uni-card>
-        </u-list-item>
-
-        <u-list-item>
-          <uni-card title="快讯!2023年考研国家线发布" sub-title="教育部" extra="2023年03月10日" thumbnail="/static/building.png"
-            class="trends-box-item">
-            <u--text :lines="1" text="近日，教育部部署2023年全国硕士研究生招生复试录取工作..."></u--text>
-          </uni-card>
-        </u-list-item>
-
-        <u-list-item>
-          <uni-card title="快讯!2023年考研国家线发布" sub-title="教育部" extra="2023年03月10日" thumbnail="/static/building.png"
-            class="trends-box-item">
-            <u--text :lines="1" text="近日，教育部部署2023年全国硕士研究生招生复试录取工作..."></u--text>
-          </uni-card>
-        </u-list-item>
-
-        <u-list-item>
-          <uni-card title="快讯!2023年考研国家线发布" sub-title="教育部" extra="2023年03月10日" thumbnail="/static/building.png"
-            class="trends-box-item">
-            <u--text :lines="1" text="近日，教育部部署2023年全国硕士研究生招生复试录取工作..."></u--text>
-          </uni-card>
-        </u-list-item>
       </u-list>
 
     </view>
@@ -124,26 +90,55 @@
       return {
         // 时间轴
         active: 3,
-        list: [{
-          title: 'SUN'
-        }, {
-          title: 'MON'
-        }, {
-          title: 'TUE'
-        }, {
-          title: 'WED'
-        }, {
-          title: 'THU'
-        }, {
-          title: 'FRI'
-        }, {
-          title: 'STA'
-        }],
 
         // 院校名字
         academyName: '福州大学',
 
         // 最新动态
+        indexList: [{
+          id: "1",
+          title: "快讯!2023年考研国家线发布",
+          subTitle: "教育部",
+          publishTime: "2023年03月10日",
+          pageImage: "/static/building.png",
+          content: "近日，教育部部署2023年全国硕士研究生招生复试录取工作..."
+        }, {
+          id: "2",
+          title: "快讯!2023年考研国家线发布",
+          subTitle: "教育部",
+          publishTime: "2023年03月10日",
+          pageImage: "/static/building.png",
+          content: "近日，教育部部署2023年全国硕士研究生招生复试录取工作..."
+        }, {
+          id: "3",
+          title: "快讯!2023年考研国家线发布",
+          subTitle: "教育部",
+          publishTime: "2023年03月10日",
+          pageImage: "/static/building.png",
+          content: "近日，教育部部署2023年全国硕士研究生招生复试录取工作..."
+        }, {
+          id: "4",
+          title: "快讯!2023年考研国家线发布",
+          subTitle: "教育部",
+          publishTime: "2023年03月10日",
+          pageImage: "/static/building.png",
+          content: "近日，教育部部署2023年全国硕士研究生招生复试录取工作..."
+        }, {
+          id: "5",
+          title: "快讯!2023年考研国家线发布",
+          subTitle: "教育部",
+          publishTime: "2023年03月10日",
+          pageImage: "/static/building.png",
+          content: "近日，教育部部署2023年全国硕士研究生招生复试录取工作..."
+        }, {
+          id: "6",
+          title: "快讯!2023年考研国家线发布",
+          subTitle: "教育部",
+          publishTime: "2023年03月10日",
+          pageImage: "/static/building.png",
+          content: "近日，教育部部署2023年全国硕士研究生招生复试录取工作..."
+        }],
+
         cover: 'https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
         avatar: 'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
         extraIcon: {
@@ -170,9 +165,43 @@
         if (diffDate < 0) diffDate + 365;
         return diffDate + "天";
       },
+      // 考研年份
       ExamYear() {
         let date = new Date();
         return date.getFullYear() + "考研倒计时"
+      },
+      // 今天星期几
+      TimeList() {
+        let date = new Date();
+        var weekday = new Array(7);
+        weekday[0] = "SUN";
+        weekday[1] = "MON";
+        weekday[2] = "TUE";
+        weekday[3] = "WED";
+        weekday[4] = "THU";
+        weekday[5] = "FRI";
+        weekday[6] = "STA";
+        let list = [{
+          title: 'SUN'
+        }, {
+          title: 'MON'
+        }, {
+          title: 'TUE'
+        }, {
+          title: 'WED'
+        }, {
+          title: 'THU'
+        }, {
+          title: 'FRI'
+        }, {
+          title: 'STA'
+        }];
+        for (let i = 0; i < list.length; i++) {
+          let j = date.getDay() - 3 + i
+          if (j < 0) j += 7;
+          list[i].title = weekday[j];
+        }
+        return list;
       },
     },
     onLoad() {},
@@ -188,9 +217,9 @@
     },
     methods: {
       // 页面跳转
-      gotoPage(url) {
+      gotoPage(u, id) {
         uni.navigateTo({
-          url
+          url: u + "?id=" + id,
         })
       },
       // 滚动到底部触发事件

@@ -13,19 +13,19 @@
     <u-list @scrolltolower="scrolltolower">
       <u-list-item v-for="(item, index) in indexList" :key="index">
         <uni-card :is-shadow="true" padding="10px">
-          <u--text :line="1" :text=item.title size="22" color="#000" lineHeight="24px" margin="10px 2px"></u--text>
-          
+          <u--text :line="1" :text="item.title" size="22" color="#000" lineHeight="24px" margin="10px 2px"></u--text>
+
           <u-row customStyle="margin: 4px" justify="space-between" gutter="2">
             <u-col span="8">
-              <u--text :line="3" :text=item.overview size="16" color="#000" lineHeight="20px"
-                margin="6px 2px" height="94px"></u--text>
+              <u--text :line="3" :text=item.overview size="16" color="#000" lineHeight="20px" margin="6px 2px"
+                height="94px"></u--text>
             </u-col>
             <u-col span="4">
-              <u--image :src=item.img shape="square" mode="aspectFill" width="150px" height="94px"></u--image>
+              <u--image :src="item.img" shape="square" mode="aspectFill" width="150px" height="94px"></u--image>
             </u-col>
           </u-row>
-          
-          <u--text :line="1" :text=item.readNum size="12" color="#000" lineHeight="12px" margin="2px 2px"></u--text>
+
+          <u--text :line="1" :text="item.readNum" size="12" color="#000" lineHeight="12px" margin="2px 2px"></u--text>
         </uni-card>
       </u-list-item>
     </u-list>
@@ -86,6 +86,10 @@
       // 滚动到底部触发事件
       scrolltolower() {
         console.log("页面到底了")
+      },
+      // 点击标签
+      clickTag() {
+
       }
     }
   }
