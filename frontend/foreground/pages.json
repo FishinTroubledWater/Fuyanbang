@@ -8,6 +8,30 @@
         "navigationStyle": "custom",
         "enablePullDownRefresh": true
       }
+    },{
+      "path": "pages/data/activityDetail/activityDetail",
+      "style": {
+        "navigationBarTitleText": "21天攒图计划",
+        "enablePullDownRefresh": true
+      }
+    }, {
+      "path": "pages/data/newsDetails/newsDetails",
+      "style": {
+        "navigationBarTitleText": "详情",
+        "enablePullDownRefresh": true
+      }
+    },{
+      "path": "pages/data/questionsDetails/questionsDetails",
+      "style": {
+        "navigationBarTitleText": "求助详情",
+        "enablePullDownRefresh": true
+      }
+    },{
+      "path": "pages/data/data",
+      "style": {
+        "navigationBarTitleText": "圈子",
+        "enablePullDownRefresh": true
+      }
     },
     {
       "path": "pages/home/news",
@@ -225,7 +249,7 @@
       {
         "iconPath": "/static/tabbar-icons/data.png",
         "selectedIconPath": "/static/tabbar-icons/data_active.png",
-        "text": "资料",
+        "text": "圈子",
         "pagePath": "pages/data/data"
       },
       {

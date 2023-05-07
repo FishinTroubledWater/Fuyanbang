@@ -17,3 +17,11 @@ html,body,#app {
 .whiteback{
     background-color: #fff;
 }
+.setcenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mg_b20{
+    margin-bottom: 20px;
+}
