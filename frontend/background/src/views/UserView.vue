@@ -13,7 +13,7 @@
         </el-col>
         <el-col :span=2>
           <el-button @click="addDialogVisible = true" type="primary"
-                     size="small" round icon="el-icon-plus">添加用户
+                      round icon="el-icon-plus">添加用户
           </el-button>
         </el-col>
       </el-row>
@@ -86,7 +86,7 @@
           <el-input v-model="addForm.phonenumber"></el-input>
         </el-form-item>
         <el-form-item label="用户类别" prop="type">
-          <el-select v-model="addForm.type" placeholder="请选择">
+          <el-select v-model="addForm.type" placeholder="请选择" disabled>
             <el-option label="普通用户" value="普通用户"></el-option>
             <el-option label="管理员" value="管理员"></el-option>
           </el-select>
@@ -191,19 +191,22 @@ export default {
 
     }
   },
-  created() {
+  mounted() {
     // this.getUserList()
   },
   methods: {
     // 查询方法
     async getUserList() {
       const {data: res} = await this.axios.get('user/list', {
-        params: this.queryInfo
+        params: this.queryInfo,
+        headers:{'token':window.sessionStorage.getItem("token")}
       })
+      console.log(window.sessionStorage.getItem("token"))
+      console.log(res)
       if (res.code !== 200) return this.$message.error('获取用户列表失败！')
       this.userList = res.data.users
       this.total = res.data.total
-      console.log(res)
+
     },
 
     // 编辑方法
@@ -278,14 +281,25 @@ export default {
     },
 
     //删除用户
-    removeUserById(id){
-      const result = this.$confirm('确定要删除该用户？', '提示', {
+    async removeUserById(id){
+      const result = await this.$confirm('确定要删除该用户？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      })
-      console.log(result)
+      }).catch(err=> err)
+      // console.log(result)
+
+      if(result !== 'confirm'){
+        return this.$message.info('已取消删除')
+      }
+      const {data : res} = await  this.axios.delete('user/' + id)
+      if(res.code !== 200) return  this.$message.error('删除用户失败！')
+      this.$message.success('删除用户成功！')
+      this.getUserList()
+
     }
+
+
 
   }
 

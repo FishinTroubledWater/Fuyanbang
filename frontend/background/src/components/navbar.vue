@@ -23,7 +23,8 @@
       <el-header style="text-align: right; font-size: 12px">
         <el-dropdown trigger="click">
           <div class="top_right">
-            <el-avatar :size="'large'" :src="avatar" :fit="'cover'" style="margin-right: 10px"></el-avatar>
+            <el-avatar :size="'large'" :src="avatar" :fit="'cover'"
+                       style="margin-right: 10px"></el-avatar>
             <span class="el-dropdown-link">admin<i class="el-icon-caret-bottom el-icon--right"></i></span></div>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item class="clearfix">个人页面</el-dropdown-item>
