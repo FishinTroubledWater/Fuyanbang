@@ -31,7 +31,7 @@
 			</view>
 			<u-cell>
 				<text slot="title">绑定邮箱</text>
-				<input  class="right" slot="value" v-model="user.email" placeholder="请输入邮箱"></input>
+				<input  class="right" slot="value" v-model="user.account" placeholder="请输入邮箱">{{user.account}}</input>
 			</u-cell>
 		</u-cell-group>
 		<button class="upButton" @click="upInfo()">确定</button>
@@ -44,12 +44,12 @@
 		data() {
 			return {
 				show: false,
-				account: '',
+				id: '',
 				oldPassword: '',
 				newPassword: '',
 				user: {
 					password: '',
-					email: '',
+					account: '',
 				}
 			}
 		},
@@ -87,7 +87,7 @@
 			},
 			upInfo() {
 				//TODO:
-				//如果新旧密码不同则提示
+				//如果新旧密码不同则提示"成功"并提交数据，否则返回上一页
 				uni.showToast({
 					title: '成功',
 					//将值设置为 success 或者直接不用写icon这个参数

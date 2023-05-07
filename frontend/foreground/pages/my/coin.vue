@@ -9,7 +9,7 @@
 		</u-popup>
 		<view class="box1">
 			<text class="coin">
-				{{balance}}
+				{{user.balance}}
 			</text>
 			<text class="balen">
 				学币余额
@@ -32,7 +32,10 @@
 		data() {
 			return {
 				showGet:false,
-				balance: '100'
+				id:'',
+				user:{
+					balance: '100',
+				},
 			}
 		},
 		methods: {
