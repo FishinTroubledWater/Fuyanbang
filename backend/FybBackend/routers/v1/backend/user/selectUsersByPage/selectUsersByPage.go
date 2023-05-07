@@ -22,8 +22,8 @@ func SelectUsersByPage(e *gin.Engine, db *gorm.DB) {
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
 		err3 := token.JwtVerify(context)
-		pageNum := mp["pagenum"]
-		pageSize := mp["pagesize"]
+		pageNum := mp["pageNum"]
+		pageSize := mp["pageSize"]
 		users, count, err4 := fybDatabase.SelectAllUserByPage(db, pageNum, pageSize)
 		errors = multierror.Append(errors, err1, err2, err3, err4)
 		if errors.ErrorOrNil() == nil {

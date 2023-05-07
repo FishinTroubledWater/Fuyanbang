@@ -8,6 +8,7 @@ import RecipeView from "@/views/RecipeView";
 import TrendsView from "@/views/TrendsView";
 import CommentView from "@/views/CommentView";
 import FeedBackView from "@/views/FeedBackView";
+import DashBoard from "@/components/DashBoard";
 
 
 Vue.use(VueRouter)
@@ -53,6 +54,11 @@ const router = new VueRouter({
                     path: '/user',
                     name: 'user',
                     component: UserView,
+                },
+                {
+                    path: '',
+                    name: 'dashBoard',
+                    component: DashBoard,
                 },
             ]
         },

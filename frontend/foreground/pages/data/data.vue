@@ -20,10 +20,10 @@
 					
 					<u-list>
 						<u-list-item v-for="(item, index) in indexList" :key="index">
-							<uni-card @click="clicknews(index)" title="linjinkun" sub-title="教育部" extra="2023年03月10日"
-								thumbnail="../../static/background/bg1.png" class="trends-box-item" >
+							<uni-card @click="clicknews(indexList[index].postId)" :title="indexList[index].name" sub-title="教育部" :extra="indexList[index].time"
+								:thumbnail="indexList[index].icon" class="trends-box-item" >
 								<u--text :lines="3" :text="indexList[index].summary"></u--text>
-								<image class="newsimage" src="../../static/background/activityDetails.png"></image>
+								<image class="newsimage" :src="indexList[index].img[0]"></image>
 							</uni-card>
 						</u-list-item>
 					</u-list>
@@ -32,10 +32,11 @@
 			</swiper-item>
 			<swiper-item class="swiper-item sns-oil">
 				<u-list>
-					<u-list-item v-for="(item, index) in indexList" :key="index">
-						<uni-card title="linjinkun" sub-title="教育部" extra="2023年03月10日"
-							thumbnail="../../static/background/bg1.png" class="trends-box-item">
-							<u--text :lines="1" text="近日，教育部部署2023年全国硕士研究生招生复试录取工作..."></u--text>
+					<u-list-item v-for="(item, index) in questionsList" :key="index">
+						<uni-card @click="clickquestions(questionsList[index].questionId)" :title="questionsList[index].name" sub-title="教育部" :extra="questionsList[index].time"
+							:thumbnail="questionsList[index].icon" class="trends-box-item">
+							<u--text :lines="3" :text="questionsList[index].summary"></u--text>
+							<image class="newsimage" :src="questionsList[index].img[0]"></image>
 						</uni-card>
 					</u-list-item>
 				</u-list>
@@ -57,20 +58,81 @@
 				}],
 				
 				indexList: [{
+					
 						name: '1',
 						time:'2022-12-21',
-						icon:'',
-						newId:'123456',
+						icon:'../../static/background/activityDetails.png',
+						postId:'123456',
 						summary:'近日，',
 						isImage:true,
-						img:['www.baidu.com',
-						'www.baidu.com',
-						'www.baidu.com']
+						img:['../../static/background/activityDetails.png',
+						'../../static/background/activityDetails.png',
+						'../../static/background/activityDetails.png']
 					}, {
 						name: '1',
 						time:'2022-12-21',
-						icon:'',
-						newId:'123457',
+						icon:'../../static/background/activityDetails.png',
+						postId:'123457',
+						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
+						isImage:true,
+						img:['www.baidu.com',
+						'www.baidu.com',
+						'www.baidu.com']
+					},{
+						name: '1',
+						time:'2022-12-21',
+						icon:'../../static/background/activityDetails.png',
+						postId:'123456',
+						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
+						isImage:true,
+						img:['www.baidu.com',
+						'www.baidu.com',
+						'www.baidu.com']
+					},{
+						name: '1',
+						time:'2022-12-21',
+						icon:'../../static/background/activityDetails.png',
+						postId:'123456',
+						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
+						isImage:true,
+						img:['www.baidu.com',
+						'www.baidu.com',
+						'www.baidu.com']
+					},{
+						name: '1',
+						time:'2022-12-21',
+						icon:'../../static/background/activityDetails.png',
+						postId:'123456',
+						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
+						isImage:true,
+						img:['www.baidu.com',
+						'www.baidu.com',
+						'www.baidu.com']
+					},{
+						name: '1',
+						time:'2022-12-21',
+						icon:'../../static/background/activityDetails.png',
+						postId:'123456',
+						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
+						isImage:true,
+						img:['www.baidu.com',
+						'www.baidu.com',
+						'www.baidu.com']
+					},{
+						name: '1',
+						time:'2022-12-21',
+						icon:'../../static/background/activityDetails.png',
+						postId:'123456',
+						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
+						isImage:true,
+						img:['www.baidu.com',
+						'www.baidu.com',
+						'www.baidu.com']
+					},{
+						name: '1',
+						time:'2022-12-21',
+						icon:'../../static/background/activityDetails.png',
+						postId:'123456',
 						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
 						isImage:true,
 						img:['www.baidu.com',
@@ -80,67 +142,7 @@
 						name: '1',
 						time:'2022-12-21',
 						icon:'',
-						newId:'123456',
-						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
-						isImage:true,
-						img:['www.baidu.com',
-						'www.baidu.com',
-						'www.baidu.com']
-					},{
-						name: '1',
-						time:'2022-12-21',
-						icon:'',
-						newId:'123456',
-						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
-						isImage:true,
-						img:['www.baidu.com',
-						'www.baidu.com',
-						'www.baidu.com']
-					},{
-						name: '1',
-						time:'2022-12-21',
-						icon:'',
-						newId:'123456',
-						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
-						isImage:true,
-						img:['www.baidu.com',
-						'www.baidu.com',
-						'www.baidu.com']
-					},{
-						name: '1',
-						time:'2022-12-21',
-						icon:'',
-						newId:'123456',
-						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
-						isImage:true,
-						img:['www.baidu.com',
-						'www.baidu.com',
-						'www.baidu.com']
-					},{
-						name: '1',
-						time:'2022-12-21',
-						icon:'',
-						newId:'123456',
-						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
-						isImage:true,
-						img:['www.baidu.com',
-						'www.baidu.com',
-						'www.baidu.com']
-					},{
-						name: '1',
-						time:'2022-12-21',
-						icon:'',
-						newId:'123456',
-						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
-						isImage:true,
-						img:['www.baidu.com',
-						'www.baidu.com',
-						'www.baidu.com']
-					},{
-						name: '1',
-						time:'2022-12-21',
-						icon:'',
-						newId:'123456',
+						postId:'123456',
 						summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
 						isImage:true,
 						img:['www.baidu.com',
@@ -150,18 +152,29 @@
 
 
 				],
-				commentList:[{
-					name:'吴彦祖',
-					icon:'',
-					content:'回复内容',
-					time:'2022-12-21'
-				},{
-					name:'吴彦祖',
-					icon:'',
-					content:'回复内容',
-					time:'2022-12-21'
-				}
-					
+				questionsList:[
+					{
+						name: '1',
+						time:'2022-12-21',
+						icon:'../../static/background/activityDetails.png',
+						questionId:'123456',
+						summary:'近日，福州大学软件工程专业的同学开始实践',
+						isImage:true,
+						img:['../../static/background/activityDetails.png',
+						'../../static/background/activityDetails.png',
+						'../../static/background/activityDetails.png']
+					},
+					{
+						name: '2',
+						time:'2022-12-21',
+						icon:'../../static/background/activityDetails.png',
+						questionId:'123456',
+						summary:'近日，同学开始实践',
+						isImage:true,
+						img:['../../static/background/activityDetails.png',
+						'../../static/background/activityDetails.png',
+						'../../static/background/activityDetails.png']
+					}
 				]
 			};
 		},
@@ -174,6 +187,11 @@
 				// console.log('1'),
 				uni.navigateTo({
 					url:'/pages/data/newsDetails/newsDetails?id='+index,
+				})
+			},
+			clickquestions(index){
+				uni.navigateTo({
+					url:'/pages/data/questionsDetails/questionsDetails?id='+index,
 				})
 			}
 			
