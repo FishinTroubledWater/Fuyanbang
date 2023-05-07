@@ -16,12 +16,12 @@
 		</view>
 		<view class="searchAcademy">
 			<text class="searchText">
-				共搜索到 <text class="searchNum">{{searchnum}}</text> 所院校
+				共搜索到 <text class="searchNum">{{mes.num}}</text> 所院校
 			</text>
 		</view>
 		<uni-list>
 			<view  class="viewAcademy" bindtap="click" @click="goUniverity" @touchstart="touchStart" @touchend="touchEnd" :style="active">
-				<image class="academyLogo" src="../../static/academy-icons/北大.png"></image>
+				<image class="academyLogo" src="@/static/academy-icons/北大.png"></image>
 				<view class="viewText">
 					<text class="academyName">北京大学</text>
 					<view class="academyType">
@@ -32,7 +32,7 @@
 				<text class="lacation">北京</text>
 			</view>
 			<view  class="viewAcademy" bindtap="click" @click="goUniverity">
-				<image class="academyLogo" src="../../static/academy-icons/清华大学.png"></image>
+				<image class="academyLogo" src="@/static/academy-icons/清华大学.png"></image>
 				<view class="viewText">
 					<text class="academyName">清华大学</text>
 					<view class="academyType">
@@ -47,18 +47,136 @@
 </template>
 
 <script>
+import Axios from 'axios'
+Axios.defaults.baseURL = '/'
+// eslint-disable-next-line no-unused-vars
+const axios = require('axios')
+
+import { onLoad } from 'uview-ui/libs/mixin/mixin';
 	export default {
 		data() {
 			return {
-				array1: ['院校地区','全部','北京','福建'],
-				array2: ['院校层次','985','211'],
-				array3: ['院校类型','综合','理工','师范'],
+				array1: ['院校地区','北京','福建','天津','上海','重庆',
+				'内蒙古','广西','西藏','宁夏','新疆','山西','辽宁','吉林',
+				'黑龙江','江苏','浙江','安徽','江西','山东','河北','河南','湖北',
+				'湖南','广东','海南','四川','贵州','云南','陕西','甘肃','青海','台湾'],		
+				array2: ['院校层次','985','211','本科','大专','高职'],
+				array3: ['院校类型','综合','理工','师范','农林','政法','医药','财经','民族','语言','艺术','体育','军事','旅游'],
 				index1: 0,
 				index2: 0,
 				index3: 0,
 				searchnum: 111,
-				active:''
+				active:'',
+				
+				mes: [],
+				
+				region: '院校地区',
+				level: '院校层次',
+				type: '院校类型',
+				academyName: '福州大学'
 			};
+		},
+		onNavigationBarButtonTap:function(e){
+		    console.log(e.text);//提交
+			uni.navigateTo({
+				url: "/pages/home/university/search"
+			})
+		},
+		async onLoad() {
+			// const result = uni.$u.http.post('/PairProject/players?gender=F&seed=true').then(res => {
+			// 	console.log("aaa");
+			// }).catch(err => {
+			// 	console.log("失败");
+			// 	console.log(err);
+			// })
+			
+			// const result = uni.$u.http.post('/PairProject/players?gender=F&seed=true').then(res => {
+			// 	console.log("aaa");
+			// }).catch(err => {
+
+			// })
+			
+			// let mes = await this.$u.api.getInfo();
+			// this.mes = postMenu({ custom: { auth: true }}).then(() => {
+				
+			// }).catch(() =>{
+				
+			// })
+			// console.log(this.mes)
+			
+			var _this= this;
+			// 详见官网：https://uniapp.dcloud.io/api/request/request
+			// uni.request({
+			// 	url:'/PairProject/players?gender=F&seed=true',
+			// 	method: 'POST',
+			// 	data: {
+					
+			// 	},
+			// 	success: res => {
+			// 		_this.mes = res.data;
+			// 		console.log(_this.mes)					
+			// 	},						
+			// });
+			
+			// uni.request({
+			// 	// url:'http://124.222.141.238:8088/v1/frontend/academy/searchByRule',
+			// 	url:'/v1/frontend/user/passwordLogin',
+			// 	method: 'GET',
+			// 	data: {
+			// 		region: "福州",
+			// 		level: '985',
+			// 		type: '法学',
+			// 	},
+			// 	header: {
+			// 	 //    'Connection': 'close',
+			// 		// 'Content-Length': '793',
+			// 		// 'Content-Type': 'application/json;charset=utf-8',
+			// 		// 'Data': '',
+			// 	},
+			// 	success: res => {
+			// 		_this.mes = res.data;
+			// 		console.log(_this.mes)					
+			// 	},						
+			// });
+			
+			// const result = await Axios.post('http://124.222.141.238:8088/v1/frontend/user/passwordLogin', {
+			//         account: 'test123',
+			//         password: 'test123'
+			//         }).then(res =>{
+			//           console.log("成功");
+			// 		  console.log(res.data)
+			//         }).catch(error =>{
+			//           console.log(error);
+			// 		  console.log("失败")
+			//         })
+		
+		
+		
+		
+			// const result = await Axios.post('http://124.222.141.238:8088/v1/frontend/academy/searchByRule', {
+			// 		  region: '福州',
+			// 		  level: '985',
+			// 		  type: '法学',
+			// 		}).then(res =>{
+			// 			console.log("成功");
+			// 			console.log(res.data.data)
+			// 		}).catch(error =>{
+			// 		  console.log(error);
+			// 		  console.log("失败")
+			// 		})
+		
+		
+		},
+		onShow() {
+		    uni.$off('searchContent')//建议先销毁一次监听，再进行新的一次监听，否则会出现重复监听的现象
+			uni.$once('searchContent',function(data){
+				if(data != '') {
+					console.log("bbbb");
+					console.log(data);
+				}
+				
+				//这的data就是B页面传递过来的数据
+			})
 		},
 		methods: {
 			touchStart(){
@@ -69,21 +187,52 @@
 			},
 			bindPickerChange1: function(e) {
 				this.index1 = e.target.value;
-				this.jg=this.array1[this.index1]
+				this.jg = this.array1[this.index1];
+				this.region = this.array1[this.index1];
+				console.log(this.region);
+				console.log(this.level);
+				console.log(this.type);
 			},
 			bindPickerChange2: function(e) {
 				this.index2 = e.target.value;
-				this.jg=this.array2[this.index2]
+				this.jg = this.array2[this.index2];
+				this.level = this.array2[this.index2];
+				console.log(this.region);
+				console.log(this.level);
+				console.log(this.type);
 			},
 			bindPickerChange3: function(e) {
 				this.index3 = e.target.value;
-				this.jg=this.array3[this.index3]
+				this.jg = this.array3[this.index3];
+				this.type = this.array3[this.index3];
+				console.log(this.region);
+				console.log(this.level);
+				console.log(this.type);
 			},
 			goUniverity() {
 				uni.navigateTo({
 					url: "/pages/home/university/university"
 				})
 			},
+		},
+		mounted() {
+			// 基本用法，注意：get请求的参数以及配置项都在第二个参数中
+			//      uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+			
+			//      }).then(res => {
+			//        console.log(res.data);
+			//      }).catch(err => {
+			
+			//      })
+			
+			uni.$u.http.post('/v1/frontend/academy/searchByRule', {
+				region: '福州',level: '985',type: '法学',
+			}).then(res => {
+				this.mes = res.data.data;
+				console.log(this.mes)
+			}).catch(err => {
+			
+			})
 		}
 	}
 </script>
@@ -131,10 +280,12 @@
 	/* 边 */
 	border: 1rpx solid #E0E3DA;
 	/* 阴影 */
-	box-shadow:2rpx 6rpx 0rpx #B8B8B8;
+	box-shadow:2rpx 7rpx 0rpx #ebebeb;
 	
 	background-color: #ffffff;
-	margin: 30rpx;
+	margin-left:30rpx;
+	margin-right:30rpx;
+	margin-top: 25rpx;
 	
 	/* padding使得文字和图片不至于贴着边框 */
 	padding: 25rpx;

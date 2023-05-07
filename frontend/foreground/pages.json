@@ -8,7 +8,131 @@
 				"navigationStyle": "custom",
 				"enablePullDownRefresh": true
 			}
-		},
+		},{
+      "path": "pages/home/major",
+      "style": {
+        "navigationBarTitleText": "专业",
+        "enablePullDownRefresh": true,
+		"app-plus": {
+			"titleNView": {
+				"buttons": [
+					{
+						"float": "right",
+						"fontSize": "32rpx",
+						// "fontSrc": "/static/academy-icons/iconfont.ttf",
+						"text": "搜索"
+					}
+				]
+			}
+		}
+      }
+    },{
+            "path" : "pages/home/professional/professional",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"backgroundColor": "#E7ECFF"
+            } 
+        },{
+            "path" : "pages/home/professional/introduction",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            } 
+        },{
+            "path" : "pages/home/professional/line",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"backgroundColor": "#E7ECFF"
+            } 
+        },{
+            "path" : "pages/home/professional/prospect",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"backgroundColor": "#E7ECFF"
+            } 
+        },{
+            "path" : "pages/home/professional/search",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"backgroundColor": "#E7ECFF"
+            } 
+        },{
+		  "path": "pages/home/academy",
+		  "style": {
+		    "navigationBarTitleText": "院校",
+		    "enablePullDownRefresh": true,
+			"app-plus": {
+				"titleNView": {
+					"buttons": [
+						{
+							"float": "right",
+							"fontSize": "32rpx",
+							// "fontSrc": "/static/academy-icons/iconfont.ttf",
+							"text": "搜索"
+						}
+					]
+				}
+			}
+		  }
+		},{
+        "path" : "pages/home/university/university",
+        "style" :                                                                                    
+        {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+        }
+    },{
+        "path" : "pages/home/university/introduction",
+        "style" :                                                                                    
+        {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+        }
+    },{
+        "path" : "pages/home/university/brochures",
+        "style" :                                                                                    
+        {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+        }
+    },{
+        "path" : "pages/home/university/line",
+        "style" :                                                                                    
+        {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+        }
+    },{
+        "path" : "pages/home/university/said",
+        "style" :                                                                                    
+        {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+        }
+    },{
+        "path" : "pages/home/university/web",
+        "style" :                                                                                    
+        {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+        }
+    },{
+        "path" : "pages/home/university/search",
+        "style" :                                                                                    
+        {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+        }
+    },
 		{
 			"path": "pages/my/my",
 			"style": {
