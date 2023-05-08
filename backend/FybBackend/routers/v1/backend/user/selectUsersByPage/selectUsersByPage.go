@@ -16,7 +16,7 @@ type responseItem struct {
 }
 
 func SelectUsersByPage(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/user/list", func(context *gin.Context) {
+	e.GET("/v1/backend/user/list", func(context *gin.Context) {
 		var errors *multierror.Error
 		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
