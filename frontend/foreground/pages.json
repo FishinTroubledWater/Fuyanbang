@@ -1,14 +1,43 @@
 {
   "pages": [ //pages数组中第一项表示应用启动页
-
+//登陆注册部分页面注册
+{
+  "path": "pages/login/passwordLogin",
+  "style": {
+    "navigationBarTitleText": "密码登录"
+  }
+},
+{
+  "path": "pages/login/register",
+  "style": {
+    "navigationBarTitleText": "注册"
+  }
+},
+{
+  "path": "pages/login/setPassword",
+  "style": {
+    "navigationBarTitleText": "设置密码"
+  }
+},
+{
+  "path": "pages/login/resetPassword1",
+  "style": {
+    "navigationBarTitleText": "忘记密码"
+  }
+},
+{
+  "path": "pages/login/resetPassword2",
+  "style": {
+    "navigationBarTitleText": "忘记密码"
+  }
+},
+{
+  "path": "pages/login/test",
+  "style": {
+    "navigationBarTitleText": "邮箱验证码测试"
+  }
+},
     {
-      "path": "pages/home/home",
-      "style": {
-        // custorm 取消顶部的 navBar 显示
-        "navigationStyle": "custom",
-        "enablePullDownRefresh": true
-      }
-    },{
       "path": "pages/data/activityDetail/activityDetail",
       "style": {
         "navigationBarTitleText": "21天攒图计划",
@@ -30,6 +59,14 @@
       "path": "pages/data/data",
       "style": {
         "navigationBarTitleText": "圈子",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/home/home",
+      "style": {
+        // custorm 取消顶部的 navBar 显示
+        "navigationStyle": "custom",
         "enablePullDownRefresh": true
       }
     },
@@ -154,6 +191,7 @@
         "enablePullDownRefresh": false
       }
     },
+        // "my"部分的页面
     {
       "path": "pages/my/my",
       "style": {
@@ -162,25 +200,7 @@
         "enablePullDownRefresh": true
       }
     },
-    {
-      "path": "pages/login/passwordLogin",
-      "style": {
-        "navigationBarTitleText": "密码登录"
-      }
-    },
-    {
-      "path": "pages/login/register",
-      "style": {
-        "navigationBarTitleText": "注册"
-      }
-    },
-    {
-      "path": "pages/login/setPassword",
-      "style": {
-        "navigationBarTitleText": "设置密码"
-      }
-    },
-    // "my"部分的页面
+
     {
       "path": "pages/my/setting",
       "style": {

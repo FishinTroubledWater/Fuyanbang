@@ -11,6 +11,8 @@
 	export default{
 		data() {
 			return {
+				code: 0,
+				mes: [],
 				webUrl: 'https://admission.pku.edu.cn/docs/20220919154422268077.pdf?CSRFT=NM1Z-V0SB-3KTR-ZOJM-B4B0-ZPUE-Q2IB-GCN7'
 			}
 		},
@@ -20,7 +22,23 @@
 					url: '/pages/home/university/web?url=' + this.webUrl
 				})
 			},
-		}
+		},
+		created() {
+			uni.$on('code',res=>{
+				this.code = res
+				uni.$u.http.get('/v1/frontend/academy/detail/' + this.code, {
+				
+				}).then(res => {
+					this.mes = res.data.data;
+					console.log("成功1")
+					console.log(this.mes);
+				}).catch(err => {
+					console.log("失败")
+				})
+			})
+		},
+		mounted() {
+		},
 	}
 </script>
 

@@ -83,6 +83,9 @@
 	export default {
 		data() {
 			return {
+				mes: [],
+				code: 0,
+				
 				array1: ['学科门类','全部','理学','工学','农学','哲学','经济学','法学','教育学','文学','历史学','医学','军事学','管理学','艺术学'],
 				array2: ['一级学科','数学','物理','化学'],
 				array3: ['二级学科','基础数学','计算数学','概率论与数理统计'],
@@ -93,6 +96,23 @@
 				firstLevelDiscipline: '一级学科',
 				secondLevelDiscipline: '二级学科'
 			};
+		},
+		onShow() {
+			// console.log('ddd')
+		},
+		created() {
+			uni.$on('code',res=>{
+				this.code = res
+				uni.$u.http.get('/v1/frontend/academy/detail/' + this.code, {
+				
+				}).then(res => {
+					this.mes = res.data.data;
+					console.log("成功3")
+					console.log(this.mes);
+				}).catch(err => {
+					console.log("失败")
+				})
+			})
 		},
 		methods: {
 			bindPickerChange1: function(e) {

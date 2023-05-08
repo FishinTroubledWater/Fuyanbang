@@ -3,12 +3,12 @@
 		<view class="academyMes">
 			<image class="academyLogo" src="@/static/academy-icons/北大.png"></image>
 			<view class="viewText">
-				<text class="academyName">北京大学</text>
+				<text class="academyName">{{mes.Name}}</text>
 				<view class="academyType">
-					<view class="typeOfScoreLine">自划线</view>
-					<text class="typeOfInstitution">985</text>
+					<view class="typeOfScoreLine">{{mes.LineType}}</view>
+					<text class="typeOfInstitution">{{mes.Level}}</text>
 				</view>
-				<text class="academyCode">北京|院校代码：10001</text>
+				<text class="academyCode">{{mes.Region}}|院校代码：{{mes.Code}}</text>
 			</view>
 		</view>
 		<view class="academyBar">
@@ -45,8 +45,21 @@
 				comp: 'one',
 				// 控制点击按钮后子组件显示，再次点击隐藏
 				isShow: true,
-				active: ''
+				active: '',
+				code: 0,
+				mes: []
 			}
+		},
+		onLoad:function(option){
+			this.code = option.code;
+			uni.$u.http.get('/v1/frontend/academy/detail/' + this.code, {
+			
+			}).then(res => {
+			    console.log(res.data.data);
+				this.mes = res.data.data;
+			}).catch(err => {
+			
+			})
 		},
 		methods: {
 		    show (value) {
