@@ -136,3 +136,13 @@ func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, upda
 	err := db.Table("user").Where(where).Updates(update).Count(&count).Error
 	return count, err
 }
+
+func SearchAllNewInfo(db *gorm.DB) ([]Post, error) {
+	var result *multierror.Error
+	var posts []Post
+	err := db.Table("post").Preload("PostImgs").Find(&posts).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return posts, err
+}

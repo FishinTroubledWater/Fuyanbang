@@ -5,7 +5,6 @@ import (
 	"FybBackend/routers"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 )
 
@@ -33,7 +32,7 @@ func Cors() gin.HandlerFunc {
 
 		defer func() {
 			if err := recover(); err != nil {
-				log.Printf("Panic info is: %v", err)
+				fmt.Printf("Panic info is: %v", err)
 			}
 		}()
 
