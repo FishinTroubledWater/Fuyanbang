@@ -38,11 +38,6 @@
 			};
 		},
 		methods: {
-			toSetPassword() {
-				uni.navigateTo({
-					url: './setPassword?email='+this.email.toString(),
-				})
-			},
 			toResetPassword2() {
 				uni.navigateTo({
 					url: './resetPassword2?email='+this.email.toString(),
