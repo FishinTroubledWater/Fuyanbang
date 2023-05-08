@@ -1,24 +1,53 @@
 <template>
 	<view>
-		<view class="mes">
+		<!-- <view class="mes">
 			<view class="academyMes">
 				<view class="type">院校类型</view>
-				<view class="typeName">综合</view>
+				<view class="typeName">{{title.Type}}</view>
 			</view>
 			<view class="academyMes">
 				<view class="type">院校隶属</view>
-				<view class="typeName">{{mes.Belong}}</view>
+				<view class="typeName">{{title.Belong}}</view>
 			</view>
 		</view>
 		<view class="introduction">
 			<view>
 				<text class="introduct">院校简介</text>
-				<text class="code">院校代码：10001 北京</text>
+				<text class="code">院校代码：{{title.Code}} {{title.Region}}</text>
+			</view>
+		</view> -->
+<!-- 		<view class="introductionMes" v-for="Mes in introductionMes">
+			<text class="mesText" space="ensp" >{{Mes}}</text>
+		</view> -->
+<!-- 		<view class="introductionMes">
+			<text class="mesText" space="ensp" >{{title.Profile}}</text>
+		</view> -->
+		
+		<view>
+			<view class="mes">
+				<view class="academyMes">
+					<view class="type">院校类型</view>
+					<view class="typeName">{{this.type}}</view>
+				</view>
+				<view class="academyMes">
+					<view class="type">院校隶属</view>
+					<view class="typeName">{{this.belong}}</view>
+				</view>
+			</view>
+			<view class="introduction">
+				<view>
+					<text class="introduct">院校简介</text>
+					<text class="code">院校代码：{{this.code}} {{this.region}}</text>
+				</view>
+			</view>
+	<!-- 		<view class="introductionMes" v-for="Mes in introductionMes">
+				<text class="mesText" space="ensp" >{{Mes}}</text>
+			</view> -->
+			<view class="introductionMes">
+				<text class="mesText" space="ensp" >{{this.profile}}</text>
 			</view>
 		</view>
-		<view class="introductionMes" v-for="Mes in introductionMes">
-			<text class="mesText" space="ensp" >{{Mes}}</text>
-		</view>
+		
 	</view>
 </template>
 
@@ -31,26 +60,79 @@
 					  '     2022年6月9日，在2023QS世界大学排名中，北京大学在中国(大陆)排名最高，排名上升6位，至全球第12位'
 					 ],
 				mes: [],
+				belong: '',
 				code: 0,
+				type: '',
+				region: '',
+				profile: '',
+				
+				
 			}
 		},
-		onShow() {
-			// console.log('bbb')
-			// uni.$on('code',res=>{
-			// 	console.log('aaa')
-			// 	console.log(this.code)
-			// })
-		},
-		onUnload() {
-			// uni.$off('code')
+		props:['title'],
+		// onShow() {
+		// 	// console.log('bbb')
+		// 	// uni.$on('code',res=>{
+		// 	// 	console.log('aaa')
+		// 	// 	console.log(this.code)
+		// 	// })
+		// },
+		methods: {
+			
 		},
 		mounted (){
+			// const on = uni.$once('code1',res=>{
+			// 	_this.code = res
+			// 	console.log("内部的code是：");
+			// 	console.log(_this.code)
+			// 	// uni.$u.http.get('/v1/frontend/academy/detail/2010', {
+				
+			// 	// }).then(res => {
+			// 	// 	this.mes = res.data.data;
+			// 	// 	console.log("成功2")		
+			// 	// 	console.log(this.mes)
+			// 	// 	console.log("MMMM")	
+			// 	// }).catch(err => {
+			// 	// 	console.log("失败")
+			// 	// })
+			// })
+			
+			// console.log("KKKHH");
+			// console.log(this.code)
 			var _this= this;
-			uni.$on('code1',res=>{
-				_this.code = res
-				console.log(this.code)
+			
+			const on = uni.$on('code1',function(data) {
+				_this.code = data.codeID;
+				_this.belong = data.belong;
+				_this.region = data.region;
+				_this.type = data.type;
+				_this.profile = data.profile;
+				console.log("内部的code是：");
+				console.log(_this.code)
 			})
-			// uni.$u.http.get('/v1/frontend/academy/detail/2010', {
+			
+			// setTimeout(function() {
+			// 	this.code = on.code
+			// 	console.log("外部的code是");
+			// 	console.log(this.code)
+			// 	uni.$u.http.get('/v1/frontend/academy/detail/' + this.code, {
+				
+			// 	}).then(res => {
+			// 		this.mes = res.data.data;
+			// 		console.log("成功2")		
+			// 		console.log(this.mes)
+			// 		console.log("MMMM")	
+			// 	}).catch(err => {
+			// 		console.log("失败")
+			// 	})
+			// }, 200)
+			
+			// this.code = on.code
+			
+			// console.log("外部的code是");
+			// console.log(this.code)
+			
+			// uni.$u.http.get('/v1/frontend/academy/detail/' + this.code, {
 			
 			// }).then(res => {
 			// 	this.mes = res.data.data;
@@ -60,8 +142,11 @@
 			// }).catch(err => {
 			// 	console.log("失败")
 			// })
-			console.log("KKKHH");
-			console.log(this.code)
+			
+			
+		},
+		onUnload() {
+			// uni.$off('code1')
 		},
 	}
 </script>

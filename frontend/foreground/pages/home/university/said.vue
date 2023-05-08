@@ -44,6 +44,7 @@
 				code: 0,
 			}
 		},
+		props:['title'],
 		methods: {
 
 		},
