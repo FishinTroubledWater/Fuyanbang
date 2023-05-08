@@ -15,7 +15,6 @@ type responseItem struct {
 	Token   string `json:"token"`
 }
 
-// func checkLogin()
 func Login(e *gin.Engine, db *gorm.DB) {
 	e.POST("/v1/backend/login", func(context *gin.Context) {
 		var errors *multierror.Error

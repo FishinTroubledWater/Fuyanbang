@@ -9,13 +9,13 @@ import (
 
 func NewsInfo(e *gin.Engine, db *gorm.DB) {
 	e.GET("/v1/frontend/news/list", func(context *gin.Context) {
-		var errors error
+		var errors *multierror.Error
 		mp := make(map[string]interface{})
 
-		newses, count, err1 := fybDatabase.SelectAllNewsByCondition(db, mp)
+		newses, _, err1 := fybDatabase.SelectAllNewsByCondition(db, mp)
 		errors = multierror.Append(errors, err1)
 
-		if count > 0 {
+		if errors.ErrorOrNil() == nil {
 			context.JSON(200, gin.H{
 				"code":    200,
 				"message": "get all newsInfo success!",

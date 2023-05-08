@@ -15,7 +15,7 @@ type MyClaims struct {
 
 var (
 	secret         = []byte("31231dasdaseqwkjcozx") //秘钥
-	ExpireDuration = 3 * time.Second                //秘钥有效时间
+	ExpireDuration = 3 * time.Minute                //秘钥有效时间
 	issuer         = "Fyb"                          //签发人
 )
 

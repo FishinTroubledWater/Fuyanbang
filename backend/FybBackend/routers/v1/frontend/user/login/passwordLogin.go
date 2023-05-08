@@ -10,6 +10,7 @@ import (
 
 type responseItem struct {
 	State string `json:"state"`
+	User  fybDatabase.User
 }
 
 func PasswordLogin(e *gin.Engine, db *gorm.DB) {
@@ -19,14 +20,16 @@ func PasswordLogin(e *gin.Engine, db *gorm.DB) {
 
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
-		_, count, err3 := fybDatabase.SelectSingleUserByCondition(db, mp)
+		user, _, err3 := fybDatabase.SelectSingleUserByCondition(db, mp)
 		errors = multierror.Append(errors, err1, err2, err3)
-		if count == 1 {
+		user.Password = "*********"
+		if errors.ErrorOrNil() == nil {
 			context.JSON(200, gin.H{
 				"code":    200,
 				"message": "登陆成功",
 				"data": responseItem{
 					"true",
+					user,
 				},
 			})
 		} else {

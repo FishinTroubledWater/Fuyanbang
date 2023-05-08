@@ -22,7 +22,7 @@ func AddUser(e *gin.Engine, db *gorm.DB) {
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
 		err3 := token.JwtVerify(context)
-		err4 := fybDatabase.AddUser(db, mp)
+		_, err4 := fybDatabase.AddUser(db, mp)
 		multierror.Append(errors, err1, err2, err3, err4)
 		if errors.ErrorOrNil() == nil {
 			context.JSON(200, gin.H{

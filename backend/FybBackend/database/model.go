@@ -1,5 +1,7 @@
 package database
 
+import "time"
+
 type User struct {
 	ID            int64 `gorm:"primaryKey"`
 	Account       string
@@ -16,6 +18,9 @@ type User struct {
 	Slogan        string
 	Balance       int64
 	College       string
+	Role          string
+	State         string
+	registerTime  time.Time `gorm:"column:registerTime"`
 }
 
 type Admin struct {

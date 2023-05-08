@@ -109,9 +109,10 @@ func SelectAllUserByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]User, in
 	return users, count, err
 }
 
-func AddUser(db *gorm.DB, values map[string]interface{}) error {
-	err := db.Create(values).Error
-	return err
+func AddUser(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Create(values).Count(&count).Error
+	return count, err
 }
 func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Admin, int64, error) {
 	var count int64 = 0
