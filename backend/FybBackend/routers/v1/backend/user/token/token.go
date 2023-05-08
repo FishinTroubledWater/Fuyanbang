@@ -15,12 +15,12 @@ type MyClaims struct {
 
 var (
 	secret         = []byte("31231dasdaseqwkjcozx") //秘钥
-	ExpireDuration = 3 * time.Minute                //秘钥有效时间
-	expirationTime = time.Now().Add(ExpireDuration)
-	issuer         = "Fyb" //签发人
+	ExpireDuration = 24 * time.Hour                 //秘钥有效时间
+	issuer         = "Fyb"                          //签发人
 )
 
 func GenerateToken(account string, phoneNumber string) (string, error) {
+	expirationTime := time.Now().Add(ExpireDuration)
 	claims := &MyClaims{
 		Account:     account,
 		PhoneNumber: phoneNumber,

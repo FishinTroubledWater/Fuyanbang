@@ -15,18 +15,17 @@ type responseItem struct {
 	Token   string `json:"token"`
 }
 
-// func checkLogin()
 func Login(e *gin.Engine, db *gorm.DB) {
 	e.POST("/v1/backend/login", func(context *gin.Context) {
-		var errors *multierror.Error
+		var result *multierror.Error
 		mp1 := make(map[string]interface{})
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp1)
 		admin, _, err1 := fybDatabase.SelectSingleAdminByCondition(db, mp1)
 
-		errors = multierror.Append(errors, err1, err2)
+		result = multierror.Append(result, err1, err2)
 		//bcrypt.CompareHashAndPassword([]byte(m.HashedPassword), []byte(inputPassword))
-		if errors.ErrorOrNil() == nil {
+		if result.ErrorOrNil() == nil {
 			mp2 := make(map[string]interface{})
 			token, _ := token.GenerateToken(admin.Account, admin.PhoneNumber)
 			mp2["token"] = token
@@ -43,7 +42,7 @@ func Login(e *gin.Engine, db *gorm.DB) {
 		} else {
 			context.JSON(404, gin.H{
 				"message": 404,
-				"msg":     errors.Error(),
+				"msg":     result.Error(),
 			})
 		}
 	})

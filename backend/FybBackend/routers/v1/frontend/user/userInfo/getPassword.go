@@ -1,4 +1,4 @@
-package selectUsers
+package userInfo
 
 import (
 	fybDatabase "FybBackend/database"
@@ -8,26 +8,24 @@ import (
 	"gorm.io/gorm"
 )
 
-func SelectUsers(e *gin.Engine, db *gorm.DB) {
-	e.GET("/v1/frontend/user/list", func(context *gin.Context) {
+func GetPassword(e *gin.Engine, db *gorm.DB) {
+	e.GET("/v1/frontend/user/getPassword", func(context *gin.Context) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
-		users, count, err3 := fybDatabase.SelectAllUserByCondition(db, mp)
+		user, _, err3 := fybDatabase.SelectSingleUserByCondition(db, mp)
 		result = multierror.Append(result, err1, err2, err3)
 
 		if result.ErrorOrNil() == nil {
 			context.JSON(200, gin.H{
 				"code":    200,
-				"message": "get userInfoList success!",
+				"message": "返回用户密码和邮箱成功！",
 				"data": struct {
-					Count int64
-					Users []fybDatabase.User
-				}{
-					count, users,
-				},
+					Account  string
+					Password string
+				}{user.Account, user.Password},
 			})
 		} else {
 			context.JSON(404, gin.H{

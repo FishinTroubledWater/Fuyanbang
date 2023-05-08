@@ -1,4 +1,4 @@
-package selectUsers
+package register
 
 import (
 	fybDatabase "FybBackend/database"
@@ -8,31 +8,23 @@ import (
 	"gorm.io/gorm"
 )
 
-func SelectUsers(e *gin.Engine, db *gorm.DB) {
-	e.GET("/v1/frontend/user/list", func(context *gin.Context) {
+func UserRegister(e *gin.Engine, db *gorm.DB) {
+	e.POST("/v1/frontend/register", func(context *gin.Context) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
-
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
-		users, count, err3 := fybDatabase.SelectAllUserByCondition(db, mp)
+		_, err3 := fybDatabase.AddUser(db, mp)
 		result = multierror.Append(result, err1, err2, err3)
-
 		if result.ErrorOrNil() == nil {
 			context.JSON(200, gin.H{
 				"code":    200,
-				"message": "get userInfoList success!",
-				"data": struct {
-					Count int64
-					Users []fybDatabase.User
-				}{
-					count, users,
-				},
+				"message": "注册成功",
 			})
 		} else {
 			context.JSON(404, gin.H{
-				"code":    404,
-				"message": result.Error(),
+				"message": 404,
+				"msg":     result.Error(),
 			})
 		}
 	})
