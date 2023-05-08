@@ -29,9 +29,9 @@
 	
 	export default {
 		components: {
-		    one,
-		    two,
-		    three,
+		    one:one,
+		    two:two,
+		    three:three,
 		  },
 		data() {
 			return {

@@ -27,15 +27,35 @@
 			return {
 				email: "",
 				password: "",
-				
+				stateCode: "",
+				userId: "",
 			};
 		},
+
 		methods: {
 			login() {
 				// 在这里添加登录逻辑
 				console.log("邮箱：" + this.email);
 				console.log("密码：" + this.password);
-				
+				uni.$u.http.post('http://localhost:8088/v1/frontend/passwordLogin', {
+					account: this.email,
+					password: this.password
+				}).then(res => {
+					console.log(res);
+					this.stateCode = res.statusCode;
+					this.userId = res.data.data.User.ID;
+					console.log(res.data.data.User.ID);
+					console.log(this.userId);
+					var _this= this;
+					setTimeout(function() {
+						uni.$emit('login', {
+							userId: _this.userId,
+						})
+					}, 300)
+
+					this.toHome();
+				});
+
 			},
 			toHome() {
 				uni.switchTab({

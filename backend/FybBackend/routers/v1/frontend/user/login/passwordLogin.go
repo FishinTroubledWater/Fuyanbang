@@ -15,15 +15,19 @@ type responseItem struct {
 
 func PasswordLogin(e *gin.Engine, db *gorm.DB) {
 	e.POST("/v1/frontend/passwordLogin", func(context *gin.Context) {
-		var errors *multierror.Error
-		var mp map[string]interface{}
+		var result *multierror.Error
+		mp := make(map[string]interface{})
 
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
-		user, _, err3 := fybDatabase.SelectSingleUserByCondition(db, mp)
-		errors = multierror.Append(errors, err1, err2, err3)
+		account := mp["account"].(string)
+		password := mp["password"].(string)
+
+		user, _, err3 := fybDatabase.SelectUserForLogin(db, account, password)
+
+		result = multierror.Append(result, err1, err2, err3)
 		user.Password = "*********"
-		if errors.ErrorOrNil() == nil {
+		if result.ErrorOrNil() == nil {
 			context.JSON(200, gin.H{
 				"code":    200,
 				"message": "登陆成功",
@@ -35,7 +39,7 @@ func PasswordLogin(e *gin.Engine, db *gorm.DB) {
 		} else {
 			context.JSON(404, gin.H{
 				"message": 404,
-				"msg":     errors.Error(),
+				"msg":     result.Error(),
 			})
 		}
 	})

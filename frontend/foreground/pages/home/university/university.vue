@@ -18,9 +18,13 @@
 			<view class="barItem" @click="show(4)" :class="index===4? 'active':''">学长学姐说</view>
 		</view>
 		<view>
-			<keep-alive>
+			<!-- <keep-alive>
 				<component :is="comp" v-show="isShow"></component>
-			</keep-alive>
+			</keep-alive> -->
+			<one v-show="isShow1" :title='mes'></one>
+			<Two v-show="isShow2" :title='mes'></Two>
+			<Three v-show="isShow3" :title='mes'></Three>
+			<four v-show="isShow4" :title='mes'></four>
 		</view>
 	</view>
 </template>
@@ -32,10 +36,10 @@
 	import four from '@/pages/home/university/said.vue'
 	export default {
 		components: {
-		    one,
-		    Two,
-		    Three,
-		    four,
+		    one:one,
+		    Two:Two,
+		    Three:Three,
+		    four:four,
 		  },
 		data() {
 			return {
@@ -45,12 +49,19 @@
 				comp: 'one',
 				// 控制点击按钮后子组件显示，再次点击隐藏
 				isShow: true,
+				isShow1: true,
+				isShow2: false,
+				isShow3: false,
+				isShow4: false,
 				active: '',
 				code: 0,
-				mes: []
+				mes: [],
+				guide: '',
+				name: '',
 			}
 		},
 		onLoad:function(option){
+			var _this = this
 			this.code = option.code;
 			uni.$u.http.get('/v1/frontend/academy/detail/' + this.code, {
 			
@@ -60,6 +71,12 @@
 			}).catch(err => {
 			
 			})
+			// uni.$on('code1',function(data) {
+			// 	_this.guide = data.guide;
+			// 	_this.name = data.name;
+			// 	console.log("内部的guide是：");
+			// 	console.log(_this.guide)
+			// })
 		},
 		methods: {
 		    show (value) {
@@ -69,10 +86,34 @@
 					this.index = value
 					this.isShow = true
 				}
-				if (value === 1) this.comp = 'one'
-				if (value === 2) this.comp = 'two'
-				if (value === 3) this.comp = 'three'
-				if (value === 4) this.comp = 'four'
+				// if (value === 1) this.comp = 'one'
+				// if (value === 2) this.comp = 'two'
+				// if (value === 3) this.comp = 'three'
+				// if (value === 4) this.comp = 'four'
+				if (value === 1){
+					this.isShow1 = true
+					this.isShow2 = false
+					this.isShow3 = false
+					this.isShow4 = false
+				}
+				if (value === 2){
+					this.isShow1 = false
+					this.isShow2 = true
+					this.isShow3 = false
+					this.isShow4 = false
+				}
+				if (value === 3){
+					this.isShow1 = false
+					this.isShow2 = false
+					this.isShow3 = true
+					this.isShow4 = false
+				}
+				if (value === 4){
+					this.isShow1 = false
+					this.isShow2 = false
+					this.isShow3 = false
+					this.isShow4 = true
+				}
 				this.$route.meta.index = 0
 		    }
 			

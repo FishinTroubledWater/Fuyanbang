@@ -1,4 +1,4 @@
-package settings
+package userInfo
 
 import (
 	fybDatabase "FybBackend/database"
@@ -10,7 +10,7 @@ import (
 
 func Settings(e *gin.Engine, db *gorm.DB) {
 	e.POST("/v1/frontend/user/settings", func(context *gin.Context) {
-		var errors *multierror.Error
+		var result *multierror.Error
 		mp1 := make(map[string]interface{})
 		mp2 := make(map[string]interface{})
 
@@ -21,9 +21,9 @@ func Settings(e *gin.Engine, db *gorm.DB) {
 		delete(mp1, "account")
 
 		_, err3 := fybDatabase.UpdateSingleUserByCondition(db, mp1, mp2)
-		errors = multierror.Append(errors, err1, err2, err3)
+		result = multierror.Append(result, err1, err2, err3)
 
-		if errors.ErrorOrNil() == nil {
+		if result.ErrorOrNil() == nil {
 			context.JSON(200, gin.H{
 				"code":    200,
 				"message": "update settings success!",
@@ -31,7 +31,7 @@ func Settings(e *gin.Engine, db *gorm.DB) {
 		} else {
 			context.JSON(404, gin.H{
 				"code":    404,
-				"message": errors.Error(),
+				"message": result.Error(),
 			})
 		}
 	})

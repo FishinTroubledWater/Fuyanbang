@@ -83,6 +83,8 @@
 	export default {
 		data() {
 			return {
+				guide: '',
+				name: '',
 				mes: [],
 				code: 0,
 				
@@ -97,6 +99,7 @@
 				secondLevelDiscipline: '二级学科'
 			};
 		},
+		props:['title'],
 		onShow() {
 			// console.log('ddd')
 		},
@@ -113,6 +116,17 @@
 					console.log("失败")
 				})
 			})
+		},
+		mounted() {
+			console.log("上方");
+			var _this= this;
+			uni.$on('code1',function(data) {
+				_this.guide = data.guide;
+				_this.name = data.name;
+				console.log("内部的guide是：");
+				console.log(_this.guide)
+			})
+			console.log("下方");
 		},
 		methods: {
 			bindPickerChange1: function(e) {

@@ -27,7 +27,7 @@
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数
 			// console.log(option.email); //打印出上个页面传递的参数。
 			this.email = option.email;
-			console.log('123'+this.email); //打印出上个页面传递的参数。
+			// console.log('123'+this.email); //打印出上个页面传递的参数。
 		},
 		methods: {
 			submitForm() {
@@ -40,10 +40,16 @@
 				}
 
 				// 如果两次密码一致，可以在这里进行注册逻辑
-				// ...
-				uni.navigateTo({
-					url: './passwordLogin'
-				})
+				// ...124.222.141.238
+				uni.$u.http.post('http://localhost:8088/v1/frontend/register', {
+					account: this.email,
+					password: this.password,
+					registerTime: this.registerTime,
+				}).then(res => {
+					console.log(res);
+					this.stateCode = res.statusCode;
+					this.toPasswordLogin();
+				});
 			}
 		}
 	};

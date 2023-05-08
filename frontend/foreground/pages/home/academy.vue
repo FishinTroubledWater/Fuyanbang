@@ -15,8 +15,11 @@
 			</picker>
 		</view>
 		<view class="searchAcademy">
-			<text class="searchText">
+			<text class="searchText" v-if="isExist == true">
 				共搜索到 <text class="searchNum">{{mes.num}}</text> 所院校
+			</text>
+			<text class="searchText" v-if="isExist == false">
+				共搜索到 <text class="searchNum">0</text> 所院校
 			</text>
 		</view>
 		<view>
@@ -71,6 +74,8 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				active:'',
 				
 				mes: [],
+				sendMes: [],
+				isExist: false,
 				
 				region: '院校地区',
 				level: '院校层次',
@@ -172,16 +177,19 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 		onShow(){  
 			let pages = getCurrentPages();
 			let currPage = pages[pages.length - 1];
-			if(currPage.searchContent) {
+			if(currPage.searchContent && currPage.searchContent != '') {
 				this.academyName = currPage.searchContent;
 				uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
 							
 				}).then(res => {
-				  this.mes = res.data.data;
-				  console.log(this.mes);
+					this.isExist = true;
+					this.mes = res.data.data;
+					console.log(this.mes);
 				}).catch(err => {
-							
+					this.mes = [];
+					this.isExist = false;
 				})
+				currPage.searchContent = '';
 			}
 		},
 
@@ -219,6 +227,19 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				console.log(this.region);
 				console.log(this.level);
 				console.log(this.type);
+				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
+					region: '福州',level: '985',type: '法学',
+					// region: '院校地区',level: '院校层次',type: '院校类型',
+				}).then(res => {
+					console.log("bbbbb")
+					this.isExist = true;
+					this.mes = res.data.data;
+					console.log(this.mes)
+				}).catch(err => {
+					this.mes = [];
+					this.isExist = false;
+					console.log("aaaaa")
+				})
 			},
 			bindPickerChange2: function(e) {
 				this.index2 = e.target.value;
@@ -227,6 +248,19 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				console.log(this.region);
 				console.log(this.level);
 				console.log(this.type);
+				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
+					region: '福州',level: '985',type: '法学',
+					// region: '院校地区',level: '院校层次',type: '院校类型',
+				}).then(res => {
+					console.log("bbbbb")
+					this.isExist = true;
+					this.mes = res.data.data;
+					console.log(this.mes)
+				}).catch(err => {
+					this.mes = [];
+					this.isExist = false;
+					console.log("aaaaa")
+				})
 			},
 			bindPickerChange3: function(e) {
 				this.index3 = e.target.value;
@@ -235,12 +269,48 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				console.log(this.region);
 				console.log(this.level);
 				console.log(this.type);
+				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
+					region: '福州',level: '985',type: '法学',
+					// region: '院校地区',level: '院校层次',type: '院校类型',
+				}).then(res => {
+					console.log("bbbbb")
+					this.isExist = true;
+					this.mes = res.data.data;
+					console.log(this.mes)
+				}).catch(err => {
+					this.mes = [];
+					this.isExist = false;
+					console.log("aaaaa")
+				})
 			},
 			goUniverity(c) {
+				var _this = this
+				uni.$u.http.get('/v1/frontend/academy/detail/' + c, {
+				
+				}).then(res => {
+				    console.log(res.data.data);
+					_this.sendMes = res.data.data;
+				}).catch(err => {
+					
+				})
+				setTimeout(function() {
+					uni.$emit('code1',{ 
+						codeID: c ,
+						belong: _this.sendMes.Belong,
+						type: _this.sendMes.Type,
+						code: _this.sendMes.Code,
+						guide: _this.sendMes.Guide,
+						level: _this.sendMes.Level,
+						lineType: _this.sendMes.LineType,
+						logo: _this.sendMes.Logo,
+						name: _this.sendMes.Name,
+						profile: _this.sendMes.Profile,
+						region: _this.sendMes.Region,
+						})
+				}, 300)
 				uni.navigateTo({
 					url: "/pages/home/university/university?code=" + c
 				})
-				uni.$emit('code1',c)
 			},
 		},
 		mounted() {
@@ -256,11 +326,16 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 			
 			uni.$u.http.post('/v1/frontend/academy/searchByRule', {
 				region: '福州',level: '985',type: '法学',
+				// region: '院校地区',level: '院校层次',type: '院校类型',
 			}).then(res => {
+				console.log("bbbbb")
+				this.isExist = true;
 				this.mes = res.data.data;
 				console.log(this.mes)
 			}).catch(err => {
-			
+				this.mes = [];
+				this.isExist = false;
+				console.log("aaaaa")
 			})
 		}
 	}

@@ -22,7 +22,8 @@
 			return {
 				email: '',
 				password: '',
-				confirmPassword: ''
+				confirmPassword: '',
+				registerTime: '',
 			};
 		},
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数
@@ -42,6 +43,33 @@
 
 				// 如果两次密码一致，可以在这里进行注册逻辑
 				// ...
+				this.registerTime = this.getTime();
+				console.log("当前时间：" + this.registerTime);
+				uni.$u.http.post('http://124.222.141.238:8088/v1/frontend/register', {
+					account: this.email,
+					password: this.password,
+					registerTime: this.registerTime,
+				}).then(res => {
+					console.log(res);
+					this.stateCode = res.statusCode;
+					this.toPasswordLogin();
+				});
+
+			},
+			getTime: function() {
+				var date = new Date(),
+					year = date.getFullYear(),
+					month = date.getMonth() + 1,
+					day = date.getDate(),
+					hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+					minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+					second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+				month >= 1 && month <= 9 ? (month = "0" + month) : "";
+				day >= 0 && day <= 9 ? (day = "0" + day) : "";
+				var timer = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+				return timer;
+			},
+			toPasswordLogin() {
 				uni.navigateTo({
 					url: './passwordLogin'
 				})

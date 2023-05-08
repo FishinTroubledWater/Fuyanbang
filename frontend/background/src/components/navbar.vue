@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     logout() {
-      // window.sessionStorage.clear();
+      window.sessionStorage.clear();
       this.$confirm('确定要退出登录？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
