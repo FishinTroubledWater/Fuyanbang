@@ -69,3 +69,19 @@ type Major struct {
 	ForeignType           string `gorm:"column:foreignType"`
 	MathType              string `gorm:"column:mathType"`
 }
+
+type Post struct {
+	ID          int64     `gorm:"primaryKey;autoIncrement;comment:帖子id"`
+	Summary     string    `gorm:"type:varchar(10000);comment:帖子内容"`
+	PartID      int64     `gorm:"comment:帖子所属板块id"`
+	AuthorID    int64     `gorm:"comment:帖子作者id"`
+	Favorite    int64     `gorm:"comment:帖子收藏数"`
+	Like        int64     `gorm:"comment:帖子点赞数"`
+	PublishTime string    `gorm:"type:varchar(50);comment:帖子发表时间"`
+	PostImgs    []PostImg `gorm:"foreignKey:PostID"`
+}
+
+type PostImg struct {
+	PostID int64  `gorm:"primaryKey"`
+	Img    string `gorm:"primaryKey"`
+}

@@ -2,6 +2,7 @@ package routers
 
 import (
 	"FybBackend/routers/v1/frontend/academy"
+	"FybBackend/routers/v1/frontend/circle"
 	"FybBackend/routers/v1/frontend/news"
 	"FybBackend/routers/v1/frontend/user/login"
 	"FybBackend/routers/v1/frontend/user/register"
@@ -23,6 +24,7 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	academy.SelectAcademyByCode(r)
 	academy.SelectScoreByTypeFirstSecondLevel(r)
 	register.UserRegister(r, db)
+	circle.SearchByName(r)
 	userInfo.ResetPassword(r, db)
 	userInfo.GetPassword(r, db)
 	userInfo.AccountSecurity(r, db)
