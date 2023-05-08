@@ -2,7 +2,7 @@ package routers
 
 import (
 	"FybBackend/routers/v1/frontend/academy"
-	"FybBackend/routers/v1/frontend/news/newsInfo"
+	"FybBackend/routers/v1/frontend/news"
 	"FybBackend/routers/v1/frontend/user/login"
 	"FybBackend/routers/v1/frontend/user/register"
 	"FybBackend/routers/v1/frontend/user/selectUsers"
@@ -17,7 +17,8 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	selectUsers.SelectUsers(r, db)
 	userInfo.BasicUserInfo(r, db)
 	userInfo.Settings(r, db)
-	newsInfo.NewsInfo(r, db)
+	news.NewsInfo(r, db)
+	news.NewsDetail(r, db)
 	academy.SearchByName(r)
 	academy.SelectAcademyByCode(r)
 	academy.SelectScoreByTypeFirstSecondLevel(r)

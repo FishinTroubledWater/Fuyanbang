@@ -1,4 +1,4 @@
-package newsInfo
+package news
 
 import (
 	fybDatabase "FybBackend/database"
@@ -11,7 +11,6 @@ func NewsInfo(e *gin.Engine, db *gorm.DB) {
 	e.GET("/v1/frontend/news/list", func(context *gin.Context) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
-
 		newses, _, err1 := fybDatabase.SelectAllNewsByCondition(db, mp)
 		result = multierror.Append(result, err1)
 

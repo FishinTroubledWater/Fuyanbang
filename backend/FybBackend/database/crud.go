@@ -80,6 +80,9 @@ func SelectSingleNewsByCondition(db *gorm.DB, where map[string]interface{}) (New
 	var count int64 = 0
 	var news News
 	err := db.Where(where).First(&news).Count(&count).Error
+	if count == 0 {
+		return news, 0, errors.New("查询的记录不存在")
+	}
 	return news, count, err
 }
 
