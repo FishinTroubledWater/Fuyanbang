@@ -1,6 +1,7 @@
 package database
 
 import (
+	"errors"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 )
@@ -111,7 +112,11 @@ func SelectAllUserByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]User, in
 
 func AddUser(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	err := db.Create(values).Count(&count).Error
+	db.Table("user").Where("account = ? ", values["account"]).Count(&count)
+	if count > 0 {
+		return 0, errors.New("account already exists")
+	}
+	err := db.Table("user").Create(values).Count(&count).Error
 	return count, err
 }
 func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Admin, int64, error) {
