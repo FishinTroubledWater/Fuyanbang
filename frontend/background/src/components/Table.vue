@@ -13,15 +13,14 @@
         :sort-by="column.index"
         :show-overflow-tooltip="column.showOverflowTooltip">
     </el-table-column>
-      <el-table-column v-if="showState" label="状态" width="120px">
-        <template>
-<!--          这里该怎么写-->
-          <slot name="state"></slot>
-        </template>
-      </el-table-column>
+<!--      <el-table-column v-if="showState" label="状态" width="120px">-->
+<!--      <slot name="one"-->
+<!--      </el-table-column>-->
       <el-table-column  label="操作" >
-        <template #>
-         <slot name="op"></slot>
+        <template #default="scope">
+          <slot :index="scope.$index"
+                :row="scope.row">
+          </slot>
         </template>
     </el-table-column>
   </el-table>

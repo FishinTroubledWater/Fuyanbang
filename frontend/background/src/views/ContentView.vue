@@ -29,12 +29,10 @@
     <el-card class="round15 mg">
       <div style="font-size: 20px;font-weight: bold"> 内容列表</div>
       <Table :table-data="contentList" :columns="columns" :show-state="true">
-        <template >
-          <slot>
-            <el-tag type="success" >标签1</el-tag>
-          </slot>
+        <template>
+           <el-tag type="success" >标签1</el-tag>
         </template>
-        <template #op>
+        <template #default="scope">
           <el-button size="mini" type="success" icon="el-icon-view" round
                      @click="handleEdit(scope.$index, scope.row)">详情
           </el-button>
