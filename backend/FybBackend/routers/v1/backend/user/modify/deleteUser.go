@@ -19,13 +19,14 @@ func DeleteUser(e *gin.Engine, db *gorm.DB) {
 		err3 := token.JwtVerify(context)
 		_, err4 := fybDatabase.DeleteUser(db, mp)
 		result = multierror.Append(result, err1, err2, err3, err4)
+
+		code := 201
 		if result.ErrorOrNil() == nil {
-			context.JSON(200, gin.H{
-				"code":    200,
+			context.JSON(code, gin.H{
+				"code":    code,
 				"message": "删除成功",
 			})
 		} else {
-			var code int
 			if err3 != nil {
 				code = 403
 			} else if err4 != nil {
