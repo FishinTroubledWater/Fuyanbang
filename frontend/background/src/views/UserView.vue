@@ -24,16 +24,18 @@
       <Table :table-data="userList" :columns="columns">
         <template #default="scope">
           <el-button size="mini" type="primary" icon="el-icon-edit" round
-                     @click="showEditDialog(scope.row.account)">编辑
+                     @click="showEditDialog(scope.row.Account)">编辑
           </el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" round
-                     @click="removeUserById(scope.row.account)">删除
+                     @click="removeUserById(scope.row)">删除
           </el-button>
         </template>
       </Table>
     </el-card>
-    <Pagination></Pagination>
-    <!--    <Pagination :total="total" :query-info="queryInfo"></Pagination>-->
+<!--    分页器-->
+    <Pagination :total="total" :query-info="queryInfo"
+                @page-size-change="handlePageSizeChange"
+                @page-change="handlePageChange"></Pagination>
     <!--    添加用户的对话框-->
     <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="30%"
                @close="addDialogClosed">
@@ -84,11 +86,10 @@
 
 <script>
 import Pagination from "@/components/Pagination";
-import Breadcrumb from "@/components/Breadcrumb";
-import Table from "@/components/Table";
+
 export default {
   name: "UserView",
-  components: {Pagination, Breadcrumb, Table},
+  components: {Pagination},
   data() {
     // 验证手机号的规则
     var checkPhoneNumber = (rule, value, cb) => {
@@ -108,10 +109,10 @@ export default {
       columns: [
         {prop: 'Account', label: '用户名', width: '150px'},
         {prop: 'NickName', label: '昵称', width: '150px'},
-        {prop: 'PhoneNumber', label: '联系方式', width: '150px'},
-        {prop: 'Year', label: '年级', width: '100px' , sortable:true},
+        {prop: 'PhoneNumber', label: '手机号', width: '150px'},
+        {prop: 'Year', label: '年级', width: '100px', sortable: true},
         {prop: 'College', label: '大学', width: '100px'},
-        {prop: 'Balance', label: '学币', width: '100px'},
+        {prop: 'Balance', label: '学币', width: '100px', sortable: true},
       ],
       //添加用户的表单数据
       addForm: {
@@ -147,7 +148,7 @@ export default {
       queryInfo: {
         query: '',
         pageNum: 1,
-        pageSize: 2
+        pageSize: 10
       },
       //控制修改用户对话框的显示与隐藏
       editDialogVisible: false,
@@ -156,7 +157,7 @@ export default {
 
     }
   },
-  mounted() {
+  created() {
     this.getUserList()
   },
   methods: {
@@ -175,6 +176,16 @@ export default {
       this.userList = res.data.users
       this.total = res.data.total
       console.log(this.userList);
+    },
+    //处理每页显示数量变化
+    handlePageSizeChange(newSize) {
+      this.queryInfo.pageSize = newSize;
+      this.getUserList()
+    },
+    //处理页码变化
+    handlePageChange(newPage) {
+      this.queryInfo.pageNum = newPage;
+      this.getUserList()
     },
 
     // 编辑方法
@@ -200,10 +211,9 @@ export default {
         // 发起添加用户网络请求
         const {data: res} = await this.axios.post('user/add', this.addForm)
 
-        if(res.code !== 201){
+        if (res.code !== 201) {
           this.$message.error('添加用户失败！')
-        }
-        this.$message.success('添加用户成功！')
+        }else this.$message.success('添加用户成功！')
         //隐藏对话框
         this.addDialogVisible = false
         //刷新用户列表
@@ -213,7 +223,7 @@ export default {
 
     //展示编辑用户的对话框
     async showEditDialog(id) {
-      // const {data:res} = await this.axios.get('user/' + id)
+      // const {data:res} = await this.axios.get('user/searchByAccount/' + id)
       // if(res.code !== 200){
       //   return this.$message.error('查询用户信息失败！')
       // }
@@ -233,11 +243,11 @@ export default {
         console.log(valid)
         if (!valid) return
         // 发起修改用户信息的数据请求
-        const {data : res} = await this.axios.patch('users/update' + this.editForm.id,{
+        const {data: res} = await this.axios.patch('users/update' + this.editForm.id, {
           phonenumber: this.editForm.phonenumber,
         })
 
-        if(res.code !== 200){
+        if (res.code !== 200) {
           return this.$message.error('更新用户信息失败！')
         }
         // 关闭对话框

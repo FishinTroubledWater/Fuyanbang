@@ -13,11 +13,15 @@
         :sort-by="column.index"
         :show-overflow-tooltip="column.showOverflowTooltip">
     </el-table-column>
+      <el-table-column v-if="showState" label="状态" width="120px">
+        <template>
+<!--          这里该怎么写-->
+          <slot name="state"></slot>
+        </template>
+      </el-table-column>
       <el-table-column  label="操作" >
-        <template #default="scope" >
-          <slot :index="scope.$index"
-                :row="scope.row">
-          </slot>
+        <template #>
+         <slot name="op"></slot>
         </template>
     </el-table-column>
   </el-table>
@@ -35,6 +39,10 @@ export default {
       type: Array,
       default: () => []
     },
+    showState: {
+      type: Boolean,
+      default: false
+    }
   }
 }
 </script>
