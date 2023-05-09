@@ -92,14 +92,16 @@
         active: 3,
 
         // 最新动态
-        indexList: [{
-          id: "666",
-          title: "快讯!2023年考研国家线发布",
-          subTitle: "教育部",
-          publishTime: "2023年03月10日",
-          pageImage: "/static/building.png",
-          content: "近日，教育部部署2023年全国硕士研究生招生复试录取工作..."
-        }],
+        indexList: [
+          //   {
+          //   id: "666",
+          //   title: "快讯!2023年考研国家线发布",
+          //   subTitle: "教育部",
+          //   publishTime: "2023年03月10日",
+          //   pageImage: "/static/building.png",
+          //   content: "近日，教育部部署2023年全国硕士研究生招生复试录取工作..."
+          // },
+        ],
 
         cover: 'https://web-assets.dcloud.net.cn/unidoc/zh/shuijiao.jpg',
         avatar: 'https://web-assets.dcloud.net.cn/unidoc/zh/unicloudlogo.png',
@@ -169,18 +171,18 @@
     onLoad() {},
     mounted() {
       // 基本用法，注意：get请求的参数以及配置项都在第二个参数中
-      uni.$u.http.get('/v1/frontend/news/list', {
+      uni.$u.http.get('/v1/frontend/news/detail', {
 
       }).then(res => {
         for (var i = 0; i < res.data.data.length; i++) {
           let tmp = res.data.data[i];
           this.indexList.push({
-          id: tmp.ID,
-          title: tmp.Title,
-          subTitle: tmp.Author,
-          publishTime: uni.$u.timeFormat(tmp.PublishTime, 'yyyy年mm月dd日'),
-          pageImage: "/static/building.png",
-          content: tmp.Content
+            id: tmp.ID,
+            title: tmp.Title,
+            subTitle: tmp.Author,
+            publishTime: uni.$u.timeFormat(tmp.PublishTime, 'yyyy年mm月dd日'),
+            pageImage: "/static/building.png",
+            content: tmp.Content
           })
         }
       }).catch(err => {
@@ -270,7 +272,6 @@
 
   .trends-box-item {
     opacity: 0.8;
-     width: 680rpx;
+    width: 680rpx;
   }
-  
 </style>
