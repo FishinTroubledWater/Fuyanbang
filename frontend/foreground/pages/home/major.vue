@@ -59,6 +59,7 @@
 				active:'',
 				mes: [],
 				majorName: '',
+				isExist: false,
 				
 				mathematicalType: '数学类型',
 				foreignLanguageType: '外语类型',
@@ -121,6 +122,21 @@
 					url: "/pages/home/professional/professional"
 				})
 			},
+		},
+		mounted() {
+			uni.$u.http.post('/v1/frontend/major/searchByRule', {
+				type: '哲学',firstLevelDiscipline: '哲学',mathType: '数学一',foreignType: '英语一',
+				// region: '院校地区',level: '院校层次',type: '院校类型',
+			}).then(res => {
+				console.log("bbbbb")
+				this.isExist = true;
+				this.mes = res.data.data;
+				console.log(this.mes)
+			}).catch(err => {
+				this.mes = [];
+				this.isExist = false;
+				console.log("aaaaa")
+			})
 		}
 	}
 </script>

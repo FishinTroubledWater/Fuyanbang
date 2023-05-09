@@ -24,7 +24,7 @@
 		</view>
 		<view>
 			<view  class="viewAcademy" v-for="m in mes.list" @click="goUniverity(m.Code)" @touchstart="touchStart" @touchend="touchEnd" :style="active">
-				<image class="academyLogo" src="@/static/academy-icons/北大.png"></image>
+				<image class="academyLogo" :src="m.Logo"></image>
 				<view class="viewText">
 					<text class="academyName">{{m.Name}}</text>
 					<view class="academyType">
@@ -89,6 +89,10 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 			})
 		},
 		async onLoad() {
+			const oMeta = document.createElement('meta');
+			oMeta.name = "referrer";
+			oMeta.content = "no-referrer"
+			document.getElementsByTagName('head')[0].appendChild(oMeta);
 			// const result = uni.$u.http.post('/PairProject/players?gender=F&seed=true').then(res => {
 			// 	console.log("aaa");
 			// }).catch(err => {

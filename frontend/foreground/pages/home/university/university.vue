@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="academyMes">
-			<image class="academyLogo" src="@/static/academy-icons/北大.png"></image>
+			<image class="academyLogo" :src="mes.Logo"></image>
 			<view class="viewText">
 				<text class="academyName">{{mes.Name}}</text>
 				<view class="academyType">

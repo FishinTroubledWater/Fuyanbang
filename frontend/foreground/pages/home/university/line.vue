@@ -15,7 +15,12 @@
 			</picker>
 		</view>
 		<view>
-			<view class="lineTable">
+			<view v-for="m in mes.list">
+				<image class="lineImg" :src="m" @click="imgClick(m)"></image>
+			</view>
+			
+			<!--
+			 <view class="lineTable">
 				<view class="tableTitle">北京大学建筑学硕士考研近3年复试分数线</view>
 				<table class="line">
 					<tr>
@@ -74,7 +79,7 @@
 						<td>7</td>
 					</tr>
 				</table>
-			</view>
+			</view> -->
 		</view>
 	</view>
 </template>
@@ -88,9 +93,9 @@
 				mes: [],
 				code: 0,
 				
-				array1: ['学科门类','全部','理学','工学','农学','哲学','经济学','法学','教育学','文学','历史学','医学','军事学','管理学','艺术学'],
-				array2: ['一级学科','数学','物理','化学'],
-				array3: ['二级学科','基础数学','计算数学','概率论与数理统计'],
+				array1: ['学科门类','理学','工学','农学','哲学','经济学','法学','教育学','文学','历史学','医学','军事学','管理学','艺术学'],
+				array2: ['一级学科','数学','物理','化学','哲学'],
+				array3: ['二级学科','基础数学','计算数学','概率论与数理统计','马克思主义哲学'],
 				index1: 0,
 				index2: 0,
 				index3: 0,
@@ -103,32 +108,50 @@
 		onShow() {
 			// console.log('ddd')
 		},
+		onLoad() {
+			const oMeta = document.createElement('meta');
+			oMeta.name = "referrer";
+			oMeta.content = "no-referrer"
+			document.getElementsByTagName('head')[0].appendChild(oMeta);
+		},
 		created() {
-			uni.$on('code',res=>{
-				this.code = res
-				uni.$u.http.get('/v1/frontend/academy/detail/' + this.code, {
-				
-				}).then(res => {
-					this.mes = res.data.data;
-					console.log("成功3")
-					console.log(this.mes);
-				}).catch(err => {
-					console.log("失败")
-				})
+			console.log("line的上方");
+			var _this= this;
+			uni.$on('code1',function(data) {
+				_this.code = data.codeID;
+				console.log("line内部的code是：");
+				console.log(_this.code)
+			})
+			console.log("line的下方");
+			uni.$u.http.post('/v1/frontend/academy/score', {
+				type: '学科门类',firstLevelDiscipline: '一级学科',secondLevelDiscipline: '二级学科',
+			}).then(res => {
+				console.log("bbbbb")
+				this.mes = res.data.data;
+				console.log(this.mes)
+			}).catch(err => {
+				this.mes = [];
+				console.log("aaaaa")
 			})
 		},
 		mounted() {
-			console.log("上方");
-			var _this= this;
-			uni.$on('code1',function(data) {
-				_this.guide = data.guide;
-				_this.name = data.name;
-				console.log("内部的guide是：");
-				console.log(_this.guide)
-			})
-			console.log("下方");
+			// console.log("上方");
+			// var _this= this;
+			// uni.$on('code1',function(data) {
+			// 	_this.guide = data.guide;
+			// 	_this.name = data.name;
+			// 	console.log("内部的guide是：");
+			// 	console.log(_this.guide)
+			// })
+			// console.log("下方");
 		},
 		methods: {
+			imgClick(url){
+				console.log(url)
+				uni.previewImage({
+					urls: [url]
+				});
+			},
 			bindPickerChange1: function(e) {
 				this.index1 = e.target.value;
 				this.jg = this.array1[this.index1];
@@ -136,6 +159,16 @@
 				console.log(this.type);
 				console.log(this.firstLevelDiscipline);
 				console.log(this.secondLevelDiscipline);
+				uni.$u.http.post('/v1/frontend/academy/score', {
+					type: this.type,firstLevelDiscipline: this.firstLevelDiscipline,secondLevelDiscipline: this.secondLevelDiscipline,
+				}).then(res => {
+					console.log("bbbbb")
+					this.mes = res.data.data;
+					console.log(this.mes)
+				}).catch(err => {
+					this.mes = [];
+					console.log("aaaaa")
+				})
 			},
 			bindPickerChange2: function(e) {
 				this.index2 = e.target.value;
@@ -144,6 +177,16 @@
 				console.log(this.type);
 				console.log(this.firstLevelDiscipline);
 				console.log(this.secondLevelDiscipline);
+				uni.$u.http.post('/v1/frontend/academy/score', {
+					type: this.type,firstLevelDiscipline: this.firstLevelDiscipline,secondLevelDiscipline: this.secondLevelDiscipline,
+				}).then(res => {
+					console.log("bbbbb")
+					this.mes = res.data.data;
+					console.log(this.mes)
+				}).catch(err => {
+					this.mes = [];
+					console.log("aaaaa")
+				})
 			},
 			bindPickerChange3: function(e) {
 				this.index3 = e.target.value;
@@ -152,6 +195,16 @@
 				console.log(this.type);
 				console.log(this.firstLevelDiscipline);
 				console.log(this.secondLevelDiscipline);
+				uni.$u.http.post('/v1/frontend/academy/score', {
+					type: this.type,firstLevelDiscipline: this.firstLevelDiscipline,secondLevelDiscipline: this.secondLevelDiscipline,
+				}).then(res => {
+					console.log("bbbbb")
+					this.mes = res.data.data;
+					console.log(this.mes)
+				}).catch(err => {
+					this.mes = [];
+					console.log("aaaaa")
+				})
 			},
 		}
 	}
@@ -163,12 +216,13 @@
 		justify-content: center;
 	}
 	.selectFormItem{
-		width: 200rpx;
+		width: auto;
 		height: 80rpx;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		font-size: 32rpx;
+		font-size: 30rpx;
+		margin-left: 20rpx;
 	}
 	.downArrow{
 		margin-left: 5rpx;
@@ -193,5 +247,11 @@
 	table td {
 	  width: 80rpx;
 	  height: 60rpx;
+	}
+	.lineImg{
+		height: 650rpx;
+		width: 650rpx;
+		margin-left: 50rpx;
+		margin-top: 30rpx;
 	}
 </style>
