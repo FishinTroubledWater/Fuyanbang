@@ -228,7 +228,7 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				console.log(this.level);
 				console.log(this.type);
 				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-					region: '福州',level: '985',type: '法学',
+					region: '北京',level: '985',type: '法学',
 					// region: '院校地区',level: '院校层次',type: '院校类型',
 				}).then(res => {
 					console.log("bbbbb")

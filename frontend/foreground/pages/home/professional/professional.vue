@@ -15,9 +15,12 @@
 			<view class="barItem" @click="show(3)" :class="index===3? 'active':''">就业前景</view>
 		</view>
 		<view>
-			<keep-alive>
+			<!-- <keep-alive>
 				<component :is="comp" v-show="isShow"></component>
-			</keep-alive>
+			</keep-alive> -->
+			<one v-show="isShow1" :title='mes'></one>
+			<two v-show="isShow2" :title='mes'></two>
+			<three v-show="isShow3" :title='mes'></three>
 		</view>
 	</view>
 </template>
@@ -41,7 +44,11 @@
 				comp: 'one',
 				// 控制点击按钮后子组件显示，再次点击隐藏
 				isShow: true,
-				active: ''
+				isShow1: true,
+				isShow2: false,
+				isShow3: false,
+				active: '',
+				mes: [],
 			}
 		},
 		methods: {
@@ -52,9 +59,24 @@
 					this.index = value
 					this.isShow = true
 				}
-				if (value === 1) this.comp = 'one'
-				if (value === 2) this.comp = 'two'
-				if (value === 3) this.comp = 'three'
+				// if (value === 1) this.comp = 'one'
+				// if (value === 2) this.comp = 'two'
+				// if (value === 3) this.comp = 'three'
+				if (value === 1){
+					this.isShow1 = true
+					this.isShow2 = false
+					this.isShow3 = false
+				}
+				if (value === 2){
+					this.isShow1 = false
+					this.isShow2 = true
+					this.isShow3 = false
+				}
+				if (value === 3){
+					this.isShow1 = false
+					this.isShow2 = false
+					this.isShow3 = true
+				}
 				this.$route.meta.index = 0
 			}
 		}

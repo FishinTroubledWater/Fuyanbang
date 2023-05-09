@@ -58,6 +58,7 @@
 				
 				active:'',
 				mes: [],
+				majorName: '',
 				
 				mathematicalType: '数学类型',
 				foreignLanguageType: '外语类型',
@@ -71,16 +72,24 @@
 				url: "/pages/home/professional/search"
 			})
 		},
-		onShow() {
-		    uni.$off('searchContent')//建议先销毁一次监听，再进行新的一次监听，否则会出现重复监听的现象
-			uni.$once('searchContent',function(data){
-				if(data != '') {
-					console.log("cccc");
-					console.log(data);
-				}
-				
-				//这的data就是B页面传递过来的数据
-			})
+		onShow(){
+			let pages = getCurrentPages();
+			let currPage = pages[pages.length - 1];
+			if(currPage.searchContent && currPage.searchContent != '') {
+				this.majorName = currPage.searchContent;
+				// uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+							
+				// }).then(res => {
+				// 	this.isExist = true;
+				// 	this.mes = res.data.data;
+				// 	console.log(this.mes);
+				// }).catch(err => {
+				// 	this.mes = [];
+				// 	this.isExist = false;
+				// })
+				console.log(this.majorName)
+				currPage.searchContent = '';
+			}
 		},
 		methods: {
 			bindPickerChange1: function(e) {
