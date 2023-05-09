@@ -32,31 +32,31 @@
 		data() {
 			return {
 				problemBox: [{
-						problemTitle: '小程序',
+						problemTitle: '福研帮',
 						problemList: [{
-								title: '为什么提示不支持打开非业务域名',
+								title: '这个App是用来干什么的',
 								content: '微信小程序内部对网页链接进行了限制，遇到此情况可复制链接至手机浏览器中打开。'
 							},
 							{
-								title: '文件类课件如何保存',
+								title: '这个App的用户群体是什么样的',
 								content: '对于文件类的课件，请点击[在线预览]，稍等片刻之后程序会跳转到对应的预览页面。点击右上角三个点按钮，在下方弹窗中选择[保存到手机]即可。也可对课件进行[转发][收藏]等操作'
 							}
 
 						]
 					},
 					{
-						problemTitle: '活动报名',
+						problemTitle: '圈子发布',
 						problemList: [{
-								title: '已经报名的活动可以取消吗',
+								title: '圈子发布的内容哪些人可以看到',
 								content: '在报名截止日期之前均可以取消。点击活动报名详情下方的[取消报名]按钮即可。'
 							}
 
 						]
 					},
 					{
-						problemTitle: '调查问卷',
+						problemTitle: '学币',
 						problemList: [{
-								title: '调查问卷是否可以多次填写',
+								title: '学币可以用来干嘛',
 								content: '不可以。完成的调查问卷会处于不可点击状态，所以请您认真对待每一次问卷的填写工作。感谢您的支持。'
 							}
 
