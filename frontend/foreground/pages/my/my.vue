@@ -46,26 +46,39 @@
 					level: 'Lv.10',
 					slogan: '一定上岸！！',
 					useageDays: '50',
-					college:'福州大学',
-					major:'软件工程',
+					college: '福州大学',
+					major: '软件工程',
 				}
 			}
 		},
-	methods: {
-		gotoPage(url) {
-			uni.navigateTo({
-				url
+		mounted() {
+			console.log("执行onLoad（）");
+			var _this = this;
+			const on = uni.$on('login1', function(data) {
+				_this.id = data.userId;
+				console.log("用户id是：");
+				console.log(_this.id)
 			})
+			console.log("执行onLoad（）");
 		},
-		changeHead() {
-			uni.chooseImage({
-				count: 1,
-				success: (res) => {
-					this.headImg = res.tempFilePaths[0]
-				}
-			});
-		},
-	}
+		// onLoad() {
+			
+		// },
+		methods: {
+			gotoPage(url) {
+				uni.navigateTo({
+					url
+				})
+			},
+			changeHead() {
+				uni.chooseImage({
+					count: 1,
+					success: (res) => {
+						this.headImg = res.tempFilePaths[0]
+					}
+				});
+			},
+		}
 	}
 </script>
 
