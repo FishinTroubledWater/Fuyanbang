@@ -167,7 +167,7 @@ func SelectAllUserByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]User, in
 	var count int64 = 0
 	var users []User
 	db.Table("user").Count(&count)
-	err := db.Table("user").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize, pageNum*pageSize).Find(&users).Error
+	err := db.Table("user").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize+1, pageNum*pageSize).Find(&users).Error
 	if count == 0 && err == nil {
 		return users, 0, nil
 	}
@@ -181,6 +181,17 @@ func AddUser(db *gorm.DB, values map[string]interface{}) (int64, error) {
 		return 0, errors.New("用户已存在")
 	}
 	err = db.Table("user").Create(values).Count(&count).Error
+	return count, err
+}
+
+func DeleteUser(db *gorm.DB, where map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	var user User
+	err := db.Table("user").Where("account = ? ", where["account"]).Count(&count).Find(&user).Error
+	if count == 0 && err == nil {
+		return 0, errors.New("用户不存在")
+	}
+	err = db.Table("user").Delete(&user).Error
 	return count, err
 }
 func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Admin, int64, error) {
@@ -197,11 +208,11 @@ func UpdateSingleAdminByCondition(db *gorm.DB, where map[string]interface{}, upd
 
 func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	db.Table("user").Where(where).Count(&count)
-	if count == 0 {
+	err := db.Table("user").Where(where).Count(&count).Error
+	if count == 0 && err == nil {
 		return 0, errors.New("用户不存在")
 	}
-	err := db.Table("user").Where(where).Updates(update).Count(&count).Error
+	err = db.Table("user").Where(where).Updates(update).Count(&count).Error
 	return count, err
 }
 

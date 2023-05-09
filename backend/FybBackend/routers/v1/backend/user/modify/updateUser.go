@@ -1,4 +1,4 @@
-package add
+package modify
 
 import (
 	fybDatabase "FybBackend/database"
@@ -7,28 +7,31 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
-	"time"
 )
 
 func UpdateUser(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/user/add", func(context *gin.Context) {
+	e.PATCH("/v1/backend/user/update", func(context *gin.Context) {
 		var result *multierror.Error
-		mp := make(map[string]interface{})
+		mp1 := make(map[string]interface{})
+		mp2 := make(map[string]interface{})
 		b, err1 := context.GetRawData()
-		err2 := json.Unmarshal(b, &mp)
-		mp["registerTime"] = time.Now()
+		err2 := json.Unmarshal(b, &mp1)
+		mp2["phoneNumber"] = mp1["phoneNumber"]
+		delete(mp1, "phoneNumber")
 		err3 := token.JwtVerify(context)
-		_, err4 := fybDatabase.AddUser(db, mp)
+		_, err4 := fybDatabase.UpdateSingleUserByCondition(db, mp1, mp2)
 		result = multierror.Append(result, err1, err2, err3, err4)
 		if result.ErrorOrNil() == nil {
 			context.JSON(200, gin.H{
 				"code":    200,
-				"message": "请求成功",
+				"message": "修改成功",
 			})
 		} else {
 			var code int
 			if err3 != nil {
 				code = 403
+			} else if err4 != nil {
+				code = 404
 			} else {
 				code = 500
 			}
