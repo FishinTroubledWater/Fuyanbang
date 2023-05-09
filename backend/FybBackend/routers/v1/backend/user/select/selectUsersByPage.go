@@ -33,8 +33,16 @@ func SelectUsersByPage(e *gin.Engine, db *gorm.DB) {
 					Users:   users},
 			})
 		} else {
-			context.JSON(404, gin.H{
-				"code":    404,
+			var code int
+			if err3 != nil {
+				code = 403
+			} else if err4 != nil {
+				code = 404
+			} else if err2 != nil {
+				code = 406
+			}
+			context.JSON(code, gin.H{
+				"code":    code,
 				"message": result.Error(),
 			})
 		}

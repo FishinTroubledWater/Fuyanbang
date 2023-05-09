@@ -25,80 +25,53 @@
         </el-col>
       </el-row>
     </el-card>
-    <!--    动态列表-->
+    <!--    内容列表-->
     <el-card class="round15 mg">
       <div style="font-size: 20px;font-weight: bold"> 内容列表</div>
-      <el-table :data="tableData" style="width: 100%" border stripe>
-        <!--        索引-->
-        <el-table-column type="index"></el-table-column>
-        <!--        用户名-->
-        <el-table-column label="用户名" width="180">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.authorID }}</span>
-          </template>
-        </el-table-column>
-        <!--        时间-->
-        <el-table-column label="时间" width="250">
-          <template slot-scope="scope">
-            <i class="el-icon-date"></i>
-            <span style="margin-left: 10px">{{ scope.row.publishTime }}</span>
-          </template>
-        </el-table-column>
-        <!--        标题-->
-        <el-table-column label="标题" width="250">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.summary }}</span>
-          </template>
-        </el-table-column>
-        <!--        板块名-->
-        <el-table-column label="板块" width="160">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.partName }}</span>
-          </template>
-        </el-table-column>
-        <!--        操作-->
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button size="mini" type="success" icon="el-icon-view" round
-                       @click="handleEdit(scope.$index, scope.row)">详情
-            </el-button>
-            <el-button size="mini" type="primary" icon="el-icon-edit" round
-                       @click="handleEdit(scope.$index, scope.row)">编辑
-            </el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete" round
-                       @click="handleDelete(scope.$index, scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <Table :table-data="contentList" :columns="columns" :show-state="true">
+        <template>
+           <el-tag type="success" >标签1</el-tag>
+        </template>
+        <template #default="scope">
+          <el-button size="mini" type="success" icon="el-icon-view" round
+                     @click="handleEdit(scope.$index, scope.row)">详情
+          </el-button>
+          <el-button size="mini" type="warning" icon="el-icon-finished" round
+                     @click="handleEdit(scope.$index, scope.row)">审核
+          </el-button>
+          <el-button size="mini" type="primary" icon="el-icon-edit" round
+                     @click="handleEdit(scope.$index, scope.row)">编辑
+          </el-button>
+          <el-button size="mini" type="danger" icon="el-icon-delete" round
+                     @click="handleDelete(scope.$index, scope.row)">删除
+          </el-button>
+        </template>
+      </Table>
     </el-card>
-    <Pagination></Pagination>
   </div>
 </template>
 
 <script>
 
-import Pagination from "@/components/Pagination";
-import Breadcrumb from "@/components/Breadcrumb";
+
 
 export default {
   name: "content",
-  components: {Pagination,Breadcrumb},
+
 
   data(){
     return{
       title: '内容管理',
-      tableData:[{
-        authorID:'渚薰',
-        publishTime:'2016-05-02',
-        summary:'死海文书',
-        partName:'EVA',
-      },{
-        authorID:'王小虎',
-        publishTime:'2015-05-02',
-        summary:'死灵之书',
-        partName:'黑深残',
-      }],
+      contentList:[
+        {author:'wxy',publishTime:'2022',part:'测试1',summary:'这是内容1',state:'1'},
+        {author:'wxy',publishTime:'2022',part:'测试2',summary:'这是内容2',state:'0'},
+      ],
+      columns: [
+        {prop: 'author', label: '用户名', width: '150px'},
+        {prop: 'publishTime', label: '发布时间', width: '180px', sortable: true},
+        {prop: 'part', label: '板块', width: '180px', sortable: true},
+        {prop: 'summary', label: '内容', width: '180px'},
+      ],
     }
   }
 }

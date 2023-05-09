@@ -28,43 +28,26 @@
     <!--    动态列表-->
     <el-card class="round15 mg">
       <div style="font-size: 20px;font-weight: bold"> 学长学姐说列表</div>
-      <el-table :data="tableData" style="width: 100%" border stripe>
-        <!--        索引-->
-        <el-table-column type="index"></el-table-column>
-        <!--        用户名-->
-        <el-table-column label="用户名" width="180">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.author }}</span>
-          </template>
-        </el-table-column>
-        <!--        时间-->
-        <el-table-column label="时间" width="250">
-          <template slot-scope="scope">
-            <i class="el-icon-date"></i>
-            <span style="margin-left: 10px">{{ scope.row.publishTime }}</span>
-          </template>
-        </el-table-column>
-        <!--        标题-->
-        <el-table-column label="标题" width="250">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.title }}</span>
-          </template>
-        </el-table-column>
-
-        <!--        操作-->
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button size="mini" type="primary" icon="el-icon-edit" round
-                       @click="handleEdit(scope.$index, scope.row)">编辑
-            </el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete" round
-                       @click="handleDelete(scope.$index, scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <Table :table-data="recipeList" :columns="columns">
+        <template #default="scope">
+          <el-button size="mini" type="success" icon="el-icon-view" round
+                     @click="handleEdit(scope.$index, scope.row)">详情
+          </el-button>
+          <el-button size="mini" type="warning" icon="el-icon-finished" round
+                     @click="handleEdit(scope.$index, scope.row)">审核
+          </el-button>
+          <el-button size="mini" type="primary" icon="el-icon-edit" round
+                     @click="handleEdit(scope.$index, scope.row)">编辑
+          </el-button>
+          <el-button size="mini" type="danger" icon="el-icon-delete" round
+                     @click="handleDelete(scope.$index, scope.row)">删除
+          </el-button>
+        </template>
+      </Table>
     </el-card>
-    <Pagination></Pagination>
+    <Pagination :total="total" :query-info="queryInfo"
+                @page-size-change="handlePageSizeChange"
+                @page-change="handlePageChange"></Pagination>
   </div>
 </template>
 
@@ -78,17 +61,14 @@ export default {
   data(){
     return{
       title: '学长学姐说管理',
-      tableData:[{
-        author:'渚薰',
-        publishTime:'2016-05-02',
-        title:'死海文书',
-
-      },{
-        author:'王小虎',
-        publishTime:'2015-05-02',
-        title:'死灵之书',
-
-      }],
+      recipeList:[
+        {author:'wxy',publishTime:'2022',title:'测试'}
+      ],
+      columns: [
+        {prop: 'author', label: '用户名', width: '150px'},
+        {prop: 'publishTime', label: '发布时间', width: '180px', sortable: true},
+        {prop: 'title', label: '标题', width: '180px'},
+      ],
     }
   }
 }

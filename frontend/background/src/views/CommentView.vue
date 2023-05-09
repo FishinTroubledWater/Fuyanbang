@@ -2,63 +2,70 @@
   <div>
     <!--    面包屑-->
     <Breadcrumb class="round15 pd whiteback mg" :title="title"></Breadcrumb>
-    <!--    评论列表-->
+    <!--    内容查询-->
+    <el-card class="round15 mg">
+      <div style="font-size: 20px;font-weight: bold;"> 评论查询</div>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-input placeholder="请输入内容" >
+            <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
+          </el-input>
+        </el-col>
+        <el-col :span="5">
+          <el-button
+              v-for="type in types"
+              :key="type.name"
+              size="small"
+          >
+            {{ type.name }}
+          </el-button>
+        </el-col>
+        <el-col :span=2>
+          <el-button type="primary" round ><i class="el-icon-plus"></i> 添加内容</el-button>
+        </el-col>
+      </el-row>
+    </el-card>
+    <!--    动态列表-->
     <el-card class="round15 mg">
       <div style="font-size: 20px;font-weight: bold"> 评论列表</div>
-      <el-table :data="tableData" style="width: 100%" border stripe>
-        <!--        索引-->
-        <el-table-column type="index"></el-table-column>
-        <!--        用户名-->
-        <el-table-column label="用户名" width="180">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.userID }}</span>
-          </template>
-        </el-table-column>
-        <!--        时间-->
-        <el-table-column label="时间" width="250">
-          <template slot-scope="scope">
-            <i class="el-icon-date"></i>
-            <span style="margin-left: 10px">{{ scope.row.time }}</span>
-          </template>
-        </el-table-column>
-        <!--        评论内容-->
-        <el-table-column label="评论内容" width="350">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.content }}</span>
-          </template>
-        </el-table-column>
-        <!--        状态-->
-        <el-table-column label="状态" width="150">
-          <template slot-scope="scope">
-            <el-tag type = "success" v-if="scope.row.state==='true'">已处理</el-tag>
-            <el-tag type = "warning" v-else>未处理</el-tag>
-          </template>
-        </el-table-column>
-        <!--        操作-->
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button size="mini" type="primary" icon="el-icon-view" round
-                       @click="handleEdit(scope.$index, scope.row)">详情
-            </el-button>
-            <el-button size="mini" type="success" icon="el-icon-finished" round
-                       @click="handleEdit(scope.$index, scope.row)">处理
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <Table :table-data="commentList" :columns="columns">
+        <template #default="scope">
+          <el-button size="mini" type="success" icon="el-icon-view" round
+                     @click="handleEdit(scope.$index, scope.row)">详情
+          </el-button>
+          <el-button size="mini" type="warning" icon="el-icon-finished" round
+                     @click="handleEdit(scope.$index, scope.row)">审核
+          </el-button>
+          <el-button size="mini" type="primary" icon="el-icon-edit" round
+                     @click="handleEdit(scope.$index, scope.row)">编辑
+          </el-button>
+          <el-button size="mini" type="danger" icon="el-icon-delete" round
+                     @click="handleDelete(scope.$index, scope.row)">删除
+          </el-button>
+        </template>
+      </Table>
     </el-card>
-    <Pagination></Pagination>
   </div>
 </template>
 
 <script>
-import Pagination from "@/components/Pagination";
-import Breadcrumb from "@/components/Breadcrumb";
 
 export default {
   name: "CommentView",
-  components: {Pagination, Breadcrumb},
-  title:'评论管理',
+  data(){
+    return{
+      title: '评论管理',
+      commentList:[
+        {userID:'wxy',publishTime:'2022',_like:'1500',content:'这是内容aaaaaaaaaaaaaaaa'}
+      ],
+      columns: [
+        {prop: 'userID', label: '用户ID', width: '150px'},
+        {prop: 'publishTime', label: '发布时间', width: '180px', sortable: true},
+        {prop: 'content', label: '评论内容', width: '180px',showOverflowTooltip:true },
+        {prop: '_like', label: '点赞数', width: '180px', sortable: true},
+      ],
+    }
+  }
 }
 </script>
 

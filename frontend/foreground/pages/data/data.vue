@@ -33,7 +33,7 @@
 			<swiper-item class="swiper-item sns-oil">
 				<u-list>
 					<u-list-item v-for="(item, index) in questionsList" :key="index">
-						<uni-card @click="clickquestions(questionsList[index].questionId)" :title="questionsList[index].name" sub-title="教育部" :extra="questionsList[index].time"
+						<uni-card @click="clickquestions(questionsList[index].queId)" :title="questionsList[index].name" sub-title="教育部" :extra="questionsList[index].time"
 							:thumbnail="questionsList[index].icon" class="trends-box-item">
 							<u--text :lines="3" :text="questionsList[index].summary"></u--text>
 							<image class="newsimage" :src="questionsList[index].img[0]"></image>
@@ -157,7 +157,7 @@
 						name: '1',
 						time:'2022-12-21',
 						icon:'../../static/background/activityDetails.png',
-						questionId:'123456',
+						queId:'123456',
 						summary:'近日，福州大学软件工程专业的同学开始实践',
 						isImage:true,
 						img:['../../static/background/activityDetails.png',
@@ -168,7 +168,7 @@
 						name: '2',
 						time:'2022-12-21',
 						icon:'../../static/background/activityDetails.png',
-						questionId:'123456',
+						queId:'123',
 						summary:'近日，同学开始实践',
 						isImage:true,
 						img:['../../static/background/activityDetails.png',

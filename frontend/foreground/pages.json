@@ -226,12 +226,36 @@
         "enablePullDownRefresh": true
       }
     }, {
-      "path": "pages/my/help",
+      "path": "pages/my/helpAndFeedback/feedbackIndex",
       "style": {
-        "navigationBarTitleText": "帮助反馈",
+        "navigationBarTitleText": "帮助与反馈",
         "enablePullDownRefresh": false
       }
     }, {
+      "path": "pages/my/helpAndFeedback/helpDetail",
+      "style": {
+       "navigationBarTitleText": "帮助详情",
+        "enablePullDownRefresh": false
+      }
+    }, {
+      "path": "pages/my/helpAndFeedback/feedbackList",
+      "style": {
+       "navigationBarTitleText": "我的反馈",
+        "enablePullDownRefresh": false
+      }
+    },{
+      "path": "pages/my/helpAndFeedback/feedback",
+      "style": {
+       "navigationBarTitleText": "发表反馈",
+        "enablePullDownRefresh": false
+      }
+    },{
+      "path": "pages/my/helpAndFeedback/feedbackDetail",
+      "style": {
+       "navigationBarTitleText": "反馈详情",
+        "enablePullDownRefresh": false
+      }
+    },{
       "path": "pages/my/userInfo",
       "style": {
         "navigationBarTitleText": "个人资料",

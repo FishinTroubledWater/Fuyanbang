@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func AddUser(e *gin.Engine, db *gorm.DB) {
+func UpdateUser(e *gin.Engine, db *gorm.DB) {
 	e.POST("/v1/backend/user/add", func(context *gin.Context) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
@@ -23,7 +23,7 @@ func AddUser(e *gin.Engine, db *gorm.DB) {
 		if result.ErrorOrNil() == nil {
 			context.JSON(200, gin.H{
 				"code":    200,
-				"message": "添加用户成功",
+				"message": "请求成功",
 			})
 		} else {
 			var code int
@@ -36,6 +36,7 @@ func AddUser(e *gin.Engine, db *gorm.DB) {
 				"code":    code,
 				"message": result.Error(),
 			})
+
 		}
 	})
 }
