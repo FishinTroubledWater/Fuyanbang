@@ -2,7 +2,7 @@
   <view>
     <uni-card :is-shadow="true">
       <u--text :text="title" size="24" lineHeight="24" margin="4px"></u--text>
-      <span style="margin: 16px 16px;font-size: 14px;line-height: 24px;">{{author}}</span>
+      <span style="margin: 16px 8px;font-size: 14px;line-height: 24px;">{{author}}</span>
       <span style="margin-right: 16px;font-size: 14px;float: right;">{{time}}</span>
       <view class="u-content">
         <u-parse :content="content"></u-parse>
@@ -20,6 +20,7 @@
     },
     data() {
       return {
+        id: "666",
         title: "考研考本校和外校的区别，你一定得知道！",
         author: "中国青年报",
         time: "2022-06-22",
@@ -36,7 +37,23 @@
 
     },
     onLoad(option) {
-      console.log(option);
+      this.id = option.id;
+    },
+    mounted() {
+      // 基本用法，注意：get请求的参数以及配置项都在第二个参数中
+      uni.$u.http.get('/v1/frontend/news/newsDetail', {
+        params: {
+          id: this.id
+        }
+      }).then(res => {
+        let tmp = res.data.data;
+        this.title = tmp.Title;
+        this.content = tmp.Content;
+        this.author = tmp.Author;
+        this.time = uni.$u.timeFormat(tmp.PublishTime, 'yyyy-mm-dd')
+      }).catch(err => {
+        console.log("出错了...")
+      })
     }
   }
 </script>

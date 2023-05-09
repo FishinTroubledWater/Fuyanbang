@@ -66,6 +66,8 @@ type Major struct {
 	FirstLevelDiscipline  string `gorm:"column:firstLevelDiscipline;comment:专业一级学科"`
 	SecondLevelDiscipline string `gorm:"column:secondLevelDiscipline;comment:专业二级学课"`
 	ScoreUrl              string `gorm:"column:scoreUrl;comment:考研分数线url"`
+	ForeignType           string `gorm:"column:foreignType"`
+	MathType              string `gorm:"column:mathType"`
 }
 
 type Post struct {

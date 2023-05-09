@@ -3,7 +3,7 @@
 <!-- 		<button @click="test">aaaaa</button> -->
 		<view class="introduct">招生简章链接：</view>
 		<view class="brochuresTitile" @click="goWeb()"> {{this.name}} 2023 年硕士研究生招生简章（校本部）</view>
-		<view class="brochuresTitile"> {{this.guide}}</view>
+<!-- 		<view class="brochuresTitile"> {{this.guide}}</view> -->
 
 <!-- 		<text class="mesText" space="ensp" >{{mes}}</text> -->
 	</view>
@@ -39,7 +39,7 @@
 			},
 			goWeb() {
 				uni.navigateTo({
-					url: '/pages/home/university/web?url=' + this.webUrl
+					url: '/pages/home/university/web?url=' + this.guide
 				})
 			},
 		},

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<uni-list>
-			<view class="viewSaid">
+			<view class="viewSaid" @click="goPost(1)">
 				<view class="viewUser">
 					<image class="headPortrait" src="@/static/academy-icons/photo.jpg"></image>
 					<view class="userMes">
@@ -46,7 +46,11 @@
 		},
 		props:['title'],
 		methods: {
-
+			goPost(postId) {
+				uni.navigateTo({
+					url: "/pages/home/university/post?id=" + postId
+				})
+			},
 		},
 		onShow() {
 			// console.log('eee')

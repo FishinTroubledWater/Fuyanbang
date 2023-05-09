@@ -21,15 +21,22 @@ func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
 		err1 := token.JwtVerify(context)
 		user, _, err2 := fybDatabase.SelectSingleUserByCondition(db, mp)
 		result = multierror.Append(result, err1, err2)
+
+		code := 200
 		if result.ErrorOrNil() == nil {
-			context.JSON(200, gin.H{
-				"code":    200,
+			context.JSON(code, gin.H{
+				"code":    code,
 				"message": "get userInfoList success!",
 				"data":    user,
 			})
 		} else {
-			context.JSON(404, gin.H{
-				"code":    404,
+			if err1 != nil {
+				code = 403
+			} else {
+				code = 500
+			}
+			context.JSON(code, gin.H{
+				"code":    code,
 				"message": result.Error(),
 			})
 		}

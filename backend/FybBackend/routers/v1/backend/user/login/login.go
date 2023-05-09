@@ -25,13 +25,14 @@ func Login(e *gin.Engine, db *gorm.DB) {
 
 		result = multierror.Append(result, err1, err2)
 		//bcrypt.CompareHashAndPassword([]byte(m.HashedPassword), []byte(inputPassword))
+		code := 200
 		if result.ErrorOrNil() == nil {
 			mp2 := make(map[string]interface{})
 			token, _ := token.GenerateToken(admin.Account, admin.PhoneNumber)
 			mp2["token"] = token
 			fybDatabase.UpdateSingleAdminByCondition(db, mp1, mp2)
-			context.JSON(200, gin.H{
-				"code":    200,
+			context.JSON(code, gin.H{
+				"code":    code,
 				"message": "frontend login success!",
 				"data": responseItem{
 					admin.ID,
@@ -40,8 +41,9 @@ func Login(e *gin.Engine, db *gorm.DB) {
 				},
 			})
 		} else {
-			context.JSON(404, gin.H{
-				"message": 404,
+			code = 404
+			context.JSON(code, gin.H{
+				"message": code,
 				"msg":     result.Error(),
 			})
 		}
