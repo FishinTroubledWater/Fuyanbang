@@ -190,6 +190,12 @@
         "navigationBarTitleText": "",
         "enablePullDownRefresh": false
       }
+    },{
+      "path": "pages/home/university/post",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
     },
         // "my"部分的页面
     {

@@ -65,8 +65,20 @@
 		},
 		methods:{
 			goBack(){
-				var data = this.searchContent;
-				uni.$emit('searchContent', data);
+				// var data = this.searchContent;
+				// uni.$emit('searchContent', data);
+				// uni.navigateBack({
+				// 	delta: 1
+				// })
+				// 在提交成功后，返回首页需要刷新（带上参数）
+				let pages = getCurrentPages();
+				let prevPage = pages[pages.length - 2];//上一个页面
+				//直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+				// prevPage.setData({
+				// 	mydata: { isRefresh: 1 }
+				// })
+				prevPage.$vm.searchContent = this.searchContent
+				// 关闭当前页面，返回上一页面
 				uni.navigateBack({
 					delta: 1
 				})
