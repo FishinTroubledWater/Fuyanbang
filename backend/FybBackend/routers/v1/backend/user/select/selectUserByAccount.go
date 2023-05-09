@@ -28,13 +28,13 @@ func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
 				"data":    user,
 			})
 		} else {
-			var code int64
+			var code int
 			if err1 != nil {
 				code = 403
-			} else if err2 != nil {
-				code = 404
+			} else {
+				code = 500
 			}
-			context.JSON(404, gin.H{
+			context.JSON(code, gin.H{
 				"code":    code,
 				"message": result.Error(),
 			})

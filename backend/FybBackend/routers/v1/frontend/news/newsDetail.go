@@ -22,8 +22,9 @@ func NewsDetail(e *gin.Engine, db *gorm.DB) {
 				"data":    newses,
 			})
 		} else {
-			context.JSON(404, gin.H{
-				"code":    404,
+			code := 404
+			context.JSON(code, gin.H{
+				"code":    code,
 				"message": result.Error(),
 			})
 		}

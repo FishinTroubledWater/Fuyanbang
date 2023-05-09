@@ -24,8 +24,14 @@ func SearchByRule(e *gin.Engine) {
 				"data":    majors,
 			})
 		} else {
-			context.JSON(http.StatusNotFound, gin.H{
-				"code":    404,
+			var code int
+			if err3 != nil || err2 != nil {
+				code = 500
+			} else {
+				code = 404
+			}
+			context.JSON(code, gin.H{
+				"code":    code,
 				"message": result.Error(),
 			})
 		}

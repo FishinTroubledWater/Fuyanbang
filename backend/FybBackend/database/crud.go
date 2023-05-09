@@ -166,7 +166,8 @@ func SelectAllUserByCondition(db *gorm.DB, where map[string]interface{}) ([]User
 func SelectAllUserByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]User, int64, error) {
 	var count int64 = 0
 	var users []User
-	err := db.Table("user").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize, pageNum*pageSize).Find(&users).Count(&count).Error
+	db.Table("user").Count(&count)
+	err := db.Table("user").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize, pageNum*pageSize).Find(&users).Error
 	if count == 0 && err == nil {
 		return users, 0, nil
 	}
