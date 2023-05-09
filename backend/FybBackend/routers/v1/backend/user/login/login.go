@@ -32,7 +32,7 @@ func Login(e *gin.Engine, db *gorm.DB) {
 			mp2["token"] = token
 			fybDatabase.UpdateSingleAdminByCondition(db, mp1, mp2)
 			context.JSON(code, gin.H{
-				"code":    code
+				"code":    code,
 				"message": "frontend login success!",
 				"data": responseItem{
 					admin.ID,

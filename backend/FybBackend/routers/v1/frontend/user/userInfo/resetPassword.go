@@ -9,7 +9,7 @@ import (
 )
 
 func ResetPassword(e *gin.Engine, db *gorm.DB) {
-	e.PATCH("/v1/frontend/user/resetPassword", func(context *gin.Context) {
+	e.POST("/v1/frontend/user/resetPassword", func(context *gin.Context) {
 		var result *multierror.Error
 		mp1 := make(map[string]interface{})
 		mp2 := make(map[string]interface{})
