@@ -107,7 +107,7 @@
 				_this.region = data.region;
 				_this.type = data.type;
 				_this.profile = data.profile;
-				console.log("内部的code是：");
+				console.log("introduction内部的code是：");
 				console.log(_this.code)
 			})
 			
