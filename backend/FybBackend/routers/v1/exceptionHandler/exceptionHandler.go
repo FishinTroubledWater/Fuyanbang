@@ -14,10 +14,16 @@ func Handle(result *multierror.Error) (code int, errStr string) {
 			errStr := err.Error()
 			fmt.Println(errStr)
 			if strings.Contains(errStr, "查询的记录不存在") {
-				return 404, "查询的记录不存在"
+				return 404, "要查询的记录不存在"
 			}
 			if strings.Contains(errStr, "用户已存在") {
 				return 404, "用户已存在"
+			}
+			if strings.Contains(errStr, "要删除的记录不存在") {
+				return 400, "要删除的记录不存在"
+			}
+			if strings.Contains(errStr, "要修改的记录不存在") {
+				return 400, "要修改的记录不存在"
 			}
 		}
 		return 500, result.Error()

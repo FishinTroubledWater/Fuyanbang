@@ -9,8 +9,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func DeletePost(e *gin.Engine, db *gorm.DB) {
-	e.DELETE("/v1/backend/post/delete", func(context *gin.Context) {
+func DeleteNews(e *gin.Engine, db *gorm.DB) {
+	e.DELETE("/v1/backend/news/delete", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,
@@ -21,12 +21,12 @@ func DeletePost(e *gin.Engine, db *gorm.DB) {
 
 		var result *multierror.Error
 		mp := make(map[string]interface{})
-		mp["id"] = context.DefaultQuery("id", "")
-		_, err1 := fybDatabase.DeletePost(db, mp)
+		mp["ID"] = context.DefaultQuery("id", "")
+		_, err1 := fybDatabase.DeleteNews(db, mp)
 		result = multierror.Append(result, err1)
 
 		code, msg := exceptionHandler.Handle(result)
-		if result.ErrorOrNil() == nil {
+		if code == 200 {
 			context.JSON(code, gin.H{
 				"code":    code,
 				"message": "删除成功",

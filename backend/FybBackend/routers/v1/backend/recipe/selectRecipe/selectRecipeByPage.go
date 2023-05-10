@@ -1,17 +1,17 @@
-package selectPost
+package selectRecipe
 
 import (
 	fybDatabase "FybBackend/database"
 	"FybBackend/routers/v1/backend/token"
 	"FybBackend/routers/v1/exceptionHandler"
-	"errors"
+	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 )
 
-func SelectPostByAccount(e *gin.Engine, db *gorm.DB) {
-	e.GET("/v1/backend/post/searchByAccount", func(context *gin.Context) {
+func SelectRecipeByPage(e *gin.Engine, db *gorm.DB) {
+	e.POST("/v1/backend/recipe/list", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,
@@ -21,20 +21,24 @@ func SelectPostByAccount(e *gin.Engine, db *gorm.DB) {
 		}
 		var result *multierror.Error
 		mp := make(map[string]interface{})
-		account := context.DefaultQuery("account", "")
-		if account == "" {
-			result = multierror.Append(result, errors.New("账户输入不能为空！"))
-		}
-		mp["account"] = account
-		post, _, err1 := fybDatabase.SelectSinglePostByCondition(db, mp)
-		result = multierror.Append(result, err1)
+		b, err1 := context.GetRawData()
+		err2 := json.Unmarshal(b, &mp)
+		query := mp["query"].(string)
+		pageNum := int64(mp["pageNum"].(float64))
+		pageSize := int64(mp["pageSize"].(float64))
+		recipes, count, err3 := fybDatabase.SelectAllRecipeByPage(db, query, pageNum, pageSize)
+		result = multierror.Append(result, err1, err2, err3)
 
 		code, msg := exceptionHandler.Handle(result)
 		if code == 200 {
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": "get userInfoList success!",
-				"data":    post,
+				"message": "请求成功",
+				"data": map[string]interface{}{
+					"total":   count,
+					"pageNum": pageNum,
+					"recipes": recipes,
+				},
 			})
 		} else {
 			context.JSON(code, gin.H{

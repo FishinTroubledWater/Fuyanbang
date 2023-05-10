@@ -5,6 +5,8 @@ import (
 	"FybBackend/routers/v1/backend/news/selectNews"
 	"FybBackend/routers/v1/backend/post/modifyPost"
 	"FybBackend/routers/v1/backend/post/selectPost"
+	"FybBackend/routers/v1/backend/recipe/modifyRecipe"
+	"FybBackend/routers/v1/backend/recipe/selectRecipe"
 	"FybBackend/routers/v1/backend/user/login"
 	"FybBackend/routers/v1/backend/user/modifyUser"
 	"FybBackend/routers/v1/backend/user/selectUser"
@@ -27,7 +29,12 @@ func InitBackend(r *gin.Engine, db *gorm.DB) {
 	selectPost.SelectPostByAccount(r, db)
 
 	//news
-	modifyNews.DeletePost(r, db)
-	selectNews.SelectNewsByAccount(r, db)
+	modifyNews.DeleteNews(r, db)
+	selectNews.SelectNewsById(r, db)
 	selectNews.SelectNewsByPage(r, db)
+
+	//recipes
+	modifyRecipe.DeleteRecipe(r, db)
+	selectRecipe.SelectRecipeByPage(r, db)
+	selectRecipe.SelectRecipeByAccount(r, db)
 }

@@ -1,4 +1,4 @@
-package selectUser
+package selectRecipe
 
 import (
 	fybDatabase "FybBackend/database"
@@ -9,8 +9,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
-	e.GET("/v1/backend/user/searchByAccount", func(context *gin.Context) {
+func SelectRecipeByAccount(e *gin.Engine, db *gorm.DB) {
+	e.GET("/v1/backend/recipe/searchById", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,
@@ -18,11 +18,10 @@ func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
 			})
 			return
 		}
-
 		var result *multierror.Error
 		mp := make(map[string]interface{})
-		mp["account"] = context.DefaultQuery("query", "")
-		user, _, err1 := fybDatabase.SelectSingleUserByCondition(db, mp)
+		mp["ID"] = context.DefaultQuery("query", "")
+		post, _, err1 := fybDatabase.SelectSingleRecipeByCondition(db, mp)
 		result = multierror.Append(result, err1)
 
 		code, msg := exceptionHandler.Handle(result)
@@ -30,7 +29,7 @@ func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
 			context.JSON(code, gin.H{
 				"code":    code,
 				"message": "请求成功",
-				"data":    user,
+				"data":    post,
 			})
 		} else {
 			context.JSON(code, gin.H{

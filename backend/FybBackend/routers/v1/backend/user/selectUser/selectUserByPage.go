@@ -34,7 +34,7 @@ func SelectUsersByPage(e *gin.Engine, db *gorm.DB) {
 		if code == 200 {
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": "get userInfoList success!",
+				"message": "请求成功",
 				"data": map[string]interface{}{
 					"total":   count,
 					"pageNum": pageNum,

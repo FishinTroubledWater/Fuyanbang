@@ -21,7 +21,7 @@ func DeletePost(e *gin.Engine, db *gorm.DB) {
 
 		var result *multierror.Error
 		mp := make(map[string]interface{})
-		mp["id"] = context.DefaultQuery("id", "")
+		mp["ID"] = context.DefaultQuery("id", "")
 		_, err1 := fybDatabase.DeletePost(db, mp)
 		result = multierror.Append(result, err1)
 

@@ -23,7 +23,7 @@ func SelectPostByPage(e *gin.Engine, db *gorm.DB) {
 		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
-		query := mp["pageNum"].(string)
+		query := mp["query"].(string)
 		pageNum := int64(mp["pageNum"].(float64))
 		pageSize := int64(mp["pageSize"].(float64))
 		posts, count, err3 := fybDatabase.SelectAllPostByPage(db, query, pageNum, pageSize)
@@ -33,7 +33,7 @@ func SelectPostByPage(e *gin.Engine, db *gorm.DB) {
 		if code == 200 {
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": "get userInfoList success!",
+				"message": "请求成功",
 				"data": map[string]interface{}{
 					"total":   count,
 					"pageNum": pageNum,

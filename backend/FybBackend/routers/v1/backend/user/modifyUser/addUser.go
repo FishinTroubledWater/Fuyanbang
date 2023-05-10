@@ -32,7 +32,7 @@ func AddUser(e *gin.Engine, db *gorm.DB) {
 		if code == 200 {
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": "添加用户成功",
+				"message": "添加成功",
 			})
 		} else {
 			context.JSON(code, gin.H{

@@ -11,7 +11,7 @@ import (
 )
 
 func SelectNewsByPage(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/post/list", func(context *gin.Context) {
+	e.POST("/v1/backend/news/list", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,
@@ -32,7 +32,7 @@ func SelectNewsByPage(e *gin.Engine, db *gorm.DB) {
 		if code == 200 {
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": "get userInfoList success!",
+				"message": "请求成功",
 				"data": map[string]interface{}{
 					"total":   count,
 					"pageNum": pageNum,
