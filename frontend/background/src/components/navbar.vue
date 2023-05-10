@@ -10,8 +10,8 @@
         </div>
         <el-menu-item index="home"><i class="el-icon-s-home"/> <span class="el-menu-text">首页</span></el-menu-item>
         <el-menu-item index="user"><i class="el-icon-user"/> <span class="el-menu-text">用户管理</span></el-menu-item>
-        <el-menu-item index="content"><i class="el-icon-tickets"/> <span class="el-menu-text">内容管理</span></el-menu-item>
-        <el-menu-item index="trends"><i class="el-icon-discover"/> <span class="el-menu-text">动态管理</span></el-menu-item>
+        <el-menu-item index="post"><i class="el-icon-tickets"/> <span class="el-menu-text">帖子管理</span></el-menu-item>
+        <el-menu-item index="news"><i class="el-icon-discover"/> <span class="el-menu-text">动态管理</span></el-menu-item>
         <el-menu-item index="recipe"><i class="el-icon-s-promotion"/> <span class="el-menu-text">学长学姐说管理</span></el-menu-item>
         <el-menu-item index="comment"><i class="el-icon-s-comment"/> <span class="el-menu-text">评论管理</span></el-menu-item>
         <el-menu-item index="feedback"><i class="el-icon-message-solid"/> <span class="el-menu-text">反馈中心</span></el-menu-item>
@@ -24,7 +24,7 @@
           <div class="top_right">
             <el-avatar :size="'large'" :src="avatar" :fit="'cover'"
                        style="margin-right: 10px"></el-avatar>
-            <span class="el-dropdown-link">admin<i class="el-icon-caret-bottom el-icon--right"></i></span></div>
+            <span class="el-dropdown-link">{{account}}<i class="el-icon-caret-bottom el-icon--right"></i></span></div>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item class="clearfix" @click.native="toAbout">个人页面</el-dropdown-item>
             <el-dropdown-item class="clearfix" @click.native="logout">退出</el-dropdown-item>
@@ -44,6 +44,8 @@ export default {
   data() {
     return {
       avatar: avatar,
+      account: window.sessionStorage.getItem("account"),
+      id: window.sessionStorage.getItem("id"),
     }
   },
   methods: {

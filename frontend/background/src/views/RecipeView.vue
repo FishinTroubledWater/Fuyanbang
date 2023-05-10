@@ -40,7 +40,8 @@
                      @click="handleEdit(scope.$index, scope.row)">详情
           </el-button>
           <el-button size="mini" type="warning" icon="el-icon-finished" round
-                     @click="handleEdit(scope.$index, scope.row)">审核
+                     @click="handleEdit(scope.$index, scope.row)"
+                     :disabled="scope.row.state=== '1'">审核
           </el-button>
           <el-button size="mini" type="primary" icon="el-icon-edit" round
                      @click="handleEdit(scope.$index, scope.row)">编辑

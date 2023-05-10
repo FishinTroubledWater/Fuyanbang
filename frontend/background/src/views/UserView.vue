@@ -23,11 +23,14 @@
       <div style="font-size: 20px;font-weight: bold"> 用户列表</div>
       <Table :table-data="userList" :columns="columns">
         <template #operation="scope">
+          <el-button size="mini" type="success" icon="el-icon-view" round
+                     @click="showDetails(scope.row)">详情
+          </el-button>
           <el-button size="mini" type="primary" icon="el-icon-edit" round
                      @click="showEditDialog(scope.row.Account)">编辑
           </el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" round
-                     @click="removeUserById(scope.row)">删除
+                     @click="removeUserById(scope.row.Account)">删除
           </el-button>
         </template>
       </Table>
@@ -63,11 +66,11 @@
       <!--      内容主体区域-->
       <el-form ref="editFormRef" :model="editForm" label-width="80px"
                :rules="editFormRules">
-        <el-form-item label="用户名" prop="account">
-          <el-input v-model="editForm.account" disabled></el-input>
+        <el-form-item label="用户名" prop="Account">
+          <el-input v-model="editForm.Account" disabled></el-input>
         </el-form-item>
-        <el-form-item label="手机号" prop="phonenumber">
-          <el-input v-model="editForm.phonenumber"></el-input>
+        <el-form-item label="手机号" prop="Phonenumber">
+          <el-input v-model="editForm.PhoneNumber"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -75,15 +78,34 @@
     <el-button type="primary" @click="editUserInfo">确 定</el-button>
   </span>
     </el-dialog>
+    <!--    抽屉-->
+    <Drawer  :drawer="detailsDrawer" :title="drawerTitle" @closed="drawerClosed">
+      <template #details="scope" >
+        <div class="mg setcenter"><el-image :src="editForm.AvatarUrl" style="height: 150px"></el-image></div>
+        <el-descriptions  direction="vertical" :column="2" border class="mg">
+          <el-descriptions-item label="用户ID" > {{editForm.ID}}</el-descriptions-item>
+          <el-descriptions-item label="用户名" > {{editForm.Account}}</el-descriptions-item>
+          <el-descriptions-item label="昵称">{{editForm.NickName}}</el-descriptions-item>
+          <el-descriptions-item label="手机号">{{editForm.PhoneNumber}}</el-descriptions-item>
+          <el-descriptions-item label="地址">{{editForm.Area}}</el-descriptions-item>
+          <el-descriptions-item label="性别">{{editForm.Sex}}</el-descriptions-item>
+          <el-descriptions-item label="目标院校">{{editForm.TargetCollege}}</el-descriptions-item>
+          <el-descriptions-item label="目标专业">{{editForm.TargetMajor}}</el-descriptions-item>
+          <el-descriptions-item label="专业">{{editForm.Major}}</el-descriptions-item>
+          <el-descriptions-item label="年级"><el-tag size="small">{{editForm.Year}}</el-tag></el-descriptions-item>
+          <el-descriptions-item label="标语" :span="2">
+            <el-input type="textarea" v-model="editForm.Slogan" :rows="5" readonly resize="none"></el-input>
+          </el-descriptions-item>
+        </el-descriptions>
+      </template>
+    </Drawer>
   </div>
 </template>
 
 <script>
-import Pagination from "@/components/Pagination";
-
 export default {
   name: "UserView",
-  components: {Pagination},
+
   data() {
     // 验证手机号的规则
     var checkPhoneNumber = (rule, value, cb) => {
@@ -95,10 +117,18 @@ export default {
     };
     return {
       title: "用户管理",
+      drawerTitle:"用户详情",
       total: 0,
+      //用户数据集合
       userList: [],
+      //查询到的用户信息
+      editForm: {},
       //添加用户对话框
       addDialogVisible: false,
+      //控制详情抽屉可见否
+      detailsDrawer: false,
+      //控制修改用户对话框的显示与隐藏
+      editDialogVisible: false,
       //列表配置
       columns: [
         {prop: 'Account', label: '用户名', width: '150px'},
@@ -143,11 +173,6 @@ export default {
         pageNum: 1,
         pageSize: 10
       },
-      //控制修改用户对话框的显示与隐藏
-      editDialogVisible: false,
-      //查询到的用户信息
-      editForm: {},
-
     }
   },
   created() {
@@ -157,6 +182,7 @@ export default {
     // 查询方法
     async getUserList() {
       const {data: res} = await this.axios.post('user/list', {
+        query: this.queryInfo.query,
         pageSize: this.queryInfo.pageSize,
         pageNum: this.queryInfo.pageNum
       }, {
@@ -191,6 +217,17 @@ export default {
       console.log(index, row);
     },
 
+    // 显示详情
+    showDetails(row) {
+      console.log(row);
+      this.editForm=row;
+      this.detailsDrawer = true;
+    },
+    //关闭详情
+    drawerClosed() {
+      this.detailsDrawer = false;
+    },
+
     //添加用户对话框关闭
     addDialogClosed() {
       this.$refs.addFormRef.resetFields()
@@ -202,7 +239,7 @@ export default {
         if (!valid) return
         console.log(this.addForm)
         // 发起添加用户网络请求
-        const {data: res} = await this.axios.post('user/add', this.addForm,{
+        const {data: res} = await this.axios.post('user/add', this.addForm, {
           headers: {
             'Authorization': window.sessionStorage.getItem("token")
           }
@@ -213,18 +250,24 @@ export default {
         //隐藏对话框
         this.addDialogVisible = false
         //刷新用户列表
-        this.getUserList()
+        await this.getUserList()
       })
     },
 
     //展示编辑用户的对话框
     async showEditDialog(id) {
-      const {data:res} = await this.axios.get('user/searchByAccount/' + id)
-      if(res.code !== 200){
+      console.log(id);
+      const {data: res} = await this.axios.get('user/searchByAccount', {
+        params: {'account': id},
+        headers: {
+          'Authorization': window.sessionStorage.getItem("token")
+        }
+      })
+      if (res.code !== 200) {
         return this.$message.error('查询用户信息失败！')
       }
       this.editForm = res.data
-      console.log(id);
+
       this.editDialogVisible = true
     },
 
@@ -238,9 +281,16 @@ export default {
       this.$refs.editFormRef.validate(async valid => {
         console.log(valid)
         if (!valid) return
+        console.log(this.editForm.Account)
+        console.log(this.editForm.PhoneNumber)
         // 发起修改用户信息的数据请求
-        const {data: res} = await this.axios.patch('users/update' + this.editForm.id, {
-          phonenumber: this.editForm.phonenumber,
+        const {data: res} = await this.axios.patch('user/update', {
+          'account': this.editForm.Account,
+          'phoneNumber': this.editForm.PhoneNumber
+        },{
+          headers: {
+            'Authorization': window.sessionStorage.getItem("token")
+          }
         })
 
         if (res.code !== 200) {
@@ -249,7 +299,7 @@ export default {
         // 关闭对话框
         this.editDialogVisible = false
         // 刷新数据列表
-        this.getUserList()
+        await this.getUserList()
         this.$message.success('更新用户信息成功！')
       })
     },
@@ -266,11 +316,15 @@ export default {
         return this.$message.info('已取消删除')
       }
       console.log(id);
-      // const {data: res} = await this.axios.delete('user/delete/' + id)
-      // if (res.code !== 200) return this.$message.error('删除用户失败！')
-      // this.$message.success('删除用户成功！')
-      // this.getUserList()
-
+      const {data: res} = await this.axios.delete('user/delete', {
+        params:{'account': id},
+        headers: {
+          'Authorization': window.sessionStorage.getItem("token")
+        }
+      })
+      if (res.code !== 200) return this.$message.error('删除用户失败！')
+      this.$message.success('删除用户成功！')
+      await  this.getUserList()
     }
   }
 }
