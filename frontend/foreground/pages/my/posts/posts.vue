@@ -32,7 +32,7 @@
 			return {
 				authorID: '', //用户id也就是创作的作者的id
 				posts: [{
-					id: '', //文章id
+					id: '1', //文章id
 					partID: '1', //文章类型
 					title: '我的创作1', //文章标题
 					content: '这是我的创作1', //文章内容
@@ -40,7 +40,7 @@
 					like: '850', //点赞数
 					publishTime: '2020-6-3 18:00:00', //发表时间
 				}, {
-					id: '', //文章id
+					id: '2', //文章id
 					partID: '2', //文章类型
 					title: '我的创作2', //文章标题
 					content: '这是我的创作2', //文章内容
@@ -59,18 +59,14 @@
 			postsClick(item) {
 				if (item.partID == '1') { //假设是加油站
 					uni.navigateTo({
-						//TODO
-						//参数部分未修改
-						url: '/pages/data/newsDetails/newsDetails?' + 'feedback=' + JSON.stringify(item),
+						url: '/pages/data/newsDetails/newsDetails?id=' + item.id,
 						success: res => {},
 						fail: () => {},
 						complete: () => {}
 					});
 				}else if(item.partID=='2'){//假设是求助
 					uni.navigateTo({
-						//TODO
-						//参数部分未修改
-						url: '/pages/data/questionsDetails/questionsDetails?' + 'feedback=' + JSON.stringify(item),
+						url: '/pages/data/questionsDetails/questionsDetails?id=' + item.id,
 						success: res => {},
 						fail: () => {},
 						complete: () => {}
