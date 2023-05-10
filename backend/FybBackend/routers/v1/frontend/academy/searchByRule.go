@@ -24,12 +24,30 @@ func SearchByRule(e *gin.Engine) {
 		region := m["region"]
 		level := m["level"]
 		_type := m["type"]
+
+		requestBody := map[string]interface{}{
+			"region": region,
+			"level":  level,
+			"type":   _type,
+		}
+
+		if region == "院校地区" {
+			delete(requestBody, "region")
+		}
+		if level == "院校层次" {
+			delete(requestBody, "level")
+		}
+		if _type == "院校类型" {
+			delete(requestBody, "type")
+		}
+
 		var responseBody []fybDatabase.Academy
 		var count int64
-		err, responseBody, count = fybDatabase.SearchAcademyByRegionLevelType(db, region.(string), level.(string), _type.(string))
+		err, responseBody, count = fybDatabase.SearchAcademyByRegionLevelType(db, requestBody)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
+
 		if count > 0 && result.ErrorOrNil() == nil {
 			context.JSON(http.StatusOK, gin.H{
 				"code":    200,

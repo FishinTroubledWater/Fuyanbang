@@ -1,0 +1,27 @@
+/* 全局样式表 */
+html,body,#app {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "PingFang SC";
+}
+.round15{
+    border-radius: 15px;
+}
+.mg{
+    margin: 10px;
+}
+.pd{
+    padding: 10px;
+}
+.whiteback{
+    background-color: #fff;
+}
+.setcenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mg_b20{
+    margin-bottom: 20px;
+}
