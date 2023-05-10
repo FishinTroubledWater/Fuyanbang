@@ -293,7 +293,7 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				
 				}).then(res => {
 				    console.log(res.data.data);
-					_this.sendMes = res.data.data;
+					_this.sendMes = res.data.data[0];
 				}).catch(err => {
 					
 				})
