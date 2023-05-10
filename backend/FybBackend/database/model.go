@@ -75,17 +75,17 @@ type Part struct {
 	PartName string `gorm:"column:partName"`
 }
 type Post struct {
-	ID          int64     `gorm:"column:ID;primaryKey"`
-	Summary     string    `gorm:"column:summary"`
+	ID      int64  `gorm:"column:ID;primaryKey"`
+	Summary string `gorm:"column:shTime"`
+	State   string `gorm:"column:state"`
+
+	Author      User      `gorm:"foreignKey:AuthorID"`
+	PostImgs    []PostImg `gorm:"foreignKeyummary"`
 	PartID      int64     `gorm:"column:partID"`
 	AuthorID    int64     `gorm:"column:authorID"`
 	Favorite    int64     `gorm:"column:favorite"`
 	Like        int64     `gorm:"column:like"`
-	PublishTime time.Time `gorm:"column:publishTime"`
-	State       string    `gorm:"column:state"`
-
-	Author   User      `gorm:"foreignKey:AuthorID"`
-	PostImgs []PostImg `gorm:"foreignKey:PostID"`
+	PublishTime time.Time `gorm:"column:publis:PostID"`
 }
 
 type PostImg struct {
@@ -104,11 +104,11 @@ type Recipe struct {
 }
 
 type Comment struct {
-	ID          int64     `gorm:"column:ID;primaryKey"`
-	Author      string    `gorm:"column:author"`
-	Title       string    `gorm:"column:title"`
-	Content     string    `gorm:"column:content"`
-	Favorite    int64     `gorm:"column:favorite"`
-	Like        int64     `gorm:"column:like"`
-	PublishTime time.Time `gorm:"column:publishTime"`
+	ID            int64     `gorm:"column:ID;primaryKey"`
+	UserID        string    `gorm:"column:userID"`
+	Content       string    `gorm:"column:content"`
+	CommentNum    string    `gorm:"column:CommentNum"`
+	TargetPost    string    `gorm:"column:targetPost"`
+	TargetComment string    `gorm:"column:targetComment"`
+	PublishTime   time.Time `gorm:"column:publishTime"`
 }

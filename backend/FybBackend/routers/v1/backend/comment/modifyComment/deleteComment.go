@@ -22,7 +22,7 @@ func DeleteComment(e *gin.Engine, db *gorm.DB) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 		mp["ID"] = context.DefaultQuery("id", "")
-		_, err1 := fybDatabase.DeletePost(db, mp)
+		_, err1 := fybDatabase.DeleteComment(db, mp)
 		result = multierror.Append(result, err1)
 
 		code, msg := exceptionHandler.Handle(result)
