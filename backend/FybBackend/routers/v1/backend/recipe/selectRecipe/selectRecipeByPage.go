@@ -26,6 +26,7 @@ func SelectRecipeByPage(e *gin.Engine, db *gorm.DB) {
 		query := mp["query"].(string)
 		pageNum := int64(mp["pageNum"].(float64))
 		pageSize := int64(mp["pageSize"].(float64))
+
 		recipes, count, err3 := fybDatabase.SelectAllRecipeByPage(db, query, pageNum, pageSize)
 		result = multierror.Append(result, err1, err2, err3)
 

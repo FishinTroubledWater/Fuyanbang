@@ -60,7 +60,8 @@ type Major struct {
 	Name                  string `gorm:"column:name;comment:专业名称"`
 	Code                  string `gorm:"column:code;comment:专业代码"`
 	Profile               string `gorm:"column:profile;comment:专业简介"`
-	JobOrientation        string `gorm:"column:jobOrient;comment:专业就业方向"`
+	MajorDirection        string `gorm:"column:majorDirection;comment:专业培养方向"`
+	JobDirection          string `gorm:"column:jobDirection;comment:专业就业方向"`
 	JobProspect           string `gorm:"column:jobProspect;comment:专业就业前景"`
 	SubjectCategory       string `gorm:"column:subjectCategory;comment:专业学科门类"`
 	FirstLevelDiscipline  string `gorm:"column:firstLevelDiscipline;comment:专业一级学科"`

@@ -239,7 +239,9 @@ func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	var posts []Post
 	if query != "" {
 		query = query + "%"
-		db = db.Table("user").Where("account like ?", query)
+		db = db.Table("post").Joins("inner join user on post.authorID = user.id and user.account like ?", query)
+	} else {
+		db = db.Table("post")
 	}
 	db.Table("post").Count(&count)
 	err := db.Preload("Author").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
@@ -288,10 +290,10 @@ func SelectAllUserByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 		query = query + "%"
 		db = db.Table("user").Where("account like ?", query)
 	}
-	db.Count(&count)
+	db.Table("user").Count(&count)
 	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&users).Error
 	if count == 0 && err == nil {
-		return users, 0, nil
+		return users, 0, errors.New("查询的记录不存在")
 	}
 	return users, count, nil
 }

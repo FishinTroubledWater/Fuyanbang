@@ -20,7 +20,7 @@ func SelectNewsById(e *gin.Engine, db *gorm.DB) {
 		}
 		var result *multierror.Error
 		mp := make(map[string]interface{})
-		mp["ID"] = context.DefaultQuery("query", "")
+		mp["ID"] = context.DefaultQuery("id", "")
 		post, _, err1 := fybDatabase.SelectSingleNewsByCondition(db, mp)
 		result = multierror.Append(result, err1)
 
