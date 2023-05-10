@@ -3,6 +3,7 @@ package selectPost
 import (
 	fybDatabase "FybBackend/database"
 	"FybBackend/routers/v1/backend/token"
+	"FybBackend/routers/v1/exceptionHandler"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
@@ -11,6 +12,13 @@ import (
 
 func SelectPostByAccount(e *gin.Engine, db *gorm.DB) {
 	e.GET("/v1/backend/post/searchByAccount", func(context *gin.Context) {
+		if err := token.JwtVerify(context); err != nil {
+			context.JSON(403, gin.H{
+				"code":    403,
+				"message": err.Error(),
+			})
+			return
+		}
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 		account := context.DefaultQuery("account", "")
@@ -18,26 +26,20 @@ func SelectPostByAccount(e *gin.Engine, db *gorm.DB) {
 			result = multierror.Append(result, errors.New("账户输入不能为空！"))
 		}
 		mp["account"] = account
-		err1 := token.JwtVerify(context)
-		post, _, err2 := fybDatabase.SelectSinglePostByCondition(db, mp)
-		result = multierror.Append(result, err1, err2)
+		post, _, err1 := fybDatabase.SelectSinglePostByCondition(db, mp)
+		result = multierror.Append(result, err1)
 
-		code := 200
-		if result.ErrorOrNil() == nil {
+		code, msg := exceptionHandler.Handle(result)
+		if code == 200 {
 			context.JSON(code, gin.H{
 				"code":    code,
 				"message": "get userInfoList success!",
 				"data":    post,
 			})
 		} else {
-			if err1 != nil {
-				code = 403
-			} else {
-				code = 500
-			}
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": result.Error(),
+				"message": msg,
 			})
 		}
 	})
