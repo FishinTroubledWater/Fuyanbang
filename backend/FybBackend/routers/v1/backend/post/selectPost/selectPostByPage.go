@@ -26,13 +26,11 @@ func SelectPostByPage(e *gin.Engine, db *gorm.DB) {
 			context.JSON(code, gin.H{
 				"code":    code,
 				"message": "get userInfoList success!",
-				"data": struct {
-					Total   int64              `json:"total"`
-					PageNum int64              `json:"pageNum"`
-					Posts   []fybDatabase.Post `json:"posts"`
-				}{Total: count,
-					PageNum: pageNum,
-					Posts:   posts},
+				"data": map[string]interface{}{
+					"total":   count,
+					"pageNum": pageNum,
+					"posts":   posts,
+				},
 			})
 		} else {
 			if err3 != nil {

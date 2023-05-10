@@ -4,27 +4,30 @@
     <!-- 倒计时 -->
     <uni-section class="header-box" title="" sub-title="" type="">
 
-      <u-row customStyle="margin: 2px 12px">
+      <u-row customStyle="margin: 2px 14px">
         <u-col span="4">
-          <u--text :text="RemainingTime" size="40px" color="#ffffff"></u--text>
+          <u--text :text="RemainingTime" size="90rpx" color="#ffffff" class="countDown"></u--text>
         </u-col>
       </u-row>
 
       <u-row customStyle="margin: 2px">
-        <u-col span="4">
+       <u-col span="3">
           <u--text></u--text>
         </u-col>
         <u-col span="4">
           <u--text></u--text>
         </u-col>
         <u-col span="4">
-          <u--text :text="ExamYear" size="16px" color="#000"></u--text>
+          <u--text :text="ExamYear" size="34rpx" color="#ffffff" class="yearDown"></u--text>
         </u-col>
       </u-row>
 
-      <u-row style="margin: 16rpx 8rpx; padding: 0rpx 12rpx;">
-        <u--text :line="2" text="满怀激情地投入到对事理的探究中来，至于建筑变成了自然而然的结果" size="13px" lineHeight="24rpx" color="#000"></u--text>
-      </u-row>
+<!--      <u-row style="margin: 16rpx 8rpx; padding: 0rpx 12rpx;">
+        <u--text :line="2" text="满怀激情地投入到对事理的探究中来，至于建筑变成了自然而然的结果" size="30rpx" lineHeight="30rpx" color="#f1f1f1"></u--text>
+      </u-row> -->
+	  <view  class="remark">
+		  满怀激情地投入到对事理的探究中来，至于建筑变成了自然而然的结果。
+	  </view>
 
       <!-- 时间轴 -->
       <view class="timeline">
@@ -37,17 +40,17 @@
     <uni-card :is-shadow="true" style="opacity: 0.6;width: 620rpx;">
       <view class="tabs-box">
         <view class="tabs-box-item" style="margin-right: 22px;">
-          <u-icon label="院校" labelPos="bottom" labelSize="20px" labelColor="#000" margin="2" size="40"
+          <u-icon label="院校" labelPos="bottom" labelSize="34rpx" labelColor="#000" margin="2" size="40"
             name="/static/home-images/academy.png" @click="gotoPage('/pages/home/academy')"></u-icon>
         </view>
 
         <view class="tabs-box-item" style="margin: 0px 22px;">
-          <u-icon label="专业" labelPos="bottom" labelSize="20px" labelColor="#000" margin="2" size="40"
+          <u-icon label="专业" labelPos="bottom" labelSize="34rpx" labelColor="#000" margin="2" size="40"
             name="/static/home-images/major.png" @click="gotoPage('/pages/home/major')"></u-icon>
         </view>
 
         <view class="tabs-box-item" style="margin-left: 22px;">
-          <u-icon label="资讯" labelPos="bottom" labelSize="20px" labelColor="#000" margin="2" size="40"
+          <u-icon label="资讯" labelPos="bottom" labelSize="34rpx" labelColor="#000" margin="2" size="40"
             name="/static/home-images/news.png" @click="gotoPage('/pages/home/news')"></u-icon>
         </view>
       </view>
@@ -55,8 +58,7 @@
 
     <!-- 动态 -->
     <view class="trends-box">
-      <view class="trends-box-title">最新动态
-      </view>
+      <view class="trends-box-title">最新动态</view>
       <u-line color="#000000"></u-line>
       <u-list @scrolltolower="scrolltolower">
         <u-list-item v-for="(item, index) in indexList" :key="index">
@@ -242,7 +244,7 @@
 
   /* 时间轴 */
   .timeline {
-    margin: 24rpx 0rpx;
+    margin: 34rpx 0rpx;
   }
 
   /* 标签栏样式 */
@@ -265,13 +267,34 @@
   }
 
   .trends-box-title {
-    margin: 6rpx 16rpx;
-    font-size: 24rpx;
-    color: #454545;
+/*    margin: 6rpx 16rpx; */
+	margin-left: 40rpx;
+	margin-bottom: 20rpx;
+    font-size: 34rpx;
+    color: #3F3F3F;
+	font-weight: 700;
+/* 	font-family: "思源黑体"; */
   }
 
   .trends-box-item {
     opacity: 0.8;
     width: 680rpx;
+  }
+  .countDown{
+	  width: 300rpx;
+	  font-family: "思源黑体";
+  }
+  .yearDown{
+	  width: 300rpx;
+	  font-family: "思源黑体";
+	  font-size: 32rpx;
+  }
+  .remark{
+	  margin-top: 50rpx;
+	  margin-left: 25rpx;
+	  width: 500rpx;
+	  color: #f5f5f5;
+	  font-size: 28rpx;
+	  font-family: "思源黑体";
   }
 </style>

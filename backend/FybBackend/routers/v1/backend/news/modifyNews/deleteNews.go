@@ -1,4 +1,4 @@
-package modifyPost
+package modifyNews
 
 import (
 	fybDatabase "FybBackend/database"
