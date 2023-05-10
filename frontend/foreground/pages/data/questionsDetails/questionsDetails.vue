@@ -42,11 +42,11 @@
 					queId: '123456',
 					summary: `<p>露从今夜白</p>
 					<img src="../../static/background/activityDetails.png" />`,
-					isImage: true,
-					img: ['../../../static/background/activityDetails.png',
-						'../../../static/background/bg1.png',
-						'../../../static/background/bg2.png'
-					],
+					// isImage: true,
+					// img: ['../../../static/background/activityDetails.png',
+					// 	'../../../static/background/bg1.png',
+					// 	'../../../static/background/bg2.png'
+					// ],
 				},
 				answer: [{
 					name: '吴彦祖',

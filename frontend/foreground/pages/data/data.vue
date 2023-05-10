@@ -25,11 +25,11 @@
 						<uni-card @click="clicknews(indexList[index].postId)" :title="indexList[index].name"
 							sub-title="教育部" :extra="indexList[index].time" :thumbnail="indexList[index].icon"
 							class="trends-box-item">
-							<!-- <u--text :lines="3" :text="indexList[index].summary"></u--text>
-								<image class="newsimage" :src="indexList[index].img[0]"></image> -->
-							<view class="u-content">
+							<u--text :lines="3" :text="indexList[index].summary"></u--text>
+								<!-- <image class="newsimage" :src="indexList[index].img[0]"></image> -->
+							<!-- <view class="u-content">
 								<u-parse :content="indexList[index].summary"></u-parse>
-							</view>
+							</view> -->
 						</uni-card>
 					</u-list-item>
 				</u-list>
@@ -42,9 +42,10 @@
 						<uni-card @click="clickquestions(questionsList[index].queId)" :title="questionsList[index].name"
 							sub-title="教育部" :extra="questionsList[index].time" :thumbnail="questionsList[index].icon"
 							class="trends-box-item">
-							<view class="u-content">
+							<u--text :lines="3" :text="questionsList[index].summary"></u--text>
+							<!-- <view class="u-content">
 								<u-parse :content="questionsList[index].summary"></u-parse>
-							</view>
+							</view> -->
 						</uni-card>
 					</u-list-item>
 				</u-list>
@@ -76,7 +77,7 @@
 						time: '2022-12-21',
 						icon: '../../static/background/activityDetails.png',
 						postId: '123456',
-						summary: '<p>露从今夜白，月是故乡明</p>',
+						summary: '第一条',
 						isImage: true,
 						img: ['../../static/background/activityDetails.png',
 							'../../static/background/activityDetails.png',
@@ -87,10 +88,7 @@
 						time: '2022-12-21',
 						icon: '../../static/background/activityDetails.png',
 						postId: '123457',
-						summary: `
-					<p>露从今夜白，月是故乡明</p>
-					<img src="../../static/background/activityDetails.png" />
-				`,
+						summary: '第二条',
 						isImage: true,
 						img: ['www.baidu.com',
 							'www.baidu.com',
@@ -101,112 +99,20 @@
 						time: '2022-12-21',
 						icon: '../../static/background/activityDetails.png',
 						postId: '123456',
-						summary: `
-					<p>露从今夜白，月是故乡明</p>
-					<img src="../../static/background/activityDetails.png" />
-				`,
-						isImage: true,
-						img: ['www.baidu.com',
-							'www.baidu.com',
-							'www.baidu.com'
-						]
-					}, {
-						name: '1',
-						time: '2022-12-21',
-						icon: '../../static/background/activityDetails.png',
-						postId: '123456',
-						summary: `
-					<p>露从今夜白，月是故乡明</p>
-					<img src="../../static/background/activityDetails.png" />
-				`,
-						isImage: true,
-						img: ['www.baidu.com',
-							'www.baidu.com',
-							'www.baidu.com'
-						]
-					}, {
-						name: '1',
-						time: '2022-12-21',
-						icon: '../../static/background/activityDetails.png',
-						postId: '123456',
-						summary: `
-					<p>露从今夜白，月是故乡明</p>
-					<img src="../../static/background/activityDetails.png" />
-				`,
-						isImage: true,
-						img: ['www.baidu.com',
-							'www.baidu.com',
-							'www.baidu.com'
-						]
-					}, {
-						name: '1',
-						time: '2022-12-21',
-						icon: '../../static/background/activityDetails.png',
-						postId: '123456',
-						summary: `
-					<p>露从今夜白，月是故乡明</p>
-					<img src="../../static/background/activityDetails.png" />
-				`,
-						isImage: true,
-						img: ['www.baidu.com',
-							'www.baidu.com',
-							'www.baidu.com'
-						]
-					}, {
-						name: '1',
-						time: '2022-12-21',
-						icon: '../../static/background/activityDetails.png',
-						postId: '123456',
-						summary: `
-					<p>露从今夜白，月是故乡明</p>
-					<img src="../../static/background/activityDetails.png" />
-				`,
-						isImage: true,
-						img: ['www.baidu.com',
-							'www.baidu.com',
-							'www.baidu.com'
-						]
-					}, {
-						name: '1',
-						time: '2022-12-21',
-						icon: '../../static/background/activityDetails.png',
-						postId: '123456',
-						summary: `
-					<p>露从今夜白，月是故乡明</p>
-					<img src="../../static/background/activityDetails.png" />
-				`,
-						isImage: true,
-						img: ['www.baidu.com',
-							'www.baidu.com',
-							'www.baidu.com'
-						]
-					}, {
-						name: '1',
-						time: '2022-12-21',
-						icon: '',
-						postId: '123456',
-						summary: `
-					<p>露从今夜白，月是故乡明</p>
-					<img src="../../static/background/activityDetails.png" />
-				`,
+						summary: '第三条',
 						isImage: true,
 						img: ['www.baidu.com',
 							'www.baidu.com',
 							'www.baidu.com'
 						]
 					}
-
-
 				],
 				questionsList: [{
 						name: '1',
 						time: '2022-12-21',
 						icon: '../../static/background/activityDetails.png',
 						queId: '123456',
-						summary: `
-							<p>露从今夜白</p>
-							<img src="../../static/background/activityDetails.png" />
-						`,
+						summary: '第一条',
 						isImage: true,
 						img: ['../../static/background/activityDetails.png',
 							'../../static/background/activityDetails.png',
@@ -218,10 +124,7 @@
 						time: '2022-12-21',
 						icon: '../../static/background/activityDetails.png',
 						queId: '123',
-						summary: `
-							<p>露从今夜白，月是故乡明</p>
-							<img src="../../static/background/activityDetails.png" />
-						`,
+						summary: '第二条',
 						isImage: true,
 						img: ['../../static/background/activityDetails.png',
 							'../../static/background/activityDetails.png',
