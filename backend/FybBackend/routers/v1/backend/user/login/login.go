@@ -2,7 +2,7 @@ package login
 
 import (
 	fybDatabase "FybBackend/database"
-	"FybBackend/routers/v1/backend/user/token"
+	"FybBackend/routers/v1/backend/token"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
