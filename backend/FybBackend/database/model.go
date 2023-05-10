@@ -81,13 +81,18 @@ type Part struct {
 type Post struct {
 	ID          int64     `gorm:"column:ID;primaryKey"`
 	Summary     string    `gorm:"column:summary"`
+	State       string    `gorm:"column:state"`
+	Author      User      `gorm:"foreignKey:AuthorID"`
 	PartID      int64     `gorm:"column:partID"`
 	AuthorID    int64     `gorm:"column:authorID"`
 	Favorite    int64     `gorm:"column:favorite"`
 	Like        int64     `gorm:"column:like"`
 	PublishTime time.Time `gorm:"column:publishTime"`
-	State       int64     `gorm:"column:state"`
-	Author      User      `gorm:"foreignKey:AuthorID"`
+}
+
+type PostImg struct {
+	PostID int64  `gorm:"primaryKey"`
+	Img    string `gorm:"primaryKey"`
 }
 
 type Recipe struct {
@@ -98,4 +103,14 @@ type Recipe struct {
 	Favorite    int64     `gorm:"column:favorite"`
 	Like        int64     `gorm:"column:like"`
 	PublishTime time.Time `gorm:"column:publishTime"`
+}
+
+type Comment struct {
+	ID            int64     `gorm:"column:ID;primaryKey"`
+	UserID        string    `gorm:"column:userID"`
+	Content       string    `gorm:"column:content"`
+	CommentNum    string    `gorm:"column:CommentNum"`
+	TargetPost    string    `gorm:"column:targetPost"`
+	TargetComment string    `gorm:"column:targetComment"`
+	PublishTime   time.Time `gorm:"column:publishTime"`
 }
