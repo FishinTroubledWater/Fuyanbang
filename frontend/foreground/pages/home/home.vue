@@ -58,9 +58,9 @@
 
     <!-- 动态 -->
     <view class="trends-box">
-      <view class="trends-box-title">最新动态</view>
-      <u-line color="#000000"></u-line>
-      <u-list @scrolltolower="scrolltolower">
+		<view class="trends-box-title">最新动态</view>
+		<u-line color="#000000"></u-line>
+<!--      <u-list @scrolltolower="scrolltolower">
         <u-list-item v-for="(item, index) in indexList" :key="index">
           <uni-card :is-shadow="true" :title="item.title" :sub-title="item.subTitle" :extra="item.publishTime"
             :thumbnail="item.pageImage" class="trends-box-item" @click="gotoPage('/pages/home/detail', item.id)">
@@ -68,7 +68,27 @@
           </uni-card>
         </u-list-item>
 
-      </u-list>
+      </u-list> -->
+		<u-list @scrolltolower="scrolltolower">
+			<u-list-item v-for="(item, index) in indexList" :key="index">
+				<view class="viewSaid" @click="gotoPage('/pages/home/detail', 1)">
+					<view class="title" v-if="item.title.length >= 16">{{item.title.substr(0,17)}}...</view>
+					<view class="title" v-else>{{item.title}}</view>
+				  	<view class="viewUser">
+				  		<image class="headPortrait" src="@/static/academy-icons/photo.jpg"></image>
+				  		<view class="userMes">
+				  			<text class="userName">{{item.subTitle.substr(0,10)}}</text>
+				  		</view>
+						<view class="publishTime">{{item.publishTime}}</view>
+				  	</view>
+				  	<view class="saidContent">
+				  		<view class="textContent">{{item.content.substr(0,30)}}...</view>
+				  		<image class="sights" src="@/static/academy-icons/风景.png"></image>
+				  	</view>
+				</view>
+			</u-list-item>
+		</u-list>
+		
 
     </view>
 
@@ -176,8 +196,9 @@
       uni.$u.http.get('/v1/frontend/news/detail', {
 
       }).then(res => {
-        for (var i = 0; i < res.data.data.length; i++) {
-          let tmp = res.data.data[i];
+		console.log(res.data.data)
+        for (var i = 0; i < res.data.data.newses.length; i++) {
+          let tmp = res.data.data.newses[i];
           this.indexList.push({
             id: tmp.ID,
             title: tmp.Title,
@@ -283,6 +304,7 @@
   .countDown{
 	  width: 300rpx;
 	  font-family: "思源黑体";
+	  font-weight: 700;
   }
   .yearDown{
 	  width: 300rpx;
@@ -296,5 +318,76 @@
 	  color: #f5f5f5;
 	  font-size: 28rpx;
 	  font-family: "思源黑体";
+  }
+  
+  
+  
+  
+  .viewUser{
+  	display: flex;
+  	flex-direction: row;
+  	align-items: center;
+	margin-top: 15rpx;
+  }
+  .viewSaid {
+  	height: auto;
+  	  
+  	/* 圆角 */
+  	border-radius: 18rpx;
+  	
+  	/* 边 */
+  	border: 1rpx solid #E0E3DA;
+  	/* 阴影 */
+  	box-shadow:2rpx 7rpx 0rpx #ebebeb;
+  	
+  	background-color: #ffffff;
+  	margin-left:30rpx;
+  	margin-right:30rpx;
+  	margin-top: 25rpx;
+  	
+  	/* padding使得文字和图片不至于贴着边框 */
+  	padding: 25rpx;
+  	
+  }
+  .headPortrait{
+  	height: 100rpx;
+  	width: 100rpx;
+  	border-radius: 50%;
+  }
+  .userMes {
+  	margin-left: 30rpx;
+  	display: flex;
+  	flex-direction: column;
+  }
+  .userName{
+  	font-size: 30rpx;
+  	font-family: "黑体";
+  }
+  .saidContent{
+  	display: flex;
+  	flex-direction: row;
+  	align-items: center;
+  }
+  .textContent{
+  	width: 450rpx;
+  	margin-top: 0rpx;
+  	margin-right: 20rpx;
+  	font-size: 20rpx;
+  }
+  .sights{
+  	float: right;
+  	width: 190rpx;
+  	height: 125rpx;
+  	border-radius: 18rpx;
+  }
+  .publishTime{
+	  font-size: 20rpx;
+	  color: #9A9A9A;
+	  margin-left: 40rpx;
+  }
+  .title{
+	  font-size: 36rpx;
+	  font-weight: 600;
+	  margin-left: 10rpx;
   }
 </style>

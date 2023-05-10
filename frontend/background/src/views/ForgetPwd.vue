@@ -1,5 +1,5 @@
 <template>
-<div>这是忘记密码页</div>
+  <div>这是忘记密码页</div>
 </template>
 
 <script>

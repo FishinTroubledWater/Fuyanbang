@@ -1,8 +1,9 @@
 <template>
   <view>
     <uni-card :is-shadow="true">
-      <u--text :text="title" size="24" lineHeight="24" margin="4px"></u--text>
-      <span style="margin: 16px 8px;font-size: 14px;line-height: 24px;">{{author}}</span>
+      <!-- <u--text :text="title" size="24" lineHeight="24" margin="4px" class="title"></u--text> -->
+      <view class="title">{{title}}</view>
+	  <span style="margin: 16px 8px;font-size: 14px;line-height: 24px;">{{author}}</span>
       <span style="margin-right: 16px;font-size: 14px;float: right;">{{time}}</span>
       <view class="u-content">
         <u-parse :content="content"></u-parse>
@@ -65,5 +66,11 @@
     font-size: 24rpx;
     color: #000;
     line-height: 1.6;
+  }
+  .title{
+	  font-size: 38rpx;
+	  color: #000;
+	  font-weight: 700;
+	  margin-bottom: 10rpx;
   }
 </style>
