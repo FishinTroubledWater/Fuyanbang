@@ -19,17 +19,17 @@
 			</picker>
 		</view>
 		
-		<uni-list>
-			<view  class="viewMajor" bindtap="click" @click="goProfessional">
+		<view>
+			<view  class="viewMajor" bindtap="click" @click="goProfessional(m.Code)" v-for="m in mes.list">
 				<view class="viewText">
 					<view class="majorText">
-						<text class="majorName">(010101)哲学</text>
+						<text class="majorName">({{m.Code}}){{m.Name}}</text>
 						<view class="typeOfDirection">学硕</view>
 					</view>
-					<view class="typeAndSubject">哲学-哲学</view>
+					<view class="typeAndSubject">{{m.SubjectCategory}}-{{m.FirstLevelDiscipline}}</view>
 				</view>
 			</view>
-			<view  class="viewMajor" bindtap="click" @click="goProfessional">
+<!-- 			<view  class="viewMajor" bindtap="click" @click="goProfessional">
 				<view class="viewText">
 					<view class="majorText">
 						<text class="majorName">(010101)马克思主义哲学</text>
@@ -37,9 +37,11 @@
 					</view>
 					<view class="typeAndSubject">哲学-哲学</view>
 				</view>
-			</view>
-		</uni-list>
-		
+			</view> -->
+		</view>
+<!-- 		<view v-for="t in test.substr(0,test.length).split(' ')">
+			{{t}}
+		</view> -->
 	</view>
 </template>
 
@@ -47,8 +49,8 @@
 	export default {
 		data() {
 			return {
-				array1: ['学科门类','全部','理学','工学','农学','哲学','经济学','法学','教育学','文学','历史学','医学','军事学','管理学','艺术学'],	
-				array2: ['一级学科','数学','物理','化学'],
+				array1: ['学科门类','理学','工学','农学','哲学','经济学','法学','教育学','文学','历史学','医学','军事学','管理学','艺术学'],	
+				array2: ['一级学科','数学','物理','理论经济学','哲学'],
 				array3: ['数学类型','数学一','数学二','数学三'],
 				array4: ['外语类型','英语一','英语二'],
 				index1: 0,
@@ -56,8 +58,10 @@
 				index3: 0,
 				index4: 0,
 				
+				// test: 'aaa bbb ccc',
 				active:'',
 				mes: [],
+				sendMes: [],
 				majorName: '',
 				isExist: false,
 				
@@ -80,16 +84,14 @@
 			let currPage = pages[pages.length - 1];
 			if(currPage.searchContent && currPage.searchContent != '') {
 				this.majorName = currPage.searchContent;
-				// uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+				uni.$u.http.get('/v1/frontend/major/searchByName/' + this.majorName, {
 							
-				// }).then(res => {
-				// 	this.isExist = true;
-				// 	this.mes = res.data.data;
-				// 	console.log(this.mes);
-				// }).catch(err => {
-				// 	this.mes = [];
-				// 	this.isExist = false;
-				// })
+				}).then(res => {
+					this.mes = res.data.data;
+					console.log(this.mes);
+				}).catch(err => {
+					this.mes = [];
+				})
 				console.log(this.majorName)
 				currPage.searchContent = '';
 			}
@@ -103,23 +105,89 @@
 				console.log(this.foreignLanguageType);
 				console.log(this.firstLevelDiscipline);
 				console.log(this.type);
+				uni.$u.http.post('/v1/frontend/major/searchByRule', {
+					subjectCategory: this.type,firstLevelDiscipline: this.firstLevelDiscipline,mathType: this.mathematicalType,foreignType: this.foreignLanguageType,
+				}).then(res => {
+					console.log("bbbbb")
+					this.mes = res.data.data;
+					console.log(this.mes)
+				}).catch(err => {
+					this.mes = [];
+					console.log("aaaaa")
+				})
 			},
 			bindPickerChange2: function(e) {
 				this.index2 = e.target.value;
 				this.jg = this.array2[this.index2];
 				this.firstLevelDiscipline = this.array2[this.index2];
+				uni.$u.http.post('/v1/frontend/major/searchByRule', {
+					subjectCategory: this.type,firstLevelDiscipline: this.firstLevelDiscipline,mathType: this.mathematicalType,foreignType: this.foreignLanguageType,
+				}).then(res => {
+					console.log("bbbbb")
+					this.mes = res.data.data;
+					console.log(this.mes)
+				}).catch(err => {
+					this.mes = [];
+					console.log("aaaaa")
+				})
 			},
 			bindPickerChange3: function(e) {
 				this.index3 = e.target.value;
 				this.jg = this.array3[this.index3];
 				this.mathematicalType = this.array3[this.index3];
+				uni.$u.http.post('/v1/frontend/major/searchByRule', {
+					subjectCategory: this.type,firstLevelDiscipline: this.firstLevelDiscipline,mathType: this.mathematicalType,foreignType: this.foreignLanguageType,
+				}).then(res => {
+					console.log("bbbbb")
+					this.mes = res.data.data;
+					console.log(this.mes)
+				}).catch(err => {
+					this.mes = [];
+					console.log("aaaaa")
+				})
 			},
 			bindPickerChange4: function(e) {
 				this.index4 = e.target.value;
 				this.jg = this.array4[this.index4];
 				this.foreignLanguageType = this.array4[this.index4];
+				uni.$u.http.post('/v1/frontend/major/searchByRule', {
+					subjectCategory: this.type,firstLevelDiscipline: this.firstLevelDiscipline,mathType: this.mathematicalType,foreignType: this.foreignLanguageType,
+				}).then(res => {
+					console.log("bbbbb")
+					this.mes = res.data.data;
+					console.log(this.mes)
+				}).catch(err => {
+					this.mes = [];
+					console.log("aaaaa")
+				})
 			},
-			goProfessional() {
+			goProfessional(c) {
+				var _this = this
+				uni.$u.http.get('/v1/frontend/major/detail/' + c, {
+				
+				}).then(res => {
+					console.log("ccccc");
+					console.log(res.data.data);
+					_this.sendMes = res.data.data[0];
+				}).catch(err => {
+					
+				})
+				setTimeout(function() {
+					console.log("专业详细信息：");
+					console.log(c);
+					console.log(_this.sendMes);
+					uni.$emit('code2',{ 
+						code: _this.sendMes.Code,
+						firstLevelDiscipline: _this.sendMes.FirstLevelDiscipline,
+						jobOrientation: _this.sendMes.JobOrientation,
+						JobProspect: _this.sendMes.JobProspect,
+						name: _this.sendMes.Name,
+						scoreUrl: _this.sendMes.ScoreUrl,
+						profile: _this.sendMes.Profile,
+						secondLevelDiscipline: _this.sendMes.SecondLevelDiscipline,
+						subjectCategory: _this.sendMes.SubjectCategory,
+						})
+				}, 500)
 				uni.navigateTo({
 					url: "/pages/home/professional/professional"
 				})
@@ -127,16 +195,14 @@
 		},
 		mounted() {
 			uni.$u.http.post('/v1/frontend/major/searchByRule', {
-				subjectCategory: '哲学',firstLevelDiscipline: '哲学',mathType: '数学一',foreignType: '英语一',
-				// region: '院校地区',level: '院校层次',type: '院校类型',
+				// subjectCategory: '哲学',firstLevelDiscipline: '哲学',mathType: '数学一',foreignType: '英语一',
+				subjectCategory: '学科门类',firstLevelDiscipline: '一级学科',mathType: '数学类型',foreignType: '外语类型',
 			}).then(res => {
 				console.log("bbbbb")
-				this.isExist = true;
 				this.mes = res.data.data;
 				console.log(this.mes)
 			}).catch(err => {
 				this.mes = [];
-				this.isExist = false;
 				console.log("aaaaa")
 			})
 		},

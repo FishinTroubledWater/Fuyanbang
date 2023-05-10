@@ -2,10 +2,10 @@
 	<view>
 		<view class="professionalMes">
 			<view class="viewText">
-				<text class="professionalName">(010100)哲学</text>
+				<text class="professionalName">({{this.code}}){{this.name}}</text>
 				<view class="professionalType">
-					<text class="type">门类：哲学</text>
-					<text class="firstLevelDiscipline">一级学科：哲学</text>
+					<text class="type">门类：{{this.subjectCategory}}</text>
+					<text class="firstLevelDiscipline">一级学科：{{this.firstLevelDiscipline}}</text>
 				</view>
 			</view>
 		</view>
@@ -49,7 +49,11 @@
 				isShow3: false,
 				active: '',
 				mes: [],
+				
 				code: 0,
+				subjectCategory: '',
+				name: '',
+				firstLevelDiscipline: '',
 			}
 		},
 		mounted() {
@@ -61,6 +65,15 @@
 			// 	console.log("profession内部的code是：");
 			// 	console.log(_this.code)
 			// })
+			var _this= this;
+			const on = uni.$on('code2',function(data) {
+				_this.code = data.code;
+				_this.subjectCategory = data.subjectCategory;
+				_this.name = data.name;
+				_this.firstLevelDiscipline = data.firstLevelDiscipline;
+				console.log("profession内部的code是：");
+				console.log(_this.code)
+			})
 		},
 		methods: {
 			show (value) {
@@ -116,10 +129,12 @@
 		font-size: 40rpx;
 		font-family: "思源黑体";
 		font-weight: 600;
+		margin-left: 10rpx;
 	}
 	.professionalType{
 		display: flex;
 		margin-top: 20rpx;
+		margin-left: 10rpx;
 	}
 	.type{
 		margin-top: 5rpx;
@@ -127,6 +142,8 @@
 	}
 	.firstLevelDiscipline{
 		margin-left: 30rpx;
+		margin-top: 5rpx;
+		font-size: 30rpx;
 	}
 
 	.academyBar{

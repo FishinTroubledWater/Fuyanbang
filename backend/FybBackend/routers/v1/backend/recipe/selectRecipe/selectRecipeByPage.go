@@ -1,4 +1,4 @@
-package selectPost
+package selectRecipe
 
 import (
 	fybDatabase "FybBackend/database"
@@ -10,8 +10,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func SelectPostByPage(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/post/list", func(context *gin.Context) {
+func SelectRecipeByPage(e *gin.Engine, db *gorm.DB) {
+	e.POST("/v1/backend/recipe/list", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,
@@ -26,7 +26,8 @@ func SelectPostByPage(e *gin.Engine, db *gorm.DB) {
 		query := mp["query"].(string)
 		pageNum := int64(mp["pageNum"].(float64))
 		pageSize := int64(mp["pageSize"].(float64))
-		posts, count, err3 := fybDatabase.SelectAllPostByPage(db, query, pageNum, pageSize)
+
+		recipes, count, err3 := fybDatabase.SelectAllRecipeByPage(db, query, pageNum, pageSize)
 		result = multierror.Append(result, err1, err2, err3)
 
 		code, msg := exceptionHandler.Handle(result)
@@ -37,7 +38,7 @@ func SelectPostByPage(e *gin.Engine, db *gorm.DB) {
 				"data": map[string]interface{}{
 					"total":   count,
 					"pageNum": pageNum,
-					"posts":   posts,
+					"recipes": recipes,
 				},
 			})
 		} else {

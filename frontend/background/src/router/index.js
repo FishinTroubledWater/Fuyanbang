@@ -3,12 +3,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import UserView from "@/views/UserView";
-import ContentView from "@/views/ContentView";
 import RecipeView from "@/views/RecipeView";
-import TrendsView from "@/views/TrendsView";
 import CommentView from "@/views/CommentView";
 import FeedBackView from "@/views/FeedBackView";
 import DashBoard from "@/components/DashBoard";
+import NewsView from "@/views/NewsView";
+import PostView from "@/views/PostView";
+import ForgetPwd from "@/views/ForgetPwd";
 
 
 Vue.use(VueRouter)
@@ -41,14 +42,14 @@ const router = new VueRouter({
                     component: RecipeView,
                 },
                 {
-                    path: '/content',
-                    name: 'content',
-                    component: ContentView,
+                    path: '/post',
+                    name: 'post',
+                    component: PostView,
                 },
                 {
-                    path: '/trends',
-                    name: 'trends',
-                    component: TrendsView,
+                    path: '/news',
+                    name: 'news',
+                    component: NewsView,
                 },
                 {
                     path: '/user',
@@ -60,15 +61,17 @@ const router = new VueRouter({
                     name: 'dashBoard',
                     component: DashBoard,
                 },
+                {
+                    path: '/about',
+                    name: 'about',
+                    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+                },
             ]
         },
         {
-            path: '/about',
-            name: 'about',
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
-            component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+            path: '/forget',
+            name: 'forget',
+            component: ForgetPwd,
         },
         {
             path: "/",
@@ -79,7 +82,7 @@ const router = new VueRouter({
 
 // 挂载路由导航守卫
 router.beforeEach((to,from,next)=>{
-    if(to.path==='/login') return next();
+    if(to.path==='/login' || to.path==='/forget') return next();
     const tokenStr =window.sessionStorage.getItem('token')
     if(!tokenStr) return next('/login')
     next()

@@ -1,4 +1,4 @@
-package selectPost
+package selectComment
 
 import (
 	fybDatabase "FybBackend/database"
@@ -10,8 +10,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func SelectPostByPage(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/post/list", func(context *gin.Context) {
+func SelectCommentByPage(e *gin.Engine, db *gorm.DB) {
+	e.POST("/v1/backend/comment/list", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,

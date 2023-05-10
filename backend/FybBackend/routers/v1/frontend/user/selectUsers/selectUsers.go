@@ -3,6 +3,7 @@ package selectUsers
 import (
 	fybDatabase "FybBackend/database"
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
@@ -17,10 +18,10 @@ func SelectUsers(e *gin.Engine, db *gorm.DB) {
 		err2 := json.Unmarshal(b, &mp)
 		users, count, err3 := fybDatabase.SelectAllUserByCondition(db, mp)
 		result = multierror.Append(result, err1, err2, err3)
-
+		code := 200
 		if result.ErrorOrNil() == nil {
-			context.JSON(200, gin.H{
-				"code":    200,
+			context.JSON(code, gin.H{
+				"code":    code,
 				"message": "get userInfoList success!",
 				"data": map[string]interface{}{
 					"count": count,
@@ -28,10 +29,18 @@ func SelectUsers(e *gin.Engine, db *gorm.DB) {
 				},
 			})
 		} else {
-			context.JSON(404, gin.H{
-				"code":    404,
+			if err1 != nil || err2 != nil {
+				code = 403
+			} else if count == 0 {
+				code = 404
+			} else {
+				code = 500
+			}
+			context.JSON(code, gin.H{
+				"code":    code,
 				"message": result.Error(),
 			})
+			fmt.Println(result.Error())
 		}
 	})
 }

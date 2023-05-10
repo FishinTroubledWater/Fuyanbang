@@ -6,7 +6,7 @@
           <el-avatar :size="'large'" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
                      :fit="'cover'"
                      style="margin-right: 10px"></el-avatar>
-          <span>admin</span>
+          <span>预留</span>
         </el-col>
         <el-col :span="4" >
 

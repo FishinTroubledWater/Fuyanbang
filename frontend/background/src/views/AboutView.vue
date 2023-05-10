@@ -1,13 +1,14 @@
 <template>
   <div class="about">
     <Table :table-data="userList" :columns="columns">
-      <template #default="scope">
+      <template #operation="scope">
         <el-row :gutter="20">
           <el-col :span="10"><el-button type="primary" @click="handle(scope.row)">编辑</el-button></el-col>
           <el-col :span="10"><el-button type="success">ni</el-button></el-col>
         </el-row>
       </template>
     </Table>
+    <Drawer :drawer="drawer"></Drawer>
   </div>
 </template>
 <script>
@@ -16,6 +17,7 @@
 export default {
   data() {
     return {
+      drawer: false,
       userList: [],
       queryInfo: {
         query: '',
@@ -54,6 +56,7 @@ export default {
     },
     handle(row) {
       console.log(row.Account);
+      this.drawer=true;
     },
 
   }

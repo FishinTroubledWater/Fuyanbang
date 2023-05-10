@@ -3,7 +3,7 @@ package database
 import "time"
 
 type User struct {
-	ID            int64 `gorm:"primaryKey"`
+	ID            int64 `gorm:"column:ID;primaryKey"`
 	Account       string
 	Password      string
 	PhoneNumber   string `gorm:"column:phoneNumber"`
@@ -24,7 +24,7 @@ type User struct {
 }
 
 type Admin struct {
-	ID          int64 `gorm:"primaryKey"`
+	ID          int64 `gorm:"column:ID;primaryKey"`
 	Account     string
 	Password    string
 	PhoneNumber string `gorm:"phoneNumber"`
@@ -32,7 +32,7 @@ type Admin struct {
 }
 
 type Academy struct {
-	ID       int64 `gorm:"primaryKey"`
+	ID       int64 `gorm:"column:ID;primaryKey"`
 	Name     string
 	Code     string
 	Guide    string
@@ -46,7 +46,7 @@ type Academy struct {
 }
 
 type News struct {
-	ID          int64 `gorm:"primaryKey"`
+	ID          int64 `gorm:"column:ID;primaryKey"`
 	Author      string
 	Title       string
 	Content     string
@@ -60,7 +60,8 @@ type Major struct {
 	Name                  string `gorm:"column:name;comment:专业名称"`
 	Code                  string `gorm:"column:code;comment:专业代码"`
 	Profile               string `gorm:"column:profile;comment:专业简介"`
-	JobOrientation        string `gorm:"column:jobOrient;comment:专业就业方向"`
+	MajorDirection        string `gorm:"column:majorDirection;comment:专业培养方向"`
+	JobDirection          string `gorm:"column:jobDirection;comment:专业就业方向"`
 	JobProspect           string `gorm:"column:jobProspect;comment:专业就业前景"`
 	SubjectCategory       string `gorm:"column:subjectCategory;comment:专业学科门类"`
 	FirstLevelDiscipline  string `gorm:"column:firstLevelDiscipline;comment:专业一级学科"`
@@ -69,20 +70,45 @@ type Major struct {
 	ForeignType           string `gorm:"column:foreignType"`
 	MathType              string `gorm:"column:mathType"`
 }
-
+type Part struct {
+	ID       int64  `gorm:"column:ID;primaryKey"`
+	PartName string `gorm:"column:partName"`
+}
 type Post struct {
-	ID          int        `gorm:"column:ID;primaryKey"`
-	Summary     string     `gorm:"column:summary"`
-	PartID      int        `gorm:"column:partID"`
-	AuthorID    int        `gorm:"column:authorID"`
-	Favorite    int        `gorm:"column:favorite"`
-	Like        int        `gorm:"column:like"`
-	PublishTime *time.Time `gorm:"column:publishTime"`
-	State       int64      `gorm:"column:state"`
-	PostImgs    []PostImg  `gorm:"foreignKey:PostID"`
+	ID          int64     `gorm:"column:ID;primaryKey"`
+	Summary     string    `gorm:"column:summary"`
+	PartID      int64     `gorm:"column:partID"`
+	AuthorID    int64     `gorm:"column:authorID"`
+	Favorite    int64     `gorm:"column:favorite"`
+	Like        int64     `gorm:"column:like"`
+	PublishTime time.Time `gorm:"column:publishTime"`
+	State       string    `gorm:"column:state"`
+
+	Author   User      `gorm:"foreignKey:AuthorID"`
+	PostImgs []PostImg `gorm:"foreignKey:PostID"`
 }
 
 type PostImg struct {
 	PostID int64  `gorm:"primaryKey"`
 	Img    string `gorm:"primaryKey"`
+}
+
+type Recipe struct {
+	ID          int64     `gorm:"column:ID;primaryKey"`
+	Author      string    `gorm:"column:author"`
+	Title       string    `gorm:"column:title"`
+	Content     string    `gorm:"column:content"`
+	Favorite    int64     `gorm:"column:favorite"`
+	Like        int64     `gorm:"column:like"`
+	PublishTime time.Time `gorm:"column:publishTime"`
+}
+
+type Comment struct {
+	ID          int64     `gorm:"column:ID;primaryKey"`
+	Author      string    `gorm:"column:author"`
+	Title       string    `gorm:"column:title"`
+	Content     string    `gorm:"column:content"`
+	Favorite    int64     `gorm:"column:favorite"`
+	Like        int64     `gorm:"column:like"`
+	PublishTime time.Time `gorm:"column:publishTime"`
 }

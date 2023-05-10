@@ -2,8 +2,9 @@
 	<view>
 		<uni-card :title="indexList.name" sub-title="帖子详情" :extra="indexList.time" :thumbnail="indexList.icon"
 			class="trends-box-item">
-			<u--text :text="indexList.summary"></u--text>
-			<image v-for="(item, index) in indexList.img" :src="indexList.img[index]"></image>
+			<view class="u-content">
+				<u-parse :content="indexList.summary"></u-parse>
+			</view>
 
 		</uni-card>
 		<!-- <view class="content">
@@ -40,12 +41,13 @@
 					time: '2022-12-21',
 					icon: '../../../static/background/activityDetails.png',
 					postId: '123456',
-					summary: '近日，福州大学爆出，今年福大考研学生取得前所未有的成绩，尤其计算机与大数据学院，计算机与大数据学院的考研学生们表现优秀。',
-					isImage: true,
-					img: ['../../../static/background/activityDetails.png',
-						'../../../static/background/bg1.png',
-						'../../../static/background/bg2.png'
-					],
+					summary: `<p>露从今夜白</p>
+					<img src="../../static/background/activityDetails.png" />`,
+					// isImage: true,
+					// img: ['../../../static/background/activityDetails.png',
+					// 	'../../../static/background/bg1.png',
+					// 	'../../../static/background/bg2.png'
+					// ],
 				},
 				comment: [{
 					name: '吴彦祖',
