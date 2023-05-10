@@ -159,8 +159,7 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 func SelectAllPostByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
-	db.Table("post").Count(&count)
-	err := db.Table("post").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize+1, pageNum*pageSize).Find(&posts).Error
+	err := db.Preload("Author").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
 	if count == 0 && err == nil {
 		return posts, 0, nil
 	}
@@ -203,7 +202,7 @@ func SelectAllUserByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]User, in
 	var count int64 = 0
 	var users []User
 	db.Table("user").Count(&count)
-	err := db.Table("user").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize+1, pageNum*pageSize).Find(&users).Error
+	err := db.Table("user").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&users).Error
 	if count == 0 && err == nil {
 		return users, 0, nil
 	}

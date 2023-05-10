@@ -69,9 +69,12 @@ type Major struct {
 	ForeignType           string `gorm:"column:foreignType"`
 	MathType              string `gorm:"column:mathType"`
 }
-
+type Part struct {
+	ID       int64  `gorm:"column:ID;primaryKey"`
+	PartName string `gorm:"column:partName"`
+}
 type Post struct {
-	ID          int        `gorm:"column:ID;primaryKey"`
+	ID          int64      `gorm:"column:ID;primaryKey"`
 	Summary     string     `gorm:"column:summary"`
 	PartID      int        `gorm:"column:partID"`
 	AuthorID    int        `gorm:"column:authorID"`
@@ -79,7 +82,9 @@ type Post struct {
 	Like        int        `gorm:"column:like"`
 	PublishTime *time.Time `gorm:"column:publishTime"`
 	State       int64      `gorm:"column:state"`
-	PostImgs    []PostImg  `gorm:"foreignKey:PostID"`
+
+	Author   User      `gorm:"foreignKey:AuthorID"`
+	PostImgs []PostImg `gorm:"foreignKey:PostID"`
 }
 
 type PostImg struct {
