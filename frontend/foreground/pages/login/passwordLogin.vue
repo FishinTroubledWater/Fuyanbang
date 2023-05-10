@@ -44,16 +44,16 @@
 					console.log(res);
 					this.stateCode = res.statusCode;
 					this.userId = res.data.data.User.ID;
-					console.log(res.data.data.User.ID);
-					console.log(this.userId);
-					var _this= this;
-					setTimeout(function() {
-						uni.$emit('login1', {
-							userId: _this.userId,
-						})
-						console.log("已经发送id数据");
-					}, 10000)
-
+					// console.log(res.data.data.User.ID);
+					// console.log(this.userId);
+					uni.setStorage({
+						key: 'userId', // 存储值的名称
+						data: this.userId, //   将要存储的数据
+						success: res => {
+							// 成功后的回调
+							console.log(res);
+						}
+					});
 					this.toHome();
 				});
 
@@ -63,7 +63,7 @@
 					url: '../home/home'
 				})
 			},
-			toTest(){
+			toTest() {
 				uni.navigateTo({
 					url: './test'
 				})

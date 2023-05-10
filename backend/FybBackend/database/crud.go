@@ -134,7 +134,32 @@ func SelectAllNewsByCondition(db *gorm.DB, where map[string]interface{}) ([]News
 	return newses, count, err
 }
 
-// Post
+func SelectAllNewsByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]News, int64, error) {
+	var count int64 = 0
+	var newses []News
+	if query != "" {
+		query = query + "%"
+		db = db.Table("news").Where("account like ?", query)
+	}
+	db.Table("news").Count(&count)
+	err := db.Table("news").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&newses).Error
+	if count == 0 && err == nil {
+		return newses, 0, errors.New("查询的记录不存在")
+	}
+	return newses, count, err
+}
+
+func SearchAllNewInfo(db *gorm.DB) ([]Post, error) {
+	var result *multierror.Error
+	var posts []Post
+	err := db.Table("post").Preload("PostImgs").Find(&posts).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return posts, err
+}
+
+// Post ------------------------------------------------------------
 
 func DeletePost(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	var count int64 = 0
@@ -156,18 +181,22 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 	}
 	return post, count, err
 }
-func SelectAllPostByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]Post, int64, error) {
+func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
+	if query != "" {
+		query = query + "%"
+		db = db.Table("user").Where("account like ?", query)
+	}
 	db.Table("post").Count(&count)
-	err := db.Table("post").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize+1, pageNum*pageSize).Find(&posts).Error
+	err := db.Table("post").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
 	if count == 0 && err == nil {
-		return posts, 0, nil
+		return posts, 0, errors.New("查询的记录不存在")
 	}
 	return posts, count, err
 }
 
-// User
+// User ------------------------------------------------------------
 
 func SelectUserForLogin(db *gorm.DB, account string, password string) (User, int64, error) {
 	var count int64 = 0
@@ -194,20 +223,24 @@ func SelectAllUserByCondition(db *gorm.DB, where map[string]interface{}) ([]User
 	var users []User
 	err := db.Where(where).Find(&users).Count(&count).Error
 	if count == 0 {
-		return users, 0, nil
+		return users, 0, errors.New("查询的记录不存在")
 	}
 	return users, count, err
 }
 
-func SelectAllUserByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]User, int64, error) {
+func SelectAllUserByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]User, int64, error) {
 	var count int64 = 0
 	var users []User
+	if query != "" {
+		query = query + "%"
+		db = db.Table("user").Where("account like ?", query)
+	}
 	db.Table("user").Count(&count)
-	err := db.Table("user").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize+1, pageNum*pageSize).Find(&users).Error
+	err := db.Table("user").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&users).Error
 	if count == 0 && err == nil {
 		return users, 0, nil
 	}
-	return users, count, err
+	return users, count, errors.New("查询的记录不存在")
 }
 
 func AddUser(db *gorm.DB, values map[string]interface{}) (int64, error) {
@@ -230,6 +263,9 @@ func DeleteUser(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	err = db.Table("user").Delete(&user).Error
 	return count, err
 }
+
+// Admin ------------------------------------------------------------
+
 func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Admin, int64, error) {
 	var count int64 = 0
 	var admin Admin
@@ -250,14 +286,4 @@ func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, upda
 	}
 	err = db.Table("user").Where(where).Updates(update).Count(&count).Error
 	return count, err
-}
-
-func SearchAllNewInfo(db *gorm.DB) ([]Post, error) {
-	var result *multierror.Error
-	var posts []Post
-	err := db.Table("post").Preload("PostImgs").Find(&posts).Error
-	if err != nil {
-		result = multierror.Append(result, err)
-	}
-	return posts, err
 }

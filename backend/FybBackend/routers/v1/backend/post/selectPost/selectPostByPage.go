@@ -3,6 +3,7 @@ package selectPost
 import (
 	fybDatabase "FybBackend/database"
 	"FybBackend/routers/v1/backend/token"
+	"FybBackend/routers/v1/exceptionHandler"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
@@ -11,18 +12,25 @@ import (
 
 func SelectPostByPage(e *gin.Engine, db *gorm.DB) {
 	e.POST("/v1/backend/post/list", func(context *gin.Context) {
+		if err := token.JwtVerify(context); err != nil {
+			context.JSON(403, gin.H{
+				"code":    403,
+				"message": err.Error(),
+			})
+			return
+		}
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
-		err3 := token.JwtVerify(context)
+		query := mp["pageNum"].(string)
 		pageNum := int64(mp["pageNum"].(float64))
 		pageSize := int64(mp["pageSize"].(float64))
-		posts, count, err4 := fybDatabase.SelectAllPostByPage(db, pageNum, pageSize)
-		result = multierror.Append(result, err1, err2, err3, err4)
+		posts, count, err3 := fybDatabase.SelectAllPostByPage(db, query, pageNum, pageSize)
+		result = multierror.Append(result, err1, err2, err3)
 
-		code := 200
-		if result.ErrorOrNil() == nil {
+		code, msg := exceptionHandler.Handle(result)
+		if code == 200 {
 			context.JSON(code, gin.H{
 				"code":    code,
 				"message": "get userInfoList success!",
@@ -33,16 +41,9 @@ func SelectPostByPage(e *gin.Engine, db *gorm.DB) {
 				},
 			})
 		} else {
-			if err3 != nil {
-				code = 403
-			} else if err4 != nil {
-				code = 404
-			} else if err2 != nil {
-				code = 406
-			}
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": result.Error(),
+				"message": msg,
 			})
 		}
 	})
