@@ -133,6 +133,27 @@ func SelectAllNewsByCondition(db *gorm.DB, where map[string]interface{}) ([]News
 	return newses, count, err
 }
 
+func DeletePost(db *gorm.DB, where map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	var user User
+	err := db.Table("post").Where("id = ? ", where["id"]).Count(&count).Find(&user).Error
+	if count == 0 && err == nil {
+		return 0, errors.New("文章不存在")
+	}
+	err = db.Table("post").Delete(&user).Error
+	return count, err
+}
+func SelectAllPostByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]User, int64, error) {
+	var count int64 = 0
+	var users []User
+	db.Table("post").Count(&count)
+	err := db.Table("post").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize+1, pageNum*pageSize).Find(&users).Error
+	if count == 0 && err == nil {
+		return users, 0, nil
+	}
+	return users, count, err
+}
+
 func SelectUserForLogin(db *gorm.DB, account string, password string) (User, int64, error) {
 	var count int64 = 0
 	var user User

@@ -1,30 +1,32 @@
-package modify
+package modifyUser
 
 import (
 	fybDatabase "FybBackend/database"
-	"FybBackend/routers/v1/backend/user/token"
+	"FybBackend/routers/v1/backend/token"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 )
 
-func DeleteUser(e *gin.Engine, db *gorm.DB) {
-	e.DELETE("/v1/backend/user/delete", func(context *gin.Context) {
+func UpdateUser(e *gin.Engine, db *gorm.DB) {
+	e.PATCH("/v1/backend/user/update", func(context *gin.Context) {
 		var result *multierror.Error
-		mp := make(map[string]interface{})
+		mp1 := make(map[string]interface{})
+		mp2 := make(map[string]interface{})
 		b, err1 := context.GetRawData()
-		err2 := json.Unmarshal(b, &mp)
-		delete(mp, "phoneNumber")
+		err2 := json.Unmarshal(b, &mp1)
+		mp2["phoneNumber"] = mp1["phoneNumber"]
+		delete(mp1, "phoneNumber")
 		err3 := token.JwtVerify(context)
-		_, err4 := fybDatabase.DeleteUser(db, mp)
+		_, err4 := fybDatabase.UpdateSingleUserByCondition(db, mp1, mp2)
 		result = multierror.Append(result, err1, err2, err3, err4)
 
-		code := 201
+		code := 200
 		if result.ErrorOrNil() == nil {
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": "删除成功",
+				"message": "修改成功",
 			})
 		} else {
 			if err3 != nil {
