@@ -6,6 +6,8 @@ import (
 	"gorm.io/gorm"
 )
 
+// Academy
+
 func SearchAcademyByRegionLevelType(db *gorm.DB, where map[string]interface{}) (error, []Academy, int64) {
 	var result *multierror.Error
 	var academy []Academy
@@ -20,32 +22,36 @@ func SearchAcademyByRegionLevelType(db *gorm.DB, where map[string]interface{}) (
 func SearchAcademyByName(db *gorm.DB, name string) (error, []Academy, int64) {
 	var academy []Academy
 	var result error
-	err := db.Table("academy").Where("name=?", name).Find(&academy).Error
+	name = "%" + name + "%"
+	err := db.Table("academy").Where("name like ?", name).Find(&academy).Error
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
 	var count int64
-	err2 := db.Table("academy").Where("name=?", name).Find(&academy).Count(&count).Error
+	err2 := db.Table("academy").Where("name like ?", name).Find(&academy).Count(&count).Error
 	if err2 != nil {
 		result = multierror.Append(result, err2)
 	}
 	return result, academy, count
 }
 
-func SearchAcademyByCode(db *gorm.DB, code string) (error, Academy, int64) {
-	var academy Academy
+func SearchAcademyByCode(db *gorm.DB, code string) (error, []Academy, int64) {
+	var academy []Academy
 	var result error
-	err := db.Table("academy").Where("code=?", code).Find(&academy).Error
+	code = code + "%"
+	err := db.Table("academy").Where("code like ?", code).Find(&academy).Error
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
 	var count int64
-	err2 := db.Table("academy").Where("code=?", code).Find(&academy).Count(&count).Error
+	err2 := db.Table("academy").Where("code like ?", code).Find(&academy).Count(&count).Error
 	if err2 != nil {
 		result = multierror.Append(result, err2)
 	}
 	return result, academy, count
 }
+
+// Major
 
 func SelectMajorByCondition(db *gorm.DB, where map[string]interface{}) ([]Major, int64, error) {
 	var majors []Major
@@ -57,34 +63,31 @@ func SelectMajorByCondition(db *gorm.DB, where map[string]interface{}) ([]Major,
 	return majors, count, err
 }
 
-func SearchMajorByName(db *gorm.DB, name string) (error, []Academy, int64) {
-	var academy []Academy
+func SearchMajorByName(db *gorm.DB, name string) (error, []Major, int64) {
+	var majors []Major
 	var result error
-	err := db.Table("academy").Where("name=?", name).Find(&academy).Error
+	name = "%" + name + "%"
+	err := db.Table("major").Where("name like ?", name).Find(&majors).Error
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
 	var count int64
-	err2 := db.Table("academy").Where("name=?", name).Find(&academy).Count(&count).Error
+	err2 := db.Table("major").Where("name like ?", name).Find(&majors).Count(&count).Error
 	if err2 != nil {
 		result = multierror.Append(result, err2)
 	}
-	return result, academy, count
+	return result, majors, count
 }
 
-func SearchMajorByCode(db *gorm.DB, code string) (error, Academy, int64) {
-	var academy Academy
-	var result error
-	err := db.Table("academy").Where("code=?", code).Find(&academy).Error
-	if err != nil {
-		result = multierror.Append(result, err)
-	}
+func SearchMajorByCode(db *gorm.DB, code string) (error, []Major, int64) {
+	var majors []Major
+	code = code + "%"
 	var count int64
-	err2 := db.Table("academy").Where("code=?", code).Find(&academy).Count(&count).Error
-	if err2 != nil {
-		result = multierror.Append(result, err2)
+	err2 := db.Where("code like ?", code).Find(&majors).Count(&count).Error
+	if count == 0 && err2 == nil {
+		return nil, majors, 0
 	}
-	return result, academy, count
+	return err2, majors, count
 }
 
 func SearchScore(db *gorm.DB, code string) (error, Academy, int64) {
@@ -112,6 +115,8 @@ func SearchScoreByTypeFirstSecondLevel(db *gorm.DB, where map[string]interface{}
 	return result, imgUrl
 }
 
+// News
+
 func SelectSingleNewsByCondition(db *gorm.DB, where map[string]interface{}) (News, int64, error) {
 	var count int64 = 0
 	var news News
@@ -128,6 +133,41 @@ func SelectAllNewsByCondition(db *gorm.DB, where map[string]interface{}) ([]News
 	err := db.Where(where).Find(&newses).Count(&count).Error
 	return newses, count, err
 }
+
+// Post
+
+func DeletePost(db *gorm.DB, where map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	var posts Post
+	err := db.Table("post").Where("id = ? ", where["id"]).Count(&count).Find(&posts).Error
+	if count == 0 && err == nil {
+		return 0, errors.New("文章不存在")
+	}
+	err = db.Table("post").Delete(&posts).Error
+	return count, err
+}
+
+func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Post, int64, error) {
+	var count int64 = 0
+	var post Post
+	err := db.Where(where).First(&post).Count(&count).Error
+	if count == 0 {
+		return post, 0, errors.New("查询的记录不存在")
+	}
+	return post, count, err
+}
+func SelectAllPostByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]Post, int64, error) {
+	var count int64 = 0
+	var posts []Post
+	db.Table("post").Count(&count)
+	err := db.Table("post").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize+1, pageNum*pageSize).Find(&posts).Error
+	if count == 0 && err == nil {
+		return posts, 0, nil
+	}
+	return posts, count, err
+}
+
+// User
 
 func SelectUserForLogin(db *gorm.DB, account string, password string) (User, int64, error) {
 	var count int64 = 0

@@ -19,7 +19,7 @@ type User struct {
 	Balance       int64
 	College       string
 	Role          string
-	State         string
+	State         int64     `gorm:"column:state"`
 	registerTime  time.Time `gorm:"column:registerTime"`
 }
 
@@ -57,9 +57,9 @@ type News struct {
 
 type Major struct {
 	ID                    int64  `gorm:"primaryKey;comment:专业id"`
-	Name                  string `gorm:"column:_name;comment:专业名称"`
-	Code                  string `gorm:"column:_code;comment:专业代码"`
-	Profile               string `gorm:"comment:专业简介"`
+	Name                  string `gorm:"column:name;comment:专业名称"`
+	Code                  string `gorm:"column:code;comment:专业代码"`
+	Profile               string `gorm:"column:profile;comment:专业简介"`
 	JobOrientation        string `gorm:"column:jobOrient;comment:专业就业方向"`
 	JobProspect           string `gorm:"column:jobProspect;comment:专业就业前景"`
 	SubjectCategory       string `gorm:"column:subjectCategory;comment:专业学科门类"`
@@ -78,7 +78,7 @@ type Post struct {
 	Favorite    int        `gorm:"column:favorite"`
 	Like        int        `gorm:"column:like"`
 	PublishTime *time.Time `gorm:"column:publishTime"`
-	State       string     `gorm:"column:state"`
+	State       int64      `gorm:"column:state"`
 	PostImgs    []PostImg  `gorm:"foreignKey:PostID"`
 }
 

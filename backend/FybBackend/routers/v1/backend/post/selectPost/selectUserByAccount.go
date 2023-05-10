@@ -1,16 +1,16 @@
-package _select
+package selectPost
 
 import (
 	fybDatabase "FybBackend/database"
-	"FybBackend/routers/v1/backend/user/token"
+	"FybBackend/routers/v1/backend/token"
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 )
 
-func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
-	e.GET("/v1/backend/user/searchByAccount", func(context *gin.Context) {
+func SelectPostByAccount(e *gin.Engine, db *gorm.DB) {
+	e.GET("/v1/backend/post/searchByAccount", func(context *gin.Context) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 		account := context.DefaultQuery("account", "")
@@ -19,7 +19,7 @@ func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
 		}
 		mp["account"] = account
 		err1 := token.JwtVerify(context)
-		user, _, err2 := fybDatabase.SelectSingleUserByCondition(db, mp)
+		post, _, err2 := fybDatabase.SelectSinglePostByCondition(db, mp)
 		result = multierror.Append(result, err1, err2)
 
 		code := 200
@@ -27,7 +27,7 @@ func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
 			context.JSON(code, gin.H{
 				"code":    code,
 				"message": "get userInfoList success!",
-				"data":    user,
+				"data":    post,
 			})
 		} else {
 			if err1 != nil {

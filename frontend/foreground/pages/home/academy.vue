@@ -28,7 +28,7 @@
 				<view class="viewText">
 					<text class="academyName">{{m.Name}}</text>
 					<view class="academyType">
-						<view class="typeOfScoreLine">{{m.LineTtpe}}</view>
+						<view class="typeOfScoreLine">{{m.LineType}}</view>
 						<text class="typeOfInstitution">{{m.Level}}</text>
 					</view>
 				</view>
@@ -232,7 +232,7 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				console.log(this.level);
 				console.log(this.type);
 				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-					region: '北京',level: '985',type: '法学',
+					region: this.region,level: this.level,type: this.type,
 					// region: '院校地区',level: '院校层次',type: '院校类型',
 				}).then(res => {
 					console.log("bbbbb")
@@ -253,7 +253,7 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				console.log(this.level);
 				console.log(this.type);
 				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-					region: '福州',level: '985',type: '法学',
+					region: this.region,level: this.level,type: this.type,
 					// region: '院校地区',level: '院校层次',type: '院校类型',
 				}).then(res => {
 					console.log("bbbbb")
@@ -274,7 +274,7 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				console.log(this.level);
 				console.log(this.type);
 				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-					region: '福州',level: '985',type: '法学',
+					region: this.region,level: this.level,type: this.type,
 					// region: '院校地区',level: '院校层次',type: '院校类型',
 				}).then(res => {
 					console.log("bbbbb")
@@ -311,9 +311,20 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 						profile: _this.sendMes.Profile,
 						region: _this.sendMes.Region,
 						})
-				}, 300)
+				}, 500)
+				// uni.setStorage({
+				//     key: 'id',   // 存储值的名称
+				//     data: 'hello',   //   将要存储的数据
+				//     success:res => {
+				//     	// 成功后的回调
+				// 		console.log("成功传出去的数据");
+				//         console.log(res);
+				//     }
+				// });
 				uni.navigateTo({
 					url: "/pages/home/university/university?code=" + c
+					// url: "/pages/home/major"
+					// url: "/pages/home/professional/professional"
 				})
 			},
 		},
@@ -329,8 +340,8 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 			//      })
 			
 			uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-				region: '福州',level: '985',type: '法学',
-				// region: '院校地区',level: '院校层次',type: '院校类型',
+				// region: '福州',level: '985',type: '法学',
+				region: '院校地区',level: '院校层次',type: '院校类型',
 			}).then(res => {
 				console.log("bbbbb")
 				this.isExist = true;

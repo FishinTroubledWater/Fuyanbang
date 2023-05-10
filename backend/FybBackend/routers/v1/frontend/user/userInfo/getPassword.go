@@ -22,10 +22,10 @@ func GetPassword(e *gin.Engine, db *gorm.DB) {
 			context.JSON(200, gin.H{
 				"code":    200,
 				"message": "返回用户密码和邮箱成功！",
-				"data": struct {
-					Account  string
-					Password string
-				}{user.Account, user.Password},
+				"data": map[string]interface{}{
+					"account":  user.Account,
+					"password": user.Password,
+				},
 			})
 		} else {
 			context.JSON(404, gin.H{
