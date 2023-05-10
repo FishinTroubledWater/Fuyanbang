@@ -40,7 +40,7 @@ type Academy struct {
 	Belong   string
 	Logo     string
 	Level    string
-	LineType string
+	LineType string `gorm:"column:lineType"`
 	Profile  string
 	Region   string
 }
@@ -71,14 +71,15 @@ type Major struct {
 }
 
 type Post struct {
-	ID          int64     `gorm:"primaryKey;autoIncrement;comment:帖子id"`
-	Summary     string    `gorm:"type:varchar(10000);comment:帖子内容"`
-	PartID      int64     `gorm:"comment:帖子所属板块id"`
-	AuthorID    int64     `gorm:"comment:帖子作者id"`
-	Favorite    int64     `gorm:"comment:帖子收藏数"`
-	Like        int64     `gorm:"comment:帖子点赞数"`
-	PublishTime string    `gorm:"type:varchar(50);comment:帖子发表时间"`
-	PostImgs    []PostImg `gorm:"foreignKey:PostID"`
+	ID          int        `gorm:"column:ID;primaryKey"`
+	Summary     string     `gorm:"column:summary"`
+	PartID      int        `gorm:"column:partID"`
+	AuthorID    int        `gorm:"column:authorID"`
+	Favorite    int        `gorm:"column:favorite"`
+	Like        int        `gorm:"column:like"`
+	PublishTime *time.Time `gorm:"column:publishTime"`
+	State       string     `gorm:"column:state"`
+	PostImgs    []PostImg  `gorm:"foreignKey:PostID"`
 }
 
 type PostImg struct {

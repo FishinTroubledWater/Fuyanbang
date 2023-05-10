@@ -48,10 +48,11 @@
 					console.log(this.userId);
 					var _this= this;
 					setTimeout(function() {
-						uni.$emit('login', {
+						uni.$emit('login1', {
 							userId: _this.userId,
 						})
-					}, 300)
+						console.log("已经发送id数据");
+					}, 10000)
 
 					this.toHome();
 				});
@@ -60,6 +61,11 @@
 			toHome() {
 				uni.switchTab({
 					url: '../home/home'
+				})
+			},
+			toTest(){
+				uni.navigateTo({
+					url: './test'
 				})
 			},
 			toRegister() {
