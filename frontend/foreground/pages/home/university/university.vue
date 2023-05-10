@@ -66,8 +66,10 @@
 			uni.$u.http.get('/v1/frontend/academy/detail/' + this.code, {
 			
 			}).then(res => {
-			    console.log(res.data.data);
-				this.mes = res.data.data;
+				_this.mes = res.data.data[0];
+				console.log('MMMMM');
+			    console.log(_this.mes);
+				console.log('MMMMM');
 			}).catch(err => {
 			
 			})

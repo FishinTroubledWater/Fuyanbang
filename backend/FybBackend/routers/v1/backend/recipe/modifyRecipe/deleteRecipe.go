@@ -1,4 +1,4 @@
-package selectUser
+package modifyRecipe
 
 import (
 	fybDatabase "FybBackend/database"
@@ -9,8 +9,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
-	e.GET("/v1/backend/user/searchByAccount", func(context *gin.Context) {
+func DeleteRecipe(e *gin.Engine, db *gorm.DB) {
+	e.DELETE("/v1/backend/recipe/delete", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,
@@ -21,16 +21,15 @@ func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
 
 		var result *multierror.Error
 		mp := make(map[string]interface{})
-		mp["account"] = context.DefaultQuery("query", "")
-		user, _, err1 := fybDatabase.SelectSingleUserByCondition(db, mp)
+		mp["ID"] = context.DefaultQuery("id", "")
+		_, err1 := fybDatabase.DeleteRecipe(db, mp)
 		result = multierror.Append(result, err1)
 
 		code, msg := exceptionHandler.Handle(result)
 		if code == 200 {
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": "请求成功",
-				"data":    user,
+				"message": "删除成功",
 			})
 		} else {
 			context.JSON(code, gin.H{

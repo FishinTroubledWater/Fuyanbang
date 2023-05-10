@@ -3,6 +3,7 @@ package modifyUser
 import (
 	fybDatabase "FybBackend/database"
 	"FybBackend/routers/v1/backend/token"
+	"FybBackend/routers/v1/exceptionHandler"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
@@ -12,31 +13,31 @@ import (
 
 func AddUser(e *gin.Engine, db *gorm.DB) {
 	e.POST("/v1/backend/user/add", func(context *gin.Context) {
+		if err := token.JwtVerify(context); err != nil {
+			context.JSON(403, gin.H{
+				"code":    403,
+				"message": err.Error(),
+			})
+			return
+		}
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
 		mp["registerTime"] = time.Now()
-		err3 := token.JwtVerify(context)
-		_, err4 := fybDatabase.AddUser(db, mp)
-		result = multierror.Append(result, err1, err2, err3, err4)
+		_, err3 := fybDatabase.AddUser(db, mp)
+		result = multierror.Append(result, err1, err2, err3)
 
-		code := 200
-		if result.ErrorOrNil() == nil {
+		code, msg := exceptionHandler.Handle(result)
+		if code == 200 {
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": "添加用户成功",
+				"message": "添加成功",
 			})
 		} else {
-
-			if err3 != nil {
-				code = 403
-			} else {
-				code = 500
-			}
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": result.Error(),
+				"message": msg,
 			})
 		}
 	})
