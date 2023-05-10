@@ -131,23 +131,23 @@ func SelectAllNewsByCondition(db *gorm.DB, where map[string]interface{}) ([]News
 
 func DeletePost(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	var user User
-	err := db.Table("post").Where("id = ? ", where["id"]).Count(&count).Find(&user).Error
+	var posts Post
+	err := db.Table("post").Where("id = ? ", where["id"]).Count(&count).Find(&posts).Error
 	if count == 0 && err == nil {
 		return 0, errors.New("文章不存在")
 	}
-	err = db.Table("post").Delete(&user).Error
+	err = db.Table("post").Delete(&posts).Error
 	return count, err
 }
-func SelectAllPostByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]User, int64, error) {
+func SelectAllPostByPage(db *gorm.DB, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
-	var users []User
+	var posts []Post
 	db.Table("post").Count(&count)
-	err := db.Table("post").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize+1, pageNum*pageSize).Find(&users).Error
+	err := db.Table("post").Where(" id >= ? and id <= ?", (pageNum-1)*pageSize+1, pageNum*pageSize).Find(&posts).Error
 	if count == 0 && err == nil {
-		return users, 0, nil
+		return posts, 0, nil
 	}
-	return users, count, err
+	return posts, count, err
 }
 
 func SelectUserForLogin(db *gorm.DB, account string, password string) (User, int64, error) {

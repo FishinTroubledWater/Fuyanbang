@@ -18,18 +18,12 @@ func BasicUserInfo(e *gin.Engine, db *gorm.DB) {
 			context.JSON(200, gin.H{
 				"code":    200,
 				"message": "用户个人信息返回成功",
-				"data": struct {
-					Avatar    string
-					Nickname  string
-					Level     string
-					Slogan    string
-					UsageDays int
-				}{
-					Avatar:    user.AvatarUrl,
-					Nickname:  user.NickName,
-					Level:     "Lv.1",
-					Slogan:    user.Slogan,
-					UsageDays: 10,
+				"data": map[string]interface{}{
+					"avatar":   user.AvatarUrl,
+					"nickname": user.NickName,
+					"level":    "Lv.1",
+					"slogan":   user.Slogan,
+					"userDays": 10,
 				},
 			})
 		} else {

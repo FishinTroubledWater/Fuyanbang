@@ -15,13 +15,29 @@ func SearchByRule(e *gin.Engine) {
 		data, err1 := context.GetRawData()
 		var mp map[string]interface{}
 		err2 := json.Unmarshal(data, &mp)
-		majors, _, err3 := fybDatabase.SelectMajorByCondition(db, mp)
+		majors, count, err3 := fybDatabase.SelectMajorByCondition(db, mp)
 		result = multierror.Append(result, err1, err2, err3)
+		if mp["type"] == "学科门类" {
+			delete(mp, "type")
+		}
+		if mp["firstLevelDiscipline"] == "一级学科" {
+			delete(mp, "firstLevelDiscipline")
+		}
+		if mp["matchType"] == "数学类型" {
+			delete(mp, "matchType")
+		}
+
+		if mp["foreign"] == "外语类型" {
+			delete(mp, "foreign")
+		}
 		if result.ErrorOrNil() == nil {
 			context.JSON(http.StatusOK, gin.H{
 				"code":    200,
-				"message": "院校筛选成功",
-				"data":    majors,
+				"message": "专业筛选成功",
+				"data": map[string]interface{}{
+					"num":  count,
+					"list": majors,
+				},
 			})
 		} else {
 			var code int

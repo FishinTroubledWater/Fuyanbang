@@ -19,7 +19,7 @@ type User struct {
 	Balance       int64
 	College       string
 	Role          string
-	State         string
+	State         int64     `gorm:"column:state"`
 	registerTime  time.Time `gorm:"column:registerTime"`
 }
 
@@ -78,7 +78,7 @@ type Post struct {
 	Favorite    int        `gorm:"column:favorite"`
 	Like        int        `gorm:"column:like"`
 	PublishTime *time.Time `gorm:"column:publishTime"`
-	State       string     `gorm:"column:state"`
+	State       int64      `gorm:"column:state"`
 	PostImgs    []PostImg  `gorm:"foreignKey:PostID"`
 }
 

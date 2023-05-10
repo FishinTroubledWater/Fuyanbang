@@ -29,7 +29,7 @@ func SelectPostByPage(e *gin.Engine, db *gorm.DB) {
 				"data": struct {
 					Total   int64              `json:"total"`
 					PageNum int64              `json:"pageNum"`
-					Posts   []fybDatabase.User `json:"posts"`
+					Posts   []fybDatabase.Post `json:"posts"`
 				}{Total: count,
 					PageNum: pageNum,
 					Posts:   posts},
