@@ -1,12 +1,36 @@
-<template>
+<!-- <template>
 	<view class="login-page">
 		<view class="title">欢迎登录</view>
 		<form class="form" @submit.prevent="login">
 			<view class="form-item">
 				<label for="email">邮箱：</label>
-				<input type="text" id="email" v-model="email">
+				<input type="text" id="email" v-model.lazy="email" :class="{ invalid: !validEmail }">
+				<p v-if="!validEmail && email !== ''" class="error">请输入有效的电子邮件地址</p>
 			</view>
 			<view class="form-item">
+				<label for="password">密码：</label>
+				<input type="password" id="password" v-model.lazy="password" :class="{ invalid: !validPassword }">
+				<p v-if="!validPassword && password !== ''" class="error">密码必须至少为6个字符</p>
+			</view>
+			<view class="handoff">
+				<text @click="toRegister()">立即注册</text>
+				<text class="resetPassword" @click="toResetPassword()">忘记密码</text>
+			</view>
+			<view class="button">
+				<button type="submit" @click="login()" :disabled="!validEmail || !validPassword">登录</button>
+			</view>
+		</form>
+	</view>
+</template> -->
+<template>
+	<view class="login-page">
+		<view class="title">欢迎登录</view>
+		<form class="form" @submit.prevent="login" :rules="rules" ref="form1">
+			<view class="form-item" ref="item1">
+				<label for="email">邮箱：</label>
+				<input type="text" id="email" v-model="email">
+			</view>
+			<view class="form-item" ref="item1">
 				<label for="password">密码：</label>
 				<input type="password" id="password" v-model="password">
 			</view>
@@ -29,6 +53,44 @@
 				password: "",
 				stateCode: "",
 				userId: "",
+				rules: {
+					email: [
+						{
+							type: 'string',
+							required: true,
+							message: '请填写邮箱',
+							trigger: ['blur', 'change']
+						},
+						{
+							pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+							// 正则检验前先将值转为字符串
+							transform(value) {
+								return String(value);
+							},
+							message: '只能包含字母或数字',
+							trigger: ['blur', 'change']
+						},
+						{
+							min: 6,
+							max: 8,
+							message: '长度在6-8个字符之间',
+							trigger: ['blur', 'change']
+						},
+					],
+					'password': [{
+							type: 'string',
+							required: true,
+							message: '请填写密码',
+							trigger: ['blur', 'change']
+						},
+						{
+							min: 6,
+							max: 8,
+							message: '长度在6-8个字符之间',
+							trigger: ['blur', 'change']
+						},
+					]
+				},
 			};
 		},
 
@@ -42,10 +104,8 @@
 					password: this.password
 				}).then(res => {
 					console.log(res);
-					this.stateCode = res.statusCode;
+					// this.stateCode = res.statusCode;
 					this.userId = res.data.data.User.ID;
-					// console.log(res.data.data.User.ID);
-					// console.log(this.userId);
 					uni.setStorage({
 						key: 'userId', // 存储值的名称
 						data: this.userId, //   将要存储的数据
@@ -77,8 +137,25 @@
 				uni.navigateTo({
 					url: './resetPassword1'
 				})
-			}
-		}
+			},
+			validateEmail() {
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				this.validEmail = emailRegex.test(this.email);
+			},
+			validatePassword() {
+				this.validPassword = this.password.length >= 6;
+			},
+		},
+		// watch: {
+		// 	email: {
+		// 		handler: 'validateEmail',
+		// 		immediate: false,
+		// 	},
+		// 	password: {
+		// 		handler: 'validatePassword',
+		// 		immediate: false,
+		// 	},
+		// },
 	};
 </script>
 
