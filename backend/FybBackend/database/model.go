@@ -1,6 +1,8 @@
 package database
 
-import "time"
+import (
+	"time"
+)
 
 type User struct {
 	ID            int64 `gorm:"column:ID;primaryKey"`
@@ -70,28 +72,24 @@ type Major struct {
 	ForeignType           string `gorm:"column:foreignType"`
 	MathType              string `gorm:"column:mathType"`
 }
+
 type Part struct {
 	ID       int64  `gorm:"column:ID;primaryKey"`
 	PartName string `gorm:"column:partName"`
 }
+
 type Post struct {
 	ID          int64     `gorm:"column:ID;primaryKey"`
 	Summary     string    `gorm:"column:summary"`
-	PartID      int       `gorm:"column:partID"`
-	AuthorID    int       `gorm:"column:authorID"`
-	Favorite    int       `gorm:"column:favorite"`
-	Like        int       `gorm:"column:like"`
+	PartID      int64     `gorm:"column:partID"`
+	AuthorID    int64     `gorm:"column:authorID"`
+	Favorite    int64     `gorm:"column:favorite"`
+	Like        int64     `gorm:"column:like"`
 	PublishTime time.Time `gorm:"column:publishTime"`
 	State       int64     `gorm:"column:state"`
-
-	Author   User      `gorm:"foreignKey:AuthorID"`
-	PostImgs []PostImg `gorm:"foreignKey:PostID"`
+	Author      User      `gorm:"foreignKey:AuthorID"`
 }
 
-type PostImg struct {
-	PostID int64  `gorm:"primaryKey"`
-	Img    string `gorm:"primaryKey"`
-}
 type Recipe struct {
 	ID          int64     `gorm:"column:ID;primaryKey"`
 	Author      string    `gorm:"column:author"`

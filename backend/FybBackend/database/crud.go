@@ -205,7 +205,7 @@ func SelectAllNewsByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 func SearchAllNewInfo(db *gorm.DB) ([]Post, error) {
 	var result *multierror.Error
 	var posts []Post
-	err := db.Table("news").Preload("PostImgs").Find(&posts).Error
+	err := db.Preload("Author").Find(&posts).Error
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
