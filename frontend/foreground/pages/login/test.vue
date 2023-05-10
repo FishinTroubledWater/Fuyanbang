@@ -133,11 +133,20 @@
 		layout: 'blank',
 		mounted() {
 			console.log("执行onLoad（）");
-			var _this = this;
-			const on = uni.$on('login1', function(data) {
-				_this.id = data.userId;
-				console.log("用户id是：");
-				console.log(_this.id)
+			// var _this = this;
+			// const on = uni.$on('login1', function(data) {
+			// 	_this.id = data.userId;
+			// 	console.log("用户id是：");
+			// 	console.log(_this.id)
+			// })
+			uni.getStorage({
+				key:'userId',   // 储存在本地的变量名
+				success:res => {
+					// 成功后的回调
+					console.log(res.data);   // hello  这里可做赋值的操作
+					this.id=res.data;
+					console.log(this.id)
+				}
 			})
 			console.log("执行onLoad（）");
 		},
