@@ -3,6 +3,7 @@ package routers
 import (
 	"FybBackend/routers/v1/frontend/academy"
 	"FybBackend/routers/v1/frontend/circle"
+	"FybBackend/routers/v1/frontend/major"
 	"FybBackend/routers/v1/frontend/news"
 	"FybBackend/routers/v1/frontend/user/login"
 	"FybBackend/routers/v1/frontend/user/register"
@@ -13,19 +14,31 @@ import (
 )
 
 func InitFrontend(r *gin.Engine, db *gorm.DB) {
-	academy.SearchByRule(r)
-	login.PasswordLogin(r, db)
+	//user
 	selectUsers.SelectUsers(r, db)
 	userInfo.BasicUserInfo(r, db)
 	userInfo.Settings(r, db)
-	news.NewsInfo(r, db)
-	news.NewsDetail(r, db)
-	academy.SearchByName(r)
-	academy.SelectAcademyByCode(r)
-	academy.SelectScoreByTypeFirstSecondLevel(r)
-	register.UserRegister(r, db)
-	circle.SearchByName(r)
 	userInfo.ResetPassword(r, db)
 	userInfo.GetPassword(r, db)
 	userInfo.AccountSecurity(r, db)
+	login.PasswordLogin(r, db)
+	register.UserRegister(r, db)
+
+	//news
+	news.NewsInfo(r, db)
+	news.NewsDetail(r, db)
+
+	//major
+	major.SearchByRule(r, db)
+	major.SearchByName(r, db)
+	major.SelectMajorByCode(r, db)
+	//academy
+	academy.SearchByName(r)
+	academy.SelectAcademyByCode(r)
+	academy.SelectScoreByTypeFirstSecondLevel(r)
+	academy.SearchByRule(r)
+
+	//circle
+	circle.SearchByName(r)
+
 }

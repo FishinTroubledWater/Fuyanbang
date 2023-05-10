@@ -1,44 +1,49 @@
-package modify
+package selectNews
 
 import (
 	fybDatabase "FybBackend/database"
-	"FybBackend/routers/v1/backend/user/token"
+	"FybBackend/routers/v1/backend/token"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 )
 
-func DeleteUser(e *gin.Engine, db *gorm.DB) {
-	e.DELETE("/v1/backend/user/delete", func(context *gin.Context) {
+func SelectNewsByPage(e *gin.Engine, db *gorm.DB) {
+	e.POST("/v1/backend/post/list", func(context *gin.Context) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
-		delete(mp, "phoneNumber")
 		err3 := token.JwtVerify(context)
-		_, err4 := fybDatabase.DeleteUser(db, mp)
+		pageNum := int64(mp["pageNum"].(float64))
+		pageSize := int64(mp["pageSize"].(float64))
+		posts, count, err4 := fybDatabase.SelectAllPostByPage(db, pageNum, pageSize)
 		result = multierror.Append(result, err1, err2, err3, err4)
 
-		code := 201
+		code := 200
 		if result.ErrorOrNil() == nil {
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": "删除成功",
+				"message": "get userInfoList success!",
+				"data": map[string]interface{}{
+					"total":   count,
+					"pageNum": pageNum,
+					"posts":   posts,
+				},
 			})
 		} else {
 			if err3 != nil {
 				code = 403
 			} else if err4 != nil {
 				code = 404
-			} else {
-				code = 500
+			} else if err2 != nil {
+				code = 406
 			}
 			context.JSON(code, gin.H{
 				"code":    code,
 				"message": result.Error(),
 			})
-
 		}
 	})
 }

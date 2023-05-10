@@ -1,38 +1,44 @@
-package modify
+package selectUser
 
 import (
 	fybDatabase "FybBackend/database"
-	"FybBackend/routers/v1/backend/user/token"
+	"FybBackend/routers/v1/backend/token"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
-	"time"
 )
 
-func AddUser(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/user/add", func(context *gin.Context) {
+func SelectUsersByPage(e *gin.Engine, db *gorm.DB) {
+	e.POST("/v1/backend/user/list", func(context *gin.Context) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
-		mp["registerTime"] = time.Now()
 		err3 := token.JwtVerify(context)
-		_, err4 := fybDatabase.AddUser(db, mp)
+		pageNum := int64(mp["pageNum"].(float64))
+		pageSize := int64(mp["pageSize"].(float64))
+		users, count, err4 := fybDatabase.SelectAllUserByPage(db, pageNum, pageSize)
 		result = multierror.Append(result, err1, err2, err3, err4)
 
-		code := 201
+		code := 200
 		if result.ErrorOrNil() == nil {
 			context.JSON(code, gin.H{
 				"code":    code,
-				"message": "添加用户成功",
+				"message": "get userInfoList success!",
+				"data": map[string]interface{}{
+					"total":   count,
+					"pageNum": pageNum,
+					"users":   users,
+				},
 			})
 		} else {
-
 			if err3 != nil {
 				code = 403
-			} else {
-				code = 500
+			} else if err4 != nil {
+				code = 404
+			} else if err2 != nil {
+				code = 406
 			}
 			context.JSON(code, gin.H{
 				"code":    code,

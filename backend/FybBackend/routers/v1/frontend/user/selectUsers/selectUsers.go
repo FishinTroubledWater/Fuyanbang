@@ -22,11 +22,9 @@ func SelectUsers(e *gin.Engine, db *gorm.DB) {
 			context.JSON(200, gin.H{
 				"code":    200,
 				"message": "get userInfoList success!",
-				"data": struct {
-					Count int64
-					Users []fybDatabase.User
-				}{
-					count, users,
+				"data": map[string]interface{}{
+					"count": count,
+					"users": users,
 				},
 			})
 		} else {

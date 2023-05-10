@@ -61,6 +61,8 @@
 				majorName: '',
 				isExist: false,
 				
+				code: 0,
+				
 				mathematicalType: '数学类型',
 				foreignLanguageType: '外语类型',
 				firstLevelDiscipline: '一级学科',
@@ -125,7 +127,7 @@
 		},
 		mounted() {
 			uni.$u.http.post('/v1/frontend/major/searchByRule', {
-				type: '哲学',firstLevelDiscipline: '哲学',mathType: '数学一',foreignType: '英语一',
+				subjectCategory: '哲学',firstLevelDiscipline: '哲学',mathType: '数学一',foreignType: '英语一',
 				// region: '院校地区',level: '院校层次',type: '院校类型',
 			}).then(res => {
 				console.log("bbbbb")
@@ -137,6 +139,17 @@
 				this.isExist = false;
 				console.log("aaaaa")
 			})
+		},
+		onLoad() {
+			// uni.getStorage({
+			// 	key:'id',   // 储存在本地的变量名
+			// 	success:res => {
+			// 		// 成功后的回调
+			// 		console.log("接收到的数据"); 
+			// 		console.log(res.data);   // hello  这里可做赋值的操作
+			// 	}
+			// })
+
 		}
 	}
 </script>
