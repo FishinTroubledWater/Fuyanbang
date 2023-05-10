@@ -41,15 +41,19 @@
 
 				// 如果两次密码一致，可以在这里进行注册逻辑
 				// ...124.222.141.238
-				uni.$u.http.post('http://localhost:8088/v1/frontend/register', {
+				uni.$u.http.post('http://localhost:8088/v1/frontend/user/resetPassword', {
 					account: this.email,
 					password: this.password,
-					registerTime: this.registerTime,
 				}).then(res => {
 					console.log(res);
-					this.stateCode = res.statusCode;
+					// this.stateCode = res.statusCode;
 					this.toPasswordLogin();
 				});
+			},
+			toPasswordLogin() {
+				uni.navigateTo({
+					url: './passwordLogin'
+				})
 			}
 		}
 	};

@@ -49,7 +49,18 @@
 				isShow3: false,
 				active: '',
 				mes: [],
+				code: 0,
 			}
+		},
+		mounted() {
+			console.log("profession外部的code是：");
+			console.log(this.code)
+			var _this= this;
+			const on = uni.$on('code1',function(data) {
+				_this.code = data.codeID;
+				console.log("profession内部的code是：");
+				console.log(_this.code)
+			})
 		},
 		methods: {
 			show (value) {

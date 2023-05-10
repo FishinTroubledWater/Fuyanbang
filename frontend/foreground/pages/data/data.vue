@@ -1,13 +1,13 @@
 <template>
 	<view>
-		<text class="quanzi">圈子</text>
+		
 		<view class="tabs-box">
-			<view class="one-nav" :class="currentSwiperIndex === 0 ? 'nav-actived' : '' " @tap="swiperChange(0)">加油站
+			<view class="one-nav" style="padding: 10rpx;" :class="currentSwiperIndex === 0 ? 'nav-actived' : '' " @tap="swiperChange(0)">加油站
 			</view>
-			<view class="one-nav" :class="currentSwiperIndex === 1 ? 'nav-actived' : '' " @tap="swiperChange(1)">求解答
+			<view class="one-nav" style="padding: 10rpx;" :class="currentSwiperIndex === 1 ? 'nav-actived' : '' " @tap="swiperChange(1)">求解答
 			</view>
 		</view>
-		<swiper class="swiper-box" style="height: 1000upx" :current="currentSwiperIndex">
+		<swiper class="swiper-box" style="height: 1200upx" :current="currentSwiperIndex">
 			<swiper-item class="swiper-item sns-que">
 				<view class="topic">
 					<text class="contentTopWord">21天攒图计划招募令</text>
