@@ -237,12 +237,14 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
-	if query != "" {
-		query = query + "%"
-		db = db.Table("user").Where("account like ?", query)
-	}
+	//if query != "" {
+	//	query = query + "%"
+	//	db = db.Preload("Author", "account like ?", query)
+	//} else {
+	//	db = db.Preload("Author")
+	//}
 	db.Table("post").Count(&count)
-	err := db.Preload("Author").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
+	err := db.Preload("Author").Limit(int(pageSize)).Offset(int((pageNum-1)*pageSize)).Find(&posts, "authorID = ").Error
 	if count == 0 && err == nil {
 		return posts, 0, errors.New("查询的记录不存在")
 	}

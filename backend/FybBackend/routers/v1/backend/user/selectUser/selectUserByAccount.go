@@ -21,7 +21,7 @@ func SelectUserByAccount(e *gin.Engine, db *gorm.DB) {
 
 		var result *multierror.Error
 		mp := make(map[string]interface{})
-		mp["account"] = context.DefaultQuery("query", "")
+		mp["account"] = context.DefaultQuery("account", "")
 		user, _, err1 := fybDatabase.SelectSingleUserByCondition(db, mp)
 		result = multierror.Append(result, err1)
 

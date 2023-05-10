@@ -21,7 +21,7 @@ func SelectPostByAccount(e *gin.Engine, db *gorm.DB) {
 
 		var result *multierror.Error
 		mp := make(map[string]interface{})
-		mp["ID"] = context.DefaultQuery("query", "")
+		mp["account"] = context.DefaultQuery("account", "")
 		post, _, err1 := fybDatabase.SelectSinglePostByCondition(db, mp)
 		result = multierror.Append(result, err1)
 
