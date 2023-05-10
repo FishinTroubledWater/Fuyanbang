@@ -92,8 +92,9 @@
       uni.$u.http.get('/v1/frontend/news/detail', {
 
       }).then(res => {
-        for (var i = 0; i < res.data.data.length; i++) {
-          let tmp = res.data.data[i];
+		console.log(res.data.data.newses)
+        for (var i = 0; i < res.data.data.newses.length; i++) {
+          let tmp = res.data.data.newses[i];
           this.indexList.push({
             id: tmp.ID,
             title: tmp.Title,

@@ -4,7 +4,7 @@
 			<image class="lineImg" src="@/static/major-icons/line.png"></image>
 		</view> -->
 		<view class="imgList">
-			<image class="lineImg" :src="this.scoreUrl"></image>
+			<image class="lineImg" :src="this.scoreUrl" @click="imgClick(scoreUrl)"></image>
 <!-- 			<view v-for="m in mes.list">
 				<image class="lineImg" :src="m"></image>
 			</view> -->
@@ -36,9 +36,12 @@
 			document.getElementsByTagName('head')[0].appendChild(oMeta);
 		},
 		methods: {
-			aaa(){
-				console.log(this.scoreUrl)
-			}
+			imgClick(url){
+				console.log(url)
+				uni.previewImage({
+					urls: [url]
+				});
+			},
 		},
 		created() {
 			uni.$u.http.post('/v1/frontend/academy/score', {

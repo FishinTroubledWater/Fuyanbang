@@ -39,7 +39,9 @@
 				</view>
 			</view> -->
 		</view>
-		
+<!-- 		<view v-for="t in test.substr(0,test.length).split(' ')">
+			{{t}}
+		</view> -->
 	</view>
 </template>
 
@@ -56,6 +58,7 @@
 				index3: 0,
 				index4: 0,
 				
+				// test: 'aaa bbb ccc',
 				active:'',
 				mes: [],
 				sendMes: [],

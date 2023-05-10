@@ -129,10 +129,12 @@
 		font-size: 40rpx;
 		font-family: "思源黑体";
 		font-weight: 600;
+		margin-left: 10rpx;
 	}
 	.professionalType{
 		display: flex;
 		margin-top: 20rpx;
+		margin-left: 10rpx;
 	}
 	.type{
 		margin-top: 5rpx;
