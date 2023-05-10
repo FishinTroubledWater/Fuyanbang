@@ -115,6 +115,45 @@ func SearchScoreByTypeFirstSecondLevel(db *gorm.DB, where map[string]interface{}
 	return result, imgUrl
 }
 
+// Comment
+
+func DeleteComment(db *gorm.DB, where map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	var post Post
+	err := db.Where(where).Find(&post).Count(&count).Error
+	if count == 0 && err == nil {
+		return 0, errors.New("要删除的记录不存在")
+	}
+	err = db.Delete(&post).Error
+	return count, err
+}
+
+func SelectSingleCommentByCondition(db *gorm.DB, where map[string]interface{}) (Post, int64, error) {
+	var count int64 = 0
+	var post Post
+	err := db.Preload("Author").Where(where).First(&post).Count(&count).Error
+	if count == 0 {
+		return post, 0, errors.New("查询的记录不存在")
+	}
+	return post, count, err
+}
+func SelectAllCommentByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
+	var count int64 = 0
+	var posts []Post
+	if query != "" {
+		query = query + "%"
+		db = db.Table("post").Joins("inner join user on post.authorID = user.id and user.account like ?", query)
+	} else {
+		db = db.Table("post")
+	}
+	db.Table("post").Count(&count)
+	err := db.Preload("Author").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
+	if count == 0 && err == nil {
+		return posts, 0, errors.New("查询的记录不存在")
+	}
+	return posts, count, err
+}
+
 // Recipe
 
 func DeleteRecipe(db *gorm.DB, where map[string]interface{}) (int64, error) {
