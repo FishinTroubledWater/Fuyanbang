@@ -1,4 +1,4 @@
-package selectUser
+package selectNews
 
 import (
 	fybDatabase "FybBackend/database"
@@ -9,8 +9,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func SelectUsersByPage(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/user/list", func(context *gin.Context) {
+func SelectNewsByPage(e *gin.Engine, db *gorm.DB) {
+	e.POST("/v1/backend/post/list", func(context *gin.Context) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
@@ -18,7 +18,7 @@ func SelectUsersByPage(e *gin.Engine, db *gorm.DB) {
 		err3 := token.JwtVerify(context)
 		pageNum := int64(mp["pageNum"].(float64))
 		pageSize := int64(mp["pageSize"].(float64))
-		users, count, err4 := fybDatabase.SelectAllUserByPage(db, pageNum, pageSize)
+		posts, count, err4 := fybDatabase.SelectAllPostByPage(db, pageNum, pageSize)
 		result = multierror.Append(result, err1, err2, err3, err4)
 
 		code := 200
@@ -29,7 +29,7 @@ func SelectUsersByPage(e *gin.Engine, db *gorm.DB) {
 				"data": map[string]interface{}{
 					"total":   count,
 					"pageNum": pageNum,
-					"users":   users,
+					"posts":   posts,
 				},
 			})
 		} else {

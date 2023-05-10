@@ -11,12 +11,18 @@ import (
 )
 
 func InitBackend(r *gin.Engine, db *gorm.DB) {
+	//user
 	login.Login(r, db)
 	modifyUser.AddUser(r, db)
 	modifyUser.UpdateUser(r, db)
 	modifyUser.DeleteUser(r, db)
 	selectUser.SelectUserByAccount(r, db)
 	selectUser.SelectUsersByPage(r, db)
-	selectPost.SelectPostByPage(r, db)
+
+	//post
 	modifyPost.DeletePost(r, db)
+	selectPost.SelectPostByPage(r, db)
+	selectPost.SelectPostByAccount(r, db)
+
+	//news
 }
