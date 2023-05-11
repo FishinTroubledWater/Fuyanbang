@@ -2,6 +2,7 @@ package database
 
 import (
 	"errors"
+	"fmt"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 )
@@ -324,7 +325,12 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 	}
 	return post, count, err
 }
-
+func SelectAllPostByCondition(db *gorm.DB, where map[string]interface{}) ([]Post, int64, error) {
+	var count int64 = 0
+	var posts []Post
+	err := db.Where(where).Find(&posts).Count(&count).Error
+	return posts, count, err
+}
 func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
@@ -445,14 +451,15 @@ func SelectAllFeedbackByPage(db *gorm.DB, query string, pageNum int64, pageSize 
 	}
 	return feedbacks, count, err
 }
-func SelectAllPossByUser(db *gorm.DB, userID string) ([]Post, int64, error) {
+
+func UpdateSingleFeedbackByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	var posts []Post
-	err := db.Where("authorID = ?", userID).Find(&posts).Error
+	err := db.Table("feedback").Where(where).Count(&count).Error
 	if count == 0 && err == nil {
-		return posts, 0, errors.New("查询的记录不存在")
+		return 0, errors.New("要修改的记录不存在")
 	}
-	return posts, count, nil
+	err = db.Table("feedback").Where(where).Updates(update).Count(&count).Error
+	return count, err
 }
 
 // Admin ------------------------------------------------------------
@@ -477,4 +484,14 @@ func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, upda
 	}
 	err = db.Table("user").Where(where).Updates(update).Count(&count).Error
 	return count, err
+}
+
+// Dashboard
+
+func SelectPostNumGroupByMonth(db *gorm.DB) (map[string]interface{}, int64, error) {
+	var count int64 = 0
+	mp := make(map[string]interface{})
+	err := db.Table("post").Select("DATE_FORMAT(publishTime,'%Y%m') months").Group("months").Find(mp).Count(&count).Error
+	fmt.Println(mp)
+	return mp, count, err
 }

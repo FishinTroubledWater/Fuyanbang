@@ -10,14 +10,15 @@ import (
 func MyPoss(e *gin.Engine, db *gorm.DB) {
 	e.GET("/v1/frontend/user/myPoss", func(context *gin.Context) {
 		var result *multierror.Error
-		authorID := context.DefaultQuery("authorID", "")
-		posts, _, err := fybDatabase.SelectAllPossByUser(db, authorID)
+		mp := make(map[string]interface{})
+		mp["authorID"] = context.DefaultQuery("authorID", "")
+		posts, _, err := fybDatabase.SelectAllPostByCondition(db, mp)
 		result = multierror.Append(result, err)
 		if result.ErrorOrNil() == nil {
 
 			context.JSON(200, gin.H{
 				"code":    200,
-				"message": "用户个人信息返回成功",
+				"message": "返回我的创作成功",
 				"data":    posts,
 			})
 		} else {

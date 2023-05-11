@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"FybBackend/routers/v1/backend/feedback/selectFeedback"
 	"FybBackend/routers/v1/backend/news/modifyNews"
 	"FybBackend/routers/v1/backend/news/selectNews"
 	"FybBackend/routers/v1/backend/post/modifyPost"
@@ -41,4 +42,7 @@ func InitBackend(r *gin.Engine, db *gorm.DB) {
 	modifyRecipe.DeleteRecipe(r, db)
 	selectRecipe.SelectRecipeByPage(r, db)
 	selectRecipe.SelectRecipeByAccount(r, db)
+
+	//feedback
+	selectFeedback.SelectFeedbackByPage(r, db)
 }
