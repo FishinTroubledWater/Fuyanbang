@@ -231,7 +231,7 @@ func SelectAllNewsByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	var newses []News
 	if query != "" {
 		query = query + "%"
-		db = db.Table("news").Where("account like ?", query)
+		db = db.Table("news").Where("author like ?", query)
 	}
 	db.Table("news").Count(&count)
 	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&newses).Error
@@ -422,12 +422,29 @@ func DeleteUser(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	return count, err
 }
 
+// Feedback
+
 func AddFeedback(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
 	err := db.Table("user").Create(values).Count(&count).Error
 	return count, err
 }
 
+func SelectAllFeedbackByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Feedback, int64, error) {
+	var count int64 = 0
+	var feedbacks []Feedback
+	if query != "" {
+		query = query + "%"
+		db = db.Table("feedback").Where("account like ?", query)
+	} else {
+		db = db.Table("feedback")
+	}
+	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&feedbacks).Count(&count).Error
+	if count == 0 && err == nil {
+		return feedbacks, 0, errors.New("查询的记录不存在")
+	}
+	return feedbacks, count, err
+}
 func SelectAllPossByUser(db *gorm.DB, userID string) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
