@@ -82,7 +82,8 @@ type Post struct {
 	ID          int64     `gorm:"column:ID;primaryKey"`
 	Summary     string    `gorm:"column:summary"`
 	State       string    `gorm:"column:state"`
-	Author      User      `gorm:"foreignKey:AuthorID"`
+	Author      User      `gorm:"foreignKey:AuthorID;"`
+	Part        Part      `gorm:"foreignKey:PartID"`
 	PartID      int64     `gorm:"column:partID"`
 	AuthorID    int64     `gorm:"column:authorID"`
 	Favorite    int64     `gorm:"column:favorite"`
@@ -114,4 +115,12 @@ type Comment struct {
 	TargetComment int64     `gorm:"column:targetComment"`
 	PublishTime   time.Time `gorm:"column:publishTime"`
 	Author        User      `gorm:"foreignKey:UserID"`
+}
+
+type Feedback struct {
+	ID      int64     `gorm:"column:ID;primaryKey"`
+	UserID  string    `gorm:"column:userID"`
+	Content string    `gorm:"column:content"`
+	State   int64     `gorm:"column:state"`
+	Time    time.Time `gorm:"column:time"`
 }

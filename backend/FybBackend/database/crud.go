@@ -287,14 +287,14 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
+	var err error
 	if query != "" {
 		query = query + "%"
-		db = db.Table("post").Joins("inner join user on post.authorID = user.id and user.account like ?", query)
+		err = db.Table("post").InnerJoins("Author", ".account like ?", query).InnerJoins("Part").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
 	} else {
-		db = db.Table("post")
+		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
 	}
 	db.Table("post").Count(&count)
-	err := db.Preload("Author").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
 	if count == 0 && err == nil {
 		return posts, 0, errors.New("查询的记录不存在")
 	}
@@ -367,6 +367,22 @@ func DeleteUser(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	}
 	err = db.Delete(&user).Error
 	return count, err
+}
+
+func AddFeedback(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("user").Create(values).Count(&count).Error
+	return count, err
+}
+
+func SelectAllPossByUser(db *gorm.DB, userID string) ([]Post, int64, error) {
+	var count int64 = 0
+	var posts []Post
+	err := db.Where("authorID = ?", userID).Find(&posts).Error
+	if count == 0 && err == nil {
+		return posts, 0, errors.New("查询的记录不存在")
+	}
+	return posts, count, nil
 }
 
 // Admin ------------------------------------------------------------

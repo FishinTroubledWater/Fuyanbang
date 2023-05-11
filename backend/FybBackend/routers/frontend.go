@@ -18,10 +18,11 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	selectUsers.SelectUsers(r, db)
 	userInfo.BasicUserInfo(r, db)
 	userInfo.Settings(r, db)
-	register.UserRegister(r, db)
 	userInfo.ResetPassword(r, db)
 	userInfo.GetPassword(r, db)
 	userInfo.AccountSecurity(r, db)
+	userInfo.AddFeedback(r, db)
+	register.UserRegister(r, db)
 	login.PasswordLogin(r, db)
 
 	//news

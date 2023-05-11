@@ -14,7 +14,7 @@
 					</view>
 					<image class="sights" src="@/static/academy-icons/风景.png"></image>
 				</view>
-				<view class="readingQuantity">3317阅读</view>
+<!-- 				<view class="readingQuantity">3317阅读</view> -->
 			</view>
 			
 			<view class="viewSaid">
@@ -30,7 +30,7 @@
 					</view>
 					<image class="sights" src="@/static/academy-icons/风景.png"></image>
 				</view>
-				<view class="readingQuantity">3317阅读</view>
+<!-- 				<view class="readingQuantity">3317阅读</view> -->
 			</view>
 		</uni-list>
 	</view>
