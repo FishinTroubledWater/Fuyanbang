@@ -266,7 +266,6 @@ func SearchNewInfoComment(db *gorm.DB) (error, []Comment) {
 func AddPost(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	mp := make(map[string]interface{})
 	mp["account"] = values["account"]
-	delete(values, "account")
 	user, count, _ := SelectSingleUserByCondition(db, mp)
 	if count == 0 {
 		return 0, errors.New("要插入的记录有误")
@@ -303,7 +302,7 @@ func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	var err error
 	if query != "" {
 		query = query + "%"
-		err = db.Table("post").InnerJoins("Author", ".account like ?", query).InnerJoins("Part").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
+		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").Where("account like ?", query).Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
 	} else {
 		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
 	}
