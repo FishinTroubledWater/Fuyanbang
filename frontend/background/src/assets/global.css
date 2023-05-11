@@ -25,3 +25,6 @@ html,body,#app {
 .mg_b20{
     margin-bottom: 20px;
 }
+.ql-editor{
+    min-height: 300px;
+}

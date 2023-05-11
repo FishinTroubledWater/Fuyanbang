@@ -24,7 +24,6 @@
       </el-form-item>
       <el-row :gutter="20">
       <el-col :span="6" :offset="2"><el-checkbox v-model="loginForm.rememberMe" style="margin:0 0 25px 0;">记住密码</el-checkbox></el-col>
-        <el-col :span="6" :offset="10"><el-link ><router-link to="/forget"> 忘记密码</router-link>   </el-link ></el-col>
       </el-row>
 
       <el-form-item style="width:100%;">
@@ -77,15 +76,23 @@ export default {
   methods: {
       handleLogin() {
         this.$refs.loginForm.validate(async valid =>{
-          if(!valid) return;
-          const {data:res} = await this.axios.post('/login',this.loginForm);
-          console.log(res);
-          if(res.code !== 200) return this.$message.error('登录失败！');
-          this.$message.success('登录成功');
-          window.sessionStorage.setItem("token",res.data.token);
-          window.sessionStorage.setItem("account",res.data.account);
-          window.sessionStorage.setItem("id",res.data.id);
-          this.$router.push({path:'/home'})
+          try {
+            const response = await this.axios.post('/login', this.loginForm);
+            const res = response.data;
+            if (res.code === 200) {
+              this.$message.success('登录成功');
+              window.sessionStorage.setItem('token', res.data.token);
+              window.sessionStorage.setItem('account', res.data.account);
+              window.sessionStorage.setItem('id', res.data.id);
+              this.$router.push({ path: '/home' });
+            } else {
+              this.$message.error('登录失败！');
+            }
+          } catch (error) {
+            // 处理请求错误
+            console.error(error);
+            this.$message.error('登录失败！');
+          }
         });
     }
   }
