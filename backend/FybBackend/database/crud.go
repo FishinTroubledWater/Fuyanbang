@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
+	"time"
 )
 
 // Academy
@@ -152,6 +153,44 @@ func SelectAllCommentByPage(db *gorm.DB, query string, pageNum int64, pageSize i
 		return posts, 0, errors.New("查询的记录不存在")
 	}
 	return posts, count, err
+}
+
+func AddComments(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	var result *multierror.Error
+	mp := make(map[string]interface{})
+	mp["ID"] = values["userId"]
+	delete(values, "account")
+	user, count, err := SelectSingleUserByCondition(db, mp)
+	result = multierror.Append(result, err)
+	if count == 0 {
+		result = multierror.Append(result, errors.New("要插入的记录有误，插入的用户不存在"))
+	}
+	values["userID"] = user.ID
+	delete(mp, "ID")
+	mp["ID"] = values["postId"]
+	delete(values, "postId")
+	post, count, err := SelectSingleCommentByCondition(db, mp)
+	result = multierror.Append(result, err)
+	if count == 0 {
+		result = multierror.Append(result, errors.New("要插入的记录有误，插入的帖子不存在"))
+	}
+	values["targetPost"] = post.ID
+	values["content"] = values["comment"]
+	delete(values, "comment")
+	delete(values, "userId")
+	t1 := time.Now().Year()
+	t2 := time.Now().Month()
+	t3 := time.Now().Day()
+	t4 := time.Now().Hour()
+	t5 := time.Now().Minute()
+	t6 := time.Now().Second()
+	t7 := time.Now().Nanosecond()
+	currentTimeData := time.Date(t1, t2, t3, t4, t5, t6, t7, time.Local) //获取当前时间，返回当前时间Time
+	values["publishTime"] = currentTimeData
+	values["state"] = 0
+	err = db.Table("comment").Create(values).Count(&count).Error
+	result = multierror.Append(result, err)
+	return count, result
 }
 
 // Recipe
