@@ -1,6 +1,8 @@
 package routers
 
 import (
+	"FybBackend/routers/v1/backend/dashboard"
+	"FybBackend/routers/v1/backend/feedback/selectFeedback"
 	"FybBackend/routers/v1/backend/news/modifyNews"
 	"FybBackend/routers/v1/backend/news/selectNews"
 	"FybBackend/routers/v1/backend/post/modifyPost"
@@ -25,11 +27,15 @@ func InitBackend(r *gin.Engine, db *gorm.DB) {
 
 	//post
 	modifyPost.DeletePost(r, db)
+	modifyPost.AddPost(r, db)
+	modifyPost.CheckPost(r, db)
+	modifyPost.UpdatePost(r, db)
 	selectPost.SelectPostByPage(r, db)
 	selectPost.SelectPostByAccount(r, db)
 
 	//news
 	modifyNews.DeleteNews(r, db)
+	modifyNews.UpdateNews(r, db)
 	selectNews.SelectNewsById(r, db)
 	selectNews.SelectNewsByPage(r, db)
 
@@ -37,4 +43,10 @@ func InitBackend(r *gin.Engine, db *gorm.DB) {
 	modifyRecipe.DeleteRecipe(r, db)
 	selectRecipe.SelectRecipeByPage(r, db)
 	selectRecipe.SelectRecipeByAccount(r, db)
+
+	//feedback
+	selectFeedback.SelectFeedbackByPage(r, db)
+
+	//dashboard
+	dashboard.GetPostData(r, db)
 }

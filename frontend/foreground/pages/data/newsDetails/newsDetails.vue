@@ -10,7 +10,8 @@
 		<!-- <view class="content">
 			<textarea class="uni-title uni-common-pl" v-model="txt"></textarea>
 		</view> -->
-
+		<u-icon v-if="whetherLike==='false'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star" @click="clickLike"></u-icon>
+		<u-icon v-if="whetherLike==='true'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star-fill" @click="clickLike"></u-icon>
 		<view class="textarea_box">
 			<textarea class="textarea" placeholder="说说你的看法吧,在此处输入评论." placeholder-style="font-size:28rpx"
 				maxlength="200" @input="descInput" v-model="desc" />
@@ -20,9 +21,9 @@
 
 
 		<text style="font-size: 40rpx; font-weight: 800;">评论:</text>
-		<uni-card v-for="(item, index) in comment" :title="comment[index].name" :sub-title="comment[index].time"
-			:thumbnail="comment[index].icon" class="trends-box-item">
-			<u--text :text="comment[index].content"></u--text>
+		<uni-card v-for="(item, index) in comment" :title="item.name" :sub-title="item.time"
+			:thumbnail="item.icon" class="trends-box-item">
+			<u--text :text="item.content"></u--text>
 		</uni-card>
 	</view>
 </template>
@@ -31,35 +32,28 @@
 	export default {
 		data() {
 			return {
+				id:'',
+				postId:'0',
+				whetherLike:'false',
 				desc: '',
 				myComment: 'null',
 
 				txt: "txt",
 				academyName: '福州大学',
 				indexList: {
-					name: 'zhang',
-					time: '2022-12-21',
-					icon: '../../../static/background/activityDetails.png',
-					postId: '123456',
-					summary: `<p>露从今夜白</p>
-					<img src="../../static/background/activityDetails.png" />`,
-					// isImage: true,
-					// img: ['../../../static/background/activityDetails.png',
-					// 	'../../../static/background/bg1.png',
-					// 	'../../../static/background/bg2.png'
-					// ],
+					// name: 'zhang',
+					// time: '2022-12-21',
+					// icon: '../../../static/background/activityDetails.png',
+					// postId: '123456',
+					// summary: `<p>露从今夜白</p>
+					// <img src="../../static/background/activityDetails.png" />`,
+					// // isImage: true,
+					// // img: ['../../../static/background/activityDetails.png',
+					// // 	'../../../static/background/bg1.png',
+					// // 	'../../../static/background/bg2.png'
+					// // ],
 				},
-				comment: [{
-					name: '吴彦祖',
-					icon: '../../../static/background/bg2.png',
-					content: '评论内容',
-					time: '2022-12-21'
-				}, {
-					name: '吴彦祖',
-					icon: '../../../static/background/bg1.png',
-					content: '评论内容',
-					time: '2022-12-21'
-				}],
+				comment: [],
 
 			}
 		},
@@ -71,13 +65,38 @@
 			}
 		},
 		methods: {
+			clickLike(){
+				if(this.whetherLike==='true'){
+					this.whetherLike='false'
+				}else{
+					this.whetherLike='true'
+				}
+				
+			},
 			descInput(e) {
 				console.log(e.detail.value.length, '输入的字数')
 				this.myComment = e.detail.value
 			},
 			clickSent() {
 				console.log(this.myComment)
-				//post请求
+				uni.getStorage({
+					key:'userId',   // 储存在本地的变量名
+					success:res => {
+						// 成功后的回调
+						// console.log(res.data);   // hello  这里可做赋值的操作
+						this.id=res.data;
+						console.log(this.id)
+					}
+				})
+				uni.$u.http.post('/v1/frontend/circle/postComment', {
+					postId: this.postId,
+					userId: this.id,
+					comment: this.myComment,
+				}).then(res => {
+					console.log(res.data)
+				}).catch(err => {
+				
+				})
 
 			},
 
@@ -85,26 +104,37 @@
 
 		onLoad: function(option) {
 			console.log(option.id)
+			this.postId=option.id
 		},
 
 		mounted() {
-			uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+			uni.$u.http.get('/v1/frontend/circle/newinfoComment?postId=' + this.postId, {
 
 				}).then(res => {
-					console.log(res.data);
+					console.log(res.data.data);
+					this.comment=res.data.data;
 				}).catch(err => {
 
 				}),
-				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-					region: '福州',
-					level: '985',
-					type: '法学',
+			uni.$u.http.get('/v1/frontend/circle/newinfoDetails/' + this.postId, {
+			
 				}).then(res => {
-					console.log(res.data)
+					console.log(res.data.data);
+					this.indexList=res.data.data[0];
 				}).catch(err => {
-
+			
 				})
-		}
+				
+				// uni.$u.http.post('/v1/frontend/academy/searchByRule', {
+				// 	region: '福建',
+				// 	level: '985',
+				// 	type: '法学',
+				// }).then(res => {
+				// 	console.log(res.data)
+				// }).catch(err => {
+
+				// })
+		},
 	}
 </script>
 

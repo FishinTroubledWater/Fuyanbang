@@ -4,22 +4,48 @@
 		<form class="form" @submit.prevent="login">
 			<view class="form-item">
 				<label for="email">邮箱：</label>
-				<input type="text" id="email" v-model="email">
+				<input type="text" id="email" v-model="email" :class="{ invalid: !validEmail }">
+				<p v-if="!validEmail && email !== ''" class="error">请输入有效的电子邮件地址</p>
 			</view>
 			<view class="form-item">
 				<label for="password">密码：</label>
-				<input type="password" id="password" v-model="password">
+				<input type="password" id="password" v-model="password" :class="{ invalid: !validPassword }">
+				<p v-if="!validPassword && password !== ''" class="error">密码必须至少为6个字符</p>
 			</view>
 			<view class="handoff">
 				<text @click="toRegister()">立即注册</text>
 				<text class="resetPassword" @click="toResetPassword()">忘记密码</text>
 			</view>
 			<view class="button">
+				<!-- :disabled="!validEmail || !validPassword" -->
 				<button type="submit" @click="login()">登录</button>
 			</view>
 		</form>
 	</view>
 </template>
+<!-- <template>
+	<view class="login-page">
+		<view class="title">欢迎登录</view>
+		<form class="form" @submit.prevent="login">
+			<view class="form-item">
+				<label for="email">邮箱：</label>
+				<input type="text" id="email" v-model="email" />
+			</view>
+			<view class="form-item" ref="item1">
+				<label for="password">密码：</label>
+				<input type="password" id="password" v-model="password" />
+			</view>
+			<view class="handoff">
+				<span @click="toRegister()">立即注册</span>
+				<span class="resetPassword" @click="toResetPassword()">忘记密码</span>
+			</view>
+			<view class="button">
+				<button type="submit" :disabled="!isFormValid">登录</button>
+			</view>
+		</form>
+
+	</view>
+</template> -->
 
 <script>
 	export default {
@@ -29,23 +55,68 @@
 				password: "",
 				stateCode: "",
 				userId: "",
+				validPassword: false,
+				validEmail: false,
+				// rules: {
+				// 	email: [{
+				// 			required: true,
+				// 			message: '请输入邮箱'
+				// 		},
+				// 		{
+				// 			pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+				// 			message: '请输入正确的邮箱格式',
+				// 		},
+				// 	],
+				// 	password: [{
+				// 			required: true,
+				// 			message: '请输入密码'
+				// 		},
+				// 		{
+				// 			min: 6,
+				// 			message: '密码至少为6位'
+				// 		},
+				// 	],
+				// },
 			};
 		},
-
+		computed: {
+			isFormValid() {
+				const valid = Object.keys(this.rules).every((key) => {
+					return this.rules[key].every((rule) => {
+						if (rule.required) {
+							return !!this[key];
+						}
+						// if (rule.pattern) {
+						// 	return rule.pattern.test(this[key]);
+						// }
+						// if (rule.min) {
+						// 	return this[key].length >= rule.min;
+						// }
+					});
+				});
+				return valid;
+			},
+		},
 		methods: {
 			login() {
 				// 在这里添加登录逻辑
+				uni.showToast({
+					title: '1',
+					icon: 'none'
+				});
 				console.log("邮箱：" + this.email);
 				console.log("密码：" + this.password);
-				uni.$u.http.post('http://localhost:8088/v1/frontend/passwordLogin', {
+				uni.$u.http.post('/v1/frontend/passwordLogin', {
 					account: this.email,
 					password: this.password
 				}).then(res => {
 					console.log(res);
-					this.stateCode = res.statusCode;
+					uni.showToast({
+						title: '2',
+						icon: 'none'
+					});
+					// this.stateCode = res.statusCode;
 					this.userId = res.data.data.User.ID;
-					// console.log(res.data.data.User.ID);
-					// console.log(this.userId);
 					uni.setStorage({
 						key: 'userId', // 存储值的名称
 						data: this.userId, //   将要存储的数据
@@ -77,8 +148,25 @@
 				uni.navigateTo({
 					url: './resetPassword1'
 				})
-			}
-		}
+			},
+			validateEmail() {
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				this.validEmail = emailRegex.test(this.email);
+			},
+			validatePassword() {
+				this.validPassword = this.password.length >= 6;
+			},
+		},
+		watch: {
+			email: {
+				handler: 'validateEmail',
+				immediate: false,
+			},
+			password: {
+				handler: 'validatePassword',
+				immediate: false,
+			},
+		},
 	};
 </script>
 
@@ -136,7 +224,12 @@
 
 	.resetPassword {
 		margin-left: auto;
-
+	}
+	
+	.error {
+	color: #FF5252;
+	font-size: 12px;
+	margin-top: 5px;
 	}
 
 	label {

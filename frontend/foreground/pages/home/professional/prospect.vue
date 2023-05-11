@@ -2,10 +2,11 @@
 	<view>
 		<view class="directionText">就业方向</view>
 		<view class="directionItem">
-			<view class="Item">公务员</view>
-			<view class="Item">高级教师</view>
-			<view class="Item">编辑</view>
+			<view v-for="direction in jobOrientation.substr(0,jobOrientation.length).split(' ')">
+				<view class="Item">{{direction}}</view>
+			</view>
 		</view>
+		
 		<view class="prospectText">就业前景</view>
 <!-- 		<view class="prospectMes">
 			<text class="mesText" space="nbsp" >  论从地域方面，还是领域方面来看，哲学系毕业生分布都比较广泛，其主要就业方向有：

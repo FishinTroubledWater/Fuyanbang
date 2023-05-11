@@ -3,8 +3,16 @@
     <uni-card :is-shadow="true">
       <!-- <u--text :text="title" size="24" lineHeight="24" margin="4px" class="title"></u--text> -->
       <view class="title">{{title}}</view>
-	  <span style="margin: 16px 8px;font-size: 14px;line-height: 24px;">{{author}}</span>
-      <span style="margin-right: 16px;font-size: 14px;float: right;">{{time}}</span>
+<!-- 	  <span style="margin: 16px 8px;font-size: 14px;line-height: 24px;">{{author}}</span>
+      <span style="margin-right: 16px;font-size: 14px;float: right;">{{time}}</span> -->
+	  
+	  <view class="info">
+		  <view class="userName">
+			<u--text :lines="1" :text="this.author" color="#9A9A9A" size="30rpx" margin="0 0rpx"></u--text>
+		  </view>
+		  <view class="publishTime">{{this.time}}</view>
+	  </view>
+	  
       <view class="u-content">
         <u-parse :content="content"></u-parse>
       </view>
@@ -13,7 +21,7 @@
 </template>
 
 <script>
-  import uCard from '../../components/uni-card/uni-card.vue'
+  import uCard from '../../uni_modules/uni-card/uni-card.vue'
 
   export default {
     components: {
@@ -63,14 +71,32 @@
   /* 资讯内容 */
   .u-content {
     padding: 4rpx;
-    font-size: 24rpx;
+    font-size: 30rpx;
     color: #000;
     line-height: 1.6;
+	margin-top: 15rpx;
   }
   .title{
-	  font-size: 38rpx;
+	  font-size: 40rpx;
 	  color: #000;
 	  font-weight: 700;
 	  margin-bottom: 10rpx;
+  }
+  .info{
+	  display: flex;
+	  flex-direction: row;
+	  align-items: center;
+	  margin-top: 20rpx;
+  }
+  .userName{
+	margin-left: 10rpx;
+	display: flex;
+	flex-direction: column;
+	width: 400rpx;
+  }
+  .publishTime{
+	  font-size: 30rpx;
+	  color: #9A9A9A;
+	  margin-left: 40rpx;
   }
 </style>

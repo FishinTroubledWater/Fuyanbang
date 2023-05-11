@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
+	"time"
 )
 
 // Academy
@@ -154,6 +155,44 @@ func SelectAllCommentByPage(db *gorm.DB, query string, pageNum int64, pageSize i
 	return posts, count, err
 }
 
+func AddComments(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	var result *multierror.Error
+	mp := make(map[string]interface{})
+	mp["ID"] = values["userId"]
+	delete(values, "account")
+	user, count, err := SelectSingleUserByCondition(db, mp)
+	result = multierror.Append(result, err)
+	if count == 0 {
+		result = multierror.Append(result, errors.New("要插入的记录有误，插入的用户不存在"))
+	}
+	values["userID"] = user.ID
+	delete(mp, "ID")
+	mp["ID"] = values["postId"]
+	delete(values, "postId")
+	post, count, err := SelectSingleCommentByCondition(db, mp)
+	result = multierror.Append(result, err)
+	if count == 0 {
+		result = multierror.Append(result, errors.New("要插入的记录有误，插入的帖子不存在"))
+	}
+	values["targetPost"] = post.ID
+	values["content"] = values["comment"]
+	delete(values, "comment")
+	delete(values, "userId")
+	t1 := time.Now().Year()
+	t2 := time.Now().Month()
+	t3 := time.Now().Day()
+	t4 := time.Now().Hour()
+	t5 := time.Now().Minute()
+	t6 := time.Now().Second()
+	t7 := time.Now().Nanosecond()
+	currentTimeData := time.Date(t1, t2, t3, t4, t5, t6, t7, time.Local) //获取当前时间，返回当前时间Time
+	values["publishTime"] = currentTimeData
+	values["state"] = 0
+	err = db.Table("comment").Create(values).Count(&count).Error
+	result = multierror.Append(result, err)
+	return count, result
+}
+
 // Recipe
 
 func DeleteRecipe(db *gorm.DB, where map[string]interface{}) (int64, error) {
@@ -231,7 +270,7 @@ func SelectAllNewsByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	var newses []News
 	if query != "" {
 		query = query + "%"
-		db = db.Table("news").Where("account like ?", query)
+		db = db.Table("news").Where("author like ?", query)
 	}
 	db.Table("news").Count(&count)
 	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&newses).Error
@@ -244,14 +283,65 @@ func SelectAllNewsByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 func SearchAllNewInfo(db *gorm.DB) ([]Post, error) {
 	var result *multierror.Error
 	var posts []Post
-	err := db.Table("news").Preload("PostImgs").Find(&posts).Error
+	err := db.Preload("Author").Where("partID = ? ", 1).Find(&posts).Error
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
 	return posts, err
 }
 
+func SearchNewInfoComment(db *gorm.DB) (error, []Comment) {
+	var result *multierror.Error
+	var comments []Comment
+	err := db.Preload("Author").Find(&comments).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return result, comments
+}
+
+func SearchNewInfoDetails(db *gorm.DB, postId int64) (error, []Post) {
+	var result *multierror.Error
+	var posts []Post
+	err := db.Preload("Author").Where("Id = ? && partID = ? ", postId, 1).Find(&posts).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return result, posts
+}
+
+func UpdateSingleNewsByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("news").Where(where).Count(&count).Error
+	if count == 0 && err == nil {
+		return 0, errors.New("要修改的记录不存在")
+	}
+	err = db.Table("news").Where(where).Updates(update).Count(&count).Error
+	return count, err
+}
+
+func AddNews(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("news").Create(values).Count(&count).Error
+	return count, err
+}
+
 // Post ------------------------------------------------------------
+
+func AddPost(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	mp := make(map[string]interface{})
+	mp["account"] = values["account"]
+	delete(values, "account")
+	user, count, _ := SelectSingleUserByCondition(db, mp)
+	if count == 0 {
+		return 0, errors.New("要插入的记录有误")
+	}
+	values["authorID"] = user.ID
+	values["favorite"] = 0
+	values["like"] = 0
+	err := db.Table("post").Create(values).Count(&count).Error
+	return count, err
+}
 
 func DeletePost(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	var count int64 = 0
@@ -273,21 +363,39 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 	}
 	return post, count, err
 }
+func SelectAllPostByCondition(db *gorm.DB, where map[string]interface{}) ([]Post, int64, error) {
+	var count int64 = 0
+	var posts []Post
+	err := db.Preload("Author").Where(where).Count(&count).Error
+	return posts, count, err
+}
 func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
+	var err error
 	if query != "" {
 		query = query + "%"
-		db = db.Table("post").Joins("inner join user on post.authorID = user.id and user.account like ?", query)
+		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").
+			Where("account like ?", query).Order("state asc").Limit(int(pageSize)).
+			Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
 	} else {
-		db = db.Table("post")
+		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").
+			Order("state asc").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
 	}
-	db.Table("post").Count(&count)
-	err := db.Preload("Author").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
 	if count == 0 && err == nil {
-		return posts, 0, errors.New("查询的记录不存在")
+		return posts, 0, errors.New("要查询的记录不存在")
 	}
 	return posts, count, err
+}
+
+func UpdateSinglePostByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("post").Where(where).Count(&count).Error
+	if count == 0 && err == nil {
+		return 0, errors.New("要修改的记录不存在")
+	}
+	err = db.Table("post").Where(where).Updates(update).Count(&count).Error
+	return count, err
 }
 
 // User ------------------------------------------------------------
@@ -308,7 +416,7 @@ func SelectSingleUserByCondition(db *gorm.DB, where map[string]interface{}) (Use
 	var user User
 	err := db.Where(where).First(&user).Count(&count).Error
 	if count == 0 {
-		return user, 0, errors.New("查询的记录不存在")
+		return user, 0, errors.New("要查询的记录不存在")
 	}
 	return user, count, err
 }
@@ -317,7 +425,7 @@ func SelectAllUserByCondition(db *gorm.DB, where map[string]interface{}) ([]User
 	var users []User
 	err := db.Where(where).Find(&users).Count(&count).Error
 	if count == 0 {
-		return users, 0, errors.New("查询的记录不存在")
+		return users, 0, errors.New("要查询的记录不存在")
 	}
 	return users, count, err
 }
@@ -332,7 +440,7 @@ func SelectAllUserByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	db.Table("user").Count(&count)
 	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&users).Error
 	if count == 0 && err == nil {
-		return users, 0, errors.New("查询的记录不存在")
+		return users, 0, errors.New("要查询的记录不存在")
 	}
 	return users, count, nil
 }
@@ -341,7 +449,7 @@ func AddUser(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
 	err := db.Table("user").Where("account = ? ", values["account"]).Count(&count).Error
 	if count > 0 && err == nil {
-		return 0, errors.New("用户已存在")
+		return 0, errors.New("记录已存在")
 	}
 	err = db.Table("user").Create(values).Count(&count).Error
 	return count, err
@@ -352,10 +460,43 @@ func DeleteUser(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	var user User
 	err := db.Where(where).Find(&user).Count(&count).Error
 	if count == 0 && err == nil {
-		return 0, errors.New("用户不存在")
+		return 0, errors.New("要删除的记录不存在")
 	}
 	err = db.Delete(&user).Error
 	return count, err
+}
+
+// Feedback
+
+func AddFeedback(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("user").Create(values).Count(&count).Error
+	return count, err
+}
+
+func SelectAllFeedbackByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Feedback, int64, error) {
+	var count int64 = 0
+	var feedbacks []Feedback
+	if query != "" {
+		query = query + "%"
+		db = db.Table("feedback").Where("account like ?", query)
+	} else {
+		db = db.Table("feedback")
+	}
+	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&feedbacks).Count(&count).Error
+	if count == 0 && err == nil {
+		return feedbacks, 0, errors.New("查询的记录不存在")
+	}
+	return feedbacks, count, err
+}
+func SelectAllPossByUser(db *gorm.DB, userID string) ([]Post, int64, error) {
+	var count int64 = 0
+	var posts []Post
+	err := db.Where("authorID = ?", userID).Find(&posts).Error
+	if count == 0 && err == nil {
+		return posts, 0, errors.New("查询的记录不存在")
+	}
+	return posts, count, nil
 }
 
 // Admin ------------------------------------------------------------
@@ -380,4 +521,20 @@ func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, upda
 	}
 	err = db.Table("user").Where(where).Updates(update).Count(&count).Error
 	return count, err
+}
+
+// Que ------------------------------------------------------------
+
+func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
+	var result *multierror.Error
+	var posts []Post
+	var count int64
+	err := db.Preload("Author").Where("partID = ? && authorId = ? ", 2, userId).Find(&posts).Count(&count).Error
+	if count == 0 {
+		result = multierror.Append(result, errors.New("找不到该用户！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return count, posts, err
 }

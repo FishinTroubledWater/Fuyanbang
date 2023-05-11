@@ -1,3 +1,27 @@
+<!-- <template>
+	<view class="login-page">
+		<view class="title">欢迎登录</view>
+		<form class="form" @submit.prevent="login">
+			<view class="form-item">
+				<label for="email">邮箱：</label>
+				<input type="text" id="email" v-model.lazy="email" :class="{ invalid: !validEmail }">
+				<p v-if="!validEmail && email !== ''" class="error">请输入有效的电子邮件地址</p>
+			</view>
+			<view class="form-item">
+				<label for="password">密码：</label>
+				<input type="password" id="password" v-model.lazy="password" :class="{ invalid: !validPassword }">
+				<p v-if="!validPassword && password !== ''" class="error">密码必须至少为6个字符</p>
+			</view>
+			<view class="handoff">
+				<text @click="toRegister()">立即注册</text>
+				<text class="resetPassword" @click="toResetPassword()">忘记密码</text>
+			</view>
+			<view class="button">
+				<button type="submit" @click="login()" :disabled="!validEmail || !validPassword">登录</button>
+			</view>
+		</form>
+	</view>
+</template> -->
 <template>
 	<div class="page-register">
 		<article class="header">
