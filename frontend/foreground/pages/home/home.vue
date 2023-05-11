@@ -84,10 +84,15 @@
 						<view class="publishTime">{{item.publishTime}}</view>
 				  	</view>
 				  	<view class="saidContent">
+<<<<<<< Updated upstream
 				  		<!-- <view class="textContent">{{item.content.substr(0,30)}}...</view> -->
 						<u--text :lines="2" :text="item.content" size="24rpx" lineHeight="34rpx" margin="4rpx 6rpx" padding="0px 4px"
 						  height="94px"></u--text>
 				  		<image class="sights" src="@/static/academy-icons/风景.png"></image>
+=======
+				  		<view class="textContent">{{item.content.substr(0,30)}}...</view>
+				  		<image class="sights" src="@/static/academy-icons/sight.png"></image>
+>>>>>>> Stashed changes
 				  	</view>
 				</view>
 			</u-list-item>
@@ -106,10 +111,10 @@
 	// eslint-disable-next-line no-unused-vars
 	const axios = require('axios')
 	
-  import uCard from '../../components/uni-card/uni-card.vue'
-  import uSteps from '../../components/uni-steps/uni-steps.vue'
-  import uIcons from '../../components/uni-icons/uni-icons.vue'
-  import uSection from '../../components/uni-section/uni-section.vue'
+  import uCard from '../../uni_modules/uni-card/uni-card.vue'
+  import uSteps from '../../uni_modules/uni-steps/uni-steps.vue'
+  import uIcons from '../../uni_modules/uni-icons/uni-icons.vue'
+  import uSection from '../../uni_modules/uni-section/uni-section.vue'
 
   export default {
     components: {
@@ -203,44 +208,44 @@
     onLoad() {},
     async mounted() {
 		
-		const result = await Axios.get('http://localhost:8088/v1/frontend/news/detail', {
-		        }).then(res =>{
-		          console.log(res.data.data)
-		          for (var i = 0; i < res.data.data.newses.length; i++) {
-		            let tmp = res.data.data.newses[i];
-		            this.indexList.push({
-		              id: tmp.ID,
-		              title: tmp.Title,
-		              subTitle: tmp.Author,
-		              publishTime: uni.$u.timeFormat(tmp.PublishTime, 'yyyy年mm月dd日'),
-		              pageImage: "/static/building.png",
-		              content: tmp.Content
-		            })
-		          }
-		        }).catch(error =>{
-		          console.log(error);
-				  console.log("失败")
-		        })
+		// const result = await Axios.get('http://localhost:8088/v1/frontend/news/detail', {
+		//         }).then(res =>{
+		//           console.log(res.data.data)
+		//           for (var i = 0; i < res.data.data.newses.length; i++) {
+		//             let tmp = res.data.data.newses[i];
+		//             this.indexList.push({
+		//               id: tmp.ID,
+		//               title: tmp.Title,
+		//               subTitle: tmp.Author,
+		//               publishTime: uni.$u.timeFormat(tmp.PublishTime, 'yyyy年mm月dd日'),
+		//               pageImage: "/static/building.png",
+		//               content: tmp.Content
+		//             })
+		//           }
+		//         }).catch(error =>{
+		//           console.log(error);
+		// 		  console.log("失败")
+		//         })
 		
       // 基本用法，注意：get请求的参数以及配置项都在第二个参数中
-  //     uni.$u.http.get('/v1/frontend/news/detail', {
+      uni.$u.http.get('/v1/frontend/news/detail', {
 
-  //     }).then(res => {
-		// console.log(res.data.data)
-  //       for (var i = 0; i < res.data.data.newses.length; i++) {
-  //         let tmp = res.data.data.newses[i];
-  //         this.indexList.push({
-  //           id: tmp.ID,
-  //           title: tmp.Title,
-  //           subTitle: tmp.Author,
-  //           publishTime: uni.$u.timeFormat(tmp.PublishTime, 'yyyy年mm月dd日'),
-  //           pageImage: "/static/building.png",
-  //           content: tmp.Content
-  //         })
-  //       }
-  //     }).catch(err => {
-  //       console.log("出错了...")
-  //     })
+      }).then(res => {
+		console.log(res.data.data)
+        for (var i = 0; i < res.data.data.newses.length; i++) {
+          let tmp = res.data.data.newses[i];
+          this.indexList.push({
+            id: tmp.ID,
+            title: tmp.Title,
+            subTitle: tmp.Author,
+            publishTime: uni.$u.timeFormat(tmp.PublishTime, 'yyyy年mm月dd日'),
+            pageImage: "/static/building.png",
+            content: tmp.Content
+          })
+        }
+      }).catch(err => {
+        console.log("出错了...")
+      })
     },
     methods: {
       // 页面跳转

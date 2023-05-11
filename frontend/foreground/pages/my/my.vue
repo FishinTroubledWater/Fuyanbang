@@ -41,7 +41,7 @@
 			return {
 				id: "",
 				user: {
-					avatarUrl: '/static/my-assets/泰裤辣.png',
+					avatarUrl: '/static/my-assets/taiku.png',
 					nickName: '张三',
 					level: 'Lv.10',
 					slogan: '一定上岸！！',

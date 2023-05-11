@@ -41,7 +41,7 @@
 
 				// 如果两次密码一致，可以在这里进行注册逻辑
 				// ...124.222.141.238
-				uni.$u.http.post('http://localhost:8088/v1/frontend/user/resetPassword', {
+				uni.$u.http.post('/v1/frontend/user/resetPassword', {
 					account: this.email,
 					password: this.password,
 				}).then(res => {
