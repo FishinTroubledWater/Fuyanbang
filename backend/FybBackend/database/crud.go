@@ -271,6 +271,22 @@ func SearchNewInfoDetails(db *gorm.DB, postId int64) (error, []Post) {
 	return result, posts
 }
 
+func UpdateSingleNewsByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("news").Where(where).Count(&count).Error
+	if count == 0 && err == nil {
+		return 0, errors.New("要修改的记录不存在")
+	}
+	err = db.Table("news").Where(where).Updates(update).Count(&count).Error
+	return count, err
+}
+
+func AddNews(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("news").Create(values).Count(&count).Error
+	return count, err
+}
+
 // Post ------------------------------------------------------------
 
 func AddPost(db *gorm.DB, values map[string]interface{}) (int64, error) {
@@ -282,6 +298,8 @@ func AddPost(db *gorm.DB, values map[string]interface{}) (int64, error) {
 		return 0, errors.New("要插入的记录有误")
 	}
 	values["authorID"] = user.ID
+	values["favorite"] = 0
+	values["like"] = 0
 	err := db.Table("post").Create(values).Count(&count).Error
 	return count, err
 }
@@ -313,11 +331,13 @@ func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	var err error
 	if query != "" {
 		query = query + "%"
-		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").Where("account like ?", query).Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
+		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").
+			Where("account like ?", query).Order("state asc").Limit(int(pageSize)).
+			Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
 	} else {
-		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
+		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").
+			Order("state asc").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
 	}
-	db.Table("post").Count(&count)
 	if count == 0 && err == nil {
 		return posts, 0, errors.New("要查询的记录不存在")
 	}
