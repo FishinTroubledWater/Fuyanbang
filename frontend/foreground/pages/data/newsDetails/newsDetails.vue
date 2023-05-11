@@ -106,7 +106,7 @@
 
 				}),
 				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-					region: '福州',
+					region: '福建',
 					level: '985',
 					type: '法学',
 				}).then(res => {
