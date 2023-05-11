@@ -517,3 +517,19 @@ func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, upda
 	err = db.Table("user").Where(where).Updates(update).Count(&count).Error
 	return count, err
 }
+
+// Que ------------------------------------------------------------
+
+func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
+	var result *multierror.Error
+	var posts []Post
+	var count int64
+	err := db.Preload("Author").Where("partID = ? && authorId = ? ", 2, userId).Find(&posts).Count(&count).Error
+	if count == 0 {
+		result = multierror.Append(result, errors.New("找不到该用户！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return count, posts, err
+}
