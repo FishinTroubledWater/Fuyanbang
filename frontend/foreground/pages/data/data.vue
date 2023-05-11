@@ -129,7 +129,7 @@
 			uni.$u.http.get('/v1/frontend/circle/newinfo', {
 		
 				}).then(res => {
-					console.log(res.data.data[0].Summary);
+					console.log(res.data.data);
 					this.indexList=res.data.data
 				}).catch(err => {
 		
