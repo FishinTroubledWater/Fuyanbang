@@ -21,8 +21,9 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	userInfo.ResetPassword(r, db)
 	userInfo.GetPassword(r, db)
 	userInfo.AccountSecurity(r, db)
-	login.PasswordLogin(r, db)
+	userInfo.AddFeedback(r, db)
 	register.UserRegister(r, db)
+	login.PasswordLogin(r, db)
 
 	//news
 	news.NewsInfo(r, db)
@@ -32,6 +33,7 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	major.SearchByRule(r, db)
 	major.SearchByName(r, db)
 	major.SelectMajorByCode(r, db)
+
 	//academy
 	academy.SearchByName(r)
 	academy.SelectAcademyByCode(r)

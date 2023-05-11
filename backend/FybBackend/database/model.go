@@ -1,6 +1,8 @@
 package database
 
-import "time"
+import (
+	"time"
+)
 
 type User struct {
 	ID            int64 `gorm:"column:ID;primaryKey"`
@@ -70,22 +72,23 @@ type Major struct {
 	ForeignType           string `gorm:"column:foreignType"`
 	MathType              string `gorm:"column:mathType"`
 }
+
 type Part struct {
 	ID       int64  `gorm:"column:ID;primaryKey"`
 	PartName string `gorm:"column:partName"`
 }
+
 type Post struct {
 	ID          int64     `gorm:"column:ID;primaryKey"`
 	Summary     string    `gorm:"column:summary"`
+	State       string    `gorm:"column:state"`
+	Author      User      `gorm:"foreignKey:AuthorID;"`
+	Part        Part      `gorm:"foreignKey:PartID"`
 	PartID      int64     `gorm:"column:partID"`
 	AuthorID    int64     `gorm:"column:authorID"`
 	Favorite    int64     `gorm:"column:favorite"`
 	Like        int64     `gorm:"column:like"`
 	PublishTime time.Time `gorm:"column:publishTime"`
-	State       string    `gorm:"column:state"`
-
-	Author   User      `gorm:"foreignKey:AuthorID"`
-	PostImgs []PostImg `gorm:"foreignKey:PostID"`
 }
 
 type PostImg struct {
@@ -104,11 +107,19 @@ type Recipe struct {
 }
 
 type Comment struct {
-	ID          int64     `gorm:"column:ID;primaryKey"`
-	Author      string    `gorm:"column:author"`
-	Title       string    `gorm:"column:title"`
-	Content     string    `gorm:"column:content"`
-	Favorite    int64     `gorm:"column:favorite"`
-	Like        int64     `gorm:"column:like"`
-	PublishTime time.Time `gorm:"column:publishTime"`
+	ID            int64     `gorm:"column:ID;primaryKey"`
+	UserID        string    `gorm:"column:userID"`
+	Content       string    `gorm:"column:content"`
+	CommentNum    string    `gorm:"column:commentNum"`
+	TargetPost    string    `gorm:"column:targetPost"`
+	TargetComment string    `gorm:"column:targetComment"`
+	PublishTime   time.Time `gorm:"column:publishTime"`
+}
+
+type Feedback struct {
+	ID      int64     `gorm:"column:ID;primaryKey"`
+	UserID  string    `gorm:"column:userID"`
+	Content string    `gorm:"column:content"`
+	State   int64     `gorm:"column:state"`
+	Time    time.Time `gorm:"column:time"`
 }

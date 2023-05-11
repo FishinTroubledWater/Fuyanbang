@@ -9,7 +9,8 @@
 		<!-- <view class="content">
 			<textarea class="uni-title uni-common-pl" v-model="txt"></textarea>
 		</view> -->
-
+		<u-icon v-if="whetherLike==='false'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star" @click="clickLike"></u-icon>
+		<u-icon v-if="whetherLike==='true'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star-fill" @click="clickLike"></u-icon>
 		<view class="textarea_box">
 			<textarea class="textarea" placeholder="说说你的看法吧,在此处输入回答." placeholder-style="font-size:28rpx"
 				maxlength="200" @input="descInput" v-model="desc" />
@@ -30,6 +31,7 @@
 	export default {
 		data() {
 			return {
+				whetherLike:'false',
 				desc: '',
 				myanswer: 'null',
 
@@ -70,6 +72,14 @@
 			}
 		},
 		methods: {
+			clickLike(){
+				if(this.whetherLike==='true'){
+					this.whetherLike='false'
+				}else{
+					this.whetherLike='true'
+				}
+				
+			},
 			descInput(e) {
 				console.log(e.detail.value.length, '输入的字数')
 				this.myanswer = e.detail.value

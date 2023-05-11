@@ -32,9 +32,23 @@ func SearchByName(e *gin.Engine) {
 				result = multierror.Append(result, err)
 			}
 
-			imgsUrlList := mapValuesToArray(postMap["PostImgs"].([]interface{}))
-			postMap["img"] = imgsUrlList
-			delete(postMap, "PostImgs")
+			authorname := postMap["Author"].(map[string]interface{})["NickName"]
+			postMap["name"] = authorname
+			postMap["time"] = postMap["PublishTime"]
+
+			postMap["postId"] = postMap["ID"]
+			postMap["isImage"] = "false"
+			postMap["summary"] = postMap["Summary"]
+			postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
+			delete(postMap, "PublishTime")
+			delete(postMap, "Summary")
+			delete(postMap, "AuthorID")
+			delete(postMap, "Author")
+			delete(postMap, "ID")
+			delete(postMap, "State")
+			delete(postMap, "Favorite")
+			delete(postMap, "Like")
+			delete(postMap, "PartID")
 
 			responseBody = append(responseBody, postMap)
 		}
