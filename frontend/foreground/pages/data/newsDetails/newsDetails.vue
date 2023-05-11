@@ -21,9 +21,9 @@
 
 
 		<text style="font-size: 40rpx; font-weight: 800;">评论:</text>
-		<uni-card v-for="(item, index) in comment" :title="comment[index].name" :sub-title="comment[index].time"
-			:thumbnail="comment[index].icon" class="trends-box-item">
-			<u--text :text="comment[index].content"></u--text>
+		<uni-card v-for="(item, index) in comment" :title="item.name" :sub-title="item.time"
+			:thumbnail="item.icon" class="trends-box-item">
+			<u--text :text="item.content"></u--text>
 		</uni-card>
 	</view>
 </template>
@@ -32,6 +32,7 @@
 	export default {
 		data() {
 			return {
+				postId:'0',
 				whetherLike:'false',
 				desc: '',
 				myComment: 'null',
@@ -39,29 +40,19 @@
 				txt: "txt",
 				academyName: '福州大学',
 				indexList: {
-					name: 'zhang',
-					time: '2022-12-21',
-					icon: '../../../static/background/activityDetails.png',
-					postId: '123456',
-					summary: `<p>露从今夜白</p>
-					<img src="../../static/background/activityDetails.png" />`,
-					// isImage: true,
-					// img: ['../../../static/background/activityDetails.png',
-					// 	'../../../static/background/bg1.png',
-					// 	'../../../static/background/bg2.png'
-					// ],
+					// name: 'zhang',
+					// time: '2022-12-21',
+					// icon: '../../../static/background/activityDetails.png',
+					// postId: '123456',
+					// summary: `<p>露从今夜白</p>
+					// <img src="../../static/background/activityDetails.png" />`,
+					// // isImage: true,
+					// // img: ['../../../static/background/activityDetails.png',
+					// // 	'../../../static/background/bg1.png',
+					// // 	'../../../static/background/bg2.png'
+					// // ],
 				},
-				comment: [{
-					name: '吴彦祖',
-					icon: '../../../static/background/bg2.png',
-					content: '评论内容',
-					time: '2022-12-21'
-				}, {
-					name: '吴彦祖',
-					icon: '../../../static/background/bg1.png',
-					content: '评论内容',
-					time: '2022-12-21'
-				}],
+				comment: [],
 
 			}
 		},
@@ -95,26 +86,37 @@
 
 		onLoad: function(option) {
 			console.log(option.id)
+			this.postId=option.id
 		},
 
 		mounted() {
-			uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+			uni.$u.http.get('/v1/frontend/circle/newinfoComment?postId=' + this.postId, {
 
 				}).then(res => {
-					console.log(res.data);
+					console.log(res.data.data);
+					this.comment=res.data.data;
 				}).catch(err => {
 
 				}),
-				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-					region: '福建',
-					level: '985',
-					type: '法学',
+			uni.$u.http.get('/v1/frontend/circle/newinfoDetails/' + this.postId, {
+			
 				}).then(res => {
-					console.log(res.data)
+					console.log(res.data.data);
+					this.indexList=res.data.data;
 				}).catch(err => {
-
+			
 				})
-		}
+				
+				// uni.$u.http.post('/v1/frontend/academy/searchByRule', {
+				// 	region: '福建',
+				// 	level: '985',
+				// 	type: '法学',
+				// }).then(res => {
+				// 	console.log(res.data)
+				// }).catch(err => {
+
+				// })
+		},
 	}
 </script>
 
