@@ -71,18 +71,22 @@
       </u-list> -->
 		<u-list @scrolltolower="scrolltolower">
 			<u-list-item v-for="(item, index) in indexList" :key="index">
-				<view class="viewSaid" @click="gotoPage('/pages/home/detail', 1)">
-					<view class="title" v-if="item.title.length >= 16">{{item.title.substr(0,17)}}...</view>
-					<view class="title" v-else>{{item.title}}</view>
+				<view class="viewSaid" @click="gotoPage('/pages/home/detail', item.id)">
+<!-- 					<view class="title" v-if="item.title.length >= 16">{{item.title.substr(0,17)}}...</view>
+					<view class="title" v-else>{{item.title}}</view> -->
+					<u--text :lines="1" :text="item.title" bold="" size="36rpx" margin="0 10rpx"></u--text>
 				  	<view class="viewUser">
 				  		<image class="headPortrait" src="@/static/academy-icons/photo.jpg"></image>
 				  		<view class="userMes">
-				  			<text class="userName">{{item.subTitle.substr(0,10)}}</text>
+				  			<!-- <text class="userName">{{item.subTitle.substr(0,10)}}</text> -->
+							<u--text :lines="1" :text="item.subTitle" size="26rpx" margin="0 10rpx"></u--text>
 				  		</view>
 						<view class="publishTime">{{item.publishTime}}</view>
 				  	</view>
 				  	<view class="saidContent">
-				  		<view class="textContent">{{item.content.substr(0,30)}}...</view>
+				  		<!-- <view class="textContent">{{item.content.substr(0,30)}}...</view> -->
+						<u--text :lines="2" :text="item.content" size="24rpx" lineHeight="34rpx" margin="4rpx 6rpx" padding="0px 4px"
+						  height="94px"></u--text>
 				  		<image class="sights" src="@/static/academy-icons/风景.png"></image>
 				  	</view>
 				</view>
@@ -384,6 +388,7 @@
   	margin-left: 30rpx;
   	display: flex;
   	flex-direction: column;
+	width: 270rpx;
   }
   .userName{
   	font-size: 30rpx;

@@ -19,15 +19,15 @@
     <u-list @scrolltolower="scrolltolower">
       <u-list-item v-for="(item, index) in indexList" :key="index">
         <uni-card :is-shadow="true" padding="10px" @click="gotoPage('/pages/home/detail', item.id)">
-          <u--text :lines="1" :text="item.title" size="22" color="#000" lineHeight="24px" margin="10px 2px"></u--text>
+          <u--text :lines="1" :text="item.title" bold="" size="22" color="#000" lineHeight="24px" margin="10px 2px"></u--text>
 
           <u-row customStyle="margin: 4px" justify="space-between" gutter="2">
             <u-col span="8">
-              <u--text :lines="3" :text=item.overview size="16" color="#000" lineHeight="20px" margin="4px 0px" padding="0px 4px"
+              <u--text :lines="3" :text="item.overview" size="14" color="#000" lineHeight="20px" margin="0px 0px 0px 0px" padding="0px 4px"
                 height="94px"></u--text>
             </u-col>
             <u-col span="4">
-              <u--image :src="item.img" shape="square" mode="aspectFill" width="144px" height="94px" margin="0px 4px"></u--image>
+              <u--image :src="item.img" radius="18rpx" shape="square" mode="aspectFill" width="100px" height="70px" margin="0px 4px"></u--image>
             </u-col>
           </u-row>
 
