@@ -64,7 +64,14 @@ func SearchNewQue(e *gin.Engine) {
 			}
 		}
 
-		if result.ErrorOrNil() == nil && count > 0 {
+		var errorMsg string
+		if result != nil {
+			errorMsg = result.Error()
+		} else {
+			errorMsg = "获取失败"
+		}
+
+		if result == nil && count > 0 {
 			context.JSON(http.StatusOK, gin.H{
 				"code":    200,
 				"message": "请求成功",
@@ -73,7 +80,7 @@ func SearchNewQue(e *gin.Engine) {
 		} else {
 			context.JSON(http.StatusNotFound, gin.H{
 				"code":    404,
-				"message": result,
+				"message": errorMsg,
 				"data":    "null",
 			})
 		}
