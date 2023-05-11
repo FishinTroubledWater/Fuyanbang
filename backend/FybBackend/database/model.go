@@ -109,8 +109,9 @@ type Comment struct {
 	ID            int64     `gorm:"column:ID;primaryKey"`
 	UserID        string    `gorm:"column:userID"`
 	Content       string    `gorm:"column:content"`
-	CommentNum    string    `gorm:"column:CommentNum"`
-	TargetPost    string    `gorm:"column:targetPost"`
-	TargetComment string    `gorm:"column:targetComment"`
+	CommentNum    int64     `gorm:"column:CommentNum"`
+	TargetPost    int64     `gorm:"column:targetPost"`
+	TargetComment int64     `gorm:"column:targetComment"`
 	PublishTime   time.Time `gorm:"column:publishTime"`
+	Author        User      `gorm:"foreignKey:UserID"`
 }
