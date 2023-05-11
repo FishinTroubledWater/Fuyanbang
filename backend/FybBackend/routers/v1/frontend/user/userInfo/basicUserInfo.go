@@ -2,7 +2,6 @@ package userInfo
 
 import (
 	fybDatabase "FybBackend/database"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
@@ -13,7 +12,6 @@ func BasicUserInfo(e *gin.Engine, db *gorm.DB) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 		mp["id"] = context.DefaultQuery("id", "")
-		fmt.Println(mp)
 		user, _, err := fybDatabase.SelectSingleUserByCondition(db, mp)
 		result = multierror.Append(result, err)
 		if result.ErrorOrNil() == nil {
