@@ -96,6 +96,12 @@
 </template>
 
 <script>
+	
+	import Axios from 'axios'
+	Axios.defaults.baseURL = '/'
+	// eslint-disable-next-line no-unused-vars
+	const axios = require('axios')
+	
   import uCard from '../../components/uni-card/uni-card.vue'
   import uSteps from '../../components/uni-steps/uni-steps.vue'
   import uIcons from '../../components/uni-icons/uni-icons.vue'
@@ -191,26 +197,46 @@
       },
     },
     onLoad() {},
-    mounted() {
+    async mounted() {
+		
+		const result = await Axios.get('http://localhost:8088/v1/frontend/news/detail', {
+		        }).then(res =>{
+		          console.log(res.data.data)
+		          for (var i = 0; i < res.data.data.newses.length; i++) {
+		            let tmp = res.data.data.newses[i];
+		            this.indexList.push({
+		              id: tmp.ID,
+		              title: tmp.Title,
+		              subTitle: tmp.Author,
+		              publishTime: uni.$u.timeFormat(tmp.PublishTime, 'yyyy年mm月dd日'),
+		              pageImage: "/static/building.png",
+		              content: tmp.Content
+		            })
+		          }
+		        }).catch(error =>{
+		          console.log(error);
+				  console.log("失败")
+		        })
+		
       // 基本用法，注意：get请求的参数以及配置项都在第二个参数中
-      uni.$u.http.get('/v1/frontend/news/detail', {
+  //     uni.$u.http.get('/v1/frontend/news/detail', {
 
-      }).then(res => {
-		console.log(res.data.data)
-        for (var i = 0; i < res.data.data.newses.length; i++) {
-          let tmp = res.data.data.newses[i];
-          this.indexList.push({
-            id: tmp.ID,
-            title: tmp.Title,
-            subTitle: tmp.Author,
-            publishTime: uni.$u.timeFormat(tmp.PublishTime, 'yyyy年mm月dd日'),
-            pageImage: "/static/building.png",
-            content: tmp.Content
-          })
-        }
-      }).catch(err => {
-        console.log("出错了...")
-      })
+  //     }).then(res => {
+		// console.log(res.data.data)
+  //       for (var i = 0; i < res.data.data.newses.length; i++) {
+  //         let tmp = res.data.data.newses[i];
+  //         this.indexList.push({
+  //           id: tmp.ID,
+  //           title: tmp.Title,
+  //           subTitle: tmp.Author,
+  //           publishTime: uni.$u.timeFormat(tmp.PublishTime, 'yyyy年mm月dd日'),
+  //           pageImage: "/static/building.png",
+  //           content: tmp.Content
+  //         })
+  //       }
+  //     }).catch(err => {
+  //       console.log("出错了...")
+  //     })
     },
     methods: {
       // 页面跳转

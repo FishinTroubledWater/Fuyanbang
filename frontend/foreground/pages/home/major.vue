@@ -179,7 +179,7 @@
 					uni.$emit('code2',{ 
 						code: _this.sendMes.Code,
 						firstLevelDiscipline: _this.sendMes.FirstLevelDiscipline,
-						jobOrientation: _this.sendMes.JobOrientation,
+						jobOrientation: _this.sendMes.JobDirection,
 						JobProspect: _this.sendMes.JobProspect,
 						name: _this.sendMes.Name,
 						scoreUrl: _this.sendMes.ScoreUrl,
