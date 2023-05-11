@@ -41,6 +41,7 @@ func SearchByName(e *gin.Engine) {
 			postMap["summary"] = postMap["Summary"]
 			postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
 			delete(postMap, "PublishTime")
+			delete(postMap, "Part")
 			delete(postMap, "Summary")
 			delete(postMap, "AuthorID")
 			delete(postMap, "Author")
