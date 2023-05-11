@@ -3,7 +3,7 @@
     <el-card class="round15 mg_b20">
       <el-row :gutter="20">
         <el-col :span="2" class="setcenter">
-          <el-avatar :size="'large'" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+          <el-avatar :size="60" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
                      :fit="'cover'"
                      style=""></el-avatar>
 <!--          <span>预留</span>-->
@@ -135,7 +135,7 @@ export default {
 
 <style scoped>
 .setcenter{
-  height: 50px;
+  height: 70px;
 }
 .adminMes{
   /*margin-left: 5px;*/
