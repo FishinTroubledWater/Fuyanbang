@@ -276,6 +276,7 @@ func SearchNewInfoDetails(db *gorm.DB, postId int64) (error, []Post) {
 func AddPost(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	mp := make(map[string]interface{})
 	mp["account"] = values["account"]
+	delete(values, "account")
 	user, count, _ := SelectSingleUserByCondition(db, mp)
 	if count == 0 {
 		return 0, errors.New("要插入的记录有误")
