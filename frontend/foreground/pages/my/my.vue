@@ -50,7 +50,6 @@
 					college: '福州大学',
 					major: '软件工程',
 				}
-
 			}
 		},
 		mounted() {
