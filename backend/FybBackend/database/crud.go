@@ -251,6 +251,16 @@ func SearchAllNewInfo(db *gorm.DB) ([]Post, error) {
 	return posts, err
 }
 
+func SearchNewInfoComment(db *gorm.DB) (error, []Comment) {
+	var result *multierror.Error
+	var comments []Comment
+	err := db.Preload("Author").Find(&comments).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return result, comments
+}
+
 // Post ------------------------------------------------------------
 
 func AddPost(db *gorm.DB, values map[string]interface{}) (int64, error) {
@@ -286,6 +296,7 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 	}
 	return post, count, err
 }
+
 func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
