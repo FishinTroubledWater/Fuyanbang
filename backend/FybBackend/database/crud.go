@@ -2,7 +2,6 @@ package database
 
 import (
 	"errors"
-	"fmt"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 	"time"
@@ -527,10 +526,11 @@ func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, upda
 
 // Dashboard
 
-func SelectPostNumGroupByMonth(db *gorm.DB) (map[string]interface{}, int64, error) {
-	var count int64 = 0
-	mp := make(map[string]interface{})
-	err := db.Table("post").Select("DATE_FORMAT(publishTime,'%Y%m') months").Group("months").Find(mp).Count(&count).Error
-	fmt.Println(mp)
-	return mp, count, err
-}
+//func SelectPostNumGroupByMonth(db *gorm.DB) ([]PostData, int64, error) {
+//	var count int64 = 0
+//	var data []PostData
+//	//err := db.Table("post").Select("DATE_FORMAT(publishTime,'%Y%m') months").Group("months").Find(mp).Count(&count).Error
+//	err := db.Exec(" SELECT DATE_FORMAT(publishTime,'%Y%m') months , count(*) as monthCount FROM post GROUP BY months ").Find(&data).Error
+//	fmt.Println(data)
+//	return data, count, err
+//}
