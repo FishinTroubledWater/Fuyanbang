@@ -9,7 +9,7 @@ import FeedBackView from "@/views/FeedBackView";
 import DashBoard from "@/components/DashBoard";
 import NewsView from "@/views/NewsView";
 import PostView from "@/views/PostView";
-import ForgetPwd from "@/views/ForgetPwd";
+
 
 
 Vue.use(VueRouter)
@@ -67,11 +67,6 @@ const router = new VueRouter({
                     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
                 },
             ]
-        },
-        {
-            path: '/forget',
-            name: 'forget',
-            component: ForgetPwd,
         },
         {
             path: "/",

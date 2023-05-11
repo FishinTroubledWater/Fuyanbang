@@ -6,7 +6,7 @@
           <el-avatar :size="60" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
                      :fit="'cover'"
                      style=""></el-avatar>
-<!--          <span>预留</span>-->
+          <!--          <span>预留</span>-->
         </el-col>
         <el-col :span="5">
           <div class="adminMes">
@@ -72,7 +72,7 @@ import * as echarts from 'echarts';
 export default {
   name: "DashBoard",
   data(){
-      return {}
+    return {}
   },
   created() {},
   //等地页面上元素渲染完毕
@@ -86,7 +86,7 @@ export default {
       color:[
         '#4394c5'
       ],
-          tooltip: {},
+      tooltip: {},
       xAxis: {
         data: ['1月', '2月', '3月', '4月', '5月', '6月']
       },
@@ -146,11 +146,11 @@ export default {
   margin-bottom: 2px;
 }
 .phoneNumber{
-  font-size: 8px;
+  font-size: 16px;
   margin-bottom: 2px;
 }
 .state{
-  font-size: 8px;
+  font-size: 16px;
   margin-bottom: 2px;
 }
 .startUsing{
@@ -159,17 +159,17 @@ export default {
   color: #3952FD;
 }
 .addUserNum {
-  font-size: 6px;
+  font-size: 16px;
   margin-top: 6px;
   font-family: 黑体,sans-serif;
 }
 .addPostNum{
-  font-size: 6px;
+  font-size: 16px;
   margin-top: 6px;
   font-family: 黑体,sans-serif;
 }
 .reviewedNum{
-  font-size: 6px;
+  font-size: 16px;
   margin-top: 6px;
   font-family: 黑体,sans-serif;
 }
@@ -185,7 +185,7 @@ export default {
   text-align: center;
 }
 .showNum{
-  font-size: 6px;
+  font-size: 18px;
 }
 .showNumColor{
   color: #3952FD;
