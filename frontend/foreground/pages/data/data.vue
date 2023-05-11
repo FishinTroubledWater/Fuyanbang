@@ -22,10 +22,10 @@
 
 				<u-list>
 					<u-list-item v-for="(item, index) in indexList" :key="index">
-						<uni-card @click="clicknews(item.PartID)" :title="item.Author.NickName"
-							:sub-title="item.Author.Slogan" :extra="item.PublishTime" :thumbnail="item.Author.AvatarUrl"
+						<uni-card @click="clicknews(item.postId)" :title="item.name"
+							:sub-title="帖子信息" :extra="item.time" :thumbnail="item.icon"
 							class="trends-box-item">
-							<u--text :lines="3" :text="item.Summary"></u--text>
+							<u--text :lines="3" :text="item.summary"></u--text>
 								<!-- <image class="newsimage" :src="indexList[index].img[0]"></image> -->
 							<!-- <view class="u-content">
 								<u-parse :content="indexList[index].summary"></u-parse>
@@ -129,7 +129,7 @@
 			uni.$u.http.get('/v1/frontend/circle/newinfo', {
 		
 				}).then(res => {
-					console.log(res.data.data[0].Summary);
+					console.log(res.data.data);
 					this.indexList=res.data.data
 				}).catch(err => {
 		

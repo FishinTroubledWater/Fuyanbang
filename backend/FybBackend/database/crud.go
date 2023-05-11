@@ -251,7 +251,40 @@ func SearchAllNewInfo(db *gorm.DB) ([]Post, error) {
 	return posts, err
 }
 
+func SearchNewInfoComment(db *gorm.DB) (error, []Comment) {
+	var result *multierror.Error
+	var comments []Comment
+	err := db.Preload("Author").Find(&comments).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return result, comments
+}
+
+func SearchNewInfoDetails(db *gorm.DB, postId int64) (error, []Post) {
+	var result *multierror.Error
+	var posts []Post
+	err := db.Preload("Author").Where("Id = ?", postId).Find(&posts).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return result, posts
+}
+
 // Post ------------------------------------------------------------
+
+func AddPost(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	mp := make(map[string]interface{})
+	mp["account"] = values["account"]
+	delete(values, "account")
+	user, count, _ := SelectSingleUserByCondition(db, mp)
+	if count == 0 {
+		return 0, errors.New("要插入的记录有误")
+	}
+	values["authorID"] = user.ID
+	err := db.Table("post").Create(values).Count(&count).Error
+	return count, err
+}
 
 func DeletePost(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	var count int64 = 0
@@ -273,21 +306,32 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 	}
 	return post, count, err
 }
+
 func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
 	var err error
 	if query != "" {
 		query = query + "%"
-		err = db.Table("post").InnerJoins("Author", ".account like ?", query).InnerJoins("Part").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
+		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").Where("account like ?", query).Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
 	} else {
 		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
 	}
 	db.Table("post").Count(&count)
 	if count == 0 && err == nil {
-		return posts, 0, errors.New("查询的记录不存在")
+		return posts, 0, errors.New("要查询的记录不存在")
 	}
 	return posts, count, err
+}
+
+func UpdateSinglePostByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("post").Where(where).Count(&count).Error
+	if count == 0 && err == nil {
+		return 0, errors.New("要修改的记录不存在")
+	}
+	err = db.Table("post").Where(where).Updates(update).Count(&count).Error
+	return count, err
 }
 
 // User ------------------------------------------------------------
@@ -308,7 +352,7 @@ func SelectSingleUserByCondition(db *gorm.DB, where map[string]interface{}) (Use
 	var user User
 	err := db.Where(where).First(&user).Count(&count).Error
 	if count == 0 {
-		return user, 0, errors.New("查询的记录不存在")
+		return user, 0, errors.New("要查询的记录不存在")
 	}
 	return user, count, err
 }
@@ -317,7 +361,7 @@ func SelectAllUserByCondition(db *gorm.DB, where map[string]interface{}) ([]User
 	var users []User
 	err := db.Where(where).Find(&users).Count(&count).Error
 	if count == 0 {
-		return users, 0, errors.New("查询的记录不存在")
+		return users, 0, errors.New("要查询的记录不存在")
 	}
 	return users, count, err
 }
@@ -332,7 +376,7 @@ func SelectAllUserByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	db.Table("user").Count(&count)
 	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&users).Error
 	if count == 0 && err == nil {
-		return users, 0, errors.New("查询的记录不存在")
+		return users, 0, errors.New("要查询的记录不存在")
 	}
 	return users, count, nil
 }
@@ -341,7 +385,7 @@ func AddUser(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
 	err := db.Table("user").Where("account = ? ", values["account"]).Count(&count).Error
 	if count > 0 && err == nil {
-		return 0, errors.New("用户已存在")
+		return 0, errors.New("记录已存在")
 	}
 	err = db.Table("user").Create(values).Count(&count).Error
 	return count, err
@@ -352,7 +396,7 @@ func DeleteUser(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	var user User
 	err := db.Where(where).Find(&user).Count(&count).Error
 	if count == 0 && err == nil {
-		return 0, errors.New("用户不存在")
+		return 0, errors.New("要删除的记录不存在")
 	}
 	err = db.Delete(&user).Error
 	return count, err
