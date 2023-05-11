@@ -78,7 +78,15 @@
 			},
 			clickSent() {
 				console.log(this.myComment)
-				//post请求
+				uni.$u.http.post('/v1/frontend/circle/postComment', {
+					postId: this.postId,
+					userId: this.indexList.userId,
+					comment: this.myComment,
+				}).then(res => {
+					console.log(res.data)
+				}).catch(err => {
+				
+				})
 
 			},
 
@@ -102,7 +110,7 @@
 			
 				}).then(res => {
 					console.log(res.data.data);
-					this.indexList=res.data.data;
+					this.indexList=res.data.data[0];
 				}).catch(err => {
 			
 				})
