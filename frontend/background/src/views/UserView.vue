@@ -21,7 +21,7 @@
     <!--    用户列表-->
     <el-card class="round15 mg">
       <div style="font-size: 20px;font-weight: bold"> 用户列表</div>
-      <Table :table-data="userList" :columns="columns">
+      <Table :table-data="userList" :columns="columns" >
         <template #operation="scope">
           <el-button size="mini" type="success" icon="el-icon-view" round
                      @click="showDetails(scope.row)">详情
@@ -95,8 +95,10 @@
           <el-descriptions-item label="年级"><el-tag size="small">{{editForm.Year}}</el-tag></el-descriptions-item>
           <el-descriptions-item label="标语" :span="2">
             <el-input type="textarea" v-model="editForm.Slogan" :rows="5" readonly resize="none"></el-input>
+            <quill-editor v-model="editForm.Slogan" @focus="focus($event)"></quill-editor>
           </el-descriptions-item>
         </el-descriptions>
+
       </template>
     </Drawer>
   </div>
@@ -163,7 +165,7 @@ export default {
       editFormRules: {
         phonenumber: [
           {required: true, message: '请输入手机号', trigger: 'blur'},
-          {validator: checkPhoneNumber, trigger: 'blur'}
+          {validator: checkPhoneNumber,  trigger: 'blur'}
         ]
       },
       //假数据
@@ -205,16 +207,6 @@ export default {
     handlePageChange(newPage) {
       this.queryInfo.pageNum = newPage;
       this.getUserList()
-    },
-
-    // 编辑方法
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-
-    // 删除方法
-    handleDelete(index, row) {
-      console.log(index, row);
     },
 
     // 显示详情
@@ -267,7 +259,6 @@ export default {
         return this.$message.error('查询用户信息失败！')
       }
       this.editForm = res.data
-
       this.editDialogVisible = true
     },
 
@@ -292,7 +283,6 @@ export default {
             'Authorization': window.sessionStorage.getItem("token")
           }
         })
-
         if (res.code !== 200) {
           return this.$message.error('更新用户信息失败！')
         }
@@ -325,6 +315,11 @@ export default {
       if (res.code !== 200) return this.$message.error('删除用户失败！')
       this.$message.success('删除用户成功！')
       await  this.getUserList()
+    },
+
+    //获取焦点事件
+    focus(event){
+      event.enable(false);
     }
   }
 }

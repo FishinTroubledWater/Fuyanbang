@@ -11,9 +11,9 @@
         <el-menu-item index="home"><i class="el-icon-s-home"/> <span class="el-menu-text">首页</span></el-menu-item>
         <el-menu-item index="user"><i class="el-icon-user"/> <span class="el-menu-text">用户管理</span></el-menu-item>
         <el-menu-item index="post"><i class="el-icon-tickets"/> <span class="el-menu-text">帖子管理</span></el-menu-item>
-        <el-menu-item index="news"><i class="el-icon-discover"/> <span class="el-menu-text">动态管理</span></el-menu-item>
+        <el-menu-item index="news"><i class="el-icon-discover"/> <span class="el-menu-text">资讯管理</span></el-menu-item>
         <el-menu-item index="recipe"><i class="el-icon-s-promotion"/> <span class="el-menu-text">学长学姐说管理</span></el-menu-item>
-        <el-menu-item index="comment"><i class="el-icon-s-comment"/> <span class="el-menu-text">评论管理</span></el-menu-item>
+<!--        <el-menu-item index="comment"><i class="el-icon-s-comment"/> <span class="el-menu-text">评论管理</span></el-menu-item>-->
         <el-menu-item index="feedback"><i class="el-icon-message-solid"/> <span class="el-menu-text">反馈中心</span></el-menu-item>
       </el-menu>
     </el-aside>

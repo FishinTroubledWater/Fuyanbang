@@ -13,7 +13,7 @@
         :sort-by="column.index"
         :show-overflow-tooltip="column.showOverflowTooltip">
     </el-table-column>
-    <el-table-column label="状态" v-if="showState" width="100">
+    <el-table-column label="状态" v-if="showState" width="100" formatter="dateFormat">
       <template #default="scope">
         <slot name="state"
               :index="scope.$index"
@@ -48,6 +48,9 @@ export default {
       default: false
     }
   },
+  methods:{
+
+  }
 
 }
 </script>

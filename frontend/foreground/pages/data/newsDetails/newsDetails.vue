@@ -32,6 +32,7 @@
 	export default {
 		data() {
 			return {
+				id:'',
 				postId:'0',
 				whetherLike:'false',
 				desc: '',
@@ -78,9 +79,18 @@
 			},
 			clickSent() {
 				console.log(this.myComment)
+				uni.getStorage({
+					key:'userId',   // 储存在本地的变量名
+					success:res => {
+						// 成功后的回调
+						// console.log(res.data);   // hello  这里可做赋值的操作
+						this.id=res.data;
+						console.log(this.id)
+					}
+				})
 				uni.$u.http.post('/v1/frontend/circle/postComment', {
 					postId: this.postId,
-					userId: this.indexList.userId,
+					userId: this.id,
 					comment: this.myComment,
 				}).then(res => {
 					console.log(res.data)
