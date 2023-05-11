@@ -13,7 +13,7 @@ func Handle(result *multierror.Error) (code int, errStr string) {
 			err := errs[i]
 			errStr := err.Error()
 			fmt.Println(errStr)
-			if strings.Contains(errStr, "查询的记录不存在") {
+			if strings.Contains(errStr, "要查询的记录不存在") {
 				return 404, "要查询的记录不存在"
 			}
 			if strings.Contains(errStr, "用户已存在") {
@@ -24,6 +24,9 @@ func Handle(result *multierror.Error) (code int, errStr string) {
 			}
 			if strings.Contains(errStr, "要修改的记录不存在") {
 				return 400, "要修改的记录不存在"
+			}
+			if strings.Contains(errStr, "要插入的记录有误") {
+				return 400, "要插入的记录有误"
 			}
 		}
 		return 500, result.Error()
