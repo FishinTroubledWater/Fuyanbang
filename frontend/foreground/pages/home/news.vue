@@ -39,8 +39,8 @@
 </template>
 
 <script>
-  import uCard from '../../components/uni-card/uni-card.vue'
-  import uIcons from '../../components/uni-icons/uni-icons.vue'
+  import uCard from '../../uni_modules/uni-card/uni-card.vue'
+  import uIcons from '../../uni_modules/uni-icons/uni-icons.vue'
 
   export default {
     components: {

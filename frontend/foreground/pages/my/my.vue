@@ -40,8 +40,9 @@
 		data() {
 			return {
 				id: "",
+
 				user: {
-					avatarUrl: '/static/my-assets/泰裤辣.png',
+					avatarUrl: '/static/my-assets/taiku.png',
 					nickName: '张三',
 					level: 'Lv.10',
 					slogan: '一定上岸！！',
@@ -49,9 +50,24 @@
 					college: '福州大学',
 					major: '软件工程',
 				}
+
 			}
 		},
 		mounted() {
+			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
+			
+			}).then(res => {
+			    console.log(res.data.data);
+				this.user.avatarUrl = res.data.data.Avatar;
+				this.user.nickName=res.data.data.Nickname;
+				this.user.level=res.data.data.Level;
+				this.user.slogan=res.data.data.Slogan;
+				this.user.useageDays=res.data.data.UserDays;
+				this.user.college=res.data.data.College;
+				this.user.major=res.data.data.Major;
+			}).catch(err => {
+				
+			})
 			// console.log("执行onLoad（）");
 			uni.getStorage({
 				key:'userId',   // 储存在本地的变量名
@@ -64,9 +80,8 @@
 			})
 			// console.log("执行onLoad（）");
 		},
-		// onLoad() {
-			
-		// },
+		onLoad() {
+		},
 		methods: {
 			gotoPage(url) {
 				uni.navigateTo({

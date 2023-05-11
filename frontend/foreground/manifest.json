@@ -48,9 +48,21 @@
                 ]
             },
             /* ios打包配置 */
-            "ios" : {},
+            "ios" : {
+                "dSYMs" : false
+            },
             /* SDK配置 */
-            "sdkConfigs" : {}
+            "sdkConfigs" : {
+                "ad" : {}
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "D:/桌面文件/123.png",
+                    "xhdpi" : "D:/桌面文件/123.png",
+                    "xxhdpi" : "D:/桌面文件/123.png",
+                    "xxxhdpi" : "D:/桌面文件/123.png"
+                }
+            }
         }
     },
     /* 快应用特有相关 */

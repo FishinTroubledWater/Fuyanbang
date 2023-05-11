@@ -5,6 +5,7 @@
 			<view class="form-item">
 				<label for="email">邮箱：</label>
 				<input type="text" id="email" v-model="email">
+				<p v-if="!validEmail && email !== ''" class="error">请输入有效的电子邮件地址</p>
 			</view>
 			<!-- <view class="sendCode">
 				<u-code :seconds="seconds" ref="uCode" @change="">后重新获取</u-code>
@@ -12,7 +13,7 @@
 			</view> -->
 			<view class="sendCode">
 				<u-code :seconds="seconds" ref="uCode" @change="codeChange">后重新获取</u-code>
-				<u-button @tap="getCode" >{{tips}}</u-button>
+				<u-button @tap="getCode">{{tips}}</u-button>
 			</view>
 			<view class="form-item" style="margin-top: 20rpx;">
 				<label for="code">请输入验证码：</label>
@@ -37,12 +38,13 @@
 				tips: '',
 				// refCode: null,
 				seconds: 60,
+				validEmail: false,
 			};
 		},
 		methods: {
 			toSetPassword() {
 				uni.navigateTo({
-					url: './setPassword?email='+this.email.toString(),
+					url: './setPassword?email=' + this.email.toString(),
 				})
 			},
 			codeChange(text) {
@@ -65,7 +67,18 @@
 					uni.$u.toast('倒计时结束后再发送');
 				}
 			},
-		}
+			validateEmail() {
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				this.validEmail = emailRegex.test(this.email);
+			},
+		},
+		watch: {
+			email: {
+				handler: 'validateEmail',
+				immediate: false,
+			},
+
+		},
 	};
 </script>
 
@@ -124,6 +137,12 @@
 
 	.register {
 		margin-top: 20px;
+	}
+
+	.error {
+		color: #FF5252;
+		font-size: 12px;
+		margin-top: 5px;
 	}
 
 	label {

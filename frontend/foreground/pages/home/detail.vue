@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import uCard from '../../components/uni-card/uni-card.vue'
+  import uCard from '../../uni_modules/uni-card/uni-card.vue'
 
   export default {
     components: {

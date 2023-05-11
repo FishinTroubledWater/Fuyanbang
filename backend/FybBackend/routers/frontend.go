@@ -22,6 +22,7 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	userInfo.GetPassword(r, db)
 	userInfo.AccountSecurity(r, db)
 	userInfo.AddFeedback(r, db)
+	userInfo.MyPoss(r, db)
 	register.UserRegister(r, db)
 	login.PasswordLogin(r, db)
 

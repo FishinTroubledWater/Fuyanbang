@@ -363,7 +363,12 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 	}
 	return post, count, err
 }
-
+func SelectAllPostByCondition(db *gorm.DB, where map[string]interface{}) ([]Post, int64, error) {
+	var count int64 = 0
+	var posts []Post
+	err := db.Preload("Author").Where(where).Count(&count).Error
+	return posts, count, err
+}
 func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post

@@ -1,4 +1,4 @@
-package selectNews
+package selectFeedback
 
 import (
 	fybDatabase "FybBackend/database"
