@@ -8632,7 +8632,7 @@ var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(/*! ../../static/backgro
 exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\r\n/* 页面左右间距 */\r\n/* 文字尺寸 */\r\n/*文字颜色*/\r\n/* 边框颜色 */\r\n/* 图片加载中颜色 */\r\n/* 行为相关颜色 */\n.u-content {\r\n  padding: 24rpx;\n}\n.newsimage {\r\n  max-height: 200rpx;\r\n  max-width: 200px;\n}\n.quanzi {\r\n  font-size: 50rpx;\r\n  font-weight: 800;\n}\n.tabs-box {\r\n  flex-flow: row;\r\n  justify-content: space-around;\r\n  display: flex;\n}\n.nav-actived {\r\n  color: #CCBE97;\r\n  font-weight: 700;\n}\n.appContentTop {\r\n  z-index: -1;\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 200rpx;\n}\n.contentTopWord {\r\n  color: #ffffff;\r\n  font-size: 40rpx;\r\n  padding-left: 20rpx;\n}\n.contentTopWordDetails {\r\n  color: #CCBE97;\r\n  font-size: 40rpx;\r\n  padding-left: 20rpx;\n}\n.contentPic {\r\n  object-fit: cover;\r\n  height: 100%;\r\n  width: 100%;\n}\n.topic {\r\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") center center;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\r\n/* 页面左右间距 */\r\n/* 文字尺寸 */\r\n/*文字颜色*/\r\n/* 边框颜色 */\r\n/* 图片加载中颜色 */\r\n/* 行为相关颜色 */\n.trends-box-item {\r\n  /* 圆角 */\r\n  border-radius: 18rpx;\r\n  /* 边 */\r\n  border: 1rpx solid #CCBE97;\r\n  /* 阴影 */\r\n  box-shadow: 2rpx 7rpx 0rpx #CCBE97;\n}\n.u-content {\r\n  padding: 24rpx;\n}\n.newsimage {\r\n  max-height: 200rpx;\r\n  max-width: 200px;\n}\n.quanzi {\r\n  font-size: 50rpx;\r\n  font-weight: 800;\n}\n.tabs-box {\r\n  flex-flow: row;\r\n  justify-content: space-around;\r\n  display: flex;\n}\n.nav-actived {\r\n  color: #CCBE97;\r\n  font-weight: 700;\n}\n.appContentTop {\r\n  z-index: -1;\r\n  position: absolute;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 200rpx;\n}\n.contentTopWord {\r\n  color: #ffffff;\r\n  font-size: 40rpx;\r\n  padding-left: 20rpx;\n}\n.contentTopWordDetails {\r\n  color: #CCBE97;\r\n  font-size: 40rpx;\r\n  padding-left: 20rpx;\n}\n.contentPic {\r\n  object-fit: cover;\r\n  height: 100%;\r\n  width: 100%;\n}\n.topic {\r\n  background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") center center;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -20065,11 +20065,6 @@ var render = function () {
         {
           staticClass: _vm._$g(12, "sc"),
           attrs: { "hover-class": "cell-hover", "hover-stay-time": 50, _i: 12 },
-          on: {
-            click: function ($event) {
-              return _vm.$handleViewEvent($event)
-            },
-          },
         },
         [
           _c(
@@ -22889,44 +22884,14 @@ var render = function () {
         },
       }),
       _c(
-        "v-uni-text",
-        { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } },
-        [
-          _vm._v("联系方式"),
-          _c(
-            "v-uni-text",
-            { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
-            [_vm._v("(必填)")]
-          ),
-        ],
-        1
-      ),
-      _c("v-uni-text", { staticStyle: { color: "red" }, attrs: { _i: 6 } }, [
-        _vm._v("*"),
-      ]),
-      _c("v-uni-input", {
-        staticClass: _vm._$g(7, "sc"),
-        attrs: { placeholder: "请输入您的邮箱", _i: 7 },
-        model: {
-          value: _vm._$g(7, "v-model"),
-          callback: function ($$v) {
-            _vm.$handleVModelEvent(7, $$v)
-          },
-          expression: "sendData.account",
-        },
-      }),
-      _c(
         "uni-view",
-        { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
+        { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } },
         [
           _c(
             "v-uni-button",
             {
-              attrs: {
-                disabled: _vm._$g(9, "a-disabled"),
-                type: "primary",
-                _i: 9,
-              },
+              staticClass: _vm._$g(5, "sc"),
+              attrs: { disabled: _vm._$g(5, "a-disabled"), _i: 5 },
               on: {
                 click: function ($event) {
                   return _vm.$handleViewEvent($event)
@@ -23036,7 +23001,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.text-black {\n\tcolor: #303133;\n\tfont-size: 32rpx;\n}\n.text-grey {\n\tcolor: #BCBCBC;\n\tfont-size: 24rpx;\n\tmargin-left: 15rpx;\n}\n.feedback-quick {\n\tpadding-right: 10rpx;\n\tcolor: #606266;\n\tfont-size: 32rpx;\n}\n.feedback-body {\n\tpadding: 30rpx;\n}\n.feedback-textare {\n\tmargin-top: 30rpx;\n\tmargin-bottom: 30rpx;\n\theight: 266rpx;\n\tcolor: #303133;\n\tfont-size: 28rpx;\n\tline-height: 2em;\n\twidth: 100%;\n\tbox-sizing: border-box;\n\tpadding: 20rpx 30rpx;\n\tborder-radius: 20rpx;\n\tbackground-color: #F5F6F8;\n}\n.feedback-input {\n\tfont-size: 28rpx;\n\tcolor: #303133;\n\tbackground-color: #F5F6F8;\n\tborder-radius: 20rpx;\n\theight: 100rpx;\n\tmin-height: 100rpx;\n\tpadding: 0 30rpx;\n\tmargin-top: 30rpx;\n\tmargin-bottom: 60rpx;\n}\n.btn-submit {\n\tborder-radius: 20rpx;\n\tcolor: #FFFFFF;\n\tmargin-top: 100rpx;\n\tbackground-color: #007AFF;\n\tmargin-bottom: 70rpx;\n}\n.image-title {\n\tdisplay: flex;\n\tflex-direction: row;\n\tjustify-content: space-between;\n\talign-items: center;\n\tcolor: #606266;\n}\n.filepicker {\n\tmargin-top: 30rpx;\n\tmargin-bottom: 30rpx;\n}\n.btn {\n\tposition: fixed;\n\tbottom: 0;\n\tleft: 0;\n\tright: 0;\n\tmargin: 30rpx 30rpx 60rpx 30rpx;\n}\n", ""]);
+exports.push([module.i, "\n.text-black {\n\tcolor: #303133;\n\tfont-size: 32rpx;\n}\n.text-grey {\n\tcolor: #BCBCBC;\n\tfont-size: 24rpx;\n\tmargin-left: 15rpx;\n}\n.feedback-quick {\n\tpadding-right: 10rpx;\n\tcolor: #606266;\n\tfont-size: 32rpx;\n}\n.feedback-body {\n\tpadding: 30rpx;\n}\n.feedback-textare {\n\tmargin-top: 30rpx;\n\tmargin-bottom: 30rpx;\n\theight: 266rpx;\n\tcolor: #303133;\n\tfont-size: 28rpx;\n\tline-height: 2em;\n\twidth: 100%;\n\tbox-sizing: border-box;\n\tpadding: 20rpx 30rpx;\n\tborder-radius: 20rpx;\n\tbackground-color: #F5F6F8;\n}\n.feedback-input {\n\tfont-size: 28rpx;\n\tcolor: #303133;\n\tbackground-color: #F5F6F8;\n\tborder-radius: 20rpx;\n\theight: 100rpx;\n\tmin-height: 100rpx;\n\tpadding: 0 30rpx;\n\tmargin-top: 30rpx;\n\tmargin-bottom: 60rpx;\n}\n.btn-submit {\n\tborder-radius: 20rpx;\n\tcolor: #FFFFFF;\n\tmargin-top: 100rpx;\n\tbackground-color: #007AFF;\n\tmargin-bottom: 70rpx;\n}\n.image-title {\n\tdisplay: flex;\n\tflex-direction: row;\n\tjustify-content: space-between;\n\talign-items: center;\n\tcolor: #606266;\n}\n.filepicker {\n\tmargin-top: 30rpx;\n\tmargin-bottom: 30rpx;\n}\n.btn {\n\tposition: fixed;\n\tbottom: 0;\n\tleft: 0;\n\tright: 0;\n\tmargin: 30rpx 30rpx 60rpx 30rpx;\n}\n.Btn{\n\twidth: 80%;\n\theight: 50px;\n\tbackground-color: bisque;\n\tborder-radius: 20px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -24806,7 +24771,7 @@ var render = function () {
               _c("v-uni-image", {
                 staticClass: _vm._$g(19, "sc"),
                 attrs: {
-                  src: "/static/my-assets//about/Logo.jpg",
+                  src: "/static/my-assets//about//Logo.jpg",
                   mode: "scaleToFill",
                   border: "0",
                   _i: 19,
@@ -25038,7 +25003,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.box {\n\twidth: 600upx;\n\theight: 490upx;\n\tborder-radius: 10px;\n\tbackground-color: #eeeeee;\n\tposition: relative;\n\ttop: 240px;\n\tmargin: 0 auto;\n}\n.contact {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\tborder-radius: 10px;\n}\n.ttext {\n\tmargin: 20px;\n}\n.title {\n\tmargin: 10px;\n}\n.about_60 {\n\twhite-space: normal;\n\twidth: 749upx;\n\tposition: relative;\n\theight: 100%;\n\tpadding: 0upx;\n\tclear: both;\n\tfloat: left;\n\tbackground-color: #ffffff;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n}\n.about_60 .about_62 {\n\twhite-space: normal;\n\twidth: 609upx;\n\theight: 300upx;\n\tpadding: 0upx;\n\tmargin-top: 127upx;\n\tmargin-left: 84upx;\n\tfloat: left;\n\tposition: absolute;\n\ttop: 0upx;\n\tleft: 0upx;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n}\n.about_60 .about_62 .about_22 {\n\twhite-space: normal;\n\twidth: 180upx;\n\theight: 180upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 10upx;\n\tmargin-left: 200upx;\n\tfloat: left;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n\tline-height: 127upx;\n}\n.about_60 .about_62 .about_35 {\n\twhite-space: normal;\n\twidth: 97upx;\n\theight: 36upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 29upx;\n\tmargin-left: 241upx;\n\tfloat: left;\n\ttext-align: center;\n\tjustify-content: center;\n\tborder-radius: 0upx;\n\tcolor: #000000;\n\tfont-size: 31upx;\n\tline-height: 36upx;\n}\n.about_60 .about_62 .about_36 {\n\twhite-space: normal;\n\twidth: 473upx;\n\theight: 26upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 18upx;\n\tmargin-left: 52upx;\n\tfloat: left;\n\ttext-align: center;\n\tjustify-content: center;\n\tborder-radius: 0upx;\n\tcolor: #5c5f66;\n\tfont-size: 20upx;\n\tline-height: 26upx;\n}\n", ""]);
+exports.push([module.i, "\n.box {\n\twidth: 600upx;\n\theight: 490upx;\n\tborder-radius: 10px;\n\tbackground-color: #eeeeee;\n\tposition: relative;\n\ttop: 240px;\n\tmargin: 0 auto;\n}\n.contact {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\tborder-radius: 10px;\n}\n.ttext {\n\tmargin: 20px;\n}\n.title {\n\tmargin: 10px;\n}\n.about_60 {\n\twhite-space: normal;\n\twidth: 749upx;\n\tposition: relative;\n\theight: 100%;\n\tpadding: 0upx;\n\tclear: both;\n\tfloat: left;\n\tbackground-color: #ffffff;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n}\n.about_60 .about_62 {\n\twhite-space: normal;\n\twidth: 609upx;\n\theight: 300upx;\n\tpadding: 0upx;\n\tmargin-top: 100upx;\n\tmargin-left: 9%;\t\n\tfloat: left;\n\tposition: absolute;\n\ttop: 0upx;\n\tleft: 0upx;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n}\n.about_60 .about_62 .about_22 {\n\twhite-space: normal;\n\twidth: 180upx;\n\theight: 180upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 10upx;\n\tmargin-left: 200upx;\n\tfloat: left;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n\tline-height: 127upx;\n}\n.about_60 .about_62 .about_35 {\n\twhite-space: normal;\n\twidth: 97upx;\n\theight: 36upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 29upx;\n\tmargin-left: 241upx;\n\tfloat: left;\n\ttext-align: center;\n\tjustify-content: center;\n\tborder-radius: 0upx;\n\tcolor: #000000;\n\tfont-size: 31upx;\n\tline-height: 36upx;\n}\n.about_60 .about_62 .about_36 {\n\twhite-space: normal;\n\twidth: 473upx;\n\theight: 26upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 18upx;\n\tmargin-left: 52upx;\n\tfloat: left;\n\ttext-align: center;\n\tjustify-content: center;\n\tborder-radius: 0upx;\n\tcolor: #5c5f66;\n\tfont-size: 20upx;\n\tline-height: 26upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
