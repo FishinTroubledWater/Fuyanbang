@@ -53,6 +53,28 @@
 				}
 			}
 		},
+		mounted() {
+			uni.$u.http.get('v1/frontend/user/basicUserInfo?id=1'+this.id, {
+			
+			}).then(res => {
+			    console.log(res.data.data);
+				this.user.password = res.data.data.Password;
+				this.user.account=res.data.data.Account;
+			}).catch(err => {
+				
+			})
+			// console.log("执行onLoad（）");
+			uni.getStorage({
+				key:'userId',   // 储存在本地的变量名
+				success:res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.id=res.data;
+					console.log(this.id)
+				}
+			})
+			// console.log("执行onLoad（）");
+		},
 		methods: {
 			openPopup() {
 				this.show = true;
@@ -95,26 +117,6 @@
 					//显示持续时间为 2秒
 					duration: 1500
 				}) 
-				// // 点击上传信息按钮触发的方法
-				// var that = this
-				// uni.request({
-				// 	//api地址
-				// 	url: 'http://localhost:3000/web/api/rest/user/',
-				// 	header: {
-				// 		'content-type': 'application/x-www-form-urlencoded'
-				// 	},
-				// 	method: 'POST',
-				// 	data: {
-				// 		// 将json数据转化成字符串格式进行上传
-				// 		information: JSON.stringify(that.user)
-				// 	},
-				// 	success: (res) => {
-				// 		console.log(res)
-				// 	},
-				// 	error(err) {
-				// 		console.log(err)
-				// 	}
-				// })
 				this.timer = setInterval(() => {
 				    //TODO 
 					uni.navigateBack({
