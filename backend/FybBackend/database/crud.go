@@ -279,6 +279,12 @@ func SelectAllRecipeByPage(db *gorm.DB, query string, pageNum int64, pageSize in
 	return recipes, count, err
 }
 
+func UpdateSingleRecipeByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("recipe").Where(where).Updates(update).Count(&count).Error
+	return count, err
+}
+
 // News
 
 func DeleteNews(db *gorm.DB, where map[string]interface{}) (int64, error) {
@@ -405,7 +411,7 @@ func DeletePost(db *gorm.DB, where map[string]interface{}) (int64, error) {
 func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Post, int64, error) {
 	var count int64 = 0
 	var post Post
-	err := db.InnerJoins("Author").InnerJoins("Part").Where(where).First(&post).Count(&count).Error
+	err := db.Table("post").InnerJoins("Author").InnerJoins("Part").Where("post.id = ?", where["id"]).Find(&post).Count(&count).Error
 	if count == 0 {
 		return post, 0, errors.New("查询的记录不存在")
 	}
@@ -546,9 +552,9 @@ func SelectAllFeedbackByPage(db *gorm.DB, query string, pageNum int64, pageSize 
 	var feedbacks []Feedback
 	if query != "" {
 		query = query + "%"
-		db = db.Table("feedback").Where("author like ?", query).Count(&count)
+		db = db.Table("feedback").InnerJoins("Author").Where("account like ?", query).Order("state,id asc").Find(&feedbacks).Count(&count)
 	} else {
-		db = db.Table("feedback").Count(&count)
+		db = db.Table("feedback").InnerJoins("Author").Order("state,id asc").Find(&feedbacks).Count(&count)
 	}
 	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&feedbacks).Error
 	if count == 0 && err == nil {
@@ -631,4 +637,19 @@ func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
 		result = multierror.Append(result, err)
 	}
 	return count, posts, result
+}
+
+// Favorite ------------------------------------------------------------
+func SearchFavoriteByUserId(db *gorm.DB, userId int64) (int64, []FavoriteRecord, error) {
+	var result *multierror.Error
+	var favorites []FavoriteRecord
+	var count int64
+	err := db.Preload("Article").Preload("Author").Where("userID = ? ", userId).Find(&favorites).Count(&count).Error
+	if count == 0 {
+		result = multierror.Append(result, errors.New("找不到该收藏记录！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return count, favorites, result
 }

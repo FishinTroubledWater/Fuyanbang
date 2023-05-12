@@ -106,7 +106,7 @@
 					console.log(res.data)
 					if(res.data.code==200){
 						uni.showToast({
-							title:"请求成功",
+							title:"评论成功",
 							duration:1000,
 						})
 					}

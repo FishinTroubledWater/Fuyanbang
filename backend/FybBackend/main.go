@@ -51,5 +51,4 @@ func main() {
 	if err := r.Run(":8088"); err != nil {
 		fmt.Println("startup service failed, err:%v\n", err)
 	}
-
 }

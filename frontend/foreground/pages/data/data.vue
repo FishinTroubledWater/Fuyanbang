@@ -14,16 +14,16 @@
 				<view class="topic">
 					<text class="contentTopWord">21天攒图计划招募令</text>
 					<text>\n</text>
-					<text style="color:blanchedalmond;">每日一画，不画就出局
-						来吧，一起坚持21天，做行动派！</text>
-					<navigator class="contentTopWord" url="/pages/data/activityDetail/activityDetail">了解详情</navigator>
+					<text style="color:#FFFFFF;padding-left: 20rpx;">每日一画，不画就出局\n</text>
+					<text style="color:#FFFFFF;padding-left: 20rpx;">来吧，一起坚持21天，做行动派！</text>
+					<navigator  class="contentTopWordDetails" url="/pages/data/activityDetail/activityDetail">了解详情</navigator>
 
 				</view>
 
 				<u-list>
 					<u-list-item v-for="(item, index) in indexList" :key="index">
 						<uni-card @click="clicknews(item.postId)" :title="item.name"
-							:sub-title="帖子信息" :extra="item.time" :thumbnail="item.icon"
+							sub-title="帖子信息" :extra="item.time" :thumbnail="item.icon"
 							class="trends-box-item">
 							<u--text :lines="3" :text="item.summary"></u--text>
 								<!-- <image class="newsimage" :src="indexList[index].img[0]"></image> -->
@@ -178,7 +178,7 @@
 	}
 
 	.nav-actived {
-		color: blanchedalmond;
+		color: #CCBE97;
 		font-weight: 700;
 	}
 
@@ -194,6 +194,12 @@
 	.contentTopWord {
 		color: #ffffff;
 		font-size: 40rpx;
+		padding-left: 20rpx;
+	}
+	.contentTopWordDetails{
+		color: #CCBE97;
+		font-size: 40rpx;
+		padding-left: 20rpx;
 	}
 
 	.contentPic {

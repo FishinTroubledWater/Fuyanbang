@@ -82,6 +82,12 @@
 					answer: this.myanswer,
 				}).then(res => {
 					console.log(res.data)
+					if(res.data.code==200){
+						uni.showToast({
+							title:"回答成功",
+							duration:1000,
+						})
+					}
 				}).catch(err => {
 				
 				})
