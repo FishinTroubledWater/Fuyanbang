@@ -104,7 +104,7 @@
 <style>
 	.box {
 		width: 600upx;
-		height: 490upx;
+		height: 530upx;
 		border-radius: 10px;
 		background-color: #eeeeee;
 		position: relative;
