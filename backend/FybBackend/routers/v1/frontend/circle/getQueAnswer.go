@@ -9,20 +9,20 @@ import (
 	"strconv"
 )
 
-func SearchNewQue(e *gin.Engine) {
+func SearchQueAnswer(e *gin.Engine) {
 	db := fybDatabase.InitDB()
-	e.GET("/v1/frontend/circle/newque/:userid", func(context *gin.Context) {
+	e.GET("/v1/frontend/circle/queAnswer/:queID", func(context *gin.Context) {
 		var result *multierror.Error
 		var count int64
 		var posts []fybDatabase.Post
-		userid := context.Param("userid")
+		queID := context.Param("queID")
 
-		userIdInt64, err := strconv.ParseInt(userid, 10, 64)
+		queIdInt64, err := strconv.ParseInt(queID, 10, 64)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
 
-		count, posts, err = fybDatabase.SearchAllQue(db, userIdInt64)
+		count, posts, err = fybDatabase.SearchQueByQueId(db, queIdInt64)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
@@ -42,11 +42,10 @@ func SearchNewQue(e *gin.Engine) {
 
 				postMap["name"] = postMap["Author"].(map[string]interface{})["NickName"]
 				postMap["time"] = postMap["PublishTime"]
-				postMap["queId"] = postMap["ID"]
 				postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
-				postMap["summary"] = postMap["Summary"]
-				postMap["isImage"] = false
-				postMap["img"] = nil
+				postMap["queId"] = postMap["ID"]
+				postMap["content"] = postMap["Content"]
+				delete(postMap, "Answer")
 				delete(postMap, "Content")
 				delete(postMap, "Summary")
 				delete(postMap, "Part")
