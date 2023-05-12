@@ -402,50 +402,38 @@ var render = function () {
                   expression: "email",
                 },
               }),
-              _vm._$g(6, "i")
-                ? _c("p", { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } }, [
-                    _vm._v("请输入有效的电子邮件地址"),
-                  ])
-                : _vm._e(),
             ],
             1
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
+            { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
             [
-              _c("v-uni-label", { attrs: { for: "password", _i: 8 } }, [
+              _c("v-uni-label", { attrs: { for: "password", _i: 7 } }, [
                 _vm._v("密码："),
               ]),
               _c("v-uni-input", {
-                class: _vm._$g(9, "c"),
-                attrs: { type: "password", id: "password", _i: 9 },
+                class: _vm._$g(8, "c"),
+                attrs: { type: "password", id: "password", _i: 8 },
                 model: {
-                  value: _vm._$g(9, "v-model"),
+                  value: _vm._$g(8, "v-model"),
                   callback: function ($$v) {
-                    _vm.$handleVModelEvent(9, $$v)
+                    _vm.$handleVModelEvent(8, $$v)
                   },
                   expression: "password",
                 },
               }),
-              _vm._$g(10, "i")
-                ? _c(
-                    "p",
-                    { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
-                    [_vm._v("密码必须至少为6个字符")]
-                  )
-                : _vm._e(),
             ],
             1
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
+            { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
             [
               _c(
                 "v-uni-text",
                 {
-                  attrs: { _i: 12 },
+                  attrs: { _i: 10 },
                   on: {
                     click: function ($event) {
                       return _vm.$handleViewEvent($event)
@@ -457,8 +445,8 @@ var render = function () {
               _c(
                 "v-uni-text",
                 {
-                  staticClass: _vm._$g(13, "sc"),
-                  attrs: { _i: 13 },
+                  staticClass: _vm._$g(11, "sc"),
+                  attrs: { _i: 11 },
                   on: {
                     click: function ($event) {
                       return _vm.$handleViewEvent($event)
@@ -472,12 +460,12 @@ var render = function () {
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
+            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
             [
               _c(
                 "v-uni-button",
                 {
-                  attrs: { type: "submit", _i: 15 },
+                  attrs: { type: "submit", _i: 13 },
                   on: {
                     click: function ($event) {
                       return _vm.$handleViewEvent($event)
@@ -7682,32 +7670,21 @@ var render = function () {
                           attrs: { _i: "35-" + $30 },
                         },
                         [
-                          _vm._v("<<<<<<< Updated upstream"),
-                          _c("u--text", { attrs: { _i: "36-" + $30 } }),
-                          _c("v-uni-image", {
-                            staticClass: _vm._$g("37-" + $30, "sc"),
-                            attrs: {
-                              src: "/static/academy-icons/风景.png",
-                              _i: "37-" + $30,
-                            },
-                          }),
-                          _vm._v("======="),
                           _c(
                             "uni-view",
                             {
-                              staticClass: _vm._$g("38-" + $30, "sc"),
-                              attrs: { _i: "38-" + $30 },
+                              staticClass: _vm._$g("36-" + $30, "sc"),
+                              attrs: { _i: "36-" + $30 },
                             },
-                            [_vm._v(_vm._$g("38-" + $30, "t0-0") + "...")]
+                            [_vm._v(_vm._$g("36-" + $30, "t0-0") + "...")]
                           ),
                           _c("v-uni-image", {
-                            staticClass: _vm._$g("39-" + $30, "sc"),
+                            staticClass: _vm._$g("37-" + $30, "sc"),
                             attrs: {
                               src: "/static/academy-icons/sight.png",
-                              _i: "39-" + $30,
+                              _i: "37-" + $30,
                             },
                           }),
-                          _vm._v(">>>>>>> Stashed changes"),
                         ],
                         1
                       ),
@@ -10246,7 +10223,7 @@ var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(/*! ../../static/FZU_bui
 exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  /* 整体内容样式 */\n.content {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    background-color: #DCE2F1;\n}\n.text-area {\n    display: flex;\n    justify-content: center;\n}\n  /* 倒计时样式 */\n.header-box {\n    margin: 10rpx 0rpx;\n    border-radius: 10rpx;\n    width: 690rpx;\n    opacity: 0.8;\n    /* 背景图片 */\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\n    background-size: 100%;\n    background-attachment: fixed;\n}\n  /* 时间轴 */\n.timeline {\n    margin: 34rpx 0rpx;\n}\n  /* 标签栏样式 */\n.tabs-box {\n    margin: 8rpx 8rpx;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n  /* 标签栏子元素 */\n.tabs-box-item {\n    margin: 0 20rpx;\n}\n  /* 最新动态样式 */\n.trends-box {\n    border-radius: 15rpx;\n    margin: 6rpx 0rpx;\n}\n.trends-box-title {\n/*    margin: 6rpx 16rpx; */\n\tmargin-left: 40rpx;\n\tmargin-bottom: 20rpx;\n    font-size: 34rpx;\n    color: #3F3F3F;\n\tfont-weight: 700;\n/* \tfont-family: \"思源黑体\"; */\n}\n.trends-box-item {\n    opacity: 0.8;\n    width: 680rpx;\n}\n.countDown{\n\t  width: 300rpx;\n\t  font-family: \"思源黑体\";\n\t  font-weight: 700;\n}\n.yearDown{\n\t  width: 300rpx;\n\t  font-family: \"思源黑体\";\n\t  font-size: 32rpx;\n}\n.remark{\n\t  margin-top: 50rpx;\n\t  margin-left: 25rpx;\n\t  width: 500rpx;\n\t  color: #f5f5f5;\n\t  font-size: 28rpx;\n\t  font-family: \"思源黑体\";\n}\n.viewUser{\n  \tdisplay: flex;\n  \tflex-direction: row;\n  \talign-items: center;\n\tmargin-top: 15rpx;\n}\n.viewSaid {\n  \theight: auto;\n  \t  \n  \t/* 圆角 */\n  \tborder-radius: 18rpx;\n  \t\n  \t/* 边 */\n  \tborder: 1rpx solid #E0E3DA;\n  \t/* 阴影 */\n  \tbox-shadow:2rpx 7rpx 0rpx #ebebeb;\n  \t\n  \tbackground-color: #ffffff;\n  \tmargin-left:30rpx;\n  \tmargin-right:30rpx;\n  \tmargin-top: 25rpx;\n  \t\n  \t/* padding使得文字和图片不至于贴着边框 */\n  \tpadding: 25rpx;\n}\n.headPortrait{\n  \theight: 100rpx;\n  \twidth: 100rpx;\n  \tborder-radius: 50%;\n}\n.userMes {\n  \tmargin-left: 30rpx;\n  \tdisplay: flex;\n  \tflex-direction: column;\n\twidth: 270rpx;\n}\n.userName{\n  \tfont-size: 30rpx;\n  \tfont-family: \"黑体\";\n}\n.saidContent{\n  \tdisplay: flex;\n  \tflex-direction: row;\n  \talign-items: center;\n}\n.textContent{\n  \twidth: 450rpx;\n  \tmargin-top: 0rpx;\n  \tmargin-right: 20rpx;\n  \tfont-size: 20rpx;\n}\n.sights{\n  \tfloat: right;\n  \twidth: 190rpx;\n  \theight: 125rpx;\n  \tborder-radius: 18rpx;\n}\n.publishTime{\n\t  font-size: 20rpx;\n\t  color: #9A9A9A;\n\t  margin-left: 40rpx;\n}\n.title{\n\t  font-size: 36rpx;\n\t  font-weight: 600;\n\t  margin-left: 10rpx;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  /* 整体内容样式 */\n.content {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    background-color: #DCE2F1;\n}\n.text-area {\n    display: flex;\n    justify-content: center;\n}\n  /* 倒计时样式 */\n.header-box {\n    margin: 10rpx 0rpx;\n    border-radius: 10rpx;\n    width: 690rpx;\n    opacity: 0.8;\n    /* 背景图片 */\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\n    background-size: 100%;\n    background-attachment: fixed;\n}\n  /* 时间轴 */\n.timeline {\n    margin: 34rpx 0rpx;\n}\n  /* 标签栏样式 */\n.tabs-box {\n    margin: 8rpx 8rpx;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n  /* 标签栏子元素 */\n.tabs-box-item {\n    margin: 0 20rpx;\n}\n  /* 最新动态样式 */\n.trends-box {\n    border-radius: 15rpx;\n    margin: 6rpx 0rpx;\n}\n.trends-box-title {\n/*    margin: 6rpx 16rpx; */\n\tmargin-left: 40rpx;\n\tmargin-bottom: 20rpx;\n    font-size: 34rpx;\n    color: #3F3F3F;\n\tfont-weight: 700;\n/* \tfont-family: \"思源黑体\"; */\n}\n.trends-box-item {\n    opacity: 0.8;\n    width: 680rpx;\n}\n.countDown{\n\t  width: 300rpx;\n\t  font-family: \"思源黑体\";\n\t  font-weight: 700;\n}\n.yearDown{\n\t  width: 300rpx;\n\t  font-family: \"思源黑体\";\n\t  font-size: 32rpx;\n}\n.remark{\n\t  margin-top: 50rpx;\n\t  margin-left: 25rpx;\n\t  width: 500rpx;\n\t  color: #f5f5f5;\n\t  font-size: 28rpx;\n\t  font-family: \"思源黑体\";\n}\n.viewUser{\n  \tdisplay: flex;\n  \tflex-direction: row;\n  \talign-items: center;\n\tmargin-top: 15rpx;\n}\n.viewSaid {\n  \theight: auto;\n  \t  \n  \t/* 圆角 */\n  \tborder-radius: 18rpx;\n  \t\n  \t/* 边 */\n  \tborder: 1rpx solid #E0E3DA;\n  \t/* 阴影 */\n  \tbox-shadow:2rpx 7rpx 0rpx #ebebeb;\n  \t\n  \tbackground-color: #ffffff;\n  \tmargin-left:30rpx;\n  \tmargin-right:30rpx;\n  \tmargin-top: 25rpx;\n  \t\n  \t/* padding使得文字和图片不至于贴着边框 */\n  \tpadding: 25rpx;\n}\n.headPortrait{\n  \theight: 100rpx;\n  \twidth: 100rpx;\n  \tborder-radius: 50%;\n}\n.userMes {\n  \tmargin-left: 30rpx;\n  \tdisplay: flex;\n  \tflex-direction: column;\n\twidth: 270rpx;\n}\n.userName{\n  \tfont-size: 30rpx;\n  \tfont-family: \"黑体\";\n}\n.saidContent{\n  \tdisplay: flex;\n  \tflex-direction: row;\n  \talign-items: center;\n}\n.textContent{\n  \twidth: 450rpx;\n  \tmargin-top: 0rpx;\n  \tmargin-right: 20rpx;\n  \tfont-size: 20rpx;\n}\n.sights{\n  \tfloat: right;\n  \twidth: 190rpx;\n  \theight: 125rpx;\n  \tborder-radius: 18rpx;\n}\n.publishTime{\n\t  font-size: 20rpx;\n\t  color: #9A9A9A;\n\t  margin-left: 40rpx;\n}\n.title{\n\t  font-size: 36rpx;\n\t  font-weight: 600;\n\t  margin-left: 10rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -16145,7 +16122,6 @@ try {
   components = {
     uniList: __webpack_require__(/*! @/uni_modules/uni-list/components/uni-list/uni-list.vue */ 456)
       .default,
-    "u-Text": __webpack_require__(/*! uview-ui/components/u--text/u--text.vue */ 132).default,
   }
 } catch (e) {
   if (
@@ -16227,16 +16203,9 @@ var render = function () {
                 "uni-view",
                 { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
                 [
-                  _vm._v("<<<<<<< Updated upstream"),
-                  _c("u--text", { attrs: { _i: 10 } }),
-                  _c("v-uni-image", {
-                    staticClass: _vm._$g(11, "sc"),
-                    attrs: { src: "/static/academy-icons/风景.png", _i: 11 },
-                  }),
-                  _vm._v("======="),
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+                    { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
                     [
                       _vm._v(
                         "致所有考研的学弟学妹，见字如面：写下这封长信只因为我知道作为一个跨考者，孤独是很难避免的，"
@@ -16244,8 +16213,8 @@ var render = function () {
                     ]
                   ),
                   _c("v-uni-image", {
-                    staticClass: _vm._$g(13, "sc"),
-                    attrs: { src: "/static/academy-icons/sight.png", _i: 13 },
+                    staticClass: _vm._$g(11, "sc"),
+                    attrs: { src: "/static/academy-icons/sight.png", _i: 11 },
                   }),
                   _vm._v(">>>>>>> Stashed changes"),
                 ],
@@ -16256,34 +16225,34 @@ var render = function () {
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
+            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
             [
               _c(
                 "uni-view",
-                { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
+                { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
                 [
                   _c("v-uni-image", {
-                    staticClass: _vm._$g(16, "sc"),
-                    attrs: { src: "/static/academy-icons/photo.jpg", _i: 16 },
+                    staticClass: _vm._$g(14, "sc"),
+                    attrs: { src: "/static/academy-icons/photo.jpg", _i: 14 },
                   }),
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+                    { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
                     [
                       _c(
                         "v-uni-text",
-                        { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
+                        { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
                         [_vm._v("玲玲学姐")]
                       ),
                       _c(
                         "uni-view",
-                        { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
+                        { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
                         [
                           _c(
                             "v-uni-text",
                             {
-                              staticClass: _vm._$g(20, "sc"),
-                              attrs: { _i: 20 },
+                              staticClass: _vm._$g(18, "sc"),
+                              attrs: { _i: 18 },
                             },
                             [_vm._v("本科专业成功上岸")]
                           ),
@@ -16298,22 +16267,11 @@ var render = function () {
               ),
               _c(
                 "uni-view",
-                { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
+                { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
                 [
-                  _vm._v("<<<<<<< Updated upstream"),
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(22, "sc"), attrs: { _i: 22 } },
-                    [_vm._v(_vm._$g(22, "t0-0"))]
-                  ),
-                  _c("v-uni-image", {
-                    staticClass: _vm._$g(23, "sc"),
-                    attrs: { src: "/static/academy-icons/风景.png", _i: 23 },
-                  }),
-                  _vm._v("======="),
-                  _c(
-                    "uni-view",
-                    { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
+                    { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
                     [
                       _vm._v(
                         "致所有考研的学弟学妹，见字如面：写下这封长信只因为我知道作为一个跨考者，孤独是很难避免的，"
@@ -16321,10 +16279,9 @@ var render = function () {
                     ]
                   ),
                   _c("v-uni-image", {
-                    staticClass: _vm._$g(25, "sc"),
-                    attrs: { src: "/static/academy-icons/sight.png", _i: 25 },
+                    staticClass: _vm._$g(21, "sc"),
+                    attrs: { src: "/static/academy-icons/sight.png", _i: 21 },
                   }),
-                  _vm._v(">>>>>>> Stashed changes"),
                 ],
                 1
               ),
@@ -17552,7 +17509,6 @@ try {
   components = {
     uniList: __webpack_require__(/*! @/uni_modules/uni-list/components/uni-list/uni-list.vue */ 456)
       .default,
-    "u-Text": __webpack_require__(/*! uview-ui/components/u--text/u--text.vue */ 132).default,
   }
 } catch (e) {
   if (
@@ -17634,16 +17590,9 @@ var render = function () {
                 "uni-view",
                 { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
                 [
-                  _vm._v("<<<<<<< Updated upstream"),
-                  _c("u--text", { attrs: { _i: 10 } }),
-                  _c("v-uni-image", {
-                    staticClass: _vm._$g(11, "sc"),
-                    attrs: { src: "/static/academy-icons/风景.png", _i: 11 },
-                  }),
-                  _vm._v("======="),
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+                    { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
                     [
                       _vm._v(
                         "致所有考研的学弟学妹，见字如面：写下这封长信只因为我知道作为一个跨考者，孤独是很难避免的，"
@@ -17651,8 +17600,8 @@ var render = function () {
                     ]
                   ),
                   _c("v-uni-image", {
-                    staticClass: _vm._$g(13, "sc"),
-                    attrs: { src: "/static/academy-icons/sight.png", _i: 13 },
+                    staticClass: _vm._$g(11, "sc"),
+                    attrs: { src: "/static/academy-icons/sight.png", _i: 11 },
                   }),
                   _vm._v(">>>>>>> Stashed changes"),
                 ],
@@ -17663,34 +17612,34 @@ var render = function () {
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
+            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
             [
               _c(
                 "uni-view",
-                { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
+                { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
                 [
                   _c("v-uni-image", {
-                    staticClass: _vm._$g(16, "sc"),
-                    attrs: { src: "/static/academy-icons/photo.jpg", _i: 16 },
+                    staticClass: _vm._$g(14, "sc"),
+                    attrs: { src: "/static/academy-icons/photo.jpg", _i: 14 },
                   }),
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+                    { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
                     [
                       _c(
                         "v-uni-text",
-                        { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
+                        { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
                         [_vm._v("玲玲学姐")]
                       ),
                       _c(
                         "uni-view",
-                        { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
+                        { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
                         [
                           _c(
                             "v-uni-text",
                             {
-                              staticClass: _vm._$g(20, "sc"),
-                              attrs: { _i: 20 },
+                              staticClass: _vm._$g(18, "sc"),
+                              attrs: { _i: 18 },
                             },
                             [_vm._v("本科专业成功上岸")]
                           ),
@@ -17705,22 +17654,11 @@ var render = function () {
               ),
               _c(
                 "uni-view",
-                { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
+                { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
                 [
-                  _vm._v("<<<<<<< Updated upstream"),
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(22, "sc"), attrs: { _i: 22 } },
-                    [_vm._v(_vm._$g(22, "t0-0"))]
-                  ),
-                  _c("v-uni-image", {
-                    staticClass: _vm._$g(23, "sc"),
-                    attrs: { src: "/static/academy-icons/风景.png", _i: 23 },
-                  }),
-                  _vm._v("======="),
-                  _c(
-                    "uni-view",
-                    { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
+                    { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
                     [
                       _vm._v(
                         "致所有考研的学弟学妹，见字如面：写下这封长信只因为我知道作为一个跨考者，孤独是很难避免的，"
@@ -17728,10 +17666,9 @@ var render = function () {
                     ]
                   ),
                   _c("v-uni-image", {
-                    staticClass: _vm._$g(25, "sc"),
-                    attrs: { src: "/static/academy-icons/sight.png", _i: 25 },
+                    staticClass: _vm._$g(21, "sc"),
+                    attrs: { src: "/static/academy-icons/sight.png", _i: 21 },
                   }),
-                  _vm._v(">>>>>>> Stashed changes"),
                 ],
                 1
               ),
