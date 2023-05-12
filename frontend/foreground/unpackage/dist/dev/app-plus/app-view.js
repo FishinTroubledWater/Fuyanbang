@@ -392,7 +392,6 @@ var render = function () {
                 _vm._v("邮箱："),
               ]),
               _c("v-uni-input", {
-                class: _vm._$g(5, "c"),
                 attrs: { type: "text", id: "email", _i: 5 },
                 model: {
                   value: _vm._$g(5, "v-model"),
@@ -413,7 +412,6 @@ var render = function () {
                 _vm._v("密码："),
               ]),
               _c("v-uni-input", {
-                class: _vm._$g(8, "c"),
                 attrs: { type: "password", id: "password", _i: 8 },
                 model: {
                   value: _vm._$g(8, "v-model"),
@@ -578,7 +576,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.login-page {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\t/* justify-content: center; */\n\theight: 80rpx;\n}\n.title {\n\tfont-size: 50rpx;\n\tfont-weight: bold;\n\tmargin-bottom: 30rpx;\n}\n.form {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\t/* justify-content: center; */\n\tpadding: 70rpx;\n\theight: 800rpx;\n\tbackground-color: #f2f2f2;\n\tborder-radius: 20rpx;\n\tbox-shadow: 0 0 30rpx rgba(0, 0, 0, 0.2);\n}\n.form-item {\n\tdisplay: flex;\n\tflex-direction: column;\n\tmargin-bottom: 20rpx;\n}\n.button {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\talign-self: flex-end;\n\tpadding: 50rpx 0;\n\t/* margin-bottom: 50%; */\n\t/* justify-content: center; */\n}\n.handoff {\n\tdisplay: flex;\n\tflex-direction: row;\n\tmargin-top: 80rpx;\n\tmargin-left: -10rpx;\n}\n.resetPassword {\n\tmargin-left: auto;\n}\n.error {\ncolor: #FF5252;\nfont-size: 12px;\nmargin-top: 5px;\n}\nuni-label {\n\tfont-weight: bold;\n\tmargin-bottom: 10rpx;\n}\nuni-input {\n\tfont-size: large;\n\tpadding: 20rpx;\n\tborder-radius: 5rpx;\n\tborder: 1rpx solid #ccc;\n\t/* width: 100%; */\n\theight: auto;\n\tbox-sizing: border-box;\n}\nuni-button {\n\tbackground-color: #4CAF50;\n\tborder: none;\n\tcolor: white;\n\tpadding: 15rpx;\n\twidth: 400rpx;\n\ttext-align: center;\n\ttext-decoration: none;\n\tdisplay: inline-block;\n\tfont-size: 40rpx;\n\tborder-radius: 30rpx;\n\tcursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.login-page {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\t/* justify-content: center; */\n\theight: 80rpx;\n}\n.title {\n\tfont-size: 50rpx;\n\tfont-weight: bold;\n\tmargin-bottom: 30rpx;\n}\n.form {\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\t/* justify-content: center; */\n\tpadding: 70rpx;\n\theight: 800rpx;\n\tbackground-color: #f2f2f2;\n\tborder-radius: 20rpx;\n\tbox-shadow: 0 0 30rpx rgba(0, 0, 0, 0.2);\n}\n.form-item {\n\tdisplay: flex;\n\tflex-direction: column;\n\tmargin-bottom: 20rpx;\n}\n.button {\n\tflex: 1 0 auto;\n\tdisplay: flex;\n\tflex-direction: column;\n\talign-items: center;\n\talign-self: flex-end;\n\tpadding: 50rpx 0;\n\t/* margin-bottom: 50%; */\n\t/* justify-content: center; */\n}\n.handoff {\n\tdisplay: flex;\n\tflex-direction: row;\n\tmargin-top: 80rpx;\n\tmargin-left: -10rpx;\n}\n.resetPassword {\n\tmargin-left: auto;\n}\n.error {\n\tcolor: #FF5252;\n\tfont-size: 12px;\n\tmargin-top: 5px;\n}\nuni-label {\n\tfont-weight: bold;\n\tmargin-bottom: 10rpx;\n}\nuni-input {\n\tfont-size: large;\n\tpadding: 20rpx;\n\tborder-radius: 5rpx;\n\tborder: 1rpx solid #ccc;\n\t/* width: 100%; */\n\theight: auto;\n\tbox-sizing: border-box;\n}\nuni-button {\n\tbackground-color: #4CAF50;\n\tborder: none;\n\tcolor: white;\n\tpadding: 15rpx;\n\twidth: 400rpx;\n\ttext-align: center;\n\ttext-decoration: none;\n\tdisplay: inline-block;\n\tfont-size: 40rpx;\n\tborder-radius: 30rpx;\n\tcursor: pointer;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -1266,23 +1264,18 @@ var render = function () {
                   expression: "email",
                 },
               }),
-              _vm._$g(6, "i")
-                ? _c("p", { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } }, [
-                    _vm._v("请输入有效的电子邮件地址"),
-                  ])
-                : _vm._e(),
             ],
             1
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
+            { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
             [
               _c(
                 "u-code",
                 {
                   ref: "uCode",
-                  attrs: { _i: 8 },
+                  attrs: { _i: 7 },
                   on: {
                     change: function ($event) {
                       return _vm.$handleViewEvent($event)
@@ -1294,14 +1287,14 @@ var render = function () {
               _c(
                 "u-button",
                 {
-                  attrs: { _i: 9 },
+                  attrs: { _i: 8 },
                   on: {
                     click: function ($event) {
                       return _vm.$handleViewEvent($event)
                     },
                   },
                 },
-                [_vm._v(_vm._$g(9, "t0-0"))]
+                [_vm._v(_vm._$g(8, "t0-0"))]
               ),
             ],
             1
@@ -1309,26 +1302,26 @@ var render = function () {
           _c(
             "uni-view",
             {
-              staticClass: _vm._$g(10, "sc"),
+              staticClass: _vm._$g(9, "sc"),
               staticStyle: { "margin-top": "20rpx" },
-              attrs: { _i: 10 },
+              attrs: { _i: 9 },
             },
             [
-              _c("v-uni-label", { attrs: { for: "code", _i: 11 } }, [
+              _c("v-uni-label", { attrs: { for: "code", _i: 10 } }, [
                 _vm._v("请输入验证码："),
               ]),
-              _c("u-code-input", { attrs: { _i: 12 } }),
+              _c("u-code-input", { attrs: { _i: 11 } }),
             ],
             1
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
             [
               _c(
                 "v-uni-button",
                 {
-                  attrs: { type: "submit", _i: 14 },
+                  attrs: { type: "submit", _i: 13 },
                   on: {
                     click: function ($event) {
                       return _vm.$handleViewEvent($event)
@@ -7545,7 +7538,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.textarea_box {\n\tpadding: 20rpx;\n\tbackground-color: #F2F2F2;\n/deep/ .uni-textarea-textarea {\n\t\tfont-size: 28rpx;\n\t\tline-height: 45rpx;\n}\n.num {\n\t\ttext-align: right;\n\t\tcolor: gray\n}\n}\n", ""]);
+exports.push([module.i, "\n.textarea_box {\n\tpadding: 20rpx;\n\tbackground-color: #F2F2F2;\n/deep/ .uni-textarea-textarea {\n\t\tfont-size: 28rpx;\n\t\tline-height: 45rpx;\n}\n.num {\n\t\ttext-align: right;\n\t\tcolor: gray\n}\n}\n.textarea{\n\twidth: 100%;\n\theight: 100rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -7853,7 +7846,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.textarea_box {\n\tpadding: 20rpx;\n\tbackground-color: #F2F2F2;\n/deep/ .uni-textarea-textarea {\n\t\tfont-size: 28rpx;\n\t\tline-height: 45rpx;\n}\n.num {\n\t\ttext-align: right;\n\t\tcolor: gray\n}\n}\n", ""]);
+exports.push([module.i, "\n.textarea_box {\n\tpadding: 20rpx;\n\tbackground-color: #F2F2F2;\n/deep/ .uni-textarea-textarea {\n\t\tfont-size: 28rpx;\n\t\tline-height: 45rpx;\n}\n.num {\n\t\ttext-align: right;\n\t\tcolor: gray\n}\n}\n.textarea{\n\twidth: 100%;\n\theight: 100rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -8989,14 +8982,7 @@ var render = function () {
                           attrs: { _i: "35-" + $30 },
                         },
                         [
-                          _c(
-                            "uni-view",
-                            {
-                              staticClass: _vm._$g("36-" + $30, "sc"),
-                              attrs: { _i: "36-" + $30 },
-                            },
-                            [_vm._v(_vm._$g("36-" + $30, "t0-0") + "...")]
-                          ),
+                          _c("u--text", { attrs: { _i: "36-" + $30 } }),
                           _c("v-uni-image", {
                             staticClass: _vm._$g("37-" + $30, "sc"),
                             attrs: {
@@ -10264,7 +10250,7 @@ var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(/*! ../../static/FZU_bui
 exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  /* 整体内容样式 */\n.content {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    background-color: #DCE2F1;\n}\n.text-area {\n    display: flex;\n    justify-content: center;\n}\n  /* 倒计时样式 */\n.header-box {\n    margin: 10rpx 0rpx;\n    border-radius: 10rpx;\n    width: 690rpx;\n    opacity: 0.8;\n    /* 背景图片 */\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\n    background-size: 100%;\n    background-attachment: fixed;\n}\n  /* 时间轴 */\n.timeline {\n    margin: 34rpx 0rpx;\n}\n  /* 标签栏样式 */\n.tabs-box {\n    margin: 8rpx 8rpx;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n  /* 标签栏子元素 */\n.tabs-box-item {\n    margin: 0 20rpx;\n}\n  /* 最新动态样式 */\n.trends-box {\n    border-radius: 15rpx;\n    margin: 6rpx 0rpx;\n}\n.trends-box-title {\n/*    margin: 6rpx 16rpx; */\n\tmargin-left: 40rpx;\n\tmargin-bottom: 20rpx;\n    font-size: 34rpx;\n    color: #3F3F3F;\n\tfont-weight: 700;\n/* \tfont-family: \"思源黑体\"; */\n}\n.trends-box-item {\n    opacity: 0.8;\n    width: 680rpx;\n}\n.countDown{\n\t  width: 300rpx;\n\t  font-family: \"思源黑体\";\n\t  font-weight: 700;\n}\n.yearDown{\n\t  width: 300rpx;\n\t  font-family: \"思源黑体\";\n\t  font-size: 32rpx;\n}\n.remark{\n\t  margin-top: 50rpx;\n\t  margin-left: 25rpx;\n\t  width: 500rpx;\n\t  color: #f5f5f5;\n\t  font-size: 28rpx;\n\t  font-family: \"思源黑体\";\n}\n.viewUser{\n  \tdisplay: flex;\n  \tflex-direction: row;\n  \talign-items: center;\n\tmargin-top: 15rpx;\n}\n.viewSaid {\n  \theight: auto;\n  \t  \n  \t/* 圆角 */\n  \tborder-radius: 18rpx;\n  \t\n  \t/* 边 */\n  \tborder: 1rpx solid #E0E3DA;\n  \t/* 阴影 */\n  \tbox-shadow:2rpx 7rpx 0rpx #ebebeb;\n  \t\n  \tbackground-color: #ffffff;\n  \tmargin-left:30rpx;\n  \tmargin-right:30rpx;\n  \tmargin-top: 25rpx;\n  \t\n  \t/* padding使得文字和图片不至于贴着边框 */\n  \tpadding: 25rpx;\n}\n.headPortrait{\n  \theight: 100rpx;\n  \twidth: 100rpx;\n  \tborder-radius: 50%;\n}\n.userMes {\n  \tmargin-left: 30rpx;\n  \tdisplay: flex;\n  \tflex-direction: column;\n\twidth: 270rpx;\n}\n.userName{\n  \tfont-size: 30rpx;\n  \tfont-family: \"黑体\";\n}\n.saidContent{\n  \tdisplay: flex;\n  \tflex-direction: row;\n  \talign-items: center;\n}\n.textContent{\n  \twidth: 450rpx;\n  \tmargin-top: 0rpx;\n  \tmargin-right: 20rpx;\n  \tfont-size: 20rpx;\n}\n.sights{\n  \tfloat: right;\n  \twidth: 190rpx;\n  \theight: 125rpx;\n  \tborder-radius: 18rpx;\n}\n.publishTime{\n\t  font-size: 20rpx;\n\t  color: #9A9A9A;\n\t  margin-left: 40rpx;\n}\n.title{\n\t  font-size: 36rpx;\n\t  font-weight: 600;\n\t  margin-left: 10rpx;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n  /* 整体内容样式 */\n.content {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    justify-content: center;\n    background-color: #DCE2F1;\n}\n.text-area {\n    display: flex;\n    justify-content: center;\n}\n  /* 倒计时样式 */\n.header-box {\n    margin: 10rpx 0rpx;\n    border-radius: 10rpx;\n    width: 690rpx;\n    opacity: 0.8;\n    /* 背景图片 */\n    background: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ") no-repeat;\n    background-size: 100%;\n    background-attachment: fixed;\n}\n  /* 时间轴 */\n.timeline {\n    margin: 34rpx 0rpx;\n}\n  /* 标签栏样式 */\n.tabs-box {\n    margin: 8rpx 8rpx;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n  /* 标签栏子元素 */\n.tabs-box-item {\n    margin: 0 20rpx;\n}\n  /* 最新动态样式 */\n.trends-box {\n    border-radius: 15rpx;\n    margin: 6rpx 0rpx;\n}\n.trends-box-title {\n/*    margin: 6rpx 16rpx; */\n\tmargin-left: 40rpx;\n\tmargin-bottom: 20rpx;\n    font-size: 34rpx;\n    color: #3F3F3F;\n\tfont-weight: 700;\n/* \tfont-family: \"思源黑体\"; */\n}\n.trends-box-item {\n    opacity: 0.8;\n    width: 680rpx;\n}\n.countDown{\n\t  width: 300rpx;\n\t  font-family: \"思源黑体\";\n\t  font-weight: 700;\n}\n.yearDown{\n\t  width: 300rpx;\n\t  font-family: \"思源黑体\";\n\t  font-size: 32rpx;\n}\n.remark{\n\t  margin-top: 50rpx;\n\t  margin-left: 25rpx;\n\t  width: 500rpx;\n\t  color: #f5f5f5;\n\t  font-size: 28rpx;\n\t  font-family: \"思源黑体\";\n}\n.viewUser{\n  \tdisplay: flex;\n  \tflex-direction: row;\n  \talign-items: center;\n\tmargin-top: 15rpx;\n}\n.viewSaid {\n  \theight: auto;\n  \t  \n  \t/* 圆角 */\n  \tborder-radius: 18rpx;\n  \t\n  \t/* 边 */\n  \tborder: 1rpx solid #E0E3DA;\n  \t/* 阴影 */\n  \tbox-shadow:2rpx 7rpx 0rpx #ebebeb;\n  \t\n  \tbackground-color: #ffffff;\n  \tmargin-left:30rpx;\n  \tmargin-right:30rpx;\n  \tmargin-top: 25rpx;\n  \t\n  \t/* padding使得文字和图片不至于贴着边框 */\n  \tpadding: 25rpx;\n}\n.headPortrait{\n  \theight: 100rpx;\n  \twidth: 100rpx;\n  \tborder-radius: 50%;\n}\n.userMes {\n  \tmargin-left: 30rpx;\n  \tdisplay: flex;\n  \tflex-direction: column;\n\twidth: 270rpx;\n}\n.userName{\n  \tfont-size: 30rpx;\n  \tfont-family: \"黑体\";\n}\n.saidContent{\n  \tdisplay: flex;\n  \tflex-direction: row;\n  \talign-items: center;\n}\n.textContent{\n  \twidth: 450rpx;\n  \tmargin-top: 0rpx;\n  \tmargin-right: 20rpx;\n  \tfont-size: 20rpx;\n}\n.sights{\n  \tfloat: right;\n  \twidth: 190rpx;\n  \theight: 125rpx;\n  \tborder-radius: 18rpx;\n}\n.publishTime{\n\t  font-size: 20rpx;\n\t  color: #9A9A9A;\n\t  margin-left: 40rpx;\n}\n.title{\n\t  font-size: 36rpx;\n\t  font-weight: 600;\n\t  margin-left: 10rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -22500,7 +22486,16 @@ var render = function () {
               _c(
                 "uni-view",
                 { class: _vm._$g("7-" + $30, "c"), attrs: { _i: "7-" + $30 } },
-                [_vm._v(_vm._$g("7-" + $30, "t0-0"))]
+                [
+                  _vm._$g("8-" + $30, "i")
+                    ? _c("v-uni-text", { attrs: { _i: "8-" + $30 } }, [
+                        _vm._v("未处理"),
+                      ])
+                    : _c("v-uni-text", { attrs: { _i: "9-" + $30 } }, [
+                        _vm._v("已处理"),
+                      ]),
+                ],
+                1
               ),
             ],
             1
