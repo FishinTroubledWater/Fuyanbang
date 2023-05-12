@@ -29,7 +29,17 @@
 </template>
 
 <script>
+	import uCard from '../../../uni_modules/uni-card/uni-card.vue'
+	import uSteps from '../../../uni_modules/uni-steps/uni-steps.vue'
+	import uIcons from '../../../uni_modules/uni-icons/uni-icons.vue'
+	import uSection from '../../../uni_modules/uni-section/uni-section.vue'
 	export default {
+		components: {
+		  uCard,
+		  uSteps,
+		  uIcons,
+		  uSection
+		},
 		data() {
 			return {
 				id:'',

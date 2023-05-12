@@ -82,7 +82,7 @@ type Post struct {
 	ID          int64     `gorm:"column:ID;primaryKey"`
 	Summary     string    `gorm:"column:summary"`
 	Content     string    `gorm:"column:content"`
-	State       string    `gorm:"column:state"`
+	State       int64     `gorm:"column:state"`
 	Author      User      `gorm:"foreignKey:AuthorID;"`
 	Part        Part      `gorm:"foreignKey:PartID"`
 	PartID      int64     `gorm:"column:partID"`
@@ -90,6 +90,7 @@ type Post struct {
 	Favorite    int64     `gorm:"column:favorite"`
 	Like        int64     `gorm:"column:like"`
 	PublishTime time.Time `gorm:"column:publishTime"`
+	Answer      string    `gorm:"column:answer"`
 }
 
 type PostImg struct {
