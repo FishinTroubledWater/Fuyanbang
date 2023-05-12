@@ -84,15 +84,8 @@
 						<view class="publishTime">{{item.publishTime}}</view>
 				  	</view>
 				  	<view class="saidContent">
-<<<<<<< Updated upstream
-				  		<!-- <view class="textContent">{{item.content.substr(0,30)}}...</view> -->
-						<u--text :lines="2" :text="item.content" size="24rpx" lineHeight="34rpx" margin="4rpx 6rpx" padding="0px 4px"
-						  height="94px"></u--text>
-				  		<image class="sights" src="@/static/academy-icons/sight.png"></image>
-=======
 				  		<view class="textContent">{{item.content.substr(0,30)}}...</view>
 				  		<image class="sights" src="@/static/academy-icons/sight.png"></image>
->>>>>>> Stashed changes
 				  	</view>
 				</view>
 			</u-list-item>
