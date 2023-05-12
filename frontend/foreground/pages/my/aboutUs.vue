@@ -147,7 +147,7 @@
 		height: 300upx;
 		padding: 0upx;
 		margin-top: 100upx;
-		margin-left: 9%;
+		margin-left: 9%;	
 		float: left;
 		position: absolute;
 		top: 0upx;
