@@ -145,7 +145,7 @@
 				}).catch(err => {
 		
 				}),
-			uni.$u.http.get('/v1/frontend/circle/newque?userid='+ this.id, {
+			uni.$u.http.get('/v1/frontend/circle/newque/'+ this.id, {
 					
 				}).then(res => {
 					console.log(res.data.data);

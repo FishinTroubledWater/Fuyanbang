@@ -2,6 +2,7 @@ package routers
 
 import (
 	"FybBackend/routers/v1/backend/dashboard"
+	"FybBackend/routers/v1/backend/feedback/modifyFeedback"
 	"FybBackend/routers/v1/backend/feedback/selectFeedback"
 	"FybBackend/routers/v1/backend/news/modifyNews"
 	"FybBackend/routers/v1/backend/news/selectNews"
@@ -46,7 +47,7 @@ func InitBackend(r *gin.Engine, db *gorm.DB) {
 
 	//feedback
 	selectFeedback.SelectFeedbackByPage(r, db)
-
+	modifyFeedback.UpdateFeedback(r, db)
 	//dashboard
 	dashboard.GetPostData(r, db)
 }
