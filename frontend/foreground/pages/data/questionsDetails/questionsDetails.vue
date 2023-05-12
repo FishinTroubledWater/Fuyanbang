@@ -130,4 +130,8 @@
 			color: gray
 		}
 	}
+	.textarea{
+		width: 100%;
+		height: 100rpx;
+	}
 </style>

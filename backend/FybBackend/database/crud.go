@@ -368,6 +368,7 @@ func UpdateSingleNewsByCondition(db *gorm.DB, where map[string]interface{}, upda
 
 func AddNews(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
+	values["publishTime"] = time.Now()
 	err := db.Table("news").Create(values).Count(&count).Error
 	return count, err
 }
@@ -385,6 +386,7 @@ func AddPost(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	values["authorID"] = user.ID
 	values["favorite"] = 0
 	values["like"] = 0
+	values["publishTime"] = time.Now()
 	err := db.Table("post").Create(values).Count(&count).Error
 	return count, err
 }
@@ -426,6 +428,14 @@ func SelectAllPostByCondition(db *gorm.DB, where map[string]interface{}) ([]Post
 	err := db.Preload("Author").InnerJoins("Part").Where(where).Count(&count).Error
 	return posts, count, err
 }
+
+func SelectAllPostsByAuthorId(db *gorm.DB, authorId int64) ([]Post, int64, error) {
+	var count int64 = 0
+	var posts []Post
+	err := db.Table("post").Where("authorId = ? ", authorId).Find(&posts).Count(&count).Error
+	return posts, count, err
+}
+
 func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post

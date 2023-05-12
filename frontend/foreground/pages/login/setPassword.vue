@@ -33,7 +33,7 @@
 		},
 		methods: {
 			submitForm() {
-				if (this.password.length<6) {
+				if (this.password.length < 6) {
 					uni.showToast({
 						title: '密码不得少于6位',
 						icon: 'none'
@@ -47,7 +47,7 @@
 					});
 					return;
 				}
-				
+
 
 				// 如果两次密码一致，可以在这里进行注册逻辑
 				// ...
@@ -59,23 +59,23 @@
 					registerTime: this.registerTime,
 				}).then(res => {
 					console.log(res);
-					this.stateCode = res.statusCode;
+					uni.showToast({
+						title: '注册成功！',
+						icon: 'none'
+					});
 					this.toPasswordLogin();
+				}).catch(err => {
+					console.log(err);
+					var str = err.data.msg
+					if (str.includes("记录已存在")) {
+						uni.showToast({
+							title: '该邮箱已被注册',
+							icon: 'none'
+						});
+						return;
+					}
 				});
-				uni.$u.http.interceptors.response.use((response) => {
-					/* 对响应成功做点什么 可使用async await 做异步操作*/
-					// if (response.data.code !== 200) { // 服务端返回的状态码不等于200，则reject()
-					//    	return Promise.reject(response) // return Promise.reject 可使promise状态进入catch
-					// if (response.config.custom.verification) { // 演示自定义参数的作用
-					//   	return response.data
-					// }
-					console.log(response)
-					return response
-				}, (response) => {
-					/*  对响应错误做点什么 （statusCode !== 200）*/
-					console.log(response)
-					return Promise.reject(response)
-				})
+
 
 			},
 			getTime: function() {

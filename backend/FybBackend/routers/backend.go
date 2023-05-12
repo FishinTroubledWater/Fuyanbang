@@ -35,6 +35,7 @@ func InitBackend(r *gin.Engine, db *gorm.DB) {
 	selectPost.SelectPostByAccount(r, db)
 
 	//news
+	modifyNews.AddNews(r, db)
 	modifyNews.DeleteNews(r, db)
 	modifyNews.UpdateNews(r, db)
 	selectNews.SelectNewsById(r, db)
