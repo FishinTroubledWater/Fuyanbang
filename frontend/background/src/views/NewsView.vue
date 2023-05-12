@@ -28,7 +28,7 @@
                      @click="showDetails(scope.row)">详情
           </el-button>
           <el-button size="mini" type="primary" icon="el-icon-edit" round
-                     @click="showEditDialog(scope.row)">编辑
+                     @click="showEditDialog(scope.row.ID)">编辑
           </el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" round
                      @click="removeNewsById(scope.row.ID)">删除
@@ -76,7 +76,7 @@
                @close="editDialogClosed">
       <!--      内容主体区域-->
       <el-form ref="editFormRef" :model="editForm" label-width="80px"
-               :rules="addFormRules">
+               >
         <el-form-item label="作者" prop="author">
           <el-input v-model="editForm.Author"></el-input>
         </el-form-item>
@@ -111,6 +111,7 @@
           <el-descriptions-item label="标题" :span="2"> {{ editForm.Title }}</el-descriptions-item>
           <el-descriptions-item label="发布时间"> {{ formattedPublishTime }}</el-descriptions-item>
         </el-descriptions>
+        <div class="mg">内容</div>
         <quill-editor v-model="editForm.Content" @focus="focus($event)" class="mg"></quill-editor>
       </template>
     </Drawer>
@@ -146,10 +147,10 @@ export default {
       },
       //资讯类型数据集合
       types:[
-        {value:'1',label:'考研常识'},
-        {value:'2',label:'考研政策'},
-        {value:'3',label:'选择院校'},
-        {value:'4',label:'备考指南'},
+        {value:'考研常识',label:'考研常识'},
+        {value:'考研政策',label:'考研政策'},
+        {value:'选择院校',label:'选择院校'},
+        {value:'备考指南',label:'备考指南'},
       ],
       //查询到的资讯信息
       editForm: {
@@ -203,7 +204,7 @@ export default {
       });
       console.log(res)
       if (res.code !== 200) return this.$message.error('获取资讯列表失败！')
-      this.newsList = res.data.posts
+      this.newsList = res.data.newses
       this.total = res.data.total
       console.log(this.newsList);
     },
@@ -258,35 +259,38 @@ export default {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) return
         console.log(this.addForm)
-        // 发起添加资讯网络请求
-        const {data: res} = await this.axios.post('news/add', this.addForm, {
-          headers: {
-            'Authorization': window.sessionStorage.getItem("token")
-          }
-        })
-        if (res.code !== 200) {
-          this.$message.error('添加资讯失败！')
-        } else this.$message.success('添加资讯成功！')
-        //隐藏对话框
-        this.addDialogVisible = false
-        //刷新用户列表
-        await this.getNewsList()
+        try{
+          // 发起添加资讯网络请求
+          const {data: res} = await this.axios.post('news/add', this.addForm, {
+            headers: {
+              'Authorization': window.sessionStorage.getItem("token")
+            }
+          })
+          if (res.code !== 200) {
+            this.$message.error('添加资讯失败！')
+          } else this.$message.success('添加资讯成功！')
+          //隐藏对话框
+          this.addDialogVisible = false
+          //刷新用户列表
+          await this.getNewsList()
+        }catch (err){
+          this.$message.error('添加资讯失败')
+        }
       })
     },
     //展示编辑的对话框
-    async showEditDialog(row) {
-      console.log(row);
-      // const {data: res} = await this.axios.get('news/searchByAccount', {
-      //   params: {'account': id},
-      //   headers: {
-      //     'Authorization': window.sessionStorage.getItem("token")
-      //   }
-      // })
-      // if (res.code !== 200) {
-      //   return this.$message.error('查询用户信息失败！')
-      // }
-      this.editForm = row
-      // console.log(this.editForm.Author.Account)
+    async showEditDialog(id) {
+      console.log(id);
+      const {data: res} = await this.axios.get('news/searchById', {
+        params: {'id':id},
+        headers: {
+          'Authorization': window.sessionStorage.getItem("token")
+        }
+      })
+      if (res.code !== 200) {
+        return this.$message.error('查询用户信息失败！')
+      }
+      this.editForm = res.data
       this.editDialogVisible = true
     },
     // 修改对话框关闭
@@ -300,24 +304,25 @@ export default {
         if (!valid) return
         console.log(this.editForm)
         // 发起修改资讯信息的数据请求
-        // const {data: res} = await this.axios.patch('news/update', {
-        //   'account': this.editForm.Account,
-        //   'part': this.editForm.Part,
-        //   'summary': this.editForm.Summary,
-        //   'state': this.editForm.state
-        // },{
-        //   headers: {
-        //     'Authorization': window.sessionStorage.getItem("token")
-        //   }
-        // })
-        // if (res.code !== 200) {
-        //   return this.$message.error('更新用户信息失败！')
-        // }
+        const {data: res} = await this.axios.patch('news/update', {
+          'id': this.editForm.ID,
+          'author': this.editForm.Author,
+          'type': this.editForm.Type,
+          'title': this.editForm.Title,
+          'Content': this.editForm.Content
+        },{
+          headers: {
+            'Authorization': window.sessionStorage.getItem("token")
+          }
+        })
+        if (res.code !== 200) {
+          return this.$message.error('更新资讯失败！')
+        }
         // 关闭对话框
         this.editDialogVisible = false
         // 刷新数据列表
         await this.getNewsList()
-        this.$message.success('更新用户信息成功！')
+        this.$message.success('更新资讯成功！')
       })
     },
     //获取焦点事件

@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <!-- 左边卡片 -->
       <el-col :span="8" :xs="24">
-        <el-card class="box-card">
+        <el-card class="box-card round15" >
           <div slot="header" class="clearfix">
             <span>个人信息</span>
           </div>
@@ -40,23 +40,15 @@
       </el-col>
       <!-- 右边卡片 -->
       <el-col :span="16" :xs="24">
-        <el-card>
+        <el-card class="round15">
           <div slot="header" class="clearfix">
             <span>基本资料</span>
           </div>
 
-          <!-- <el-tabs v-model="activeTab">
-            <el-tab-pane label="基本资料" name="userinfo">
-              用户基本信息
-            </el-tab-pane>
-            <el-tab-pane label="修改密码" name="resetPwd">
-              重置密码
-            </el-tab-pane>
-          </el-tabs> -->
           <div class="info">
             <div class="img-center">
-              <el-image :src="require('../assets/images/FYB.png')" style="width: 340px; height: 340px"
-                fit="fill"></el-image>
+              <el-image :src="require('../assets/images/FYB.png')" style="width: 290px;"
+                        fit="fill"></el-image>
             </div>
             <el-row style="line-height: 42px;">应用简介：由来自福州大学20级软件工程专业的学生打造</el-row>
             <el-row style="line-height: 42px;">主要功能：提供各类考研复习资料</el-row>
@@ -74,47 +66,10 @@
 export default {
   data() {
     return {
-      drawer: false,
-      userList: [],
-      queryInfo: {
-        query: '',
-        pageNum: 1,
-        pageSize: 2
-      },
-      students: [
-        {name: '张三', age: 18, score: 90},
-        {name: '李四', age: 19, score: 85},
-        {name: '王五', age: 20, score: 95}
-      ],
-      columns: [
-        {prop: 'Account', label: '姓名', width: '120px'},
-        {prop: 'Age', label: '年龄', width: '100px'},
-        {prop: 'College', label: '成绩', width: '100px'}],
+
     }
   },
-  created() {
-    this.getUserList()
-  },
   methods:{
-    async getUserList() {
-      const {data: res} = await this.axios.post('user/list', {
-        pageSize: this.queryInfo.pageSize,
-        pageNum: this.queryInfo.pageNum
-      }, {
-        headers: {
-          'Authorization': window.sessionStorage.getItem("token")
-        }
-      });
-      console.log(res)
-      if (res.code !== 200) return this.$message.error('获取用户列表失败！')
-      this.userList = res.data.users
-      this.total = res.data.total
-      console.log(this.userList);
-    },
-    handle(row) {
-      console.log(row.Account);
-      this.drawer=true;
-    },
 
   }
 }
