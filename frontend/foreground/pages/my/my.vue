@@ -53,20 +53,6 @@
 			}
 		},
 		mounted() {
-			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
-			
-			}).then(res => {
-			    console.log(res.data.data);
-				this.user.avatarUrl = res.data.data.Avatar;
-				this.user.nickName=res.data.data.Nickname;
-				this.user.level=res.data.data.Level;
-				this.user.slogan=res.data.data.Slogan;
-				this.user.useageDays=res.data.data.UserDays;
-				this.user.college=res.data.data.College;
-				this.user.major=res.data.data.Major;
-			}).catch(err => {
-				
-			})
 			// console.log("执行onLoad（）");
 			uni.getStorage({
 				key:'userId',   // 储存在本地的变量名
@@ -76,6 +62,20 @@
 					this.id=res.data;
 					console.log(this.id)
 				}
+			})
+			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
+			
+			}).then(res => {
+			    console.log(res.data.data);
+				this.user.avatarUrl = res.data.data.AvatarUrl;
+				this.user.nickName=res.data.data.NickName;
+				this.user.level=res.data.data.Level;
+				this.user.slogan=res.data.data.Slogan;
+				this.user.useageDays=res.data.data.UserDays;
+				this.user.college=res.data.data.College;
+				this.user.major=res.data.data.Major;
+			}).catch(err => {
+				
 			})
 			// console.log("执行onLoad（）");
 		},

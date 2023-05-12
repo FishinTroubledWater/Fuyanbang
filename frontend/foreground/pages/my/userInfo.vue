@@ -94,13 +94,16 @@
 			
 			}).then(res => {
 			    console.log(res.data.data);
-				this.user.avatarUrl = res.data.data.Avatar;
-				this.user.nickName=res.data.data.Nickname;
-				this.user.level=res.data.data.Level;
+				this.user.avatarUrl = res.data.data.AvatarUrl;
+				this.user.nickName=res.data.data.NickName;
+				this.user.sex=res.data.data.Sex;
+				this.user.area=res.data.data.Area;
 				this.user.slogan=res.data.data.Slogan;
 				this.user.useageDays=res.data.data.UserDays;
 				this.user.college=res.data.data.College;
 				this.user.major=res.data.data.Major;
+				this.user.year=res.data.data.Year;
+				this.user.targetCollege=res.data.data.TargetCollege;
 			}).catch(err => {
 				
 			})
@@ -145,27 +148,7 @@
 					icon: 'success',
 					//显示持续时间为 2秒
 					duration: 1500
-				}) 
-				// 点击上传信息按钮触发的方法
-				// var that = this
-				// uni.request({
-				// 	//api地址
-				// 	url: 'http://localhost:3000/web/api/rest/user/',
-				// 	header: {
-				// 		'content-type': 'application/x-www-form-urlencoded'
-				// 	},
-				// 	method: 'POST',
-				// 	data: {
-				// 		// 将json数据转化成字符串格式进行上传
-				// 		information: JSON.stringify(that.user)
-				// 	},
-				// 	success: (res) => {
-				// 		console.log(res)
-				// 	},
-				// 	error(err) {
-				// 		console.log(err)
-				// 	}
-				// })
+				})
 				this.timer = setInterval(() => {
 				    //TODO 
 					uni.navigateBack({
