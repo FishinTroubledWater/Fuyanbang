@@ -550,19 +550,19 @@ func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Ad
 	}
 	return admin, count, err
 }
-func UpdateSingleAdminByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
+func UpdateSingleAdminByCondition(db *gorm.DB, where map[string]interface{}, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	err := db.Table("admin").Where(where).Updates(update).Count(&count).Error
+	err := db.Table("admin").Where(where).Updates(values).Count(&count).Error
 	return count, err
 }
 
-func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
+func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
 	err := db.Table("user").Where(where).Count(&count).Error
 	if count == 0 && err == nil {
 		return 0, errors.New("要修改的记录不存在")
 	}
-	err = db.Table("user").Where(where).Updates(update).Count(&count).Error
+	err = db.Table("user").Where(where).Updates(values).Count(&count).Error
 	return count, err
 }
 
