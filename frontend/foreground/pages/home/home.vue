@@ -37,7 +37,7 @@
     </uni-section>
 
     <!-- 标签按钮 -->
-    <uni-card :is-shadow="true" style="opacity: 0.6;width: 620rpx;">
+    <my-card :is-shadow="true" style="opacity: 0.6;width: 620rpx;">
       <view class="tabs-box">
         <view class="tabs-box-item" style="margin-right: 22px;">
           <u-icon label="院校" labelPos="bottom" labelSize="34rpx" labelColor="#000" margin="2" size="40"
@@ -54,7 +54,7 @@
             name="/static/home-images/news.png" @click="gotoPage('/pages/home/news')"></u-icon>
         </view>
       </view>
-    </uni-card>
+    </my-card>
 
     <!-- 动态 -->
     <view class="trends-box">
@@ -91,7 +91,6 @@
 			</u-list-item>
 		</u-list>
 		
-
     </view>
 
   </view>
@@ -104,16 +103,16 @@
 	// eslint-disable-next-line no-unused-vars
 	const axios = require('axios')
 	
-  import uCard from '../../uni_modules/uni-card/uni-card.vue'
+  import MyCard from '../../components/my-card/my-card.vue'
   import uSteps from '../../uni_modules/uni-steps/uni-steps.vue'
-  import uIcons from '../../uni_modules/uni-icons/uni-icons.vue'
+  import UniIcons from '../../components/uni-icons/uni-icons.vue'
   import uSection from '../../uni_modules/uni-section/uni-section.vue'
 
   export default {
     components: {
-      uCard,
+      MyCard,
       uSteps,
-      uIcons,
+      UniIcons,
       uSection
     },
     data() {
@@ -193,6 +192,7 @@
         for (let i = 0; i < list.length; i++) {
           let j = date.getDay() - 3 + i
           if (j < 0) j += 7;
+          if (j > 6) j -= 7;
           list[i].title = weekday[j];
         }
         return list;

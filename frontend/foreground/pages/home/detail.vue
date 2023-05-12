@@ -1,6 +1,6 @@
 <template>
   <view>
-    <uni-card :is-shadow="true">
+    <my-card :is-shadow="true">
       <!-- <u--text :text="title" size="24" lineHeight="24" margin="4px" class="title"></u--text> -->
       <view class="title">{{title}}</view>
 <!-- 	  <span style="margin: 16px 8px;font-size: 14px;line-height: 24px;">{{author}}</span>
@@ -8,7 +8,7 @@
 	  
 	  <view class="info">
 		  <view class="userName">
-			<u--text :lines="1" :text="this.author" color="#9A9A9A" size="30rpx" margin="0 0rpx"></u--text>
+			<u--text :lines="1" :text="this.author" color="#9A9A9A" size="28rpx" margin="0rpx 0rpx 0rpx -8rpx"></u--text>
 		  </view>
 		  <view class="publishTime">{{this.time}}</view>
 	  </view>
@@ -16,16 +16,16 @@
       <view class="u-content">
         <u-parse :content="content"></u-parse>
       </view>
-    </uni-card>
+    </my-card>
   </view>
 </template>
 
 <script>
-  import uCard from '../../uni_modules/uni-card/uni-card.vue'
+   import MyCard from '../../components/my-card/my-card.vue'
 
   export default {
     components: {
-      uCard
+      MyCard
     },
     data() {
       return {
@@ -73,14 +73,15 @@
     padding: 4rpx;
     font-size: 30rpx;
     color: #000;
-    line-height: 1.6;
-	margin-top: 15rpx;
+    line-height: 1.8;
+    margin-top: 15rpx;
   }
   .title{
 	  font-size: 40rpx;
 	  color: #000;
 	  font-weight: 700;
 	  margin-bottom: 10rpx;
+    line-height: 40rpx;
   }
   .info{
 	  display: flex;
@@ -95,8 +96,8 @@
 	width: 400rpx;
   }
   .publishTime{
-	  font-size: 30rpx;
+	  font-size: 28rpx;
 	  color: #9A9A9A;
-	  margin-left: 40rpx;
+	  margin-left: 60rpx;
   }
 </style>
