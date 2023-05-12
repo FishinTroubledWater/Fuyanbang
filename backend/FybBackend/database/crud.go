@@ -2,6 +2,7 @@ package database
 
 import (
 	"errors"
+	"fmt"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 	"time"
@@ -169,7 +170,7 @@ func AddComments(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	delete(mp, "ID")
 	mp["ID"] = values["postId"]
 	delete(values, "postId")
-	post, count, err := SelectSingleCommentByCondition(db, mp)
+	post, count, err := SelectSingleQueByCondition(db, mp)
 	result = multierror.Append(result, err)
 	if count == 0 {
 		result = multierror.Append(result, errors.New("要插入的记录有误，插入的帖子不存在"))
@@ -198,8 +199,9 @@ func SearchCommentByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
 	var comments []Comment
 	var whereMap map[string]interface{} = make(map[string]interface{})
 	whereMap["ID"] = queId
-	whereMap["PartID"] = 2
-	_, count, err := SelectSinglePostByCondition(db, whereMap)
+	whereMap["partID"] = 2
+	_, count, err := SelectSingleQueByCondition(db, whereMap)
+	fmt.Println(count)
 	if count == 0 {
 		result = multierror.Append(result, errors.New("帖子id不是问题！"))
 	}
@@ -393,6 +395,17 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 	}
 	return post, count, err
 }
+
+func SelectSingleQueByCondition(db *gorm.DB, where map[string]interface{}) (Post, int64, error) {
+	var count int64 = 0
+	var post Post
+	err := db.Where(where).First(&post).Count(&count).Error
+	if count == 0 {
+		return post, 0, errors.New("查询的记录不存在")
+	}
+	return post, count, err
+}
+
 func SelectAllPostByCondition(db *gorm.DB, where map[string]interface{}) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
@@ -582,27 +595,18 @@ func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
 	return count, posts, result
 }
 
-func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
+func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
 	var result *multierror.Error
-	var comments []Comment
-	var whereMap map[string]interface{} = make(map[string]interface{})
-	whereMap["ID"] = queId
-	whereMap["PartID"] = 2
-	_, count, err := SelectSinglePostByCondition(db, whereMap)
-	if count == 0 {
-		result = multierror.Append(result, errors.New("帖子id不是问题！"))
-	}
-	if err != nil {
-		result = multierror.Append(result, err)
-	}
-	err = db.Preload("Author").Where("targetPost = ? ", queId).Find(&comments).Count(&count).Error
+	var posts []Post
+	var count int64
+	err := db.Preload("Author").Where("ID = ? ", queId).Find(&posts).Count(&count).Error
 	if count == 0 {
 		result = multierror.Append(result, errors.New("找不到该问题！"))
 	}
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
-	return count, comments, result
+	return count, posts, result
 }
 
 func AddAnswer(db *gorm.DB, values map[string]interface{}) (int64, error) {

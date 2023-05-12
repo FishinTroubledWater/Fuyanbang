@@ -42,8 +42,9 @@ func SearchQueDetails(e *gin.Engine) {
 
 				postMap["name"] = postMap["Author"].(map[string]interface{})["NickName"]
 				postMap["time"] = postMap["PublishTime"]
+				postMap["queId"] = postMap["ID"]
 				postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
-				postMap["answer"] = postMap["Content"]
+				postMap["content"] = postMap["Content"]
 
 				delete(postMap, "Content")
 				delete(postMap, "Summary")

@@ -90,7 +90,6 @@ type Post struct {
 	Favorite    int64     `gorm:"column:favorite"`
 	Like        int64     `gorm:"column:like"`
 	PublishTime time.Time `gorm:"column:publishTime"`
-	Answer      string    `gorm:"column:answer"`
 }
 
 type PostImg struct {
