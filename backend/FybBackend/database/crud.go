@@ -375,13 +375,13 @@ func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	var err error
 	if query != "" {
 		query = query + "%"
-		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").
-			Where("account like ?", query).Order("state asc").Limit(int(pageSize)).
-			Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
+		db = db.Table("post").InnerJoins("Author").InnerJoins("Part").
+			Where("account like ?", query).Order("state asc, id").Find(&posts).Count(&count)
 	} else {
-		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").
-			Order("state asc").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
+		db = db.Table("post").InnerJoins("Author").InnerJoins("Part").
+			Order("state asc, id").Find(&posts).Count(&count)
 	}
+	err = db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
 	if count == 0 && err == nil {
 		return posts, 0, errors.New("要查询的记录不存在")
 	}
