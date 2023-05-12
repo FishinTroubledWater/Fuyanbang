@@ -44,7 +44,7 @@ func SearchQueAnswer(e *gin.Engine) {
 				postMap["time"] = postMap["PublishTime"]
 				postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
 				postMap["queId"] = postMap["ID"]
-				postMap["content"] = postMap["Content"]
+				postMap["answer"] = postMap["Answer"]
 				delete(postMap, "Answer")
 				delete(postMap, "Content")
 				delete(postMap, "Summary")
