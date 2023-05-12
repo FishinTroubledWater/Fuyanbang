@@ -599,7 +599,7 @@ func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
 	var result *multierror.Error
 	var posts []Post
 	var count int64
-	err := db.Where("partID = ? && authorId = ? ", 2, userId).Find(&posts).Count(&count).Error
+	err := db.Preload("Author").Where("partID = ? && authorId = ? ", 2, userId).Find(&posts).Count(&count).Error
 	if count == 0 {
 		result = multierror.Append(result, errors.New("找不到该用户！"))
 	}

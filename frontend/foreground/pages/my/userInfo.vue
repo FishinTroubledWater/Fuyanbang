@@ -161,7 +161,7 @@
 						title: '修改成功',
 						//将值设置为 success 或者直接不用写icon这个参数
 						icon: 'success',
-						//显示持续时间为 2秒
+						//显示持续时间为 1.5秒
 						duration: 1500
 					})
 					this.timer = setInterval(() => {
