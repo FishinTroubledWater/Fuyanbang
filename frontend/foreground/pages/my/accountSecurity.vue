@@ -54,15 +54,6 @@
 			}
 		},
 		mounted() {
-			uni.$u.http.get('v1/frontend/user/basicUserInfo?id=1'+this.id, {
-			
-			}).then(res => {
-			    console.log(res.data.data);
-				this.user.password = res.data.data.Password;
-				this.user.account=res.data.data.Account;
-			}).catch(err => {
-				
-			})
 			// console.log("执行onLoad（）");
 			uni.getStorage({
 				key:'userId',   // 储存在本地的变量名
@@ -74,6 +65,16 @@
 				}
 			})
 			// console.log("执行onLoad（）");
+			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
+			
+			}).then(res => {
+			    console.log(res.data.data);
+				this.user.password = res.data.data.Password;
+				this.user.account=res.data.data.Account;
+			}).catch(err => {
+				
+			})
+			
 		},
 		methods: {
 			openPopup() {
