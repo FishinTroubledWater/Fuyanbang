@@ -24,7 +24,7 @@
       <Table :table-data="postList" :columns="columns" :show-state="true">
         <!--        状态区-->
         <template #state="scope" >
-          <el-tag v-if="scope.row.State === '0'" type="warning">未审核</el-tag>
+          <el-tag v-if="scope.row.State === 0" type="warning">未审核</el-tag>
           <el-tag v-else type="success">已审核</el-tag>
 
         </template>
@@ -35,10 +35,10 @@
           </el-button>
           <el-button size="mini" type="warning" icon="el-icon-finished" round
                      @click="checkPostById(scope.row.ID)"
-                     :disabled="scope.row.State=== '1'">审核
+                     :disabled="scope.row.State=== 1">审核
           </el-button>
           <el-button size="mini" type="primary" icon="el-icon-edit" round
-                     @click="showEditDialog(scope.row)">编辑
+                     @click="showEditDialog(scope.row.ID)">编辑
           </el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" round
                      @click="removePostById(scope.row.ID)">删除
@@ -55,8 +55,8 @@
         <el-form-item label="用户名" prop="account">
           <el-input v-model="addForm.account"></el-input>
         </el-form-item>
-        <el-form-item label="板块" prop="part">
-          <el-select v-model="addForm.part" placeholder="请选择">
+        <el-form-item label="板块" prop="partID">
+          <el-select v-model="addForm.partID" placeholder="请选择">
             <el-option
                 v-for="item in parts"
                 :key="item.value"
@@ -66,11 +66,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="状态" prop="state">
-          <el-radio v-model="addForm.state" label="0">未审核</el-radio>
-          <el-radio v-model="addForm.state" label="1">已审核</el-radio>
+          <el-radio v-model="addForm.state" label='0'>未审核</el-radio>
+          <el-radio v-model="addForm.state" label='1'>已审核</el-radio>
         </el-form-item>
         <el-form-item label="概要" prop="summary">
-          <el-input type="textarea" v-model="addForm.summary" :rows="5" readonly resize="none"></el-input>
+          <el-input type="textarea" v-model="addForm.summary" :rows="5"  resize="none"></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="content">
           <quill-editor v-model="addForm.content"></quill-editor>
@@ -93,16 +93,19 @@
         <el-form-item label="板块" prop="PartID">
           <el-select v-model="editForm.PartID" placeholder="请选择">
             <el-option v-for="item in parts" :key="item.value"
-                       :label="item.label" :value="item.value">
+                       :label="item.label" :value="item.value" >
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="状态" prop="State">
-          <el-radio v-model="editForm.State" label="0">未审核</el-radio>
-          <el-radio v-model="editForm.State" label="1">已审核</el-radio>
+          <el-radio v-model="editForm.State" :label='0'>未审核</el-radio>
+          <el-radio v-model="editForm.State" :label='1'>已审核</el-radio>
         </el-form-item>
-        <el-form-item label="内容" prop="Summary">
-          <quill-editor v-model="editForm.Summary"></quill-editor>
+        <el-form-item label="概要" prop="Summary">
+          <el-input type="textarea" v-model="editForm.Summary" :rows="5"  resize="none"></el-input>
+        </el-form-item>
+        <el-form-item label="内容" prop="Content">
+          <quill-editor v-model="editForm.Content"></quill-editor>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -123,10 +126,11 @@
           <el-descriptions-item label="板块"> {{ editForm.Part.PartName }}</el-descriptions-item>
           <el-descriptions-item label="发布时间"> {{ formattedPublishTime}}</el-descriptions-item>
           <el-descriptions-item label="状态">
-            <el-tag v-if="editForm.State === '0'" type="warning">未审核</el-tag>
+            <el-tag v-if="editForm.State === 0" type="warning">未审核</el-tag>
             <el-tag v-else type="success">已审核</el-tag>
           </el-descriptions-item>
         </el-descriptions>
+        <div class="mg">内容</div>
         <quill-editor v-model="editForm.Content" @focus="focus($event)" class="mg"></quill-editor>
       </template>
     </Drawer>
@@ -166,20 +170,23 @@ export default {
       },
       //板块数据集合
       parts:[
-        {value:'1',label:'加油站'},
-        {value:'2',label:'求解答'},
+        {value:'1',label:'帖子'},
+        {value:'2',label:'问题'},
+        {value:'3',label:'官方'},
       ],
       //查询到的帖子信息
       editForm: {
+        ID:'',
         Author:{},
-        Part:{}
+        Part:{},
+        State:'',
       },
       //帖子数据集合
       postList: [],
       //添加帖子的表单数据
       addForm: {
         account: '',
-        part: '1',
+        partID: '1',
         summary: '',
         state: '0',
         content:''
@@ -269,12 +276,11 @@ export default {
         return this.$message.info('已取消通过')
       }
       console.log(id);
-      // 发起修改帖子信息的数据请求
+      // 发起审核帖子信息的数据请求
+      this.editForm.State = '1'
+      console.log(id);
       const {data: res} = await this.axios.patch('post/update', {
-        'id': this.editForm.ID,
-        'partID': this.editForm.PartID,
-        'summary': this.editForm.Summary,
-        'content': this.editForm.Content,
+        'id': id,
         'state': this.editForm.State
       },{
         headers: {
@@ -282,16 +288,9 @@ export default {
         }
       })
       if (res.code !== 200) {
-        return this.$message.error('更新用户信息失败！')
+        return this.$message.error('审核帖子失败！')
       }
-      // const {data: res} = await this.axios.delete('post/delete', {
-      //   params: {'id': id},
-      //   headers: {
-      //     'Authorization': window.sessionStorage.getItem("token")
-      //   }
-      // })
-      // if (res.code !== 200) return this.$message.error('删除帖子失败！')
-      // this.$message.success('删除帖子成功！')
+      this.$message.success('审核成功')
       await this.getPostList()
     },
 
@@ -329,20 +328,19 @@ export default {
         await this.getPostList()
       })
     },
-    //展示编辑用户的对话框
-    async showEditDialog(row) {
-      console.log(row);
-      // const {data: res} = await this.axios.get('post/searchByAccount', {
-      //   params: {'account': id},
-      //   headers: {
-      //     'Authorization': window.sessionStorage.getItem("token")
-      //   }
-      // })
-      // if (res.code !== 200) {
-      //   return this.$message.error('查询用户信息失败！')
-      // }
-      this.editForm = row
-      // console.log(this.editForm.Author.Account)
+    //展示编辑帖子的对话框
+    async showEditDialog(id) {
+      console.log(id);
+      const {data: res} = await this.axios.get('post/searchById', {
+        params: {'id':id},
+        headers: {
+          'Authorization': window.sessionStorage.getItem("token")
+        }
+      })
+      if (res.code !== 200) {
+        return this.$message.error('查询帖子信息失败！')
+      }
+      this.editForm = res.data
       this.editDialogVisible = true
     },
     // 修改帖子对话框关闭
@@ -357,7 +355,7 @@ export default {
         console.log(this.editForm)
         // 发起修改帖子信息的数据请求
         const {data: res} = await this.axios.patch('post/update', {
-          'postID': this.editForm.PostID,
+          'id': this.editForm.ID,
           'partID': this.editForm.PartID,
           'summary': this.editForm.Summary,
           'content': this.editForm.Content,
@@ -368,13 +366,13 @@ export default {
           }
         })
         if (res.code !== 200) {
-          return this.$message.error('更新用户信息失败！')
+          return this.$message.error('更新帖子失败！')
         }
         // 关闭对话框
         this.editDialogVisible = false
         // 刷新数据列表
-        await this.getUserList()
-        this.$message.success('更新用户信息成功！')
+        await this.getPostList()
+        this.$message.success('更新帖子成功！')
       })
     },
     //获取焦点事件

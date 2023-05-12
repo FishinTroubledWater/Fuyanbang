@@ -8,7 +8,7 @@
       <Table :table-data="feedbackList" :columns="columns" :show-state="true">
         <!--        状态区-->
         <template #state="scope">
-          <el-tag v-if="scope.row.state === '0'" type="warning">未处理</el-tag>
+          <el-tag v-if="scope.row.State === 0" type="warning">未处理</el-tag>
           <el-tag v-else type="success">已处理</el-tag>
         </template>
         <!--        操作区-->
@@ -18,12 +18,30 @@
           </el-button>
           <el-button size="mini" type="warning" icon="el-icon-finished" round
                      @click="finishFeedBackById(scope.row.ID)"
-                     :disabled="scope.row.state=== '1'">处理
+                     :disabled="scope.row.State=== 1">处理
           </el-button>
         </template>
       </Table>
     </el-card>
-    <Pagination></Pagination>
+    <!--    分页器-->
+    <Pagination :total="total" :query-info="queryInfo"
+                @page-size-change="handlePageSizeChange"
+                @page-change="handlePageChange"></Pagination>
+    <!--    抽屉-->
+    <Drawer :drawer="detailsDrawer" :title="drawerTitle" @closed="drawerClosed">
+      <template #details="scope">
+        <el-descriptions direction="vertical" :column="2" border class="mg">
+          <el-descriptions-item label="作者"> {{ editForm.Author.Account }}</el-descriptions-item>
+          <el-descriptions-item label="时间"> {{ formattedPublishTime }}</el-descriptions-item>
+          <el-descriptions-item label="状态">
+            <el-tag v-if="editForm.State === 0" type="warning">未审核</el-tag>
+            <el-tag v-else type="success">已审核</el-tag>
+          </el-descriptions-item>
+        </el-descriptions>
+        <div class="mg">内容</div>
+        <quill-editor v-model="editForm.Content" @focus="focus($event)" class="mg"></quill-editor>
+      </template>
+    </Drawer>
   </div>
 </template>
 
@@ -48,7 +66,7 @@ export default {
       total: 0,
       //获取列表的参数对象
       queryInfo: {
-        query: '',
+        query:'',
         pageNum: 1,
         pageSize: 10
       },
@@ -59,13 +77,13 @@ export default {
       //反馈数据集合
       feedbackList: [],
       columns: [
-        {prop: 'account', label: '用户名', width: '180px'},
-        {prop: 'time', label: '时间', width: '200px', sortable: true,
+        {prop: 'Author.Account', label: '用户名', width: '180px'},
+        {prop: 'Time', label: '时间', width: '200px', sortable: true,
           formatter: (row, column) => {
             const time = row[column.property];
             return this.$moment(time).format('YYYY-MM-DD HH:mm:ss');
           }},
-        {prop: 'content', label: '内容', width: '180px', showOverflowTooltip:true},
+        {prop: 'Content', label: '内容', width: '180px', showOverflowTooltip:true},
       ],
     }
   },
@@ -84,8 +102,9 @@ export default {
           'Authorization': window.sessionStorage.getItem("token")
         }
       });
+      console.log(this.queryInfo);
       console.log(res)
-      if (res.code !== 200) return this.$message.error('获取学长学姐说列表失败！')
+      if (res.code !== 200) return this.$message.error('获取反馈列表失败！')
       this.feedbackList = res.data.feedbacks
       this.total = res.data.total
       console.log(this.feedbackList);
@@ -101,6 +120,7 @@ export default {
       if (result !== 'confirm') {
         return this.$message.info('已取消处理')
       }
+      this.editForm.State = 1
       console.log(id);
       const {data: res} = await this.axios.patch('feedback/update', {
         'id': this.editForm.ID,
@@ -113,15 +133,8 @@ export default {
       if (res.code !== 200) {
         return this.$message.error('处理反馈失败！')
       }
-      // const {data: res} = await this.axios.delete('feedback/delete', {
-      //   params: {'id': id},
-      //   headers: {
-      //     'Authorization': window.sessionStorage.getItem("token")
-      //   }
-      // })
-      // if (res.code !== 200) return this.$message.error('删除反馈失败！')
-      // this.$message.success('删除反馈成功！')
-      // await this.getFeedBackList()
+      this.$message.success('处理成功')
+      await this.getFeedBackList()
     },
     //处理每页显示数量变化
     handlePageSizeChange(newSize) {
