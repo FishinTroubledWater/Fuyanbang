@@ -26,7 +26,7 @@
 				sendData: {
 					content: '', //反馈内容
 					account: '', //联系邮箱
-					state:'未回复',//默认刚提交的反馈状态为‘未回复’
+					state:'未查看',//默认刚提交的反馈状态为‘未处理’
 					time:'',//当前设备当前时间
 				},
 				btnLoading: false

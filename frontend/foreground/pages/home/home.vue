@@ -84,7 +84,8 @@
 						<view class="publishTime">{{item.publishTime}}</view>
 				  	</view>
 				  	<view class="saidContent">
-				  		<view class="textContent">{{item.content.substr(0,30)}}...</view>
+				  		<!-- <view class="textContent">{{item.content.substr(0,30)}}...</view> -->
+						<u--text :lines="3" :text="item.content" size="20rpx" margin="0 10rpx"></u--text>
 				  		<image class="sights" src="@/static/academy-icons/sight.png"></image>
 				  	</view>
 				</view>

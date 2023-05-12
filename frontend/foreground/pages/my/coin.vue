@@ -39,15 +39,6 @@
 			}
 		},
 		mounted() {
-			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
-			
-			}).then(res => {
-			    console.log(res.data.data);
-				this.user.balance = res.data.data.Balance;
-
-			}).catch(err => {
-				
-			})
 			// console.log("执行onLoad（）");
 			uni.getStorage({
 				key:'userId',   // 储存在本地的变量名
@@ -59,6 +50,16 @@
 				}
 			})
 			// console.log("执行onLoad（）");
+			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
+			
+			}).then(res => {
+			    console.log(res.data.data);
+				this.user.balance = res.data.data.Balance;
+
+			}).catch(err => {
+				
+			})
+
 		},
 		methods: {
 			getCoin(){

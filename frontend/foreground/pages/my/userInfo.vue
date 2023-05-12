@@ -19,8 +19,8 @@
 					<text slot="value">{{user.sex}}</text>
 				</u-cell>
 			</picker>
-			
-			
+
+
 			<u-cell>
 				<text slot="title">所在地区</text>
 				<input class="right" slot="value" v-model="user.area" placeholder="请输入地区">{{user.area}}</input>
@@ -80,7 +80,7 @@
 					targetCollege: "",
 					slogan: ""
 				},
-				
+
 				//选择器数据
 				sex: ['男', '女'],
 				colleges: ['福州大学', '清华大学', '贵州大学', '上海大学', '北京大学', '北京大学', '清华大学', '清华大学', '清华大学', '清华大学', '清华大学', '清华大学',
@@ -90,34 +90,36 @@
 			}
 		},
 		mounted() {
-			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
-			
-			}).then(res => {
-			    console.log(res.data.data);
-				this.user.avatarUrl = res.data.data.AvatarUrl;
-				this.user.nickName=res.data.data.NickName;
-				this.user.sex=res.data.data.Sex;
-				this.user.area=res.data.data.Area;
-				this.user.slogan=res.data.data.Slogan;
-				this.user.useageDays=res.data.data.UserDays;
-				this.user.college=res.data.data.College;
-				this.user.major=res.data.data.Major;
-				this.user.year=res.data.data.Year;
-				this.user.targetCollege=res.data.data.TargetCollege;
-			}).catch(err => {
-				
-			})
 			// console.log("执行onLoad（）");
 			uni.getStorage({
-				key:'userId',   // 储存在本地的变量名
-				success:res => {
+				key: 'userId', // 储存在本地的变量名
+				success: res => {
 					// 成功后的回调
 					// console.log(res.data);   // hello  这里可做赋值的操作
-					this.id=res.data;
+					this.id = res.data;
 					console.log(this.id)
 				}
 			})
 			// console.log("执行onLoad（）");
+
+			uni.$u.http.get('v1/frontend/user/basicUserInfo?id=' + this.id, {
+
+			}).then(res => {
+				console.log(res.data.data);
+				this.user.avatarUrl = res.data.data.AvatarUrl;
+				this.user.nickName = res.data.data.NickName;
+				this.user.sex = res.data.data.Sex;
+				this.user.area = res.data.data.Area;
+				this.user.slogan = res.data.data.Slogan;
+				this.user.useageDays = res.data.data.UserDays;
+				this.user.college = res.data.data.College;
+				this.user.major = res.data.data.Major;
+				this.user.year = res.data.data.Year;
+				this.user.targetCollege = res.data.data.TargetCollege;
+			}).catch(err => {
+
+			})
+
 		},
 		methods: {
 			changeHead() {
@@ -142,25 +144,45 @@
 			},
 			//上传用户信息的方法
 			upInfo() {
-				uni.showToast({
-					title: '修改成功',
-					//将值设置为 success 或者直接不用写icon这个参数
-					icon: 'success',
-					//显示持续时间为 2秒
-					duration: 1500
-				})
-				this.timer = setInterval(() => {
-				    //TODO 
-					uni.navigateBack({
-							delta:1,//返回层数，2则上上页
+				uni.$u.http.post('/v1/frontend/user/settings', {
+					id:this.id,
+					avatarUrl:this.user.avatarUrl,
+					nickName:this.user.nickName,
+					sex:this.user.sex,
+					area:this.user.area,
+					college:this.user.college,
+					major:this.user.major,
+					year:this.user.year,
+					targetCollege:this.user.targetCollege,
+					slogan:this.user.slogan
+				}).then(res => {
+					console.log(res);
+					uni.showToast({
+						title: '修改成功',
+						//将值设置为 success 或者直接不用写icon这个参数
+						icon: 'success',
+						//显示持续时间为 1.5秒
+						duration: 1500
+					})
+					this.timer = setInterval(() => {
+						//TODO 
+						uni.navigateBack({
+							delta: 1, //返回层数，2则上上页
 						})
-				}, 1500);
+					}, 1500);
+				}).catch(err => {
+					console.log("失败了。。。");
+				})
+
+
+				
+				
 			},
-			onUnload:function(){  
-			    if(this.timer) {  //在页面卸载时清除定时器有时会清除不了，可在页面跳转时清除
-			        clearInterval(this.timer);  
-			        this.timer = null;  
-			    }  
+			onUnload: function() {
+				if (this.timer) { //在页面卸载时清除定时器有时会清除不了，可在页面跳转时清除
+					clearInterval(this.timer);
+					this.timer = null;
+				}
 			}
 
 		}

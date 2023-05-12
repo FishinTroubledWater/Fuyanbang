@@ -3,7 +3,7 @@
 		<uni-card :title="indexList.name" sub-title="问题详情" :extra="indexList.time" :thumbnail="indexList.icon"
 			class="trends-box-item">
 			<view class="u-content">
-				<u-parse :content="indexList.summary"></u-parse>
+				<u-parse :content="indexList.content"></u-parse>
 			</view>
 		</uni-card>
 		<!-- <view class="content">
@@ -20,9 +20,9 @@
 
 
 		<text style="font-size: 40rpx; font-weight: 800;">回答:</text>
-		<uni-card v-for="(item, index) in answer" :title="answer[index].name" :sub-title="answer[index].time"
-			:thumbnail="answer[index].icon" class="trends-box-item">
-			<u--text :text="answer[index].content"></u--text>
+		<uni-card v-for="(item, index) in answer" :title="item.name" :sub-title="item.time"
+			:thumbnail="item.icon" class="trends-box-item">
+			<u--text :text="item.answer"></u--text>
 		</uni-card>
 	</view>
 </template>
@@ -31,36 +31,16 @@
 	export default {
 		data() {
 			return {
+				id:'',
+				queID:'',
 				whetherLike:'false',
 				desc: '',
 				myanswer: 'null',
 
 				txt: "txt",
 				academyName: '福州大学',
-				indexList: {
-					name: 'zhang',
-					time: '2022-12-21',
-					icon: '../../../static/background/activityDetails.png',
-					queId: '123456',
-					summary: `<p>露从今夜白</p>
-					<img src="../../static/background/activityDetails.png" />`,
-					// isImage: true,
-					// img: ['../../../static/background/activityDetails.png',
-					// 	'../../../static/background/bg1.png',
-					// 	'../../../static/background/bg2.png'
-					// ],
-				},
-				answer: [{
-					name: '吴彦祖',
-					icon: '../../../static/background/bg2.png',
-					content: '回答内容',
-					time: '2022-12-21'
-				}, {
-					name: '吴彦祖',
-					icon: '../../../static/background/bg1.png',
-					content: '回答内容',
-					time: '2022-12-21'
-				}],
+				indexList: {},
+				answer: [],
 
 			}
 		},
@@ -87,33 +67,51 @@
 			clickSent() {
 				console.log(this.myanswer)
 				//post请求
+				uni.getStorage({
+					key:'userId',   // 储存在本地的变量名
+					success:res => {
+						// 成功后的回调
+						// console.log(res.data);   // hello  这里可做赋值的操作
+						this.id=res.data;
+						console.log(this.id)
+					}
+				})
+				uni.$u.http.post('/v1/frontend/circle/postAnswer', {
+					queId: this.queID,
+					userId: this.id,
+					answer: this.myanswer,
+				}).then(res => {
+					console.log(res.data)
+				}).catch(err => {
+				
+				})
 
 			},
 
 		},
+		mounted() {
+			uni.$u.http.get('/v1/frontend/circle/queAnswer/' +this.queID, {
+		
+				}).then(res => {
+					console.log(res.data.data);
+					this.answer=res.data.data;
+				}).catch(err => {
+		
+				})
+			uni.$u.http.get('/v1/frontend/circle/queDetails/' + this.queID, {
+			
+				}).then(res => {
+					console.log(res.data.data);
+					this.indexList=res.data.data[0];
+				}).catch(err => {
+			
+				})
+		},
 
 		onLoad: function(option) {
 			console.log(option.id)
+			this.queID=option.id
 		},
-
-		mounted() {
-			uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
-
-				}).then(res => {
-					console.log(res.data);
-				}).catch(err => {
-
-				}),
-				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-					region: '福州',
-					level: '985',
-					type: '法学',
-				}).then(res => {
-					console.log(res.data)
-				}).catch(err => {
-
-				})
-		}
 	}
 </script>
 
@@ -131,5 +129,9 @@
 			text-align: right;
 			color: gray
 		}
+	}
+	.textarea{
+		width: 100%;
+		height: 100rpx;
 	}
 </style>

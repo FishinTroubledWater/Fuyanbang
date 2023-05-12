@@ -8,7 +8,11 @@
 				<view v-if="item.state=='0'" class="text-tips">您的反馈我们已经收到，我们会尽快处理。感谢您的支持。</view>
 				<view v-if="item.state=='1'" class="text-tips">您的反馈我们已经收到，我们会尽快处理。感谢您的支持。</view>
 				<view class="text-time">{{item.time}}</view>
-				<view :class="item.state=='0'?'state-grey':'state-green'  ">{{item.stateName}}</view>
+				<view :class="item.state=='0'?'state-grey':'state-green'  ">
+				<text v-if="item.state=='0'">未处理</text>
+				<text v-else>已处理</text>
+				
+				</view>
 			</view>
 		</view>
 
@@ -20,11 +24,34 @@
 		data() {
 			return {
 				feedbacks: [],
-				stateName: {
-					yi: '已处理',
-					wei: '未处理',
-				}
 			}
+		},
+		mounted() {
+			// console.log("执行onLoad（）");
+			uni.getStorage({
+				key: 'userId', // 储存在本地的变量名
+				success: res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.id = res.data;
+					console.log(this.id)
+				}
+			})
+			uni.$u.http.get('v1/frontend/user/basicUserInfo?id=' + this.id, {
+
+			}).then(res => {
+				console.log(res.data.data);
+				this.user.avatarUrl = res.data.data.AvatarUrl;
+				this.user.nickName = res.data.data.NickName;
+				this.user.level = res.data.data.Level;
+				this.user.slogan = res.data.data.Slogan;
+				this.user.useageDays = res.data.data.UserDays;
+				this.user.college = res.data.data.College;
+				this.user.major = res.data.data.Major;
+			}).catch(err => {
+
+			})
+			// console.log("执行onLoad（）");
 		},
 		onLoad() {
 			this.getUserFeedback();
@@ -33,31 +60,26 @@
 			//获取用户意见反馈列表
 			getUserFeedback() {
 				//演示数据  实际通过接口调用获得
-				this.feedbacks = [
-					{
+				this.feedbacks = [{
 						"time": "2022-03-07 11:31:51",
-						"updateTime": "2022-03-07 11:31:51",
 						"content": "界面显示错乱",
 						"state": "1",
 						"stateName": "已处理",
 					},
 					{
 						"time": "2022-03-07 11:31:51",
-						"updateTime": "2022-03-07 11:31:51",
 						"content": "界面显示错乱",
 						"state": "0",
 						"stateName": "未处理",
 					},
 					{
 						"time": "2022-03-07 11:31:51",
-						"updateTime": "2022-03-07 11:31:51",
 						"content": "界面显示错乱",
 						"state": "0",
 						"stateName": "未处理",
 					},
 					{
 						"time": "2022-03-07 11:31:51",
-						"updateTime": "2022-03-07 11:31:51",
 						"content": "界面显示错乱",
 						"state": "1",
 						"stateName": "已处理",
