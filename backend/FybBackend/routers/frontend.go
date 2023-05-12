@@ -6,6 +6,7 @@ import (
 	"FybBackend/routers/v1/frontend/major"
 	"FybBackend/routers/v1/frontend/news"
 	"FybBackend/routers/v1/frontend/user/login"
+	"FybBackend/routers/v1/frontend/user/myFavorites"
 	"FybBackend/routers/v1/frontend/user/myPosts"
 	"FybBackend/routers/v1/frontend/user/register"
 	"FybBackend/routers/v1/frontend/user/selectUsers"
@@ -52,4 +53,7 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	circle.SearchNewQue(r)
 	circle.SearchQueAnswer(r)
 	circle.SearchQueDetails(r)
+
+	//favorite
+	myFavorites.SearchNewQue(r)
 }

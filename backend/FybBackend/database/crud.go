@@ -281,7 +281,7 @@ func SelectAllRecipeByPage(db *gorm.DB, query string, pageNum int64, pageSize in
 
 func UpdateSingleRecipeByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	err := db.Table("news").Where(where).Updates(update).Count(&count).Error
+	err := db.Table("recipe").Where(where).Updates(update).Count(&count).Error
 	return count, err
 }
 
@@ -637,4 +637,19 @@ func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
 		result = multierror.Append(result, err)
 	}
 	return count, posts, result
+}
+
+// Favorite ------------------------------------------------------------
+func SearchFavoriteByUserId(db *gorm.DB, userId int64) (int64, []FavoriteRecord, error) {
+	var result *multierror.Error
+	var favorites []FavoriteRecord
+	var count int64
+	err := db.Preload("Article").Preload("Author").Where("userID = ? ", userId).Find(&favorites).Count(&count).Error
+	if count == 0 {
+		result = multierror.Append(result, errors.New("找不到该收藏记录！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return count, favorites, result
 }
