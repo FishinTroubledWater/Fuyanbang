@@ -62,10 +62,12 @@
 					console.log(this.authorID)
 				}
 			})
-			uni.$u.http.get('/v1/frontend/user/myPosts/authorID='+this.authorID, {
-			
+			uni.$u.http.get('/v1/frontend/user/myPosts/'+this.authorID, {
+				
 			}).then(res => {
 			    console.log(res.data.data);
+				this.posts=res.data.data;
+				console.log(this.posts);
 			}).catch(err => {
 				
 			})
