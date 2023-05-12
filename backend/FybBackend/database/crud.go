@@ -402,7 +402,7 @@ func DeletePost(db *gorm.DB, where map[string]interface{}) (int64, error) {
 func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Post, int64, error) {
 	var count int64 = 0
 	var post Post
-	err := db.InnerJoins("Author").InnerJoins("Part").Where(where).First(&post).Count(&count).Error
+	err := db.Table("post").InnerJoins("Author").InnerJoins("Part").Where("post.id = ?", where["id"]).Find(&post).Count(&count).Error
 	if count == 0 {
 		return post, 0, errors.New("查询的记录不存在")
 	}
