@@ -170,7 +170,7 @@ func AddComments(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	delete(mp, "ID")
 	if _, ok := values["postId"]; ok {
 		mp["ID"] = values["postId"]
-		delete(values, "postId")
+
 	} else if _, ok := values["queId"]; ok {
 		mp["ID"] = values["queId"]
 	}
@@ -184,6 +184,7 @@ func AddComments(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	if _, ok := values["postId"]; ok {
 		values["content"] = values["comment"]
 		delete(values, "comment")
+		delete(values, "postId")
 	} else if _, ok := values["queId"]; ok {
 		values["content"] = values["answer"]
 		delete(values, "answer")
