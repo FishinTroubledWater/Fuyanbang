@@ -281,7 +281,7 @@ func SelectAllRecipeByPage(db *gorm.DB, query string, pageNum int64, pageSize in
 
 func UpdateSingleRecipeByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	err := db.Table("news").Where(where).Updates(update).Count(&count).Error
+	err := db.Table("recipe").Where(where).Updates(update).Count(&count).Error
 	return count, err
 }
 
