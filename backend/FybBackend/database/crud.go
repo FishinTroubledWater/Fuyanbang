@@ -536,5 +536,19 @@ func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
-	return count, posts, err
+	return count, posts, result
+}
+
+func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
+	var result *multierror.Error
+	var posts []Post
+	var count int64
+	err := db.Preload("Author").Where("ID = ? && PartID = ?", queId, 2).Find(&posts).Count(&count).Error
+	if count == 0 {
+		result = multierror.Append(result, errors.New("找不到该问题！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return count, posts, result
 }

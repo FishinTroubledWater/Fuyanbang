@@ -47,4 +47,5 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	circle.SearchNewInfoDetails(r)
 	circle.SearchPostComments(r)
 	circle.SearchNewQue(r)
+	circle.SearchQueAnswer(r)
 }
