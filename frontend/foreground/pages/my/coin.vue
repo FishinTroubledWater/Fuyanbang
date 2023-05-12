@@ -54,7 +54,7 @@
 			
 			}).then(res => {
 			    console.log(res.data.data);
-				this.user.balance = res.data.data.Balance;
+				this.user.balance = res.data.data.user.Balance;
 
 			}).catch(err => {
 				
