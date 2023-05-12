@@ -193,6 +193,29 @@ func AddComments(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	return count, result
 }
 
+func SearchCommentByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
+	var result *multierror.Error
+	var comments []Comment
+	var whereMap map[string]interface{} = make(map[string]interface{})
+	whereMap["ID"] = queId
+	whereMap["PartID"] = 2
+	_, count, err := SelectSinglePostByCondition(db, whereMap)
+	if count == 0 {
+		result = multierror.Append(result, errors.New("帖子id不是问题！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	err = db.Preload("Author").Where("targetPost = ? ", queId).Find(&comments).Count(&count).Error
+	if count == 0 {
+		result = multierror.Append(result, errors.New("找不到该问题！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return count, comments, result
+}
+
 // Recipe
 
 func DeleteRecipe(db *gorm.DB, where map[string]interface{}) (int64, error) {

@@ -22,7 +22,7 @@ func SearchQueAnswer(e *gin.Engine) {
 			result = multierror.Append(result, err)
 		}
 
-		count, comments, err = fybDatabase.SearchQueByQueId(db, queIdInt64)
+		count, comments, err = fybDatabase.SearchCommentByQueId(db, queIdInt64)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
