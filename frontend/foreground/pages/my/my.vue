@@ -53,6 +53,16 @@
 			}
 		},
 		mounted() {
+			// console.log("执行onLoad（）");
+			uni.getStorage({
+				key:'userId',   // 储存在本地的变量名
+				success:res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.id=res.data;
+					console.log(this.id)
+				}
+			})
 			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
 			
 			}).then(res => {
@@ -66,16 +76,6 @@
 				this.user.major=res.data.data.Major;
 			}).catch(err => {
 				
-			})
-			// console.log("执行onLoad（）");
-			uni.getStorage({
-				key:'userId',   // 储存在本地的变量名
-				success:res => {
-					// 成功后的回调
-					// console.log(res.data);   // hello  这里可做赋值的操作
-					this.id=res.data;
-					console.log(this.id)
-				}
 			})
 			// console.log("执行onLoad（）");
 		},
