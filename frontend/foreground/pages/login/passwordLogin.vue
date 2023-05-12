@@ -138,11 +138,12 @@
 
 <style>
 	.login-page {
+		margin-top: 180rpx;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		/* justify-content: center; */
-		height: 80rpx;
+		height: 800rpx;
 	}
 
 	.title {
