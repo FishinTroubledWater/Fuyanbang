@@ -16,9 +16,9 @@ func Settings(e *gin.Engine, db *gorm.DB) {
 
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp1)
-		account := mp1["account"]
-		mp2["account"] = account
-		delete(mp1, "account")
+		account := mp1["id"]
+		mp2["id"] = account
+		delete(mp1, "id")
 
 		_, err3 := fybDatabase.UpdateSingleUserByCondition(db, mp1, mp2)
 		result = multierror.Append(result, err1, err2, err3)

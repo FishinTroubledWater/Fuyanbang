@@ -45,7 +45,7 @@ func main() {
 	r := gin.Default()
 	r.Use(Cors())
 
-	routers.InitFrontend(r, db)
+	//routers.InitFrontend(r, db)
 	routers.InitBackend(r, db)
 
 	if err := r.Run(":8088"); err != nil {
