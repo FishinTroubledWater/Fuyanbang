@@ -125,3 +125,12 @@ type Feedback struct {
 	State   int64     `gorm:"column:state"`
 	Time    time.Time `gorm:"column:time"`
 }
+
+type FavoriteRecord struct {
+	ID          int64  `gorm:"column:ID;primaryKey"`
+	UserID      string `gorm:"column:userID"`
+	ArticleID   string `gorm:"column:articleID"`
+	ArticleType string `gorm:"column:articleType"`
+	Article     Post   `gorm:"foreignKey:articleID"`
+	Author      User   `gorm:"foreignKey:UserID"`
+}

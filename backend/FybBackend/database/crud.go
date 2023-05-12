@@ -632,3 +632,18 @@ func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
 	}
 	return count, posts, result
 }
+
+// Favorite ------------------------------------------------------------
+func SearchFavoriteByUserId(db *gorm.DB, userId int64) (int64, []FavoriteRecord, error) {
+	var result *multierror.Error
+	var favorites []FavoriteRecord
+	var count int64
+	err := db.Preload("Article").Preload("Author").Where("userID = ? ", userId).Find(&favorites).Count(&count).Error
+	if count == 0 {
+		result = multierror.Append(result, errors.New("找不到该收藏记录！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return count, favorites, result
+}
