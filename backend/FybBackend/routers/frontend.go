@@ -6,6 +6,7 @@ import (
 	"FybBackend/routers/v1/frontend/major"
 	"FybBackend/routers/v1/frontend/news"
 	"FybBackend/routers/v1/frontend/user/login"
+	"FybBackend/routers/v1/frontend/user/myPosts"
 	"FybBackend/routers/v1/frontend/user/register"
 	"FybBackend/routers/v1/frontend/user/selectUsers"
 	"FybBackend/routers/v1/frontend/user/userInfo"
@@ -25,6 +26,7 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	userInfo.MyPoss(r, db)
 	register.UserRegister(r, db)
 	login.PasswordLogin(r, db)
+	myPosts.SearchNewQue(r)
 
 	//news
 	news.NewsInfo(r, db)

@@ -1,4 +1,4 @@
-package modifyUser
+package modifyRecipe
 
 import (
 	fybDatabase "FybBackend/database"
@@ -10,8 +10,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func UpdateUser(e *gin.Engine, db *gorm.DB) {
-	e.PATCH("/v1/backend/user/update", func(context *gin.Context) {
+func UpdateRecipe(e *gin.Engine, db *gorm.DB) {
+	e.PATCH("/v1/backend/recipe/update", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,
@@ -24,9 +24,9 @@ func UpdateUser(e *gin.Engine, db *gorm.DB) {
 		mp2 := make(map[string]interface{})
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp1)
-		mp2["account"] = mp1["account"]
-		delete(mp1, "account")
-		_, err3 := fybDatabase.UpdateSingleUserByCondition(db, mp2, mp1)
+		mp2["id"] = mp1["id"]
+		delete(mp1, "id")
+		_, err3 := fybDatabase.UpdateSingleRecipeByCondition(db, mp2, mp1)
 		result = multierror.Append(result, err1, err2, err3)
 
 		code, msg := exceptionHandler.Handle(result)

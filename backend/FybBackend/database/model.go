@@ -90,7 +90,6 @@ type Post struct {
 	Favorite    int64     `gorm:"column:favorite"`
 	Like        int64     `gorm:"column:like"`
 	PublishTime time.Time `gorm:"column:publishTime"`
-	Answer      string    `gorm:"column:answer"`
 }
 
 type PostImg struct {
@@ -125,4 +124,5 @@ type Feedback struct {
 	Content string    `gorm:"column:content"`
 	State   int64     `gorm:"column:state"`
 	Time    time.Time `gorm:"column:time"`
+	Author  User      `gorm:"foreignKey:UserID"`
 }

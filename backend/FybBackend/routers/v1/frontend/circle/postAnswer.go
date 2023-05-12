@@ -23,7 +23,7 @@ func PostAnswers(e *gin.Engine) {
 			result = multierror.Append(result, err)
 		}
 
-		count, err := fybDatabase.AddAnswer(db, m)
+		count, err := fybDatabase.AddComments(db, m)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}

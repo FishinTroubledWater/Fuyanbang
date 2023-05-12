@@ -14,7 +14,7 @@ func SearchQueAnswer(e *gin.Engine) {
 	e.GET("/v1/frontend/circle/queAnswer/:queID", func(context *gin.Context) {
 		var result *multierror.Error
 		var count int64
-		var posts []fybDatabase.Post
+		var comments []fybDatabase.Comment
 		queID := context.Param("queID")
 
 		queIdInt64, err := strconv.ParseInt(queID, 10, 64)
@@ -22,15 +22,15 @@ func SearchQueAnswer(e *gin.Engine) {
 			result = multierror.Append(result, err)
 		}
 
-		count, posts, err = fybDatabase.SearchQueByQueId(db, queIdInt64)
+		count, comments, err = fybDatabase.SearchCommentByQueId(db, queIdInt64)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
 
 		var responseBody []map[string]interface{}
 		if count > 0 {
-			for i := range posts {
-				data, err := json.Marshal(&posts[i])
+			for i := range comments {
+				data, err := json.Marshal(&comments[i])
 				if err != nil {
 					result = multierror.Append(result, err)
 				}
@@ -43,21 +43,15 @@ func SearchQueAnswer(e *gin.Engine) {
 				postMap["name"] = postMap["Author"].(map[string]interface{})["NickName"]
 				postMap["time"] = postMap["PublishTime"]
 				postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
-				postMap["queId"] = postMap["ID"]
-				postMap["content"] = postMap["Content"]
-				delete(postMap, "Answer")
-				delete(postMap, "Content")
-				delete(postMap, "Summary")
-				delete(postMap, "Part")
+				postMap["answer"] = postMap["Content"]
 				delete(postMap, "Author")
-				delete(postMap, "AuthorID")
-				delete(postMap, "Favorite")
-				delete(postMap, "State")
-				delete(postMap, "PartID")
-				delete(postMap, "Like")
 				delete(postMap, "PublishTime")
-				delete(postMap, "ID")
+				delete(postMap, "CommentNum")
+				delete(postMap, "Content")
+				delete(postMap, "TargetComment")
+				delete(postMap, "TargetPost")
 				delete(postMap, "UserID")
+				delete(postMap, "ID")
 
 				responseBody = append(responseBody, postMap)
 			}

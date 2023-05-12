@@ -26,7 +26,7 @@ func SelectNewsByPage(e *gin.Engine, db *gorm.DB) {
 		query := mp["query"].(string)
 		pageNum := int64(mp["pageNum"].(float64))
 		pageSize := int64(mp["pageSize"].(float64))
-		posts, count, err3 := fybDatabase.SelectAllNewsByPage(db, query, pageNum, pageSize)
+		newses, count, err3 := fybDatabase.SelectAllNewsByPage(db, query, pageNum, pageSize)
 		result = multierror.Append(result, err1, err2, err3)
 
 		code, msg := exceptionHandler.Handle(result)
@@ -37,7 +37,7 @@ func SelectNewsByPage(e *gin.Engine, db *gorm.DB) {
 				"data": map[string]interface{}{
 					"total":   count,
 					"pageNum": pageNum,
-					"posts":   posts,
+					"newses":  newses,
 				},
 			})
 		} else {

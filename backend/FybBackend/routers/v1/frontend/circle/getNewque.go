@@ -47,6 +47,7 @@ func SearchNewQue(e *gin.Engine) {
 				postMap["summary"] = postMap["Summary"]
 				postMap["isImage"] = false
 				postMap["img"] = nil
+				delete(postMap, "Answer")
 				delete(postMap, "Content")
 				delete(postMap, "Summary")
 				delete(postMap, "Part")

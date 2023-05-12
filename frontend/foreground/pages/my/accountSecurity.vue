@@ -54,15 +54,6 @@
 			}
 		},
 		mounted() {
-			uni.$u.http.get('v1/frontend/user/basicUserInfo?id=1'+this.id, {
-			
-			}).then(res => {
-			    console.log(res.data.data);
-				this.user.password = res.data.data.Password;
-				this.user.account=res.data.data.Account;
-			}).catch(err => {
-				
-			})
 			// console.log("执行onLoad（）");
 			uni.getStorage({
 				key:'userId',   // 储存在本地的变量名
@@ -74,6 +65,16 @@
 				}
 			})
 			// console.log("执行onLoad（）");
+			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
+			
+			}).then(res => {
+			    console.log(res.data.data);
+				this.user.password = res.data.data.Password;
+				this.user.account=res.data.data.Account;
+			}).catch(err => {
+				
+			})
+			
 		},
 		methods: {
 			openPopup() {
@@ -84,7 +85,7 @@
 				if(this.oldPassword==this.user.password)//如果正确，修改user.password=newPassword 并关闭弹窗
 				{
 					uni.showToast({
-						title: '修改成功',
+						title: '修改成功请点击确定键',
 						//将值设置为 success 或者直接不用写icon这个参数
 						icon: 'success',
 						//显示持续时间为 2秒
@@ -108,21 +109,28 @@
 				this.show = false
 			},
 			upInfo() {
-				//TODO:
-				//如果新旧密码不同则提示"成功"并提交数据，否则返回上一页
-				uni.showToast({
-					title: '成功',
-					//将值设置为 success 或者直接不用写icon这个参数
-					icon: 'success',
-					//显示持续时间为 2秒
-					duration: 1500
-				}) 
-				this.timer = setInterval(() => {
-				    //TODO 
-					uni.navigateBack({
-							delta:1,//返回层数，2则上上页
+				uni.$u.http.post('/v1/frontend/user/resetPassword', {
+					account:this.user.account,
+					password:this.user.password,
+				}).then(res => {
+					console.log(res);
+					uni.showToast({
+						title: '成功',
+						//将值设置为 success 或者直接不用写icon这个参数
+						icon: 'success',
+						//显示持续时间为 1.5秒
+						duration: 1500
+					})
+					this.timer = setInterval(() => {
+						//TODO 
+						uni.navigateBack({
+							delta: 1, //返回层数，2则上上页
 						})
-				}, 1500);
+					}, 1500);
+				}).catch(err => {
+					console.log("失败了。。。");
+				})
+			
 			},
 			onUnload:function(){
 			    if(this.timer) {  //在页面卸载时清除定时器有时会清除不了，可在页面跳转时清除
@@ -176,6 +184,7 @@
 		background-color: bisque;
 		border-radius: 20px;
 		margin-top: 50px;
+		margin-bottom: 20px;
 	}
 	.right {
 		text-align: right;

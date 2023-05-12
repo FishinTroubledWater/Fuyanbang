@@ -1,4 +1,4 @@
-package circle
+package myPosts
 
 import (
 	fybDatabase "FybBackend/database"
@@ -9,20 +9,17 @@ import (
 	"strconv"
 )
 
-func SearchQueDetails(e *gin.Engine) {
+func SearchNewQue(e *gin.Engine) {
 	db := fybDatabase.InitDB()
-	e.GET("/v1/frontend/circle/queDetails/:queId", func(context *gin.Context) {
+	e.GET("/v1/frontend/user/myPosts/:authorID", func(context *gin.Context) {
 		var result *multierror.Error
 		var count int64
 		var posts []fybDatabase.Post
-		queId := context.Param("queId")
+		authorId := context.Param("authorID")
 
-		queIdInt64, err := strconv.ParseInt(queId, 10, 64)
-		if err != nil {
-			result = multierror.Append(result, err)
-		}
+		userIdInt64, err := strconv.ParseInt(authorId, 10, 64)
 
-		count, posts, err = fybDatabase.SearchQueByQueId(db, queIdInt64)
+		posts, count, err = fybDatabase.SelectAllPostsByAuthorId(db, userIdInt64)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
@@ -40,12 +37,14 @@ func SearchQueDetails(e *gin.Engine) {
 					result = multierror.Append(result, err)
 				}
 
-				postMap["name"] = postMap["Author"].(map[string]interface{})["NickName"]
-				postMap["time"] = postMap["PublishTime"]
-				postMap["queId"] = postMap["ID"]
-				postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
+				postMap["id"] = postMap["ID"]
+				postMap["publishTime"] = postMap["PublishTime"]
+				postMap["partID"] = postMap["PartID"]
+				postMap["title"] = postMap["Summary"]
+				postMap["favorite"] = postMap["Favorite"]
+				postMap["like"] = postMap["Like"]
 				postMap["content"] = postMap["Content"]
-
+				delete(postMap, "Answer")
 				delete(postMap, "Content")
 				delete(postMap, "Summary")
 				delete(postMap, "Part")
@@ -66,7 +65,7 @@ func SearchQueDetails(e *gin.Engine) {
 		if result.ErrorOrNil() == nil && count > 0 {
 			context.JSON(http.StatusOK, gin.H{
 				"code":    200,
-				"message": "请求成功",
+				"message": "获取发表过的帖子成功！",
 				"data":    responseBody,
 			})
 		} else {
