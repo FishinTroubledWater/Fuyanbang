@@ -124,4 +124,5 @@ type Feedback struct {
 	Content string    `gorm:"column:content"`
 	State   int64     `gorm:"column:state"`
 	Time    time.Time `gorm:"column:time"`
+	Author  User      `gorm:"foreignKey:UserID"`
 }

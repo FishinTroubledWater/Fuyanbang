@@ -535,9 +535,9 @@ func SelectAllFeedbackByPage(db *gorm.DB, query string, pageNum int64, pageSize 
 	var feedbacks []Feedback
 	if query != "" {
 		query = query + "%"
-		db = db.Table("feedback").Where("author like ?", query).Count(&count)
+		db = db.Table("feedback").InnerJoins("Author").Where("account like ?", query).Find(&feedbacks).Count(&count)
 	} else {
-		db = db.Table("feedback").Count(&count)
+		db = db.Table("feedback").InnerJoins("Author").Find(&feedbacks).Count(&count)
 	}
 	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&feedbacks).Error
 	if count == 0 && err == nil {
