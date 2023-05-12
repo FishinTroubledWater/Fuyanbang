@@ -582,6 +582,20 @@ func UpdateSingleFeedbackByCondition(db *gorm.DB, where map[string]interface{}, 
 	return count, err
 }
 
+func SearchFeedbackByUserId(db *gorm.DB, userId int64) (int64, []Feedback, error) {
+	var result *multierror.Error
+	var feedbacks []Feedback
+	var count int64
+	err := db.Preload("Author").Where("userID = ? ", userId).Find(&feedbacks).Count(&count).Error
+	if count == 0 {
+		result = multierror.Append(result, errors.New("找不到该收藏记录！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return count, feedbacks, result
+}
+
 // Admin ------------------------------------------------------------
 
 func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Admin, int64, error) {
