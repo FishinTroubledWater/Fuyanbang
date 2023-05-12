@@ -10,8 +10,8 @@ import (
 )
 
 type MonthData struct {
-	Months     string `gorm:"column:months"`
-	MonthCount int64  `gorm:"column:monthCount"`
+	Months     string
+	MonthCount int64
 }
 
 func GetPostData(e *gin.Engine, db *gorm.DB) {
