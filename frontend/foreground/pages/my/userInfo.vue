@@ -89,6 +89,33 @@
 				majors: ['金融', '应用统计', '税务', '国际商务', '保险', '资产评估', '审计', '法律', '社会工作', '警务', '教育', '体育', '应用心理', ],
 			}
 		},
+		mounted() {
+			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
+			
+			}).then(res => {
+			    console.log(res.data.data);
+				this.user.avatarUrl = res.data.data.Avatar;
+				this.user.nickName=res.data.data.Nickname;
+				this.user.level=res.data.data.Level;
+				this.user.slogan=res.data.data.Slogan;
+				this.user.useageDays=res.data.data.UserDays;
+				this.user.college=res.data.data.College;
+				this.user.major=res.data.data.Major;
+			}).catch(err => {
+				
+			})
+			// console.log("执行onLoad（）");
+			uni.getStorage({
+				key:'userId',   // 储存在本地的变量名
+				success:res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.id=res.data;
+					console.log(this.id)
+				}
+			})
+			// console.log("执行onLoad（）");
+		},
 		methods: {
 			changeHead() {
 				uni.chooseImage({

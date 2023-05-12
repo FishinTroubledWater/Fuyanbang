@@ -23,9 +23,10 @@ func SelectFeedbackByPage(e *gin.Engine, db *gorm.DB) {
 		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
+		query := mp["query"].(string)
 		pageNum := int64(mp["pageNum"].(float64))
 		pageSize := int64(mp["pageSize"].(float64))
-		posts, count, err3 := fybDatabase.SelectAllFeedbackByPage(db, "", pageNum, pageSize)
+		posts, count, err3 := fybDatabase.SelectAllFeedbackByPage(db, query, pageNum, pageSize)
 		result = multierror.Append(result, err1, err2, err3)
 
 		code, msg := exceptionHandler.Handle(result)

@@ -227,8 +227,13 @@ func SelectAllRecipeByPage(db *gorm.DB, query string, pageNum int64, pageSize in
 	var count int64 = 0
 	var recipes []Recipe
 
-	db.Table("recipe").Count(&count)
-	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&recipes).Error
+	if query != "" {
+		query = query + "%"
+		db = db.Table("recipe").Where("author like ?", query)
+	} else {
+		db = db.Table("recipe")
+	}
+	err := db.Order("id asc").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&recipes).Count(&count).Error
 	if count == 0 && err == nil {
 		return recipes, 0, errors.New("查询的记录不存在")
 	}
@@ -268,12 +273,14 @@ func SelectAllNewsByCondition(db *gorm.DB, where map[string]interface{}) ([]News
 func SelectAllNewsByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]News, int64, error) {
 	var count int64 = 0
 	var newses []News
+
 	if query != "" {
 		query = query + "%"
 		db = db.Table("news").Where("author like ?", query)
+	} else {
+		db = db.Table("news")
 	}
-	db.Table("news").Count(&count)
-	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&newses).Error
+	err := db.Order("id asc").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&newses).Count(&count).Error
 	if count == 0 && err == nil {
 		return newses, 0, errors.New("查询的记录不存在")
 	}
@@ -375,13 +382,13 @@ func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	var err error
 	if query != "" {
 		query = query + "%"
-		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").
-			Where("account like ?", query).Order("state asc").Limit(int(pageSize)).
-			Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
+		db = db.Table("post").InnerJoins("Author").InnerJoins("Part").
+			Where("account like ?", query).Order("state asc, id")
 	} else {
-		err = db.Table("post").InnerJoins("Author").InnerJoins("Part").
-			Order("state asc").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
+		db = db.Table("post").InnerJoins("Author").InnerJoins("Part").
+			Order("state asc, id")
 	}
+	err = db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
 	if count == 0 && err == nil {
 		return posts, 0, errors.New("要查询的记录不存在")
 	}
@@ -505,6 +512,9 @@ func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Ad
 	var count int64 = 0
 	var admin Admin
 	err := db.Where(where).First(&admin).Count(&count).Error
+	if count == 0 && err == nil {
+		return admin, 0, errors.New("查询的记录不存在")
+	}
 	return admin, count, err
 }
 func UpdateSingleAdminByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
@@ -536,5 +546,55 @@ func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
-	return count, posts, err
+	return count, posts, result
+}
+
+func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
+	var result *multierror.Error
+	var posts []Post
+	var count int64
+	err := db.Preload("Author").Where("ID = ? && PartID = ?", queId, 2).Find(&posts).Count(&count).Error
+	if count == 0 {
+		result = multierror.Append(result, errors.New("找不到该问题！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return count, posts, result
+}
+
+func AddAnswer(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	var result *multierror.Error
+	mp := make(map[string]interface{})
+	mp["ID"] = values["userId"]
+	delete(values, "account")
+	_, count, err := SelectSingleUserByCondition(db, mp)
+	result = multierror.Append(result, err)
+	if count == 0 {
+		result = multierror.Append(result, errors.New("要插入的记录有误，插入的用户不存在"))
+	}
+	delete(mp, "ID")
+	mp["ID"] = values["queId"]
+	mp["partID"] = 2
+	delete(values, "queId")
+	post, count, err := SelectSingleCommentByCondition(db, mp)
+	result = multierror.Append(result, err)
+	if count == 0 {
+		result = multierror.Append(result, errors.New("要插入的记录有误，回答的问题不存在"))
+	}
+	postId := post.ID
+	delete(values, "userId")
+	t1 := time.Now().Year()
+	t2 := time.Now().Month()
+	t3 := time.Now().Day()
+	t4 := time.Now().Hour()
+	t5 := time.Now().Minute()
+	t6 := time.Now().Second()
+	t7 := time.Now().Nanosecond()
+	currentTimeData := time.Date(t1, t2, t3, t4, t5, t6, t7, time.Local) //获取当前时间，返回当前时间Time
+	values["publishTime"] = currentTimeData
+	values["state"] = 0
+	err = db.Table("post").Where("ID = ? ", postId).Updates(values).Count(&count).Error
+	result = multierror.Append(result, err)
+	return count, result
 }

@@ -42,8 +42,14 @@
 			};
 		},
 		methods: {
-			...mapMutations(['logout']),
-
+			logout(){
+				uni.clearStorage();
+				setTimeout(()=>{
+					uni.navigateTo({
+						url:'/pages/login/passwordLogin'
+					})
+				},200)
+			},
 			gotoPage(url) {
 				uni.navigateTo({
 					url
@@ -56,9 +62,6 @@
 					success: (e) => {
 						if (e.confirm) {
 							this.logout();
-							setTimeout(() => {
-								uni.navigateBack();
-							}, 200)
 						}
 					}
 				});

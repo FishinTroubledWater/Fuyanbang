@@ -11,10 +11,12 @@
 				</view>
 				<view class="saidContent">
 
-					<view class="textContent">致所有考研的学弟学妹，见字如面：写下这封长信只因为我知道作为一个跨考者，孤独是很难避免的，
-					</view>
+					<!-- <view class="textContent">致所有考研的学弟学妹，见字如面：写下这封长信只因为我知道作为一个跨考者，孤独是很难避免的，
+					</view> -->
+					<u--text :lines="3" :text="this.content" size="24rpx" lineHeight="34rpx" margin="20rpx 6rpx 0rpx 0rpx" padding="6px 4px"
+					  height="94px"></u--text>
 					<image class="sights" src="@/static/academy-icons/sight.png"></image>
->>>>>>> Stashed changes
+
 				</view>
 <!-- 				<view class="readingQuantity">3317阅读</view> -->
 			</view>
@@ -28,9 +30,10 @@
 					</view>
 				</view>
 				<view class="saidContent">
-					<view class="textContent">致所有考研的学弟学妹，见字如面：写下这封长信只因为我知道作为一个跨考者，孤独是很难避免的，
-					</view>
+
+					<view class="textContent">{{this.content}}</view>
 					<image class="sights" src="@/static/academy-icons/sight.png"></image>
+
 				</view>
 <!-- 				<view class="readingQuantity">3317阅读</view> -->
 			</view>

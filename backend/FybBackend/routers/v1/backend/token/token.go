@@ -1,6 +1,7 @@
 package token
 
 import (
+	"FybBackend/database"
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
@@ -19,11 +20,11 @@ var (
 	issuer         = "Fyb"                          //签发人
 )
 
-func GenerateToken(account string, phoneNumber string) (string, error) {
+func GenerateToken(admin database.Admin) (string, error) {
 	expirationTime := time.Now().Add(ExpireDuration)
 	claims := &MyClaims{
-		Account:     account,
-		PhoneNumber: phoneNumber,
+		Account:     admin.Account,
+		PhoneNumber: admin.PhoneNumber,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime.Unix(),
 			Issuer:    issuer,
@@ -46,7 +47,15 @@ func JwtVerify(c *gin.Context) error {
 	c.Set("claims", myClaims)
 	return err1
 }
-
+func InitToken(c *gin.Context) error {
+	token := c.GetHeader("Authorization")
+	if token == "" {
+		return errors.New("token not exists")
+	}
+	myClaims, err1 := parseToken(token)
+	c.Set("claims", myClaims)
+	return err1
+}
 func parseToken(tokenString string) (*MyClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &MyClaims{}, func(t *jwt.Token) (interface{}, error) {
 		return secret, nil
@@ -59,3 +68,23 @@ func parseToken(tokenString string) (*MyClaims, error) {
 	}
 	return nil, errors.New("token can't be parsed or is not valid")
 }
+
+//func refresh(tokenString string) string {
+//	jwt.TimeFunc = func() time.Time {
+//		return time.Unix(0, 0)
+//	}
+//	token, err := jwt.ParseWithClaims(tokenString, &MyClaims{}, func(token *jwt.Token) (interface{}, error) {
+//		return secret, nil
+//	})
+//	if err != nil {
+//		panic(err)
+//	}
+//	claims, ok := token.Claims.(*MyClaims)
+//	if !ok {
+//		panic("token is valid")
+//	}
+//	jwt.TimeFunc = time.Now
+//	claims.StandardClaims.ExpiresAt = time.Now().Add(2 * time.Hour).Unix()
+//	tokenStr, _ := GenerateToken(MyClaims.Pho)
+//	return token
+//}
