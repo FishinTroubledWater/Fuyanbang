@@ -158,6 +158,21 @@
 </script>
 
 <style lang="scss">
+	.trends-box-item{
+		
+			
+			  
+			/* 圆角 */
+			border-radius: 18rpx;
+			
+			/* 边 */
+			border: 1rpx solid #CCBE97;
+			/* 阴影 */
+			box-shadow:2rpx 7rpx 0rpx #CCBE97;
+			
+			
+			
+	}
 	.u-content {
 	        padding: 24rpx;
 	}
