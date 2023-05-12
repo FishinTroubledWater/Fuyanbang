@@ -22,7 +22,7 @@ type User struct {
 	College       string
 	Role          string
 	State         int64     `gorm:"column:state"`
-	registerTime  time.Time `gorm:"column:registerTime"`
+	RegisterTime  time.Time `gorm:"column:registerTime"`
 }
 
 type Admin struct {
