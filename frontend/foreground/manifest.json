@@ -2,8 +2,8 @@
     "name" : "FuYanBang",
     "appid" : "__UNI__27F330E",
     "description" : "",
-    "versionName" : "1.0.1",
-    "versionCode" : "100",
+    "versionName" : "1.0.3",
+    "versionCode" : 101,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -87,8 +87,5 @@
     },
     "uniStatistics" : {
         "enable" : false
-    },
-    "h5" : {
-        "title" : "福研帮"
     }
 }

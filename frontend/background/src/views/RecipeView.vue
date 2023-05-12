@@ -30,7 +30,7 @@
                      @click="showDetails(scope.row)">详情
           </el-button>
           <el-button size="mini" type="primary" icon="el-icon-edit" round
-                     @click="showEditDialog(scope.row)">编辑
+                     @click="showEditDialog(scope.row.ID)">编辑
           </el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" round
                      @click="removeRecipeById(scope.row.ID)">删除
@@ -93,6 +93,7 @@
           <el-descriptions-item label="收藏数" > {{ editForm.Favorite }}</el-descriptions-item>
           <el-descriptions-item label="发布时间"> {{ formattedPublishTime }}</el-descriptions-item>
         </el-descriptions>
+        <div class="mg">内容</div>
         <quill-editor v-model="editForm.Content" @focus="focus($event)" class="mg"></quill-editor>
       </template>
     </Drawer>
@@ -249,19 +250,18 @@ export default {
       })
     },
     //展示编辑的对话框
-    async showEditDialog(row) {
-      console.log(row);
-      // const {data: res} = await this.axios.get('recipe/searchByAccount', {
-      //   params: {'account': id},
-      //   headers: {
-      //     'Authorization': window.sessionStorage.getItem("token")
-      //   }
-      // })
-      // if (res.code !== 200) {
-      //   return this.$message.error('查询用户信息失败！')
-      // }
-      this.editForm = row
-      // console.log(this.editForm.Author.Account)
+    async showEditDialog(id) {
+      console.log(id);
+      const {data: res} = await this.axios.get('recipe/searchById', {
+        params: {'id':id},
+        headers: {
+          'Authorization': window.sessionStorage.getItem("token")
+        }
+      })
+      if (res.code !== 200) {
+        return this.$message.error('查询学长学姐说信息失败！')
+      }
+      this.editForm = res.data
       this.editDialogVisible = true
     },
     // 修改对话框关闭
@@ -275,23 +275,24 @@ export default {
         if (!valid) return
         console.log(this.editForm)
         // 发起修改信息的数据请求
-        // const {data: res} = await this.axios.patch('recipe/update', {
-        //   'account': this.editForm.Account,
-        //   'summary': this.editForm.Summary,
-        //   'state': this.editForm.state
-        // },{
-        //   headers: {
-        //     'Authorization': window.sessionStorage.getItem("token")
-        //   }
-        // })
-        // if (res.code !== 200) {
-        //   return this.$message.error('更新用户信息失败！')
-        // }
+        const {data: res} = await this.axios.patch('recipe/update', {
+          'id':this.editForm.ID,
+          'author': this.editForm.Author,
+          'title': this.editForm.Title,
+          'Content': this.editForm.Content,
+        },{
+          headers: {
+            'Authorization': window.sessionStorage.getItem("token")
+          }
+        })
+        if (res.code !== 200) {
+          return this.$message.error('更新学长学姐说失败！')
+        }
         // 关闭对话框
         this.editDialogVisible = false
         // 刷新数据列表
         await this.getRecipeList()
-        this.$message.success('更新用户信息成功！')
+        this.$message.success('更新学长学姐说成功！')
       })
     },
     //获取焦点事件

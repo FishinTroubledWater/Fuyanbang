@@ -46,21 +46,21 @@
 		methods: {
 			login() {
 				// 在这里添加登录逻辑
-				if(!this.validateEmail()){
+				if (!this.validateEmail()) {
 					uni.showToast({
 						title: '邮箱格式错误',
 						icon: 'none'
 					});
 					return;
 				}
-				if(!this.validatePassword()){
+				if (!this.validatePassword()) {
 					uni.showToast({
 						title: '密码不得少于6位',
 						icon: 'none'
 					});
 					return;
 				}
-				
+
 				uni.$u.http.post('/v1/frontend/passwordLogin', {
 					account: this.email,
 					password: this.password
@@ -74,17 +74,27 @@
 							console.log("已成功发送userId");
 						}
 					});
-					this.toHome();
+					uni.showToast({
+						title: '登陆成功',
+						//将值设置为 success 或者直接不用写icon这个参数
+						icon: 'success',
+						//显示持续时间为 1.5秒
+						// duration: 1000
+					});
+
+					setTimeout(() => {
+						this.toHome();
+					}, 1000);
 				}).catch(err => {
 					console.log(err);
-					var str=err.data.msg
-					if(str.includes("密码错误")){
+					var str = err.data.msg
+					if (str.includes("密码错误")) {
 						uni.showToast({
 							title: '密码错误',
 							icon: 'none'
 						});
 						return;
-					}else if(str.includes("账户不存在")){
+					} else if (str.includes("账户不存在")) {
 						uni.showToast({
 							title: '账户不存在',
 							icon: 'none'
@@ -133,6 +143,18 @@
 				immediate: false,
 			},
 		},
+		// onUnload: function() {
+		// 	if (this.timer) { //在页面卸载时清除定时器有时会清除不了，可在页面跳转时清除
+		// 		clearInterval(this.timer);
+		// 		this.timer = null;
+		// 	}
+		// },
+		// onload: function() {
+		// 	if (this.timer) { //在页面卸载时清除定时器有时会清除不了，可在页面跳转时清除
+		// 		clearInterval(this.timer);
+		// 		this.timer = null;
+		// 	}
+		// }
 	};
 </script>
 

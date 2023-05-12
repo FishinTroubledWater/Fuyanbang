@@ -60,10 +60,16 @@
 				}).then(res => {
 					console.log(res);
 					uni.showToast({
-						title: '注册成功！',
-						icon: 'none'
-					});
-					this.toPasswordLogin();
+						title: '注册成功',
+						//将值设置为 success 或者直接不用写icon这个参数
+						icon: 'success',
+						//显示持续时间为 1.5秒
+						// duration: 1000
+					})
+					setTimeout(() => {
+						this.toPasswordLogin();
+					}, 1000);
+
 				}).catch(err => {
 					console.log(err);
 					var str = err.data.msg
@@ -96,7 +102,7 @@
 					url: './passwordLogin'
 				})
 			}
-		}
+		},
 	};
 </script>
 
