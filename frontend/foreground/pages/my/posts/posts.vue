@@ -51,9 +51,27 @@
 				],
 			}
 		},
-		onLoad() {
-			this.getAuthorID();
-			this.getPostsItem();
+		mounted() {
+			// console.log("执行onLoad（）");
+			uni.getStorage({
+				key:'userId',   // 储存在本地的变量名
+				success:res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.authorID=res.data;
+					console.log(this.authorID)
+				}
+			})
+			uni.$u.http.get('/v1/frontend/user/myPosts/'+this.authorID, {
+				
+			}).then(res => {
+			    console.log(res.data.data);
+				this.posts=res.data.data;
+				console.log(this.posts);
+			}).catch(err => {
+				
+			})
+			// console.log("执行onLoad（）");
 		},
 		methods: {
 			postsClick(item) {
@@ -72,13 +90,6 @@
 						complete: () => {}
 					});
 				}
-
-			},
-			getAuthorID() {
-				//获取用户id
-			},
-			getPostsItem() {
-				//调用接口调取数据
 
 			},
 		}

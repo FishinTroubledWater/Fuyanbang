@@ -5,7 +5,7 @@
 			<view class="form-item">
 				<label for="email">邮箱：</label>
 				<input type="text" id="email" v-model="email">
-				<p v-if="!validEmail && email !== ''" class="error">请输入有效的电子邮件地址</p>
+				<!-- <p v-if="!validEmail && email !== ''" class="error">请输入有效的电子邮件地址</p> -->
 			</view>
 			<!-- <view class="sendCode">
 				<u-code :seconds="seconds" ref="uCode" @change="">后重新获取</u-code>
@@ -33,16 +33,25 @@
 		data() {
 			return {
 				email: "",
-				password: "",
 				code: "",
 				tips: '',
 				// refCode: null,
 				seconds: 60,
-				validEmail: false,
 			};
 		},
 		methods: {
+			validateEmail() {
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				return emailRegex.test(this.email);
+			},
 			toSetPassword() {
+				if(!this.validateEmail()){
+					uni.showToast({
+						title: '邮箱格式错误',
+						icon: 'none'
+					});
+					return;
+				}
 				uni.navigateTo({
 					url: './setPassword?email=' + this.email.toString(),
 				})
@@ -67,10 +76,7 @@
 					uni.$u.toast('倒计时结束后再发送');
 				}
 			},
-			validateEmail() {
-				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-				this.validEmail = emailRegex.test(this.email);
-			},
+			
 		},
 		watch: {
 			email: {
