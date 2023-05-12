@@ -16,17 +16,16 @@ func Settings(e *gin.Engine, db *gorm.DB) {
 
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp1)
-		account := mp1["account"]
-		mp2["account"] = account
-		delete(mp1, "account")
-
-		_, err3 := fybDatabase.UpdateSingleUserByCondition(db, mp1, mp2)
+		id := mp1["id"]
+		mp2["id"] = id
+		delete(mp1, "id")
+		_, err3 := fybDatabase.UpdateSingleUserByCondition(db, mp2, mp1)
 		result = multierror.Append(result, err1, err2, err3)
 
 		if result.ErrorOrNil() == nil {
 			context.JSON(200, gin.H{
 				"code":    200,
-				"message": "update settings success!",
+				"message": "修改成功!",
 			})
 		} else {
 			context.JSON(404, gin.H{

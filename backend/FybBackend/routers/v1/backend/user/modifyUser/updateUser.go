@@ -24,9 +24,9 @@ func UpdateUser(e *gin.Engine, db *gorm.DB) {
 		mp2 := make(map[string]interface{})
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp1)
-		mp2["phoneNumber"] = mp1["phoneNumber"]
-		delete(mp1, "phoneNumber")
-		_, err3 := fybDatabase.UpdateSingleUserByCondition(db, mp1, mp2)
+		mp2["account"] = mp1["account"]
+		delete(mp1, "account")
+		_, err3 := fybDatabase.UpdateSingleUserByCondition(db, mp2, mp1)
 		result = multierror.Append(result, err1, err2, err3)
 
 		code, msg := exceptionHandler.Handle(result)

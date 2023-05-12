@@ -3,13 +3,13 @@
 		<view class="white">
 			<view class="text-black">{{feedback.content}}</view>
 
-			<view class="text-time">{{feedback.createTime}}提交</view>
+			<view class="text-time">{{feedback.time}}提交</view>
 
 		</view>
 		<view class="box">
 			<view class="text-black">客服回复：</view>
 			<view class="text-grey">您的反馈我们已经收到，我们会尽快处理，给您造成的不便敬请谅解。感谢您的反馈与支持！</view>
-			<view class="text-time">{{feedback.createTime}}</view>
+			<view class="text-time">{{feedback.time}}</view>
 
 		</view>
 	</view>
@@ -21,13 +21,10 @@
 			return {
 
 				feedback: {},
-				isResolve: false,
-				isShow: false
 
 			}
 		},
 		onLoad(options) {
-
 			this.feedback = JSON.parse(options.feedback);
 		},
 

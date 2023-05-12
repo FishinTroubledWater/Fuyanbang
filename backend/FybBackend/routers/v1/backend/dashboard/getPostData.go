@@ -3,15 +3,14 @@ package dashboard
 import (
 	"FybBackend/routers/v1/backend/token"
 	"FybBackend/routers/v1/exceptionHandler"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 )
 
 type MonthData struct {
-	Months     string
-	MonthCount int64
+	Months     string `gorm:"column:months"`
+	MonthCount int64  `gorm:"column:monthCount"`
 }
 
 func GetPostData(e *gin.Engine, db *gorm.DB) {
@@ -25,14 +24,14 @@ func GetPostData(e *gin.Engine, db *gorm.DB) {
 		}
 
 		var result *multierror.Error
-		//var data []MonthData
+		var data []MonthData
 		var err1 error
-		rows, err1 := db.Raw(" SELECT DATE_FORMAT(publishTime,'%Y%m') months , count(*) as monthCount FROM post GROUP BY months ").Rows()
-		for rows.Next() {
-			var monthData int64
-			rows.Scan(&monthData)
-			fmt.Println(monthData)
-		}
+		err1 = db.Raw("SELECT DATE_FORMAT(publishTime,'%Y%m') as months , count(*) as monthCount FROM post GROUP BY months").Scan(&data).Error
+		//for rows.Next() {
+		//	var monthData MonthData
+		//	rows.Scan(&monthData.Months, &monthData.MonthCount)
+		//	fmt.Println(monthData)
+		//}
 		result = multierror.Append(result, err1)
 
 		code, msg := exceptionHandler.Handle(result)
@@ -40,7 +39,7 @@ func GetPostData(e *gin.Engine, db *gorm.DB) {
 			context.JSON(code, gin.H{
 				"code":    code,
 				"message": "请求成功",
-				"data":    "",
+				"data":    data,
 			})
 		} else {
 			context.JSON(code, gin.H{
