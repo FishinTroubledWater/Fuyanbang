@@ -14,7 +14,7 @@ func SearchQueDetails(e *gin.Engine) {
 	e.GET("/v1/frontend/circle/queDetails/:queId", func(context *gin.Context) {
 		var result *multierror.Error
 		var count int64
-		var posts []fybDatabase.Post
+		var posts []fybDatabase.Comment
 		queId := context.Param("queId")
 
 		queIdInt64, err := strconv.ParseInt(queId, 10, 64)
