@@ -2,6 +2,7 @@ package database
 
 import (
 	"errors"
+	"fmt"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 	"time"
@@ -167,16 +168,29 @@ func AddComments(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	}
 	values["userID"] = user.ID
 	delete(mp, "ID")
-	mp["ID"] = values["postId"]
-	delete(values, "postId")
-	post, count, err := SelectSingleCommentByCondition(db, mp)
+	if _, ok := values["postId"]; ok {
+		mp["ID"] = values["postId"]
+		delete(values, "postId")
+	} else if _, ok := values["queId"]; ok {
+		mp["ID"] = values["queId"]
+	}
+
+	post, count, err := SelectSingleQueByCondition(db, mp)
 	result = multierror.Append(result, err)
 	if count == 0 {
 		result = multierror.Append(result, errors.New("要插入的记录有误，插入的帖子不存在"))
 	}
+
+	if _, ok := values["postId"]; ok {
+		values["content"] = values["comment"]
+		delete(values, "comment")
+	} else if _, ok := values["queId"]; ok {
+		values["content"] = values["answer"]
+		delete(values, "answer")
+		delete(values, "queId")
+	}
 	values["targetPost"] = post.ID
-	values["content"] = values["comment"]
-	delete(values, "comment")
+
 	delete(values, "userId")
 	t1 := time.Now().Year()
 	t2 := time.Now().Month()
@@ -198,8 +212,9 @@ func SearchCommentByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
 	var comments []Comment
 	var whereMap map[string]interface{} = make(map[string]interface{})
 	whereMap["ID"] = queId
-	whereMap["PartID"] = 2
-	_, count, err := SelectSinglePostByCondition(db, whereMap)
+	whereMap["partID"] = 2
+	_, count, err := SelectSingleQueByCondition(db, whereMap)
+	fmt.Println(count)
 	if count == 0 {
 		result = multierror.Append(result, errors.New("帖子id不是问题！"))
 	}
@@ -393,6 +408,17 @@ func SelectSinglePostByCondition(db *gorm.DB, where map[string]interface{}) (Pos
 	}
 	return post, count, err
 }
+
+func SelectSingleQueByCondition(db *gorm.DB, where map[string]interface{}) (Post, int64, error) {
+	var count int64 = 0
+	var post Post
+	err := db.Where(where).First(&post).Count(&count).Error
+	if count == 0 {
+		return post, 0, errors.New("查询的记录不存在")
+	}
+	return post, count, err
+}
+
 func SelectAllPostByCondition(db *gorm.DB, where map[string]interface{}) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
@@ -582,61 +608,16 @@ func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
 	return count, posts, result
 }
 
-func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
+func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
 	var result *multierror.Error
-	var comments []Comment
-	var whereMap map[string]interface{} = make(map[string]interface{})
-	whereMap["ID"] = queId
-	whereMap["PartID"] = 2
-	_, count, err := SelectSinglePostByCondition(db, whereMap)
-	if count == 0 {
-		result = multierror.Append(result, errors.New("帖子id不是问题！"))
-	}
-	if err != nil {
-		result = multierror.Append(result, err)
-	}
-	err = db.Preload("Author").Where("targetPost = ? ", queId).Find(&comments).Count(&count).Error
+	var posts []Post
+	var count int64
+	err := db.Preload("Author").Where("ID = ? ", queId).Find(&posts).Count(&count).Error
 	if count == 0 {
 		result = multierror.Append(result, errors.New("找不到该问题！"))
 	}
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
-	return count, comments, result
-}
-
-func AddAnswer(db *gorm.DB, values map[string]interface{}) (int64, error) {
-	var result *multierror.Error
-	mp := make(map[string]interface{})
-	mp["ID"] = values["userId"]
-	delete(values, "account")
-	_, count, err := SelectSingleUserByCondition(db, mp)
-	result = multierror.Append(result, err)
-	if count == 0 {
-		result = multierror.Append(result, errors.New("要插入的记录有误，插入的用户不存在"))
-	}
-	delete(mp, "ID")
-	mp["ID"] = values["queId"]
-	mp["partID"] = 2
-	delete(values, "queId")
-	post, count, err := SelectSingleCommentByCondition(db, mp)
-	result = multierror.Append(result, err)
-	if count == 0 {
-		result = multierror.Append(result, errors.New("要插入的记录有误，回答的问题不存在"))
-	}
-	postId := post.ID
-	delete(values, "userId")
-	t1 := time.Now().Year()
-	t2 := time.Now().Month()
-	t3 := time.Now().Day()
-	t4 := time.Now().Hour()
-	t5 := time.Now().Minute()
-	t6 := time.Now().Second()
-	t7 := time.Now().Nanosecond()
-	currentTimeData := time.Date(t1, t2, t3, t4, t5, t6, t7, time.Local) //获取当前时间，返回当前时间Time
-	values["publishTime"] = currentTimeData
-	values["state"] = 0
-	err = db.Table("post").Where("ID = ? ", postId).Updates(values).Count(&count).Error
-	result = multierror.Append(result, err)
-	return count, result
+	return count, posts, result
 }
