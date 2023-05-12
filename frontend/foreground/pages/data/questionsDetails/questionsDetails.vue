@@ -3,7 +3,7 @@
 		<uni-card :title="indexList.name" sub-title="问题详情" :extra="indexList.time" :thumbnail="indexList.icon"
 			class="trends-box-item">
 			<view class="u-content">
-				<u-parse :content="indexList.answer"></u-parse>
+				<u-parse :content="indexList.content"></u-parse>
 			</view>
 		</uni-card>
 		<!-- <view class="content">
