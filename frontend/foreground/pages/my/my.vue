@@ -57,8 +57,8 @@
 			
 			}).then(res => {
 			    console.log(res.data.data);
-				this.user.avatarUrl = res.data.data.Avatar;
-				this.user.nickName=res.data.data.Nickname;
+				this.user.avatarUrl = res.data.data.AvatarUrl;
+				this.user.nickName=res.data.data.NickName;
 				this.user.level=res.data.data.Level;
 				this.user.slogan=res.data.data.Slogan;
 				this.user.useageDays=res.data.data.UserDays;
