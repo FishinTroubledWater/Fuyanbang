@@ -8,9 +8,9 @@ import (
 	"net/http"
 )
 
-func PostComments(e *gin.Engine) {
+func PostAnswers(e *gin.Engine) {
 	db := fybDatabase.InitDB()
-	e.POST("/v1/frontend/circle/postComment", func(context *gin.Context) {
+	e.POST("/v1/frontend/circle/postAnswer", func(context *gin.Context) {
 		var result *multierror.Error
 
 		data, err := context.GetRawData()
@@ -23,7 +23,7 @@ func PostComments(e *gin.Engine) {
 			result = multierror.Append(result, err)
 		}
 
-		count, err := fybDatabase.AddComments(db, m)
+		count, err := fybDatabase.AddAnswer(db, m)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
