@@ -20,9 +20,9 @@
 
 
 		<text style="font-size: 40rpx; font-weight: 800;">回答:</text>
-		<uni-card v-for="(item, index) in answer" :title="answer[index].name" :sub-title="answer[index].time"
-			:thumbnail="answer[index].icon" class="trends-box-item">
-			<u--text :text="answer[index].content"></u--text>
+		<uni-card v-for="(item, index) in answer" :title="item.name" :sub-title="item.time"
+			:thumbnail="item.icon" class="trends-box-item">
+			<u--text :text="item.answer"></u--text>
 		</uni-card>
 	</view>
 </template>
@@ -31,6 +31,7 @@
 	export default {
 		data() {
 			return {
+				queID:'',
 				whetherLike:'false',
 				desc: '',
 				myanswer: 'null',
@@ -50,17 +51,7 @@
 					// 	'../../../static/background/bg2.png'
 					// ],
 				},
-				answer: [{
-					name: '吴彦祖',
-					icon: '../../../static/background/bg2.png',
-					content: '回答内容',
-					time: '2022-12-21'
-				}, {
-					name: '吴彦祖',
-					icon: '../../../static/background/bg1.png',
-					content: '回答内容',
-					time: '2022-12-21'
-				}],
+				answer: [],
 
 			}
 		},
@@ -91,29 +82,39 @@
 			},
 
 		},
+		mounted() {
+			uni.$u.http.get('/v1/frontend/circle/queAnswer/3' , {
+		
+				}).then(res => {
+					console.log(res.data.data);
+					this.answer=res.data.data;
+				}).catch(err => {
+		
+				})
+			// uni.$u.http.get('/v1/frontend/circle/newinfoDetails/' + this.queID, {
+			
+			// 	}).then(res => {
+			// 		console.log(res.data.data);
+			// 		this.indexList=res.data.data[0];
+			// 	}).catch(err => {
+			
+			// 	})
+				
+				// uni.$u.http.post('/v1/frontend/academy/searchByRule', {
+				// 	region: '福建',
+				// 	level: '985',
+				// 	type: '法学',
+				// }).then(res => {
+				// 	console.log(res.data)
+				// }).catch(err => {
+		
+				// })
+		},
 
 		onLoad: function(option) {
 			console.log(option.id)
+			this.queID=option.id
 		},
-
-		mounted() {
-			uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
-
-				}).then(res => {
-					console.log(res.data);
-				}).catch(err => {
-
-				}),
-				uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-					region: '福州',
-					level: '985',
-					type: '法学',
-				}).then(res => {
-					console.log(res.data)
-				}).catch(err => {
-
-				})
-		}
 	}
 </script>
 

@@ -39,10 +39,10 @@
 			<swiper-item class="swiper-item sns-oil">
 				<u-list>
 					<u-list-item v-for="(item, index) in questionsList" :key="index">
-						<uni-card @click="clickquestions(questionsList[index].queId)" :title="questionsList[index].name"
-							sub-title="教育部" :extra="questionsList[index].time" :thumbnail="questionsList[index].icon"
+						<uni-card @click="clickquestions(item.queId)" :title="item.name"
+							sub-title="教育部" :extra="item.time" :thumbnail="item.icon"
 							class="trends-box-item">
-							<u--text :lines="3" :text="questionsList[index].Summary"></u--text>
+							<u--text :lines="3" :text="item.summary"></u--text>
 							<!-- <view class="u-content">
 								<u-parse :content="questionsList[index].summary"></u-parse>
 							</view> -->
@@ -59,6 +59,7 @@
 	export default {
 		data() {
 			return {
+				id:'',
 				content: `
 					<p>露从今夜白，月是故乡明</p>
 					<img src="../../static/background/activityDetails.png" />
@@ -80,31 +81,32 @@
 				// 		Summary:'近日，教育部部署2023年全国硕士研究生招生复试录取工作...',
 				// 		isImage:true,
 				// 		img:'www.baidu.com',				// }],
-				questionsList: [{
-						name: '1',
-						time: '2022-12-21',
-						icon: '../../static/background/activityDetails.png',
-						queId: '123456',
-						summary: '第一条',
-						isImage: true,
-						img: ['../../static/background/activityDetails.png',
-							'../../static/background/activityDetails.png',
-							'../../static/background/activityDetails.png'
-						]
-					},
-					{
-						name: '2',
-						time: '2022-12-21',
-						icon: '../../static/background/activityDetails.png',
-						queId: '123',
-						summary: '第二条',
-						isImage: true,
-						img: ['../../static/background/activityDetails.png',
-							'../../static/background/activityDetails.png',
-							'../../static/background/activityDetails.png'
-						]
-					}
-				]
+				questionsList:[]
+				// questionsList: [{
+				// 		name: '1',
+				// 		time: '2022-12-21',
+				// 		icon: '../../static/background/activityDetails.png',
+				// 		queId: '123456',
+				// 		summary: '第一条',
+				// 		isImage: true,
+				// 		img: ['../../static/background/activityDetails.png',
+				// 			'../../static/background/activityDetails.png',
+				// 			'../../static/background/activityDetails.png'
+				// 		]
+				// 	},
+				// 	{
+				// 		name: '2',
+				// 		time: '2022-12-21',
+				// 		icon: '../../static/background/activityDetails.png',
+				// 		queId: '123',
+				// 		summary: '第二条',
+				// 		isImage: true,
+				// 		img: ['../../static/background/activityDetails.png',
+				// 			'../../static/background/activityDetails.png',
+				// 			'../../static/background/activityDetails.png'
+				// 		]
+				// 	}
+				// ]
 			};
 		},
 		methods: {
@@ -126,6 +128,15 @@
 
 		},
 		mounted() {
+			uni.getStorage({
+				key:'userId',   // 储存在本地的变量名
+				success:res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.id=res.data;
+					console.log(this.id)
+				}
+			})
 			uni.$u.http.get('/v1/frontend/circle/newinfo', {
 		
 				}).then(res => {
@@ -133,6 +144,14 @@
 					this.indexList=res.data.data
 				}).catch(err => {
 		
+				}),
+			uni.$u.http.get('/v1/frontend/circle/newque/'+ this.id, {
+					
+				}).then(res => {
+					console.log(res.data.data);
+					this.questionsList=res.data.data
+				}).catch(err => {
+					
 				})
 		},
 	}
