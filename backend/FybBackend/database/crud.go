@@ -227,8 +227,13 @@ func SelectAllRecipeByPage(db *gorm.DB, query string, pageNum int64, pageSize in
 	var count int64 = 0
 	var recipes []Recipe
 
-	db.Table("recipe").Count(&count)
-	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&recipes).Error
+	if query != "" {
+		query = query + "%"
+		db = db.Table("recipe").Where("author like ?", query)
+	} else {
+		db = db.Table("recipe")
+	}
+	err := db.Order("id asc").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&recipes).Count(&count).Error
 	if count == 0 && err == nil {
 		return recipes, 0, errors.New("查询的记录不存在")
 	}
@@ -268,12 +273,14 @@ func SelectAllNewsByCondition(db *gorm.DB, where map[string]interface{}) ([]News
 func SelectAllNewsByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]News, int64, error) {
 	var count int64 = 0
 	var newses []News
+
 	if query != "" {
 		query = query + "%"
 		db = db.Table("news").Where("author like ?", query)
+	} else {
+		db = db.Table("news")
 	}
-	db.Table("news").Count(&count)
-	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&newses).Error
+	err := db.Order("id asc").Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&newses).Count(&count).Error
 	if count == 0 && err == nil {
 		return newses, 0, errors.New("查询的记录不存在")
 	}
@@ -376,12 +383,12 @@ func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	if query != "" {
 		query = query + "%"
 		db = db.Table("post").InnerJoins("Author").InnerJoins("Part").
-			Where("account like ?", query).Order("state asc, id").Find(&posts).Count(&count)
+			Where("account like ?", query).Order("state asc, id")
 	} else {
 		db = db.Table("post").InnerJoins("Author").InnerJoins("Part").
-			Order("state asc, id").Find(&posts).Count(&count)
+			Order("state asc, id")
 	}
-	err = db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Error
+	err = db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&posts).Count(&count).Error
 	if count == 0 && err == nil {
 		return posts, 0, errors.New("要查询的记录不存在")
 	}
@@ -505,6 +512,9 @@ func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Ad
 	var count int64 = 0
 	var admin Admin
 	err := db.Where(where).First(&admin).Count(&count).Error
+	if count == 0 && err == nil {
+		return admin, 0, errors.New("查询的记录不存在")
+	}
 	return admin, count, err
 }
 func UpdateSingleAdminByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
