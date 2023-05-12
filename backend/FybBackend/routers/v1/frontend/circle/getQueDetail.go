@@ -9,15 +9,15 @@ import (
 	"strconv"
 )
 
-func SearchQueAnswer(e *gin.Engine) {
+func SearchQueDetails(e *gin.Engine) {
 	db := fybDatabase.InitDB()
-	e.GET("/v1/frontend/circle/queAnswer/:queID", func(context *gin.Context) {
+	e.GET("/v1/frontend/circle/queDetails/:queId", func(context *gin.Context) {
 		var result *multierror.Error
 		var count int64
 		var posts []fybDatabase.Post
-		queID := context.Param("queID")
+		queId := context.Param("queId")
 
-		queIdInt64, err := strconv.ParseInt(queID, 10, 64)
+		queIdInt64, err := strconv.ParseInt(queId, 10, 64)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
@@ -43,9 +43,8 @@ func SearchQueAnswer(e *gin.Engine) {
 				postMap["name"] = postMap["Author"].(map[string]interface{})["NickName"]
 				postMap["time"] = postMap["PublishTime"]
 				postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
-				postMap["queId"] = postMap["ID"]
-				postMap["content"] = postMap["Content"]
-				delete(postMap, "Answer")
+				postMap["answer"] = postMap["Content"]
+
 				delete(postMap, "Content")
 				delete(postMap, "Summary")
 				delete(postMap, "Part")
