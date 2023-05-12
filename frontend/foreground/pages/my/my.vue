@@ -69,9 +69,9 @@
 			    console.log(res.data.data);
 				this.user.avatarUrl = res.data.data.AvatarUrl;
 				this.user.nickName=res.data.data.NickName;
-				this.user.level=res.data.data.Level;
+				this.user.level=res.data.data.level;
 				this.user.slogan=res.data.data.Slogan;
-				this.user.useageDays=res.data.data.UserDays;
+				this.user.useageDays=res.data.data.userDay;
 				this.user.college=res.data.data.College;
 				this.user.major=res.data.data.Major;
 			}).catch(err => {

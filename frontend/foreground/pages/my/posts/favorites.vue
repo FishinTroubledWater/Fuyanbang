@@ -47,14 +47,30 @@
 					favorite: '125', //收藏数
 					like: '840', //点赞数
 					publishTime: '2020-6-3 18:00:00', //发表时间
-				},
-				],
+				}, ],
 			}
 		},
-		onLoad() {
-			this.getUserID();
-			this.getFavoritesClik();
+		mounted() {
+			// console.log("执行onLoad（）");
+			uni.getStorage({
+				key: 'userId', // 储存在本地的变量名
+				success: res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.userID = res.data;
+					console.log(this.userID)
+				}
+			})
+			uni.$u.http.get('/v1/frontend/user/myFavorites/' + this.userID, {
+
+			}).then(res => {
+				console.log(res.data.data);
+				this.favorites = res.data.data;
+			}).catch(err => {
+
+			})
 		},
+		// console.log("执行onLoad（）");
 		methods: {
 			favoritesClik(item) {
 				if (item.partID == '1') { //假设是加油站
@@ -66,23 +82,17 @@
 						fail: () => {},
 						complete: () => {}
 					});
-				}else if(item.partID=='2'){//假设是求助
+				} else if (item.partID == '2') { //假设是求助
 					uni.navigateTo({
 						//TODO
 						//参数部分未修改
-						url: '/pages/data/questionsDetails/questionsDetails?' + 'feedback=' + JSON.stringify(item),
+						url: '/pages/data/questionsDetails/questionsDetails?' + 'feedback=' + JSON
+							.stringify(item),
 						success: res => {},
 						fail: () => {},
 						complete: () => {}
 					});
 				}
-
-			},
-			getUserID() {
-				//获取用户id
-			},
-			getFavoritesClik() {
-				//调用接口调取数据
 
 			},
 		}

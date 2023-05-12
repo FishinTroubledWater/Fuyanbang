@@ -543,7 +543,7 @@ func DeleteUser(db *gorm.DB, where map[string]interface{}) (int64, error) {
 
 func AddFeedback(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	err := db.Table("user").Create(values).Count(&count).Error
+	err := db.Table("feedback").Create(values).Count(&count).Error
 	return count, err
 }
 
