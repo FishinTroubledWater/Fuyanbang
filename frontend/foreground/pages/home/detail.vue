@@ -98,6 +98,6 @@
   .publishTime{
 	  font-size: 28rpx;
 	  color: #9A9A9A;
-	  margin-left: 60rpx;
+	  margin-left: 84rpx;
   }
 </style>

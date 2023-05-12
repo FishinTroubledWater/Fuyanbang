@@ -87,5 +87,8 @@
     },
     "uniStatistics" : {
         "enable" : false
+    },
+    "h5" : {
+        "title" : "福研帮"
     }
 }
