@@ -385,6 +385,7 @@ func AddPost(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	values["authorID"] = user.ID
 	values["favorite"] = 0
 	values["like"] = 0
+	values["publishTime"] = time.Now()
 	err := db.Table("post").Create(values).Count(&count).Error
 	return count, err
 }
