@@ -31,6 +31,13 @@
 		},
 		methods: {
 			submitForm() {
+				if (this.password.length<6) {
+					uni.showToast({
+						title: '密码至少6位',
+						icon: 'none'
+					});
+					return;
+				}
 				if (this.password !== this.confirmPassword) {
 					uni.showToast({
 						title: '两次输入的密码不一致',
@@ -46,8 +53,22 @@
 					password: this.password,
 				}).then(res => {
 					console.log(res);
+					uni.showToast({
+						title: '密码修改成功，请登录',
+						icon: 'none'
+					});
 					// this.stateCode = res.statusCode;
 					this.toPasswordLogin();
+				}).catch(err => {
+					console.log(err);
+					var str = err.data.msg
+					if (str.includes("要修改的记录不存在")) {
+						uni.showToast({
+							title: '邮箱输入错误，该邮箱还未被注册',
+							icon: 'none'
+						});
+						return;
+					}
 				});
 			},
 			toPasswordLogin() {
