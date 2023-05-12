@@ -5,12 +5,12 @@
 			<view class="form-item">
 				<label for="email">邮箱：</label>
 				<input type="text" id="email" v-model="email" :class="{ invalid: !validEmail }">
-				<p v-if="!validEmail && email !== ''" class="error">请输入有效的电子邮件地址</p>
+				<!-- <p v-if="!validEmail && email !== ''" class="error">请输入有效的电子邮件地址</p> -->
 			</view>
 			<view class="form-item">
 				<label for="password">密码：</label>
 				<input type="password" id="password" v-model="password" :class="{ invalid: !validPassword }">
-				<p v-if="!validPassword && password !== ''" class="error">密码必须至少为6个字符</p>
+				<!-- <p v-if="!validPassword && password !== ''" class="error">密码必须至少为6个字符</p> -->
 			</view>
 			<view class="handoff">
 				<text @click="toRegister()">立即注册</text>
@@ -57,26 +57,6 @@
 				userId: "",
 				validPassword: false,
 				validEmail: false,
-				// rules: {
-				// 	email: [{
-				// 			required: true,
-				// 			message: '请输入邮箱'
-				// 		},
-				// 		{
-				// 			pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-				// 			message: '请输入正确的邮箱格式',
-				// 		},
-				// 	],
-				// 	password: [{
-				// 			required: true,
-				// 			message: '请输入密码'
-				// 		},
-				// 		{
-				// 			min: 6,
-				// 			message: '密码至少为6位'
-				// 		},
-				// 	],
-				// },
 			};
 		},
 		computed: {
@@ -86,12 +66,6 @@
 						if (rule.required) {
 							return !!this[key];
 						}
-						// if (rule.pattern) {
-						// 	return rule.pattern.test(this[key]);
-						// }
-						// if (rule.min) {
-						// 	return this[key].length >= rule.min;
-						// }
 					});
 				});
 				return valid;
@@ -104,8 +78,9 @@
 					title: '1',
 					icon: 'none'
 				});
-				console.log("邮箱：" + this.email);
-				console.log("密码：" + this.password);
+				// console.log("邮箱：" + this.email);
+				// console.log("密码：" + this.password);
+				// if()
 				uni.$u.http.post('/v1/frontend/passwordLogin', {
 					account: this.email,
 					password: this.password
@@ -120,9 +95,11 @@
 					uni.setStorage({
 						key: 'userId', // 存储值的名称
 						data: this.userId, //   将要存储的数据
+						
 						success: res => {
 							// 成功后的回调
 							console.log(res);
+							console.log("已成功发送userId");
 						}
 					});
 					this.toHome();
