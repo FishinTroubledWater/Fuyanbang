@@ -21,13 +21,10 @@
 			return {
 
 				feedback: {},
-				isResolve: false,
-				isShow: false
 
 			}
 		},
 		onLoad(options) {
-
 			this.feedback = JSON.parse(options.feedback);
 		},
 
