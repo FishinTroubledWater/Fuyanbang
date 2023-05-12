@@ -170,7 +170,7 @@ func AddComments(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	delete(mp, "ID")
 	if _, ok := values["postId"]; ok {
 		mp["ID"] = values["postId"]
-		delete(values, "postId")
+
 	} else if _, ok := values["queId"]; ok {
 		mp["ID"] = values["queId"]
 	}
@@ -184,6 +184,7 @@ func AddComments(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	if _, ok := values["postId"]; ok {
 		values["content"] = values["comment"]
 		delete(values, "comment")
+		delete(values, "postId")
 	} else if _, ok := values["queId"]; ok {
 		values["content"] = values["answer"]
 		delete(values, "answer")
@@ -367,6 +368,7 @@ func UpdateSingleNewsByCondition(db *gorm.DB, where map[string]interface{}, upda
 
 func AddNews(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
+	values["publishTime"] = time.Now()
 	err := db.Table("news").Create(values).Count(&count).Error
 	return count, err
 }
@@ -384,6 +386,7 @@ func AddPost(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	values["authorID"] = user.ID
 	values["favorite"] = 0
 	values["like"] = 0
+	values["publishTime"] = time.Now()
 	err := db.Table("post").Create(values).Count(&count).Error
 	return count, err
 }
@@ -425,6 +428,14 @@ func SelectAllPostByCondition(db *gorm.DB, where map[string]interface{}) ([]Post
 	err := db.Preload("Author").InnerJoins("Part").Where(where).Count(&count).Error
 	return posts, count, err
 }
+
+func SelectAllPostsByAuthorId(db *gorm.DB, authorId int64) ([]Post, int64, error) {
+	var count int64 = 0
+	var posts []Post
+	err := db.Table("post").Where("authorId = ? ", authorId).Find(&posts).Count(&count).Error
+	return posts, count, err
+}
+
 func SelectAllPostByPage(db *gorm.DB, query string, pageNum int64, pageSize int64) ([]Post, int64, error) {
 	var count int64 = 0
 	var posts []Post
@@ -598,7 +609,7 @@ func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
 	var result *multierror.Error
 	var posts []Post
 	var count int64
-	err := db.Preload("comment").Where("partID = ? && authorId = ? ", 2, userId).Find(&posts).Count(&count).Error
+	err := db.Preload("Author").Where("partID = ? && authorId = ? ", 2, userId).Find(&posts).Count(&count).Error
 	if count == 0 {
 		result = multierror.Append(result, errors.New("找不到该用户！"))
 	}

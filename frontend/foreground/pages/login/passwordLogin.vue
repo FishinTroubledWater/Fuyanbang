@@ -4,48 +4,22 @@
 		<form class="form" @submit.prevent="login">
 			<view class="form-item">
 				<label for="email">邮箱：</label>
-				<input type="text" id="email" v-model="email" :class="{ invalid: !validEmail }">
-				<!-- <p v-if="!validEmail && email !== ''" class="error">请输入有效的电子邮件地址</p> -->
+				<input type="text" id="email" v-model="email">
 			</view>
 			<view class="form-item">
 				<label for="password">密码：</label>
-				<input type="password" id="password" v-model="password" :class="{ invalid: !validPassword }">
-				<!-- <p v-if="!validPassword && password !== ''" class="error">密码必须至少为6个字符</p> -->
+				<input type="password" id="password" v-model="password">
 			</view>
 			<view class="handoff">
 				<text @click="toRegister()">立即注册</text>
 				<text class="resetPassword" @click="toResetPassword()">忘记密码</text>
 			</view>
 			<view class="button">
-				<!-- :disabled="!validEmail || !validPassword" -->
 				<button type="submit" @click="login()">登录</button>
 			</view>
 		</form>
 	</view>
 </template>
-<!-- <template>
-	<view class="login-page">
-		<view class="title">欢迎登录</view>
-		<form class="form" @submit.prevent="login">
-			<view class="form-item">
-				<label for="email">邮箱：</label>
-				<input type="text" id="email" v-model="email" />
-			</view>
-			<view class="form-item" ref="item1">
-				<label for="password">密码：</label>
-				<input type="password" id="password" v-model="password" />
-			</view>
-			<view class="handoff">
-				<span @click="toRegister()">立即注册</span>
-				<span class="resetPassword" @click="toResetPassword()">忘记密码</span>
-			</view>
-			<view class="button">
-				<button type="submit" :disabled="!isFormValid">登录</button>
-			</view>
-		</form>
-
-	</view>
-</template> -->
 
 <script>
 	export default {
@@ -55,8 +29,6 @@
 				password: "",
 				stateCode: "",
 				userId: "",
-				validPassword: false,
-				validEmail: false,
 			};
 		},
 		computed: {
@@ -74,35 +46,52 @@
 		methods: {
 			login() {
 				// 在这里添加登录逻辑
-				uni.showToast({
-					title: '1',
-					icon: 'none'
-				});
-				// console.log("邮箱：" + this.email);
-				// console.log("密码：" + this.password);
-				// if()
+				if(!this.validateEmail()){
+					uni.showToast({
+						title: '邮箱格式错误',
+						icon: 'none'
+					});
+					return;
+				}
+				if(!this.validatePassword()){
+					uni.showToast({
+						title: '密码不得少于6位',
+						icon: 'none'
+					});
+					return;
+				}
+				
 				uni.$u.http.post('/v1/frontend/passwordLogin', {
 					account: this.email,
 					password: this.password
 				}).then(res => {
-					console.log(res);
-					uni.showToast({
-						title: '2',
-						icon: 'none'
-					});
-					// this.stateCode = res.statusCode;
 					this.userId = res.data.data.User.ID;
 					uni.setStorage({
 						key: 'userId', // 存储值的名称
 						data: this.userId, //   将要存储的数据
-						
 						success: res => {
-							// 成功后的回调
 							console.log(res);
 							console.log("已成功发送userId");
 						}
 					});
 					this.toHome();
+				}).catch(err => {
+					console.log(err);
+					var str=err.data.msg
+					if(str.includes("密码错误")){
+						uni.showToast({
+							title: '密码错误',
+							icon: 'none'
+						});
+						return;
+					}else if(str.includes("账户不存在")){
+						uni.showToast({
+							title: '账户不存在',
+							icon: 'none'
+						});
+						return;
+					}
+					// this.loginError = true; // 设置登录错误标志
 				});
 
 			},
@@ -128,10 +117,10 @@
 			},
 			validateEmail() {
 				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-				this.validEmail = emailRegex.test(this.email);
+				return emailRegex.test(this.email);
 			},
 			validatePassword() {
-				this.validPassword = this.password.length >= 6;
+				return this.password.length >= 6;
 			},
 		},
 		watch: {
@@ -202,11 +191,11 @@
 	.resetPassword {
 		margin-left: auto;
 	}
-	
+
 	.error {
-	color: #FF5252;
-	font-size: 12px;
-	margin-top: 5px;
+		color: #FF5252;
+		font-size: 12px;
+		margin-top: 5px;
 	}
 
 	label {

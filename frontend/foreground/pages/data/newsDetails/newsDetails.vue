@@ -104,6 +104,12 @@
 					comment: this.myComment,
 				}).then(res => {
 					console.log(res.data)
+					if(res.data.code==200){
+						uni.showToast({
+							title:"评论成功",
+							duration:1000,
+						})
+					}
 				}).catch(err => {
 				
 				})
@@ -162,5 +168,9 @@
 			text-align: right;
 			color: gray
 		}
+	}
+	.textarea{
+		width: 100%;
+		height: 100rpx;
 	}
 </style>
