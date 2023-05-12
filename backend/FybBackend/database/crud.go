@@ -543,7 +543,7 @@ func DeleteUser(db *gorm.DB, where map[string]interface{}) (int64, error) {
 
 func AddFeedback(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	err := db.Table("user").Create(values).Count(&count).Error
+	err := db.Table("feedback").Create(values).Count(&count).Error
 	return count, err
 }
 
@@ -580,6 +580,20 @@ func UpdateSingleFeedbackByCondition(db *gorm.DB, where map[string]interface{}, 
 	}
 	err = db.Table("feedback").Where(where).Updates(update).Count(&count).Error
 	return count, err
+}
+
+func SearchFeedbackByUserId(db *gorm.DB, userId int64) (int64, []Feedback, error) {
+	var result *multierror.Error
+	var feedbacks []Feedback
+	var count int64
+	err := db.Preload("Author").Where("userID = ? ", userId).Find(&feedbacks).Count(&count).Error
+	if count == 0 {
+		result = multierror.Append(result, errors.New("找不到该收藏记录！"))
+	}
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return count, feedbacks, result
 }
 
 // Admin ------------------------------------------------------------

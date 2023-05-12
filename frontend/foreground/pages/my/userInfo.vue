@@ -106,16 +106,16 @@
 
 			}).then(res => {
 				console.log(res.data.data);
-				this.user.avatarUrl = res.data.data.AvatarUrl;
-				this.user.nickName = res.data.data.NickName;
-				this.user.sex = res.data.data.Sex;
-				this.user.area = res.data.data.Area;
-				this.user.slogan = res.data.data.Slogan;
-				this.user.useageDays = res.data.data.UserDays;
-				this.user.college = res.data.data.College;
-				this.user.major = res.data.data.Major;
-				this.user.year = res.data.data.Year;
-				this.user.targetCollege = res.data.data.TargetCollege;
+				this.user.avatarUrl = res.data.data.user.AvatarUrl;
+				this.user.nickName = res.data.data.user.NickName;
+				this.user.sex = res.data.data.user.Sex;
+				this.user.area = res.data.data.user.Area;
+				this.user.slogan = res.data.data.user.Slogan;
+				this.user.useageDays = res.data.data.userDay;
+				this.user.college = res.data.data.user.College;
+				this.user.major = res.data.data.user.Major;
+				this.user.year = res.data.data.user.Year;
+				this.user.targetCollege = res.data.data.user.TargetCollege;
 			}).catch(err => {
 
 			})
