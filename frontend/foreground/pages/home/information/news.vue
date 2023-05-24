@@ -19,7 +19,7 @@
     <!-- 内容 -->
     <u-list @scrolltolower="scrolltolower">
       <u-list-item v-for="(item, index) in indexList" :key="index">
-        <my-card :is-shadow="true" padding="10px" @click="gotoPage('/pages/home/detail', item.id)">
+        <my-card :is-shadow="true" padding="10px" @click="gotoPage('/pages/home/information/detail', item.id)">
           <u--text :lines="1" :text="item.title" bold="" size="22" color="#000" lineHeight="24px"
             margin="10px 2px"></u--text>
 
@@ -48,8 +48,8 @@
 </template>
 
 <script>
-  import MyCard from '../../components/my-card/my-card.vue'
-  import UniIcons from '../../components/uni-icons/uni-icons.vue'
+  import MyCard from '../../../components/my-card/my-card.vue'
+  import UniIcons from '../../../components/uni-icons/uni-icons.vue'
 
   export default {
     components: {

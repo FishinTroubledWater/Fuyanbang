@@ -21,7 +21,7 @@
 </template>
 
 <script>
-   import MyCard from '../../components/my-card/my-card.vue'
+   import MyCard from '../../../components/my-card/my-card.vue'
 
   export default {
     components: {
