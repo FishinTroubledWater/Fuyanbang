@@ -6,14 +6,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"net/http"
+	"strconv"
 )
 
 func SearchByName(e *gin.Engine) {
 	db := fybDatabase.InitDB()
-	e.GET("/v1/frontend/circle/newinfo", func(context *gin.Context) {
+	e.GET("/v1/frontend/circle/newinfo/:userid", func(context *gin.Context) {
 		var result *multierror.Error
 
-		posts, err := fybDatabase.SearchAllNewInfo(db)
+		userid := context.Param("userid")
+
+		userIdInt64, err := strconv.ParseInt(userid, 10, 64)
+		if err != nil {
+			result = multierror.Append(result, err)
+		}
+
+		posts, err := fybDatabase.SearchAllNewInfo(db, userIdInt64)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}

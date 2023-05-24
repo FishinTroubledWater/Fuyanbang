@@ -441,14 +441,21 @@ func UpdateSinglePostByCondition(db *gorm.DB, where map[string]interface{}, upda
 	return count, err
 }
 
-func SearchAllNewInfo(db *gorm.DB) ([]Post, error) {
+func SearchAllNewInfo(db *gorm.DB, userId int64) ([]Post, error) {
 	var result *multierror.Error
 	var posts []Post
-	err := db.Preload("Author").Where("partID = ? ", 1).Find(&posts).Error
+	var posts1 []Post
+	var postResult []Post
+	err := db.Preload("Author").Where("partID = ? && AuthorId = ? ", 1, userId).Order("publishTime DESC").Find(&posts).Error
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
-	return posts, err
+	err = db.Preload("Author").Where("partID = ? && AuthorId != ? ", 1, userId).Order("publishTime DESC").Find(&posts1).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	postResult = append(posts, posts1...)
+	return postResult, err
 }
 
 func SearchNewInfoComment(db *gorm.DB) (error, []Comment) {
@@ -628,7 +635,6 @@ func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, valu
 func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
 	var result *multierror.Error
 	var posts []Post
-	var postsResult []Post
 	var count1 int64
 	var count2 int64
 	err := db.Preload("Author").Where("partID = ? && authorId = ? ", 2, userId).Order("publishTime DESC").Find(&posts).Count(&count1).Error
@@ -640,7 +646,7 @@ func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
-	postsResult = append(append(postsResult, posts...), posts1...)
+	postsResult := append(posts, posts1...)
 	return count1 + count2, postsResult, result
 }
 
