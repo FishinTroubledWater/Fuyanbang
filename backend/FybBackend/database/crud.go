@@ -332,36 +332,6 @@ func SelectAllNewsByPage(db *gorm.DB, query string, pageNum int64, pageSize int6
 	return newses, count, err
 }
 
-func SearchAllNewInfo(db *gorm.DB) ([]Post, error) {
-	var result *multierror.Error
-	var posts []Post
-	err := db.Preload("Author").Where("partID = ? ", 1).Find(&posts).Error
-	if err != nil {
-		result = multierror.Append(result, err)
-	}
-	return posts, err
-}
-
-func SearchNewInfoComment(db *gorm.DB) (error, []Comment) {
-	var result *multierror.Error
-	var comments []Comment
-	err := db.Preload("Author").Find(&comments).Error
-	if err != nil {
-		result = multierror.Append(result, err)
-	}
-	return result, comments
-}
-
-func SearchNewInfoDetails(db *gorm.DB, postId int64) (error, []Post) {
-	var result *multierror.Error
-	var posts []Post
-	err := db.Preload("Author").Where("Id = ? && partID = ? ", postId, 1).Find(&posts).Error
-	if err != nil {
-		result = multierror.Append(result, err)
-	}
-	return result, posts
-}
-
 func UpdateSingleNewsByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
 	var count int64 = 0
 	err := db.Table("news").Where(where).Count(&count).Error
@@ -469,6 +439,36 @@ func UpdateSinglePostByCondition(db *gorm.DB, where map[string]interface{}, upda
 	}
 	err = db.Table("post").Where(where).Updates(update).Count(&count).Error
 	return count, err
+}
+
+func SearchAllNewInfo(db *gorm.DB) ([]Post, error) {
+	var result *multierror.Error
+	var posts []Post
+	err := db.Preload("Author").Where("partID = ? ", 1).Find(&posts).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return posts, err
+}
+
+func SearchNewInfoComment(db *gorm.DB) (error, []Comment) {
+	var result *multierror.Error
+	var comments []Comment
+	err := db.Preload("Author").Find(&comments).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return result, comments
+}
+
+func SearchNewInfoDetails(db *gorm.DB, postId int64) (error, []Post) {
+	var result *multierror.Error
+	var posts []Post
+	err := db.Preload("Author").Where("Id = ? && partID = ? ", postId, 1).Find(&posts).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return result, posts
 }
 
 // User ------------------------------------------------------------
@@ -628,15 +628,20 @@ func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, valu
 func SearchAllQue(db *gorm.DB, userId int64) (int64, []Post, error) {
 	var result *multierror.Error
 	var posts []Post
-	var count int64
-	err := db.Preload("Author").Where("partID = ? && authorId = ? ", 2, userId).Find(&posts).Count(&count).Error
-	if count == 0 {
-		result = multierror.Append(result, errors.New("找不到该用户！"))
-	}
+	var postsResult []Post
+	var count1 int64
+	var count2 int64
+	err := db.Preload("Author").Where("partID = ? && authorId = ? ", 2, userId).Order("publishTime DESC").Find(&posts).Count(&count1).Error
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
-	return count, posts, result
+	var posts1 []Post
+	err = db.Preload("Author").Where("partID = ? && authorId != ? ", 2, userId).Order("publishTime DESC").Find(&posts1).Count(&count2).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	postsResult = append(append(postsResult, posts...), posts1...)
+	return count1 + count2, postsResult, result
 }
 
 func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
