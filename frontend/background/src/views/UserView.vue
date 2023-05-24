@@ -95,7 +95,6 @@
           <el-descriptions-item label="年级"><el-tag size="small">{{editForm.Year}}</el-tag></el-descriptions-item>
           <el-descriptions-item label="标语" :span="2">
             <el-input type="textarea" v-model="editForm.Slogan" :rows="5" readonly resize="none"></el-input>
-            <quill-editor v-model="editForm.Slogan" @focus="focus($event)"></quill-editor>
           </el-descriptions-item>
         </el-descriptions>
 
@@ -231,18 +230,22 @@ export default {
         if (!valid) return
         console.log(this.addForm)
         // 发起添加用户网络请求
-        const {data: res} = await this.axios.post('user/add', this.addForm, {
-          headers: {
-            'Authorization': window.sessionStorage.getItem("token")
-          }
-        })
-        if (res.code !== 200) {
-          this.$message.error('添加用户失败！')
-        } else this.$message.success('添加用户成功！')
-        //隐藏对话框
-        this.addDialogVisible = false
-        //刷新用户列表
-        await this.getUserList()
+        try{
+          const {data: res} = await this.axios.post('user/add', this.addForm, {
+            headers: {
+              'Authorization': window.sessionStorage.getItem("token")
+            }
+          })
+          if (res.code !== 200) {
+            this.$message.error('添加用户失败！')
+          } else this.$message.success('添加用户成功！')
+          //隐藏对话框
+          this.addDialogVisible = false
+          //刷新用户列表
+          await this.getUserList()
+        }catch (err){
+          this.$message.error(err.response.data.message);
+        }
       })
     },
 

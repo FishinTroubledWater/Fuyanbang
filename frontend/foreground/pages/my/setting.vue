@@ -15,7 +15,7 @@
 			<text class="cell-tit">消息推送</text>
 			<switch checked color="#fa436a" @change="switchChange" />
 		</view>
-		<view class="list-cell m-t b-b" @click="gotoPage('/pages/my/userInfo')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell m-t b-b" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">清除缓存</text>
 			<text class="cell-tip">105.4M</text>
 			<text class="cell-more yticon icon-you"></text>

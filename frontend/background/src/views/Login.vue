@@ -75,22 +75,25 @@ export default {
   },
   methods: {
       handleLogin() {
+        this.loading=true;
         this.$refs.loginForm.validate(async valid =>{
           try {
             const response = await this.axios.post('/login', this.loginForm);
             const res = response.data;
             if (res.code === 200) {
               this.$message.success('登录成功');
-              window.sessionStorage.setItem('token', res.data.token);
-              window.sessionStorage.setItem('account', res.data.account);
-              window.sessionStorage.setItem('id', res.data.id);
+              window.sessionStorage.setItem('token', res.token);
+              window.sessionStorage.setItem('account', res.account);
+              window.sessionStorage.setItem('id', res.id);
               this.$router.push({ path: '/home' });
             } else {
+              this.loading=false;
               this.$message.error('登录失败！');
             }
           } catch (error) {
             // 处理请求错误
             console.error(error);
+            this.loading=false;
             this.$message.error('登录失败！');
           }
         });

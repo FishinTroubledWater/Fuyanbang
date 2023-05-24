@@ -31,7 +31,7 @@
 		},
 		methods: {
 			submitForm() {
-				if (this.password.length<6) {
+				if (this.password.length < 6) {
 					uni.showToast({
 						title: '密码至少6位',
 						icon: 'none'
@@ -55,10 +55,13 @@
 					console.log(res);
 					uni.showToast({
 						title: '密码修改成功，请登录',
-						icon: 'none'
+						icon: 'success'
 					});
 					// this.stateCode = res.statusCode;
-					this.toPasswordLogin();
+					setTimeout(() => {
+						this.toPasswordLogin();
+					}, 1000);
+
 				}).catch(err => {
 					console.log(err);
 					var str = err.data.msg
@@ -83,11 +86,12 @@
 
 <style>
 	.login-page {
+		margin-top: 180rpx;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		/* justify-content: center; */
-		height: 80rpx;
+		height: 800rpx;
 	}
 
 	.title {

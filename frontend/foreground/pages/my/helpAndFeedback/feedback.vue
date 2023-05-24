@@ -6,12 +6,12 @@
 		<textarea placeholder="请描述您遇到的问题或对本产品的建议..." v-model="sendData.content" class="feedback-textare"
 			maxlength="-1" />
 
-
+<!-- 
 		<text class="text-black">联系方式<text class="text-grey">(必填)</text> </text>
 		<text style="color: red;">*</text></text>
-		<input class="feedback-input" v-model="sendData.account" placeholder="请输入您的邮箱" />
+		<input class="feedback-input" v-model="sendData.account" placeholder="请输入您的邮箱" /> -->
 		<view class="btn">
-			<button :disabled="!sendData.content" type="primary" @click="upFeedback()">
+			<button :disabled="!sendData.content" @click="upFeedback()" class="Btn">
 				提交
 			</button>
 		</view>
@@ -26,7 +26,7 @@
 				userID: '',
 				sendData: {
 					content: '', //反馈内容
-					account: '', //联系邮箱
+					// account: '', //联系邮箱
 					state: '0', //默认刚提交的反馈状态为‘未处理’
 					time: '', //当前设备当前时间
 				},
@@ -176,5 +176,11 @@
 		left: 0;
 		right: 0;
 		margin: 30rpx 30rpx 60rpx 30rpx;
+	}
+	.Btn{
+		width: 80%;
+		height: 50px;
+		background-color: bisque;
+		border-radius: 20px;
 	}
 </style>

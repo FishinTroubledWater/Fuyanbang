@@ -69,8 +69,8 @@
 			
 			}).then(res => {
 			    console.log(res.data.data);
-				this.user.password = res.data.data.Password;
-				this.user.account=res.data.data.Account;
+				this.user.password = res.data.data.user.Password;
+				this.user.account=res.data.data.user.Account;
 			}).catch(err => {
 				
 			})

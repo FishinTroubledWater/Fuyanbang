@@ -42,7 +42,7 @@
 		</u-popup>
 		<view class="about_60">
 			<view class="about_62">
-				<image src="/static/my-assets//about/Logo.jpg" mode="scaleToFill" border="0" class="about_22"></image>
+				<image src="/static/my-assets//about//Logo.jpg" mode="scaleToFill" border="0" class="about_22"></image>
 				<text decode="true" class="about_35">福研帮</text>
 				<text decode="true" class="about_36">{{version}}</text>
 			</view>
@@ -104,7 +104,7 @@
 <style>
 	.box {
 		width: 600upx;
-		height: 490upx;
+		height: 530upx;
 		border-radius: 10px;
 		background-color: #eeeeee;
 		position: relative;
@@ -146,8 +146,8 @@
 		width: 609upx;
 		height: 300upx;
 		padding: 0upx;
-		margin-top: 127upx;
-		margin-left: 84upx;
+		margin-top: 100upx;
+		margin-left: 9%;	
 		float: left;
 		position: absolute;
 		top: 0upx;

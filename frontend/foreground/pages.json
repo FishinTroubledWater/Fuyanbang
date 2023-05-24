@@ -4,31 +4,31 @@
 {
   "path": "pages/login/passwordLogin",
   "style": {
-    "navigationBarTitleText": "密码登录"
+    "navigationStyle": "custom"
   }
 },
 {
   "path": "pages/login/register",
   "style": {
-    "navigationBarTitleText": "注册"
+    "navigationStyle": "custom"
   }
 },
 {
   "path": "pages/login/setPassword",
   "style": {
-    "navigationBarTitleText": "设置密码"
+    "navigationStyle": "custom"
   }
 },
 {
   "path": "pages/login/resetPassword1",
   "style": {
-    "navigationBarTitleText": "忘记密码"
+    "navigationStyle": "custom"
   }
 },
 {
   "path": "pages/login/resetPassword2",
   "style": {
-    "navigationBarTitleText": "忘记密码"
+    "navigationStyle": "custom"
   }
 },
 {
@@ -71,19 +71,19 @@
       }
     },
     {
-      "path": "pages/home/news",
+      "path": "pages/home/information/news",
       "style": {
         "navigationBarTitleText": "资讯",
         "enablePullDownRefresh": true
       }
     }, {
-      "path": "pages/home/detail",
+      "path": "pages/home/information/detail",
       "style": {
         "navigationBarTitleText": "资讯详情",
         "enablePullDownRefresh": false
       }
     }, {
-      "path": "pages/home/major",
+      "path": "pages/home/professional/major",
       "style": {
         "navigationBarTitleText": "专业",
         "enablePullDownRefresh": true,
@@ -133,7 +133,7 @@
         "backgroundColor": "#E7ECFF"
       }
     }, {
-      "path": "pages/home/academy",
+      "path": "pages/home/university/academy",
       "style": {
         "navigationBarTitleText": "院校",
         "enablePullDownRefresh": true,
@@ -197,7 +197,7 @@
         "enablePullDownRefresh": false
       }
     },
-        // "my"部分的页面
+    // "my"部分的页面
     {
       "path": "pages/my/my",
       "style": {
