@@ -458,10 +458,10 @@ func SearchAllNewInfo(db *gorm.DB, userId int64) ([]Post, error) {
 	return postResult, err
 }
 
-func SearchNewInfoComment(db *gorm.DB) (error, []Comment) {
+func SearchNewInfoComment(db *gorm.DB, postId string) (error, []Comment) {
 	var result *multierror.Error
 	var comments []Comment
-	err := db.Preload("Author").Find(&comments).Error
+	err := db.Preload("Author").Where("targetPost = ? ", postId).Order("publishTime DESC").Find(&comments).Error
 	if err != nil {
 		result = multierror.Append(result, err)
 	}

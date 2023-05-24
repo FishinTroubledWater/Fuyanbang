@@ -10,10 +10,12 @@ import (
 
 func SearchNewInfoComment(e *gin.Engine) {
 	db := fybDatabase.InitDB()
-	e.GET("/v1/frontend/circle/newinfoComment", func(context *gin.Context) {
+	e.GET("/v1/frontend/circle/newinfoComment/:postId", func(context *gin.Context) {
 		var result *multierror.Error
 
-		err, comments := fybDatabase.SearchNewInfoComment(db)
+		postId := context.Param("postId")
+
+		err, comments := fybDatabase.SearchNewInfoComment(db, postId)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
