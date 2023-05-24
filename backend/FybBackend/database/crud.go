@@ -222,7 +222,7 @@ func SearchCommentByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
-	err = db.Preload("Author").Where("targetPost = ? ", queId).Find(&comments).Count(&count).Error
+	err = db.Preload("Author").Where("targetPost = ? ", queId).Order("publishTime DESC").Find(&comments).Count(&count).Error
 	if count == 0 {
 		result = multierror.Append(result, errors.New("找不到该问题！"))
 	}
