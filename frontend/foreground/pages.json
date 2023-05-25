@@ -265,7 +265,7 @@
       "path": "pages/my/settings/userInfo",
       "style": {
         "navigationBarTitleText": "个人资料",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     }, {
       "path": "pages/my/settings/accountSecurity",

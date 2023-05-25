@@ -1,6 +1,6 @@
 <template>
-	<!-- TODO: 所在地区部分的多列选择器存在一定问题 -->
 	<view class="content">
+		<u-notify ref="uNotify"></u-notify>
 		<u-cell-group>
 			<u-cell>
 				<text slot="title">修改头像</text>
@@ -89,39 +89,61 @@
 				majors: ['金融', '应用统计', '税务', '国际商务', '保险', '资产评估', '审计', '法律', '社会工作', '警务', '教育', '体育', '应用心理', ],
 			}
 		},
-		mounted() {
-			// console.log("执行onLoad（）");
-			uni.getStorage({
-				key: 'userId', // 储存在本地的变量名
-				success: res => {
-					// 成功后的回调
-					// console.log(res.data);   // hello  这里可做赋值的操作
-					this.id = res.data;
-					console.log(this.id)
-				}
-			})
-			// console.log("执行onLoad（）");
-
-			uni.$u.http.get('v1/frontend/user/basicUserInfo?id=' + this.id, {
-
-			}).then(res => {
-				console.log(res.data.data);
-				this.user.avatarUrl = res.data.data.user.AvatarUrl;
-				this.user.nickName = res.data.data.user.NickName;
-				this.user.sex = res.data.data.user.Sex;
-				this.user.area = res.data.data.user.Area;
-				this.user.slogan = res.data.data.user.Slogan;
-				this.user.useageDays = res.data.data.userDay;
-				this.user.college = res.data.data.user.College;
-				this.user.major = res.data.data.user.Major;
-				this.user.year = res.data.data.user.Year;
-				this.user.targetCollege = res.data.data.user.TargetCollege;
-			}).catch(err => {
-
-			})
-
+		onShow(){
+			this.refresh();
+		},
+		onPullDownRefresh() {
+			setTimeout(() => {
+				this.refresh();
+				uni.stopPullDownRefresh();
+				this.$refs.uNotify.show({
+					top: 10,
+					type: 'success',
+					color: '#000',
+					bgColor: '#55ff7f',
+					message: '刷新成功',
+					duration: 1000 * 2,
+					fontSize: 20,
+					safeAreaInsetTop: true
+				})
+			}, 1000)
+		},
+		onLoad(){
+			this.refresh();
 		},
 		methods: {
+			refresh(){
+				// console.log("执行onLoad（）");
+				uni.getStorage({
+					key: 'userId', // 储存在本地的变量名
+					success: res => {
+						// 成功后的回调
+						// console.log(res.data);   // hello  这里可做赋值的操作
+						this.id = res.data;
+						console.log(this.id)
+					}
+				})
+				// console.log("执行onLoad（）");
+				
+				uni.$u.http.get('v1/frontend/user/basicUserInfo?id=' + this.id, {
+				
+				}).then(res => {
+					console.log(res.data.data);
+					this.user.avatarUrl = res.data.data.user.AvatarUrl;
+					this.user.nickName = res.data.data.user.NickName;
+					this.user.sex = res.data.data.user.Sex;
+					this.user.area = res.data.data.user.Area;
+					this.user.slogan = res.data.data.user.Slogan;
+					this.user.useageDays = res.data.data.userDay;
+					this.user.college = res.data.data.user.College;
+					this.user.major = res.data.data.user.Major;
+					this.user.year = res.data.data.user.Year;
+					this.user.targetCollege = res.data.data.user.TargetCollege;
+				}).catch(err => {
+				
+				})
+				
+			},
 			changeHead() {
 				uni.chooseImage({
 					count: 1,
@@ -173,10 +195,6 @@
 				}).catch(err => {
 					console.log("失败了。。。");
 				})
-
-
-				
-				
 			},
 			onUnload: function() {
 				if (this.timer) { //在页面卸载时清除定时器有时会清除不了，可在页面跳转时清除

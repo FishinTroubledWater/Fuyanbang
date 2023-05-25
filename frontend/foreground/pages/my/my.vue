@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		<u-notify ref="uNotify" ></u-notify>
+		<u-notify ref="uNotify"></u-notify>
 		<!-- 个人信息 -->
 		<u-cell-group>
 			<u-cell class="blankBox">
@@ -64,14 +64,38 @@
 					color: '#000',
 					bgColor: '#55ff7f',
 					message: '刷新成功',
-					duration: 1000 * 3,
+					duration: 1000 * 2,
 					fontSize: 20,
 					safeAreaInsetTop: true
 				})
 			}, 1000)
 		},
 		onLoad() {
-			this.refresh();
+			// console.log("执行onLoad（）");
+			uni.getStorage({
+				key: 'userId', // 储存在本地的变量名
+				success: res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.id = res.data;
+					console.log(this.id)
+				}
+			})
+			uni.$u.http.get('v1/frontend/user/basicUserInfo?id=' + this.id, {
+
+			}).then(res => {
+				console.log(res.data.data);
+				this.user.avatarUrl = res.data.data.user.AvatarUrl;
+				this.user.nickName = res.data.data.user.NickName;
+				this.user.level = res.data.data.level;
+				this.user.slogan = res.data.data.user.Slogan;
+				this.user.useageDays = res.data.data.userDay;
+				this.user.college = res.data.data.user.College;
+				this.user.major = res.data.data.user.Major;
+			}).catch(err => {
+
+			})
+			// console.log("执行onLoad（）");
 		},
 		methods: {
 			refresh() {
@@ -112,7 +136,7 @@
 
 <style lang="scss">
 	.blankBox {
-		height: 20%;
+		height: 100rpx;
 	}
 
 	.box {
