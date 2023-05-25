@@ -3,7 +3,7 @@
 		<!-- 个人信息 -->
 		<u-cell-group>
 			<u-cell>
-				<u-icon @click="gotoPage('/pages/my/setting')" slot="value" name="setting" color="#6f6f6f"
+				<u-icon @click="gotoPage('/pages/my/settings/setting')" slot="value" name="setting" color="#6f6f6f"
 					size="22"></u-icon>
 			</u-cell>
 			<u-cell isLink>
@@ -26,7 +26,7 @@
 			</u-cell>
 			<u-gap height="15" bg-color="#f9f9f9"></u-gap>
 			<u-cell icon="edit-pen" title="我的创作" isLink url="/pages/my/posts/posts"></u-cell>
-			<u-cell icon="rmb-circle" title="我的学币" isLink url="/pages/my/coin"></u-cell>
+			<u-cell icon="rmb-circle" title="我的学币" isLink url="/pages/my/coin/coin"></u-cell>
 			<u-cell icon="star" title="我的收藏" isLink url="/pages/my/posts/favorites"></u-cell>
 			<u-gap height="15" bg-color="#f9f9f9"></u-gap>
 			<u-cell icon="question-circle" title="帮助与反馈" isLink url="/pages/my/helpAndFeedback/feedbackIndex"></u-cell>

@@ -1,11 +1,11 @@
 <template>
 	<view class="container">
-		<view class="list-cell b-b m-t" @click="gotoPage('/pages/my/userInfo')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell b-b m-t" @click="gotoPage('/pages/my/settings/userInfo')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">个人资料</text>
 			<text class="cell-more yticon icon-you"></text>
 			<text>></text>
 		</view>
-		<view class="list-cell b-b" @click="gotoPage('/pages/my/accountSecurity')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell b-b" @click="gotoPage('/pages/my/settings/accountSecurity')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">账号与安全</text>
 			<text class="cell-more yticon icon-you"></text>
 			<text>></text>
@@ -20,7 +20,7 @@
 			<text class="cell-tip">105.4M</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
-		<view class="list-cell b-b" @click="gotoPage('/pages/my/aboutUs')"hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell b-b" @click="gotoPage('/pages/my/settings/aboutUs')"hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">关于我们</text>
 			<text class="cell-more yticon icon-you"></text>
 			<text>></text>

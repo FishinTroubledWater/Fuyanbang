@@ -208,7 +208,7 @@
     },
 
     {
-      "path": "pages/my/setting",
+      "path": "pages/my/settings/setting",
       "style": {
         "navigationBarTitleText": "设置",
         "enablePullDownRefresh": false
@@ -220,10 +220,10 @@
         "enablePullDownRefresh": true
       }
     }, {
-      "path": "pages/my/coin",
+      "path": "pages/my/coin/coin",
       "style": {
         "navigationBarTitleText": "我的学币",
-        "enablePullDownRefresh": true
+        "enablePullDownRefresh": false
       }
     }, {
       "path": "pages/my/posts/favorites",
@@ -262,19 +262,19 @@
         "enablePullDownRefresh": false
       }
     },{
-      "path": "pages/my/userInfo",
+      "path": "pages/my/settings/userInfo",
       "style": {
         "navigationBarTitleText": "个人资料",
         "enablePullDownRefresh": false
       }
     }, {
-      "path": "pages/my/accountSecurity",
+      "path": "pages/my/settings/accountSecurity",
       "style": {
         "navigationBarTitleText": "账号与安全",
         "enablePullDownRefresh": false
       }
     }, {
-      "path": "pages/my/aboutUs",
+      "path": "pages/my/settings/aboutUs",
       "style": {
         "navigationBarTitleText": "关于我们",
         "enablePullDownRefresh": false
