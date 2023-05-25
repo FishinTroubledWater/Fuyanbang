@@ -124,7 +124,7 @@
 		},
 
 		mounted() {
-			uni.$u.http.get('/v1/frontend/circle/newinfoComment?postId=' + this.postId, {
+			uni.$u.http.get('/v1/frontend/circle/newinfoComment/' + this.postId, {
 
 				}).then(res => {
 					console.log(res.data.data);
