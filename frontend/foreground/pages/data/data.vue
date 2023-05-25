@@ -137,7 +137,7 @@
 					console.log(this.id)
 				}
 			})
-			uni.$u.http.get('/v1/frontend/circle/newinfo', {
+			uni.$u.http.get('/v1/frontend/circle/newinfo/'+ this.id, {
 		
 				}).then(res => {
 					console.log(res.data.data);
