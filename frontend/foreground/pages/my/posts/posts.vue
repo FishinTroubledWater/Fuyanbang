@@ -1,7 +1,7 @@
 <template>
 	<view class="page">
 
-
+		<u-notify ref="uNotify" ></u-notify>
 		<view v-for="(item,index) in posts" :key="index" @click="postsClick(item)">
 			<view class="list-box">
 				<view class="text-title">{{item.title}}</view>
@@ -47,33 +47,54 @@
 					favorite: '125', //收藏数
 					like: '840', //点赞数
 					publishTime: '2020-6-3 18:00:00', //发表时间
-				},
-				],
+				}, ],
 			}
 		},
-		mounted() {
-			// console.log("执行onLoad（）");
-			uni.getStorage({
-				key:'userId',   // 储存在本地的变量名
-				success:res => {
-					// 成功后的回调
-					// console.log(res.data);   // hello  这里可做赋值的操作
-					this.authorID=res.data;
-					console.log(this.authorID)
-				}
-			})
-			uni.$u.http.get('/v1/frontend/user/myPosts/'+this.authorID, {
-				
-			}).then(res => {
-			    console.log(res.data.data);
-				this.posts=res.data.data;
-				console.log(this.posts);
-			}).catch(err => {
-				
-			})
-			// console.log("执行onLoad（）");
+		onShow() {
+			this.refresh();
+		},
+		onPullDownRefresh() {
+			setTimeout(() => {
+				this.refresh();
+				uni.stopPullDownRefresh();
+				this.$refs.uNotify.show({
+					top: 10,
+					type: 'success',
+					color: '#000',
+					bgColor: '#55ff7f',
+					message: '刷新成功',
+					duration: 1000 * 3,
+					fontSize: 20,
+					safeAreaInsetTop: true
+				})
+			}, 1000)
+		},
+		onLoad() {
+			this.refresh();
 		},
 		methods: {
+			refresh() {
+				// console.log("执行onLoad（）");
+				uni.getStorage({
+					key: 'userId', // 储存在本地的变量名
+					success: res => {
+						// 成功后的回调
+						// console.log(res.data);   // hello  这里可做赋值的操作
+						this.authorID = res.data;
+						console.log(this.authorID)
+					}
+				})
+				uni.$u.http.get('/v1/frontend/user/myPosts/' + this.authorID, {
+
+				}).then(res => {
+					console.log(res.data.data);
+					this.posts = res.data.data;
+					console.log(this.posts);
+				}).catch(err => {
+
+				})
+				// console.log("执行onLoad（）");
+			},
 			postsClick(item) {
 				if (item.partID == '1') { //假设是加油站
 					uni.navigateTo({
@@ -82,7 +103,7 @@
 						fail: () => {},
 						complete: () => {}
 					});
-				}else if(item.partID=='2'){//假设是求助
+				} else if (item.partID == '2') { //假设是求助
 					uni.navigateTo({
 						url: '/pages/data/questionsDetails/questionsDetails?id=' + item.id,
 						success: res => {},

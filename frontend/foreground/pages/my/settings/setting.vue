@@ -12,11 +12,11 @@
 			<text class="cell-more yticon icon-you"></text>
 			<text>></text>
 		</view>
-
+<!-- 
 		<view class="list-cell m-t">
 			<text class="cell-tit">消息推送</text>
 			<switch checked color="#fa436a" @change="switchChange" />
-		</view>
+		</view> -->
 		<view class="list-cell m-t b-b" @click="cleanCache" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">清除缓存</text>
 			<text class="cell-tip">{{cache}}M</text>

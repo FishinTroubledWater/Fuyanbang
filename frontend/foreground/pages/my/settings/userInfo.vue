@@ -126,7 +126,7 @@
 				uni.chooseImage({
 					count: 1,
 					success: (res) => {
-						this.headImg = res.tempFilePaths[0]
+						this.user.avatarUrl = res.tempFilePaths[0]
 					}
 				});
 			},

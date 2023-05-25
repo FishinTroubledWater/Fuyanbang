@@ -1,14 +1,12 @@
 <template>
 	<view class="content">
+		<u-notify ref="uNotify" ></u-notify>
 		<!-- 个人信息 -->
 		<u-cell-group>
-			<u-cell>
-				<u-icon @click="gotoPage('/pages/my/settings/setting')" slot="value" name="setting" color="#6f6f6f"
-					size="22"></u-icon>
+			<u-cell class="blankBox">
 			</u-cell>
-			<u-cell isLink>
-				<u-image @click="changeHead()" width='140rpx' height='140rpx' slot="icon" :src="user.avatarUrl"
-					shape="circle"></u-image>
+			<u-cell isLink url="/pages/my/settings/userInfo">
+				<u-image width='140rpx' height='140rpx' slot="icon" :src="user.avatarUrl" shape="circle"></u-image>
 				<view class="box" slot="title">
 					<view class="box1">
 						<text style="margin-right:10px;">{{user.nickName}}</text>
@@ -30,6 +28,7 @@
 			<u-cell icon="star" title="我的收藏" isLink url="/pages/my/posts/favorites"></u-cell>
 			<u-gap height="15" bg-color="#f9f9f9"></u-gap>
 			<u-cell icon="question-circle" title="帮助与反馈" isLink url="/pages/my/helpAndFeedback/feedbackIndex"></u-cell>
+			<u-cell icon="setting" title="设置" isLink url="/pages/my/settings/setting"></u-cell>
 		</u-cell-group>
 
 	</view>
@@ -52,54 +51,70 @@
 				}
 			}
 		},
-		mounted() {
-			// console.log("执行onLoad（）");
-			uni.getStorage({
-				key:'userId',   // 储存在本地的变量名
-				success:res => {
-					// 成功后的回调
-					// console.log(res.data);   // hello  这里可做赋值的操作
-					this.id=res.data;
-					console.log(this.id)
-				}
-			})
-			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
-			
-			}).then(res => {
-			    console.log(res.data.data);
-				this.user.avatarUrl = res.data.data.user.AvatarUrl;
-				this.user.nickName=res.data.data.user.NickName;
-				this.user.level=res.data.data.level;
-				this.user.slogan=res.data.data.user.Slogan;
-				this.user.useageDays=res.data.data.userDay;
-				this.user.college=res.data.data.user.College;
-				this.user.major=res.data.data.user.Major;
-			}).catch(err => {
-				
-			})
-			// console.log("执行onLoad（）");
+		onShow() {
+			this.refresh();
+		},
+		onPullDownRefresh() {
+			setTimeout(() => {
+				this.refresh();
+				uni.stopPullDownRefresh();
+				this.$refs.uNotify.show({
+					top: 10,
+					type: 'success',
+					color: '#000',
+					bgColor: '#55ff7f',
+					message: '刷新成功',
+					duration: 1000 * 3,
+					fontSize: 20,
+					safeAreaInsetTop: true
+				})
+			}, 1000)
 		},
 		onLoad() {
+			this.refresh();
 		},
 		methods: {
+			refresh() {
+				// console.log("执行onLoad（）");
+				uni.getStorage({
+					key: 'userId', // 储存在本地的变量名
+					success: res => {
+						// 成功后的回调
+						// console.log(res.data);   // hello  这里可做赋值的操作
+						this.id = res.data;
+						console.log(this.id)
+					}
+				})
+				uni.$u.http.get('v1/frontend/user/basicUserInfo?id=' + this.id, {
+
+				}).then(res => {
+					console.log(res.data.data);
+					this.user.avatarUrl = res.data.data.user.AvatarUrl;
+					this.user.nickName = res.data.data.user.NickName;
+					this.user.level = res.data.data.level;
+					this.user.slogan = res.data.data.user.Slogan;
+					this.user.useageDays = res.data.data.userDay;
+					this.user.college = res.data.data.user.College;
+					this.user.major = res.data.data.user.Major;
+				}).catch(err => {
+
+				})
+				// console.log("执行onLoad（）");
+			},
 			gotoPage(url) {
 				uni.navigateTo({
 					url
 				})
-			},
-			changeHead() {
-				uni.chooseImage({
-					count: 1,
-					success: (res) => {
-						this.headImg = res.tempFilePaths[0]
-					}
-				});
 			},
 		}
 	}
 </script>
 
 <style lang="scss">
+	.blankBox {
+		height: 20%;
+	}
+
 	.box {
 		display: flex;
 		flex-direction: column;
