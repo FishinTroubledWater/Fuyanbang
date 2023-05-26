@@ -89,7 +89,8 @@
 				majors: ['金融', '应用统计', '税务', '国际商务', '保险', '资产评估', '审计', '法律', '社会工作', '警务', '教育', '体育', '应用心理', ],
 			}
 		},
-		onShow(){
+		onShow() {
+			console.log("执行onShow()函数")
 			this.refresh();
 		},
 		onPullDownRefresh() {
@@ -108,26 +109,22 @@
 				})
 			}, 1000)
 		},
-		onLoad(){
+		mounted() {
+			console.log("执行onLoad（）1");
 			this.refresh();
+			console.log("执行onLoad（）end")
 		},
 		methods: {
-			refresh(){
-				// console.log("执行onLoad（）");
+			refresh() {
 				uni.getStorage({
 					key: 'userId', // 储存在本地的变量名
 					success: res => {
 						// 成功后的回调
-						// console.log(res.data);   // hello  这里可做赋值的操作
 						this.id = res.data;
-						console.log(this.id)
 					}
 				})
-				// console.log("执行onLoad（）");
-				
-				uni.$u.http.get('v1/frontend/user/basicUserInfo?id=' + this.id, {
-				
-				}).then(res => {
+				uni.$u.http.get('v1/frontend/user/basicUserInfo?id=' + this.id, {}).then(res => {
+					console.log("获取数据成功！");
 					console.log(res.data.data);
 					this.user.avatarUrl = res.data.data.user.AvatarUrl;
 					this.user.nickName = res.data.data.user.NickName;
@@ -140,9 +137,10 @@
 					this.user.year = res.data.data.user.Year;
 					this.user.targetCollege = res.data.data.user.TargetCollege;
 				}).catch(err => {
-				
+					console.log(this.id);
+					console.log("获取数据失败！");
 				})
-				
+
 			},
 			changeHead() {
 				uni.chooseImage({
@@ -167,16 +165,16 @@
 			//上传用户信息的方法
 			upInfo() {
 				uni.$u.http.post('/v1/frontend/user/settings', {
-					id:this.id,
-					avatarUrl:this.user.avatarUrl,
-					nickName:this.user.nickName,
-					sex:this.user.sex,
-					area:this.user.area,
-					college:this.user.college,
-					major:this.user.major,
-					year:this.user.year,
-					targetCollege:this.user.targetCollege,
-					slogan:this.user.slogan
+					id: this.id,
+					avatarUrl: this.user.avatarUrl,
+					nickName: this.user.nickName,
+					sex: this.user.sex,
+					area: this.user.area,
+					college: this.user.college,
+					major: this.user.major,
+					year: this.user.year,
+					targetCollege: this.user.targetCollege,
+					slogan: this.user.slogan
 				}).then(res => {
 					console.log(res);
 					uni.showToast({

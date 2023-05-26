@@ -39,7 +39,6 @@
 		data() {
 			return {
 				id: "",
-
 				user: {
 					avatarUrl: '/static/my-assets/taiku.png',
 					nickName: '张三',
@@ -70,36 +69,11 @@
 				})
 			}, 1000)
 		},
-		onLoad() {
-			// console.log("执行onLoad（）");
-			uni.getStorage({
-				key: 'userId', // 储存在本地的变量名
-				success: res => {
-					// 成功后的回调
-					// console.log(res.data);   // hello  这里可做赋值的操作
-					this.id = res.data;
-					console.log(this.id)
-				}
-			})
-			uni.$u.http.get('v1/frontend/user/basicUserInfo?id=' + this.id, {
-
-			}).then(res => {
-				console.log(res.data.data);
-				this.user.avatarUrl = res.data.data.user.AvatarUrl;
-				this.user.nickName = res.data.data.user.NickName;
-				this.user.level = res.data.data.level;
-				this.user.slogan = res.data.data.user.Slogan;
-				this.user.useageDays = res.data.data.userDay;
-				this.user.college = res.data.data.user.College;
-				this.user.major = res.data.data.user.Major;
-			}).catch(err => {
-
-			})
-			// console.log("执行onLoad（）");
+		mounted(){
+			this.refresh();
 		},
 		methods: {
 			refresh() {
-				// console.log("执行onLoad（）");
 				uni.getStorage({
 					key: 'userId', // 储存在本地的变量名
 					success: res => {
@@ -112,6 +86,7 @@
 				uni.$u.http.get('v1/frontend/user/basicUserInfo?id=' + this.id, {
 
 				}).then(res => {
+					console.log("请求数据成功！");
 					console.log(res.data.data);
 					this.user.avatarUrl = res.data.data.user.AvatarUrl;
 					this.user.nickName = res.data.data.user.NickName;
@@ -121,9 +96,8 @@
 					this.user.college = res.data.data.user.College;
 					this.user.major = res.data.data.user.Major;
 				}).catch(err => {
-
+					console.log("请求数据失败！！！");
 				})
-				// console.log("执行onLoad（）");
 			},
 			gotoPage(url) {
 				uni.navigateTo({

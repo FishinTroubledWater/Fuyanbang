@@ -1,7 +1,7 @@
 <template>
 	<view class="page">
 
-		<u-notify ref="uNotify" ></u-notify>
+		<u-notify ref="uNotify"></u-notify>
 		<view v-for="(item,index) in posts" :key="index" @click="postsClick(item)">
 			<view class="list-box">
 				<view class="text-title">{{item.title}}</view>
@@ -69,7 +69,7 @@
 				})
 			}, 1000)
 		},
-		onLoad() {
+		mounted() {
 			this.refresh();
 		},
 		methods: {
@@ -87,13 +87,13 @@
 				uni.$u.http.get('/v1/frontend/user/myPosts/' + this.authorID, {
 
 				}).then(res => {
+					console.log("获取帖子成功！");
 					console.log(res.data.data);
 					this.posts = res.data.data;
 					console.log(this.posts);
 				}).catch(err => {
-
+					console.log("获取帖子失败！！！");
 				})
-				// console.log("执行onLoad（）");
 			},
 			postsClick(item) {
 				if (item.partID == '1') { //假设是加油站

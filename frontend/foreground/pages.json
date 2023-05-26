@@ -247,7 +247,7 @@
       "path": "pages/my/helpAndFeedback/feedbackList",
       "style": {
        "navigationBarTitleText": "我的反馈",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     },{
       "path": "pages/my/helpAndFeedback/feedback",

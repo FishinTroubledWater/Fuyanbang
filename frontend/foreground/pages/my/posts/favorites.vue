@@ -69,12 +69,11 @@
 				})
 			}, 1000)
 		},
-		onLoad() {
+		mounted() {
 			this.refresh();
 		},
 		methods: {
-			refresh(){
-				// console.log("执行onLoad（）");
+			refresh() {
 				uni.getStorage({
 					key: 'userId', // 储存在本地的变量名
 					success: res => {
@@ -85,12 +84,13 @@
 					}
 				})
 				uni.$u.http.get('/v1/frontend/user/myFavorites/' + this.userID, {
-				
+
 				}).then(res => {
+					console.log("获取收藏成功！");
 					console.log(res.data.data);
 					this.favorites = res.data.data;
 				}).catch(err => {
-				
+					console.log("获取收藏失败！！！");
 				})
 			},
 			favoritesClik(item) {

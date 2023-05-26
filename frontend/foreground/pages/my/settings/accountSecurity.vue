@@ -53,30 +53,38 @@
 				}
 			}
 		},
-		mounted() {
-			// console.log("执行onLoad（）");
-			uni.getStorage({
-				key:'userId',   // 储存在本地的变量名
-				success:res => {
-					// 成功后的回调
-					// console.log(res.data);   // hello  这里可做赋值的操作
-					this.id=res.data;
-					console.log(this.id)
-				}
-			})
-			// console.log("执行onLoad（）");
-			uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
-			
-			}).then(res => {
-			    console.log(res.data.data);
-				this.user.password = res.data.data.user.Password;
-				this.user.account=res.data.data.user.Account;
-			}).catch(err => {
-				
-			})
-			
+		onShow() {
+			console.log("执行onShow()函数")
+			this.refresh();
+		},
+		mounted(){
+			console.log("执行onLoad（）1");
+			this.refresh();
+			console.log("执行onLoad（）2");
 		},
 		methods: {
+			refresh(){
+				uni.getStorage({
+					key:'userId',   // 储存在本地的变量名
+					success:res => {
+						// 成功后的回调
+						// console.log(res.data);   // hello  这里可做赋值的操作
+						this.id=res.data;
+						console.log(this.id)
+					}
+				})
+				uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
+				}).then(res => {
+					console.log("获取数据成功！！！！")
+				    console.log(res.data.data);
+					this.user.password = res.data.data.user.Password;
+					this.user.account=res.data.data.user.Account;
+				}).catch(err => {
+					console.log("获取数据失败！！！！")
+					
+				})
+				
+			},
 			openPopup() {
 				this.show = true;
 			},

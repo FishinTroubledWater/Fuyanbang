@@ -22800,6 +22800,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uNotify: __webpack_require__(/*! uview-ui/components/u-notify/u-notify.vue */ 512).default,
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function () {
   var _vm = this
   var _h = _vm.$createElement
@@ -22807,92 +22828,98 @@ var render = function () {
   return _c(
     "uni-view",
     { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
-    _vm._l(_vm._$g(1, "f"), function (item, index, $20, $30) {
-      return _c(
-        "uni-view",
-        {
-          key: item,
-          attrs: { _i: "1-" + $30 },
-          on: {
-            click: function ($event) {
-              return _vm.$handleViewEvent($event)
+    [
+      _c("u-notify", { ref: "uNotify", attrs: { _i: 1 } }),
+      _vm._l(_vm._$g(2, "f"), function (item, index, $20, $30) {
+        return _c(
+          "uni-view",
+          {
+            key: item,
+            attrs: { _i: "2-" + $30 },
+            on: {
+              click: function ($event) {
+                return _vm.$handleViewEvent($event)
+              },
             },
           },
-        },
-        [
-          _c(
-            "uni-view",
-            {
-              staticClass: _vm._$g("2-" + $30, "sc"),
-              attrs: { _i: "2-" + $30 },
-            },
-            [
-              _c(
-                "uni-view",
-                {
-                  staticClass: _vm._$g("3-" + $30, "sc"),
-                  attrs: { _i: "3-" + $30 },
-                },
-                [_vm._v(_vm._$g("3-" + $30, "t0-0"))]
-              ),
-              _vm._$g("4-" + $30, "i")
-                ? _c(
-                    "uni-view",
-                    {
-                      staticClass: _vm._$g("4-" + $30, "sc"),
-                      attrs: { _i: "4-" + $30 },
-                    },
-                    [
-                      _vm._v(
-                        "您的反馈我们已经收到，我们会尽快处理。感谢您的支持。"
-                      ),
-                    ]
-                  )
-                : _vm._e(),
-              _vm._$g("5-" + $30, "i")
-                ? _c(
-                    "uni-view",
-                    {
-                      staticClass: _vm._$g("5-" + $30, "sc"),
-                      attrs: { _i: "5-" + $30 },
-                    },
-                    [
-                      _vm._v(
-                        "您的反馈我们已经收到，我们会尽快处理。感谢您的支持。"
-                      ),
-                    ]
-                  )
-                : _vm._e(),
-              _c(
-                "uni-view",
-                {
-                  staticClass: _vm._$g("6-" + $30, "sc"),
-                  attrs: { _i: "6-" + $30 },
-                },
-                [_vm._v(_vm._$g("6-" + $30, "t0-0"))]
-              ),
-              _c(
-                "uni-view",
-                { class: _vm._$g("7-" + $30, "c"), attrs: { _i: "7-" + $30 } },
-                [
-                  _vm._$g("8-" + $30, "i")
-                    ? _c("v-uni-text", { attrs: { _i: "8-" + $30 } }, [
-                        _vm._v("未处理"),
-                      ])
-                    : _c("v-uni-text", { attrs: { _i: "9-" + $30 } }, [
-                        _vm._v("已处理"),
-                      ]),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      )
-    }),
-    1
+          [
+            _c(
+              "uni-view",
+              {
+                staticClass: _vm._$g("3-" + $30, "sc"),
+                attrs: { _i: "3-" + $30 },
+              },
+              [
+                _c(
+                  "uni-view",
+                  {
+                    staticClass: _vm._$g("4-" + $30, "sc"),
+                    attrs: { _i: "4-" + $30 },
+                  },
+                  [_vm._v(_vm._$g("4-" + $30, "t0-0"))]
+                ),
+                _vm._$g("5-" + $30, "i")
+                  ? _c(
+                      "uni-view",
+                      {
+                        staticClass: _vm._$g("5-" + $30, "sc"),
+                        attrs: { _i: "5-" + $30 },
+                      },
+                      [
+                        _vm._v(
+                          "您的反馈我们已经收到，我们会尽快处理。感谢您的支持。"
+                        ),
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._$g("6-" + $30, "i")
+                  ? _c(
+                      "uni-view",
+                      {
+                        staticClass: _vm._$g("6-" + $30, "sc"),
+                        attrs: { _i: "6-" + $30 },
+                      },
+                      [
+                        _vm._v(
+                          "您的反馈我们已经收到，我们会尽快处理。感谢您的支持。"
+                        ),
+                      ]
+                    )
+                  : _vm._e(),
+                _c(
+                  "uni-view",
+                  {
+                    staticClass: _vm._$g("7-" + $30, "sc"),
+                    attrs: { _i: "7-" + $30 },
+                  },
+                  [_vm._v(_vm._$g("7-" + $30, "t0-0"))]
+                ),
+                _c(
+                  "uni-view",
+                  {
+                    class: _vm._$g("8-" + $30, "c"),
+                    attrs: { _i: "8-" + $30 },
+                  },
+                  [
+                    _vm._$g("9-" + $30, "i")
+                      ? _c("v-uni-text", { attrs: { _i: "9-" + $30 } }, [
+                          _vm._v("未处理"),
+                        ])
+                      : _c("v-uni-text", { attrs: { _i: "10-" + $30 } }, [
+                          _vm._v("已处理"),
+                        ]),
+                  ],
+                  1
+                ),
+              ],
+              1
+            ),
+          ],
+          1
+        )
+      }),
+    ],
+    2
   )
 }
 var recyclableRender = false
