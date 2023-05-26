@@ -1,7 +1,7 @@
 <template>
 	<view class="page">
 
-
+		<u-notify ref="uNotify"></u-notify>
 		<view v-for="(item,index) in favorites" :key="index" @click="favoritesClik(item)">
 			<view class="list-box">
 				<view class="text-title">{{item.title}}</view>
@@ -50,28 +50,49 @@
 				}, ],
 			}
 		},
-		mounted() {
-			// console.log("执行onLoad（）");
-			uni.getStorage({
-				key: 'userId', // 储存在本地的变量名
-				success: res => {
-					// 成功后的回调
-					// console.log(res.data);   // hello  这里可做赋值的操作
-					this.userID = res.data;
-					console.log(this.userID)
-				}
-			})
-			uni.$u.http.get('/v1/frontend/user/myFavorites/' + this.userID, {
-
-			}).then(res => {
-				console.log(res.data.data);
-				this.favorites = res.data.data;
-			}).catch(err => {
-
-			})
+		onShow() {
+			this.refresh();
 		},
-		// console.log("执行onLoad（）");
+		onPullDownRefresh() {
+			setTimeout(() => {
+				this.refresh();
+				uni.stopPullDownRefresh();
+				this.$refs.uNotify.show({
+					top: 10,
+					type: 'success',
+					color: '#000',
+					bgColor: '#55ff7f',
+					message: '刷新成功',
+					duration: 1000 * 3,
+					fontSize: 20,
+					safeAreaInsetTop: true
+				})
+			}, 1000)
+		},
+		mounted() {
+			this.refresh();
+		},
 		methods: {
+			refresh() {
+				uni.getStorage({
+					key: 'userId', // 储存在本地的变量名
+					success: res => {
+						// 成功后的回调
+						// console.log(res.data);   // hello  这里可做赋值的操作
+						this.userID = res.data;
+						console.log(this.userID)
+					}
+				})
+				uni.$u.http.get('/v1/frontend/user/myFavorites/' + this.userID, {
+
+				}).then(res => {
+					console.log("获取收藏成功！");
+					console.log(res.data.data);
+					this.favorites = res.data.data;
+				}).catch(err => {
+					console.log("获取收藏失败！！！");
+				})
+			},
 			favoritesClik(item) {
 				if (item.partID == '1') { //假设是加油站
 					uni.navigateTo({

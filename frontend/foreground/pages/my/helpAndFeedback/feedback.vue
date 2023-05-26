@@ -93,6 +93,12 @@
 						duration: 1500
 					})
 				})
+			},
+			onUnload:function(){
+			    if(this.timer) {  //在页面卸载时清除定时器有时会清除不了，可在页面跳转时清除
+			        clearInterval(this.timer);  
+			        this.timer = null;  
+			    }  
 			}
 		},
 	}

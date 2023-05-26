@@ -10,8 +10,10 @@
 		<!-- <view class="content">
 			<textarea class="uni-title uni-common-pl" v-model="txt"></textarea>
 		</view> -->
-		<u-icon v-if="whetherLike==='false'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star" @click="clickLike"></u-icon>
-		<u-icon v-if="whetherLike==='true'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star-fill" @click="clickLike"></u-icon>
+		<u-icon v-if="whetherCollect==='false'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star" @click="clickCollect"></u-icon>
+		<u-icon v-if="whetherCollect==='true'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star-fill" @click="clickCollect"></u-icon>
+		<u-icon v-if="whetherLike==='false'" style="padding-left: 50rpx;" label="点赞" color="#2979ff" size="20" name="heart" @click="clickLike"></u-icon>
+		<u-icon v-if="whetherLike==='true'" style="padding-left: 50rpx;" label="点赞" color="#2979ff" size="20" name="fire-filled" @click="clickLike"></u-icon>
 		<view class="textarea_box">
 			<textarea class="textarea" placeholder="说说你的看法吧,在此处输入评论." placeholder-style="font-size:28rpx"
 				maxlength="200" @input="descInput" v-model="desc" />
@@ -31,13 +33,13 @@
 <script>
 	import uCard from '../../../uni_modules/uni-card/uni-card.vue'
 	import uSteps from '../../../uni_modules/uni-steps/uni-steps.vue'
-	import uIcons from '../../../uni_modules/uni-icons/uni-icons.vue'
+	import uniIcons from '../../../uni_modules/uni-icons/uni-icons.vue'
 	import uSection from '../../../uni_modules/uni-section/uni-section.vue'
 	export default {
 		components: {
 		  uCard,
 		  uSteps,
-		  uIcons,
+		  uniIcons:uniIcons,
 		  uSection
 		},
 		data() {
@@ -45,6 +47,7 @@
 				id:'',
 				postId:'0',
 				whetherLike:'false',
+				whetherCollect:'false',
 				desc: '',
 				myComment: 'null',
 
@@ -75,6 +78,14 @@
 			}
 		},
 		methods: {
+			clickCollect(){
+				if(this.whetherCollect==='true'){
+					this.whetherCollect='false'
+				}else{
+					this.whetherCollect='true'
+				}
+				
+			},
 			clickLike(){
 				if(this.whetherLike==='true'){
 					this.whetherLike='false'
@@ -124,7 +135,7 @@
 		},
 
 		mounted() {
-			uni.$u.http.get('/v1/frontend/circle/newinfoComment?postId=' + this.postId, {
+			uni.$u.http.get('/v1/frontend/circle/newinfoComment/' + this.postId, {
 
 				}).then(res => {
 					console.log(res.data.data);

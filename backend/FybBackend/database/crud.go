@@ -667,11 +667,11 @@ func UpdateSingleAdminByCondition(db *gorm.DB, where map[string]interface{}, val
 
 func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	err := db.Table("user").Where(where).Count(&count).Error
+	err := db.Table("admin").Where(where).Count(&count).Error
 	if count == 0 && err == nil {
 		return 0, errors.New("要修改的记录不存在")
 	}
-	err = db.Table("user").Where(where).Updates(values).Count(&count).Error
+	err = db.Table("admin").Where(where).Updates(values).Count(&count).Error
 	return count, err
 }
 
@@ -710,6 +710,7 @@ func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
 }
 
 // Favorite ------------------------------------------------------------
+
 func SearchFavoriteByUserId(db *gorm.DB, userId int64) (int64, []FavoriteRecord, error) {
 	var result *multierror.Error
 	var favorites []FavoriteRecord
@@ -722,4 +723,15 @@ func SearchFavoriteByUserId(db *gorm.DB, userId int64) (int64, []FavoriteRecord,
 		result = multierror.Append(result, err)
 	}
 	return count, favorites, result
+}
+
+func DeleteFavoriteByCondition(db *gorm.DB, where map[string]interface{}) (int64, error) {
+	var count int64
+	var favoriteRecord FavoriteRecord
+	err := db.Where(where).Find(favoriteRecord).Count(&count).Error
+	if count == 0 && err == nil {
+		return 0, errors.New("要删除的记录不存在")
+	}
+	err = db.Delete(&favoriteRecord).Error
+	return count, err
 }
