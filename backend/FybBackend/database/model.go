@@ -135,3 +135,10 @@ type FavoriteRecord struct {
 	Article     Post   `gorm:"foreignKey:articleID"`
 	Author      User   `gorm:"foreignKey:UserID"`
 }
+
+type LikeRecord struct {
+	UserId int64  `gorm:"column:userId"`
+	PostId string `gorm:"column:postId"`
+	Post   Post   `gorm:"foreignKey:postId"`
+	Author User   `gorm:"foreignKey:UserId"`
+}
