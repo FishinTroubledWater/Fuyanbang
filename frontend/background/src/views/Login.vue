@@ -76,10 +76,11 @@ export default {
   methods: {
       handleLogin() {
         this.loading=true;
+        let res;
         this.$refs.loginForm.validate(async valid =>{
           try {
             const response = await this.axios.post('/login', this.loginForm);
-            const res = response.data;
+            res = response.data;
             if (res.code === 200) {
               this.$message.success('登录成功');
               window.sessionStorage.setItem('token', res.token);
@@ -88,13 +89,17 @@ export default {
               this.$router.push({ path: '/home' });
             } else {
               this.loading=false;
-              this.$message.error('登录失败！');
+              this.$message.error(res.message);
             }
           } catch (error) {
             // 处理请求错误
             console.error(error);
             this.loading=false;
-            this.$message.error('登录失败！');
+            if(res){
+              this.$message.error(res.message);
+            }else {
+              this.$message.error('登录失败！');
+            }
           }
         });
     }
