@@ -10,7 +10,7 @@
         </el-col>
         <el-col :span="5">
           <div class="adminMes">
-            <div class="account">admin</div>
+            <div class="account">{{account}}</div>
             <div class="phoneNumber">电话：110</div>
             <div class="state">账号状态：<span class="startUsing">启用</span></div>
           </div>
@@ -72,7 +72,10 @@ import * as echarts from 'echarts';
 export default {
   name: "DashBoard",
   data(){
-    return {}
+    return {
+      account:window.sessionStorage.getItem("account"),
+
+    }
   },
   created() {},
   //等地页面上元素渲染完毕

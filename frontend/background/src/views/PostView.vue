@@ -91,7 +91,7 @@
           <el-input v-model="editForm.Author.Account" disabled></el-input>
         </el-form-item>
         <el-form-item label="板块" prop="PartID">
-          <el-select v-model="editForm.PartID" placeholder="请选择">
+          <el-select v-model="editForm.Part.PartName" placeholder="请选择">
             <el-option v-for="item in parts" :key="item.value"
                        :label="item.label" :value="item.value" >
             </el-option>
@@ -385,5 +385,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
