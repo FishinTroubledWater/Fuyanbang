@@ -13,11 +13,11 @@
 			</view> -->
 			<view class="sendCode">
 				<u-code :seconds="seconds" ref="uCode" @change="codeChange">后重新获取</u-code>
-				<u-button @tap="getCode">{{tips}}</u-button>
+				<u-button @tap="getCode()">{{tips}}</u-button>
 			</view>
 			<view class="form-item" style="margin-top: 20rpx;">
 				<label for="code">请输入验证码：</label>
-				<u-code-input mode="line" :space="20" :maxlength="4" hairline></u-code-input>
+				<u-code-input mode="line" :space="20" :maxlength="4" hairline v-model="code"></u-code-input>
 			</view>
 
 
@@ -45,39 +45,66 @@
 				return emailRegex.test(this.email);
 			},
 			toSetPassword() {
-				if(!this.validateEmail()){
+
+				if (!this.validateEmail()) {
 					uni.showToast({
 						title: '邮箱格式错误',
 						icon: 'none'
 					});
 					return;
 				}
-				uni.navigateTo({
-					url: './setPassword?email=' + this.email.toString(),
-				})
+				uni.$u.http.post('/v1/frontend/codeVerify', {
+					account: this.email,
+					code: this.code
+				}).then(res => {
+					if (res.data.state == true) {
+						uni.navigateTo({
+							url: './setPassword?email=' + this.email.toString(),
+						})
+					}
+				}).catch(err => {
+					uni.$u.toast('验证码错误');
+					// this.loginError = true; // 设置登录错误标志
+				});
 			},
 			codeChange(text) {
 				this.tips = text;
 			},
 			getCode() {
+				if (!this.validateEmail()) {
+					uni.showToast({
+						title: '邮箱格式错误',
+						icon: 'none'
+					});
+					return;
+				}
 				if (this.$refs.uCode.canGetCode) {
 					// 模拟向后端请求验证码
 					uni.showLoading({
 						title: '正在获取验证码'
 					})
-					setTimeout(() => {
-						uni.hideLoading();
-						// 这里此提示会被this.start()方法中的提示覆盖
-						uni.$u.toast('验证码已发送');
-						// 通知验证码组件内部开始倒计时
-						this.$refs.uCode.start();
-					}, 2000);
+					uni.$u.http.post('/v1/frontend/sendEmail', {
+						account: this.email,
+					}).then(res => {
+						setTimeout(() => {
+							uni.hideLoading();
+							// 这里此提示会被this.start()方法中的提示覆盖
+							uni.$u.toast('验证码已发送,有效期300s');
+							// 通知验证码组件内部开始倒计时
+							this.$refs.uCode.start();
+						}, 2000);
+					}).catch(err => {
+						uni.$u.toast('验证码发送失败');
+						// this.loginError = true; // 设置登录错误标志
+					});
+
 				} else {
 					uni.$u.toast('倒计时结束后再发送');
 				}
 			},
-			
+
 		},
+
 		watch: {
 			email: {
 				handler: 'validateEmail',

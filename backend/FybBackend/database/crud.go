@@ -478,6 +478,51 @@ func SearchNewInfoDetails(db *gorm.DB, postId int64) (error, []Post) {
 	return result, posts
 }
 
+func IsExistedLikeRecord(db *gorm.DB, postId int64, userId int64) (error, bool) {
+	var result *multierror.Error
+	var likeRecord []LikeRecord
+	var isExistedLikeRecord bool
+	var count int64
+	err := db.Preload("Post").Preload("Author").Where("postId = ? && userId = ? ", postId, userId).Find(&likeRecord).Count(&count).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	if count > 0 {
+		isExistedLikeRecord = true
+	} else {
+		isExistedLikeRecord = false
+	}
+	return result, isExistedLikeRecord
+}
+
+func GetLikeNumByPostId(db *gorm.DB, postId int64) (error, int64) {
+	var result *multierror.Error
+	var likeRecord []LikeRecord
+	var count int64
+	err := db.Preload("Post").Preload("Author").Where("postId = ? ", postId).Find(&likeRecord).Count(&count).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	return result, count
+}
+
+func IsExistedFavoriteRecord(db *gorm.DB, postId int64, userId int64) (error, bool) {
+	var result *multierror.Error
+	var favoriteRecord []FavoriteRecord
+	var isExistedFavoriteRecord bool
+	var count int64
+	err := db.Preload("Article").Preload("Author").Where("articleID = ? && userID = ? ", postId, userId).Find(&favoriteRecord).Count(&count).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+	}
+	if count > 0 {
+		isExistedFavoriteRecord = true
+	} else {
+		isExistedFavoriteRecord = false
+	}
+	return result, isExistedFavoriteRecord
+}
+
 // User ------------------------------------------------------------
 
 func SelectUserForLogin(db *gorm.DB, account string, password string) (User, int64, error) {
