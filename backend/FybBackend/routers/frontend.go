@@ -33,6 +33,8 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	register.UserRegister(r, db)
 	login.PasswordLogin(r, db)
 	myPosts.SearchNewQue(r)
+	myPosts.DeletePost(r, db)
+	myFavorites.DeleteFavorite(r, db)
 
 	//news
 	news.NewsInfo(r, db)
