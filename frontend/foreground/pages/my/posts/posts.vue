@@ -1,9 +1,12 @@
 <template>
-	<view class="page">
 
+	<view class="page">
+		<!-- 弹出提示窗 -->
+		<u-toast ref="uToast"></u-toast>
 		<u-notify ref="uNotify"></u-notify>
 		<view v-for="(item,index) in posts" :key="index" @click="postsClick(item)">
 			<view class="list-box">
+				<view class="text-delete" @click.native.stop="postsDelete(item.id)">×</view>
 				<view class="text-title">{{item.title}}</view>
 				<view class="text-tips">{{item.content}}</view>
 				<view class="item-bottom">
@@ -27,6 +30,9 @@
 </template>
 
 <script>
+	import {
+		onMounted
+	} from "vue";
 	export default {
 		data() {
 			return {
@@ -94,6 +100,34 @@
 				}).catch(err => {
 					console.log("获取帖子失败！！！");
 				})
+			},
+			// 删除创作
+			postsDelete(postId) {
+
+				// 基本用法，注意：post的第三个参数才为配置项
+				uni.$u.http.post('/v1/frontend/user/deleteMyPost', {
+					id: postId
+				}).then(res => {
+					console.log(res.data);
+
+					this.$refs.uToast.show({
+						type: 'success',
+						message: "删除成功",
+					})
+					setTimeout(function() {
+					  // 这里写要延时执行的代码
+					  location.reload();
+					}, 1500);
+					
+
+				}).catch(err => {
+					console.log(err);
+					this.$refs.uToast.show({
+						type: 'error',
+						message: "删除失败",
+					})
+				})
+
 			},
 			postsClick(item) {
 				if (item.partID == '1') { //假设是加油站
@@ -173,5 +207,9 @@
 	.item-bottom {
 		display: flex;
 		flex-direction: row;
+	}
+
+	.text-delete {
+		float: right;
 	}
 </style>
