@@ -4,7 +4,7 @@
 			<input class="uniInput" placeholder-style="color:#c7c7c7" focus placeholder="标题 (6-30字之间) " v-model="title" />
 		</view>
 		<view class="container">
-			<editor id="editor" class="qlContainer" :placeholder="placeholder" @ready="onEditorReady" v-model="context"></editor>
+			<editor id="editor" class="qlContainer" :placeholder="placeholder" @input="getText" @ready="onEditorReady"></editor>
 		</view>
 		<view>
 			<button @click="chooseImage1()">上传图片</button>
@@ -33,10 +33,15 @@
 	        undo() {
 	            this.editorCtx.undo()
 	        },
-			
+			getText(e){
+			    var that = this;
+			    // console.log(e.detail.html);//带标签内容
+				this.context = e.detail.html;
+				console.log(this.context);//带标签内容
+			},
 			test(){
 				console.log("bbbbbb" + this.title);
-				console.log("aaaaaa" + this.context);
+				console.log("aaaaaa" + this.editorCtx);
 			},
 			
 			chooseImage1(){
@@ -54,6 +59,7 @@
 							src: 'https://pic35.photophoto.cn/20150511/0034034892281415_b.jpg', //服务端返回的url
 							alt: '图像',
 						})
+						console.log("ccc" + _this.editorCtx)
 				    }
 				});
 			},
