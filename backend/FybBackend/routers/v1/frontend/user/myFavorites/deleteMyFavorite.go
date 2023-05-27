@@ -19,6 +19,7 @@ func DeleteFavorite(e *gin.Engine, db *gorm.DB) {
 		err2 := json.Unmarshal(b, &mp)
 
 		count, err3 := fybDatabase.DeleteFavoriteByCondition(db, mp)
+
 		result = multierror.Append(result, err1, err2, err3)
 		if result.ErrorOrNil() == nil && count > 0 {
 			context.JSON(http.StatusOK, gin.H{
