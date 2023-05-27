@@ -763,3 +763,40 @@ func DeleteFavoriteByCondition(db *gorm.DB, where map[string]interface{}) (int64
 	err = db.Delete(&favoriteRecord).Error
 	return count, err
 }
+
+func UpdateFavoriteByCondition(db *gorm.DB, where map[string]interface{}) (bool, error) {
+	var result *multierror.Error
+	var count int64
+	var resultSign bool
+	var favoriteRecord FavoriteRecord
+	if where["isCollected"] == "false" {
+		delete(where, "isCollected")
+		err := db.Where(where).Find(&favoriteRecord).Count(&count).Error
+		if count == 0 && err == nil {
+			result = multierror.Append(result, errors.New("要删除的记录不存在"))
+			result = multierror.Append(result, err)
+		}
+		err = db.Delete(&favoriteRecord).Error
+		if err != nil {
+			result = multierror.Append(result, err)
+			resultSign = false
+		} else {
+			resultSign = true
+		}
+
+	} else if where["isCollected"] == "true" {
+		fr := FavoriteRecord{
+			UserID:    where["userID"].(string),
+			ArticleID: where["articleID"].(string),
+		}
+		err := db.Create(&fr).Error
+		if err != nil {
+			result = multierror.Append(result, err)
+			resultSign = false
+		} else {
+			resultSign = true
+		}
+
+	}
+	return resultSign, result
+}

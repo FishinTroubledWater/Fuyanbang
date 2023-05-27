@@ -10,21 +10,20 @@ import (
 )
 
 func UpdatePostCollected(e *gin.Engine, db *gorm.DB) {
-	e.POST("v1/frontend/circle/postCollected", func(context *gin.Context) {
+	e.POST("/v1/frontend/circle/postCollected", func(context *gin.Context) {
 		var result *multierror.Error
-		var count int64
 		mp := make(map[string]interface{})
 
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
 
-		count, err3 := fybDatabase.DeleteFavoriteByCondition(db, mp)
+		flag, err3 := fybDatabase.UpdateFavoriteByCondition(db, mp)
 
 		result = multierror.Append(result, err1, err2, err3)
-		if result.ErrorOrNil() == nil && count > 0 {
+		if result.ErrorOrNil() == nil && flag == true {
 			context.JSON(http.StatusOK, gin.H{
 				"code":    200,
-				"message": "删除成功",
+				"message": "请求成功",
 			})
 		} else {
 			context.JSON(http.StatusNotFound, gin.H{
