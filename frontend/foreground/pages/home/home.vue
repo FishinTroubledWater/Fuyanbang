@@ -359,9 +359,6 @@
     font-family: "思源黑体";
   }
 
-
-
-
   .viewUser {
     display: flex;
     flex-direction: row;

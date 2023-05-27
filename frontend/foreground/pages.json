@@ -280,7 +280,16 @@
         "enablePullDownRefresh": false
       }
     }
-  ],
+      ,{
+            "path" : "pages/data/publishPost/publishPost",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
