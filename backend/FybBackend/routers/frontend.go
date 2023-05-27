@@ -60,6 +60,7 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	circle.SearchNewQue(r)
 	circle.SearchQueAnswer(r)
 	circle.SearchQueDetails(r)
+	circle.UpdatePostCollected(r, db)
 
 	//favorite
 	myFavorites.SearchNewQue(r)
