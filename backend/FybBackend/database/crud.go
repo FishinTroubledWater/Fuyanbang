@@ -683,7 +683,9 @@ func SearchFavoriteByUserId(db *gorm.DB, userId int64) (int64, []FavoriteRecord,
 func DeleteFavoriteByCondition(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	var count int64
 	var favoriteRecord FavoriteRecord
-	err := db.Where(where).Find(favoriteRecord).Count(&count).Error
+	
+	err := db.Where(where).Find(&favoriteRecord).Count(&count).Error
+	fmt.Println(favoriteRecord)
 	if count == 0 && err == nil {
 		return 0, errors.New("要删除的记录不存在")
 	}
