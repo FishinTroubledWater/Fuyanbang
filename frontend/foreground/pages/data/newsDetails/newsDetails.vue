@@ -13,7 +13,7 @@
 		<u-icon v-if="whetherCollect==='false'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star" @click="clickCollect"></u-icon>
 		<u-icon v-if="whetherCollect==='true'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star-fill" @click="clickCollect"></u-icon>
 		<u-icon v-if="whetherLike==='false'" style="padding-left: 50rpx;" label="点赞" color="#2979ff" size="20" name="heart" @click="clickLike"></u-icon>
-		<u-icon v-if="whetherLike==='true'" style="padding-left: 50rpx;" label="点赞" color="#2979ff" size="20" name="fire-filled" @click="clickLike"></u-icon>
+		<u-icon v-if="whetherLike==='true'" style="padding-left: 50rpx;" label="点赞" color="#2979ff" size="20" name="heart-fill" @click="clickLike"></u-icon>
 		<view class="textarea_box">
 			<textarea class="textarea" placeholder="说说你的看法吧,在此处输入评论." placeholder-style="font-size:28rpx"
 				maxlength="200" @input="descInput" v-model="desc" />
