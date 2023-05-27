@@ -1,9 +1,11 @@
 <template>
 	<view class="page">
-
+		<!-- 弹出提示窗 -->
+		<u-toast ref="uToast"></u-toast>
 		<u-notify ref="uNotify"></u-notify>
 		<view v-for="(item,index) in favorites" :key="index" @click="favoritesClik(item)">
 			<view class="list-box">
+				<view class="text-delete" @click.native.stop="postsDelete(item.id,userID)">×</view>
 				<view class="text-title">{{item.title}}</view>
 				<view class="text-tips">{{item.content}}</view>
 				<view class="item-bottom">
@@ -93,6 +95,35 @@
 					console.log("获取收藏失败！！！");
 				})
 			},
+			// 删除收藏
+			postsDelete(article_ID,user_ID) {
+				// 基本用法，注意：post的第三个参数才为配置项
+				uni.$u.http.post('/v1/frontend/user/deleteMyFavorite', {
+					userID:user_ID,
+					articleID:article_ID
+				}).then(res => {
+					console.log("userID=="+user_ID);
+					console.log("articleID=="+article_ID);
+					console.log(res.data);
+					this.$refs.uToast.show({
+						type: 'success',
+						message: "删除成功",
+					})
+					setTimeout(function() {
+					  // 这里写要延时执行的代码
+					  location.reload();
+					}, 1500);
+					
+			
+				}).catch(err => {
+					console.log(err);
+					this.$refs.uToast.show({
+						type: 'error',
+						message: "删除失败",
+					})
+				})
+			
+			},
 			favoritesClik(item) {
 				if (item.partID == '1') { //假设是加油站
 					uni.navigateTo({
@@ -176,5 +207,9 @@
 	.item-bottom {
 		display: flex;
 		flex-direction: row;
+	}
+
+	.text-delete {
+		float: right;
 	}
 </style>
