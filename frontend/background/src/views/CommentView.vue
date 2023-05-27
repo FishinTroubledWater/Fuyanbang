@@ -7,21 +7,14 @@
       <div style="font-size: 20px;font-weight: bold;"> 评论查询</div>
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-input placeholder="请输入内容" >
-            <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
+          <el-input placeholder="请输入帖子id" v-model="queryInfo.query">
+            <el-button slot="append" icon="el-icon-search" @click="getPostList"></el-button>
           </el-input>
         </el-col>
-        <el-col :span="5">
-          <el-button
-              v-for="type in types"
-              :key="type.name"
-              size="small"
-          >
-            {{ type.name }}
-          </el-button>
-        </el-col>
         <el-col :span=2>
-          <el-button type="primary" round ><i class="el-icon-plus"></i> 添加内容</el-button>
+          <el-button @click="addDialogVisible = true" type="primary"
+                     round icon="el-icon-plus">添加评论
+          </el-button>
         </el-col>
       </el-row>
     </el-card>

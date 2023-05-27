@@ -11,13 +11,19 @@ import (
 
 func SearchQueDetails(e *gin.Engine) {
 	db := fybDatabase.InitDB()
-	e.GET("/v1/frontend/circle/queDetails/:queId", func(context *gin.Context) {
+	e.GET("/v1/frontend/circle/queDetails/:queId/:userId", func(context *gin.Context) {
 		var result *multierror.Error
 		var count int64
 		var posts []fybDatabase.Post
-		queId := context.Param("queId")
+		var isExistedLikeRecord bool
+		var isExistedFavoriteRecord bool
 
+		queId := context.Param("queId")
+		userId := context.Param("userId")
+
+		userIdInt64, err := strconv.ParseInt(userId, 10, 64)
 		queIdInt64, err := strconv.ParseInt(queId, 10, 64)
+
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
@@ -36,6 +42,33 @@ func SearchQueDetails(e *gin.Engine) {
 				}
 				var postMap map[string]interface{}
 				err = json.Unmarshal(data, &postMap)
+				if err != nil {
+					result = multierror.Append(result, err)
+				}
+
+				err, isExistedLikeRecord = fybDatabase.IsExistedLikeRecord(db, queIdInt64, userIdInt64)
+				if err != nil {
+					result = multierror.Append(result, err)
+				}
+
+				err, isExistedFavoriteRecord = fybDatabase.IsExistedFavoriteRecord(db, queIdInt64, userIdInt64)
+				if err != nil {
+					result = multierror.Append(result, err)
+				}
+
+				if isExistedLikeRecord == true {
+					postMap["isLiked"] = "true"
+				} else {
+					postMap["isLiked"] = "false"
+				}
+
+				if isExistedFavoriteRecord == true {
+					postMap["isCollected"] = "true"
+				} else {
+					postMap["isCollected"] = "false"
+				}
+
+				err, postMap["likeNum"] = fybDatabase.GetLikeNumByPostId(db, queIdInt64)
 				if err != nil {
 					result = multierror.Append(result, err)
 				}
