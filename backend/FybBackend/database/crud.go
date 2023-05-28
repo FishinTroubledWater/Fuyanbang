@@ -800,3 +800,42 @@ func UpdateFavoriteByCondition(db *gorm.DB, where map[string]interface{}) (bool,
 	}
 	return resultSign, result
 }
+
+// Like ------------------------------------------------------------
+
+func UpdateLikeByCondition(db *gorm.DB, where map[string]interface{}) (bool, error) {
+	var result *multierror.Error
+	var count int64
+	var resultSign bool
+	var likeRecord LikeRecord
+	if where["isLiked"] == "false" {
+		delete(where, "isLiked")
+		err := db.Where(where).Find(&likeRecord).Count(&count).Error
+		if count == 0 && err == nil {
+			result = multierror.Append(result, errors.New("要删除的记录不存在"))
+			result = multierror.Append(result, err)
+		}
+		err = db.Delete(&likeRecord).Error
+		if err != nil {
+			result = multierror.Append(result, err)
+			resultSign = false
+		} else {
+			resultSign = true
+		}
+
+	} else if where["isLiked"] == "true" {
+		lr := LikeRecord{
+			UserId: where["userId"].(string),
+			PostId: where["postId"].(string),
+		}
+		err := db.Create(&lr).Error
+		if err != nil {
+			result = multierror.Append(result, err)
+			resultSign = false
+		} else {
+			resultSign = true
+		}
+
+	}
+	return resultSign, result
+}
