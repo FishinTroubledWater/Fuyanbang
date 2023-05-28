@@ -73,16 +73,78 @@
 				} else {
 					this.whetherCollect = 'true'
 				}
+				this.id = this.id + '',
+					console.log(this.id),
+					uni.$u.http.post('/v1/frontend/circle/postCollected', {
+						articleID: this.queID,
+						userID: this.id,
+						isCollected: this.whetherCollect,
+					}).then(res => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							uni.showToast({
+								title: "操作成功",
+								duration: 1000,
+							})
+						} else {
+							uni.showToast({
+								title: "操作不成功",
+								duration: 1000,
+							})
+							if (this.whetherCollect === 'true') {
+								this.whetherCollect = 'false'
+							} else {
+								this.whetherCollect = 'true'
+							}
+						}
 
+					}).catch(err => {
+
+					})
 
 			},
 			clickLike() {
 				if (this.whetherLike === 'true') {
 					this.whetherLike = 'false'
+					this.likeNum = this.likeNum - 1
+
 				} else {
 					this.whetherLike = 'true'
+					this.likeNum = this.likeNum + 1
 				}
+				this.id = this.id + '',
+					console.log(this.id),
+					uni.$u.http.post('/v1/frontend/circle/postLiked', {
+						postId: this.queID,
+						userId: this.id,
+						isLiked: this.whetherLike,
+					}).then(res => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							uni.showToast({
+								title: "操作成功",
+								duration: 1000,
+							})
+						} else {
+							uni.showToast({
+								title: "操作不成功",
+								duration: 1000,
+							})
+							if (this.whetherLike === 'true') {
+								this.whetherLike = 'false'
+								this.likeNum = this.likeNum - 1
+							} else {
+								this.whetherLike = 'true'
+								this.likeNum = this.likeNum + 1
+							}
+						}
+						// setTimeout(() => {
+						// 	this.$router.go(0)
+						// }, 500)
 
+					}).catch(err => {
+
+					})
 			},
 			descInput(e) {
 				console.log(e.detail.value.length, '输入的字数')
@@ -114,7 +176,7 @@
 						setTimeout(() => {
 							this.$router.go(0)
 						}, 500)
-						
+
 					}
 				}).catch(err => {
 

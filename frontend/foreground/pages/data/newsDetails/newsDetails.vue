@@ -11,20 +11,20 @@
 			<textarea class="uni-title uni-common-pl" v-model="txt"></textarea>
 		</view> -->
 		<u-row customstyle="margin-bottom: 10px">
-			<u-col span="6" >
+			<u-col span="6">
 				<u-icon v-if="whetherCollect==='false'" style="padding-left: 50rpx;" label="收藏" color="#808A87"
 					size="20" name="star" @click="clickCollect"></u-icon>
-				<u-icon v-if="whetherCollect==='true'" style="padding-left: 50rpx;" label="收藏" color="#2979ff"
-					size="20" name="star-fill" @click="clickCollect"></u-icon>
+				<u-icon v-if="whetherCollect==='true'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20"
+					name="star-fill" @click="clickCollect"></u-icon>
 			</u-col>
 			<u-col span="6" offset="-4">
-				<u-icon v-if="whetherLike==='false'" style="padding-left: 50rpx;" :label="this.likeNum"
-					color="#808A87" size="20" name="heart" @click="clickLike"></u-icon>
-				<u-icon v-if="whetherLike==='true'" style="padding-left: 50rpx;" :label="this.likeNum"
-					color="#FF0000" size="20" name="heart-fill" @click="clickLike"></u-icon>
+				<u-icon v-if="whetherLike==='false'" style="padding-left: 50rpx;" :label="this.likeNum" color="#808A87"
+					size="20" name="heart" @click="clickLike"></u-icon>
+				<u-icon v-if="whetherLike==='true'" style="padding-left: 50rpx;" :label="this.likeNum" color="#FF0000"
+					size="20" name="heart-fill" @click="clickLike"></u-icon>
 			</u-col>
 		</u-row>
-		
+
 		<view class="textarea_box">
 			<textarea class="textarea" placeholder="说说你的看法吧,在此处输入评论." placeholder-style="font-size:28rpx"
 				maxlength="200" @input="descInput" v-model="desc" />
@@ -97,13 +97,78 @@
 					this.whetherCollect = 'true'
 				}
 
+
+				this.id = this.id + '',
+					console.log(this.id),
+					uni.$u.http.post('/v1/frontend/circle/postCollected', {
+						articleID: this.postId,
+						userID: this.id,
+						isCollected: this.whetherCollect,
+					}).then(res => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							uni.showToast({
+								title: "操作成功",
+								duration: 1000,
+							})
+						} else {
+							uni.showToast({
+								title: "操作不成功",
+								duration: 1000,
+							})
+							if (this.whetherCollect === 'true') {
+								this.whetherCollect = 'false'
+							} else {
+								this.whetherCollect = 'true'
+							}
+						}
+
+					}).catch(err => {
+
+					})
 			},
 			clickLike() {
 				if (this.whetherLike === 'true') {
 					this.whetherLike = 'false'
+					this.likeNum = this.likeNum - 1
 				} else {
 					this.whetherLike = 'true'
+					this.likeNum = this.likeNum + 1
 				}
+
+				this.id = this.id + '',
+					console.log(this.id),
+					uni.$u.http.post('/v1/frontend/circle/postLiked', {
+						postId: this.postId,
+						userId: this.id,
+						isLiked: this.whetherLike,
+					}).then(res => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							uni.showToast({
+								title: "操作成功",
+								duration: 1000,
+							})
+						} else {
+							uni.showToast({
+								title: "操作不成功",
+								duration: 1000,
+							})
+							if (this.whetherLike === 'true') {
+								this.whetherLike = 'false'
+								this.likeNum = this.likeNum - 1
+							} else {
+								this.whetherLike = 'true'
+								this.likeNum = this.likeNum + 1
+							}
+						}
+						// setTimeout(() => {
+						// 	this.$router.go(0)
+						// }, 500)
+
+					}).catch(err => {
+
+					})
 
 			},
 			descInput(e) {
