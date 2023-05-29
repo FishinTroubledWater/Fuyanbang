@@ -26,6 +26,7 @@
 	// eslint-disable-next-line no-unused-vars
 	const axios = require('axios')
 	
+	import { pathToBase64, base64ToPath } from '@/js/image-tools/index.js'
 	
 	 export default {
 	    data() {
@@ -37,6 +38,7 @@
 				array1: ['请选择文章类型','加油站','求解答','学长学姐说'],
 				index1: 0,
 				type: '',
+				baseImageList:[],
 	        }
 	    },
 	    methods: {
@@ -61,28 +63,29 @@
 				console.log(this.synopsis);
 			},
 			test(){
-				if(this.index1 != 0 || this.title != "") {
-					console.log("文章类型：" + this.type);
-					console.log("标题：" + this.title);
-					console.log("内容：" + this.context);
-				}
-				else if(this.title == ""){
-					console.log("请先输入文章标题");
-					uni.showToast({
-						title: '请先输入文章标题',
-						icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
-						duration: 2000    //持续时间为 2秒
-					})  
-				}
-				else{
-					console.log("请先选择文章类型");
-					uni.showToast({
-						title: '请先选择文章类型',
-						icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
-						duration: 2000    //持续时间为 2秒
-					})  
+				console.log(this.context)
+				// if(this.index1 != 0 || this.title != "") {
+				// 	console.log("文章类型：" + this.type);
+				// 	console.log("标题：" + this.title);
+				// 	console.log("内容：" + this.context);
+				// }
+				// else if(this.title == ""){
+				// 	console.log("请先输入文章标题");
+				// 	uni.showToast({
+				// 		title: '请先输入文章标题',
+				// 		icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+				// 		duration: 2000    //持续时间为 2秒
+				// 	})  
+				// }
+				// else{
+				// 	console.log("请先选择文章类型");
+				// 	uni.showToast({
+				// 		title: '请先选择文章类型',
+				// 		icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+				// 		duration: 2000    //持续时间为 2秒
+				// 	})  
 
-				}
+				// }
 				
 			},
 			async chooseImage1(){
@@ -136,6 +139,7 @@
 				
 				try {
 				    // 调用uni.chooseImage方法选择本地图片文件
+				
 				    const res = await new Promise((resolve, reject) => {
 				      uni.chooseImage({
 				        count: 1, // 选择图片的数量，这里选择1张
@@ -147,18 +151,41 @@
 				
 				    // 从返回结果中获取选中的图片文件路径
 				    const imagePath = res.tempFilePaths[0];
+					
+					
+					
+					const res1 = pathToBase64(imagePath)
+					  .then(base64 => {
+						// console.log(base64)
+						this.baseImageList = this.baseImageList.concat(base64);
+						var s = base64.substr(base64.indexOf(',') + 1,base64.length);
+						console.log(s)
+						const result = Axios.post('https://api.superbed.cn/upload', {
+								  token: '1000766339bd4c248a8ad625a87f687d',
+								  b64_data: s,
+								}).then(res =>{
+									console.log("图片上传成功");
+									console.log(res.data.url);
+									_this.editorCtx.insertImage({
+										width: '100%', //设置宽度为100%防止宽度溢出手机屏幕
+										height: 'auto',
+										src: res.data.url,
+										alt: '图像',
+									})
+								}).catch(error =>{
+								  console.log(error);
+								  console.log("失败")
+								})
+					  })
+					  .catch(error => {
+					    console.error(error)
+					  })
 				
-					_this.editorCtx.insertImage({
-						width: '100%', //设置宽度为100%防止宽度溢出手机屏幕
-						height: 'auto',
-						src: res.tempFilePaths[0],
-						alt: '图像',
-					})
 					
 					// const uploadRes = await new Promise((resolve, reject) => {
 					//       uni.uploadFile({
 					//         url: 'https://sm.ms/api/v2/upload', // 图床服务器的URL地址
-					//         filePath: imagePath, // 图片文件路径
+					//         filePath: "imagePath", // 图片文件路径
 					//         name: 'smfile', // 上传文件的字段名
 					//         headers: {
 					//             'Authorization': 'giKtHZm1SL0Paj1l7Ye0lrQ0Ilq6VuxX', // 添加Authorization字段，替换your_token_here为实际的token值
@@ -171,45 +198,52 @@
 					//     // 上传成功后，可以在uploadRes中获取服务器返回的响应信息
 					//     console.log('上传成功:', uploadRes.data);
 					
-				    //调用uni.getFileInfo方法获取图片文件的信息
-				    const fileInfo = await new Promise((resolve, reject) => {
-				      uni.getFileInfo({
-				        filePath: imagePath, // 图片文件路径
-				        success: resolve,
-				        fail: reject,
-				      });
-				    });
-				
-				    // 将图片文件转换为File对象
-				    const file = new File([imagePath], fileInfo.fileName, {
-				      type: fileInfo.type, // 设置文件类型
-				    });
-				
-				//     console.log("图片的file文件：", file);
-				//   } catch (error) {
-				//     console.error("选择图片出错：", error);
-				//   }
-				  
 					
-				const formData = new FormData();
-				formData.append('smfile', file);
+				//     //调用uni.getFileInfo方法获取图片文件的信息
+				//     const fileInfo = await new Promise((resolve, reject) => {
+				//       uni.getFileInfo({
+				//         filePath: imagePath, // 图片文件路径
+				//         // success: resolve,
+				// 		success: res => {
+				// 			console.log("file exist!!!!",res.size)
+				// 		},
+				//         fail: reject,
+				//       });
+				//     });
+					
+				
+				// 将图片文件转换为File对象
+				    // const file = new File([imagePath], fileInfo.fileName, {
+				    //   type: fileInfo.type, // 设置文件类型
+				    // });
+					
+					// var file1 = new File(imagePath);
+				
+				    // console.log("图片的file文件：", file);
+				  
+					  
+	
+				// const formData = new FormData();
+				// formData.append('smfile', file);
 						
-				axios.post('https://sm.ms/api/v2/upload', formData, {
-				headers: {
-				    'Content-Type': 'multipart/form-data',
-				    'Authorization': 'giKtHZm1SL0Paj1l7Ye0lrQ0Ilq6VuxX',
-				  },
-				}).then((res) => {
-				  console.log("返回信息：" + res);
-				}).catch(err => {
-					console.log("图片转换接口请求失败");
-				});
+				// await Axios.post('https://sm.ms/api/v2/upload', formData, {
+				// headers: {
+				//     'Content-Type': 'multipart/form-data',
+				//     'Authorization': 'giKtHZm1SL0Paj1l7Ye0lrQ0Ilq6VuxX',
+				//   },
+				// }).then((res) => {
+				//   console.log("返回信息：" + res);
+				// }).catch(err => {
+				// 	console.log("图片转换接口请求失败");
+				// });
 				
 				
 			}catch (error) {
 				console.error('上传失败:', error);
-			}
-		}
+				}
+			},
+		
+			// 将本地图片文件转换为Base64编码的字符串
 		}
 	}
 </script>
