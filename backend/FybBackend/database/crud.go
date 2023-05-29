@@ -131,15 +131,9 @@ func DeleteComment(db *gorm.DB, where map[string]interface{}) (int64, error) {
 }
 func UpdateSingleCommentByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	where1 := make(map[string]interface{})
-	where1["id"] = where["userID"]
 	err := db.Table("comment").Where(where).Count(&count).Error
 	if count == 0 && err == nil {
 		return 0, errors.New("要修改的记录不存在")
-	}
-	_, count, _ = SelectSingleUserByCondition(db, where1)
-	if count == 0 {
-		return 0, errors.New("要修改的记录有误")
 	}
 	err = db.Table("comment").Where(where).Updates(update).Count(&count).Error
 	return count, err
@@ -159,7 +153,7 @@ func SelectAllCommentByPage(db *gorm.DB, query string, pageNum int64, pageSize i
 	if query != "" {
 		query = query + "%"
 		db = db.Table("comment").InnerJoins("Author").
-			Where("account like ?", query).Order("comment.state asc, id").Find(&comments).Count(&count)
+			Where("comment.targetPost = ?", query).Order("state asc, id").Find(&comments).Count(&count)
 	} else {
 		db = db.Table("comment").InnerJoins("Author").
 			Order("comment.state asc, id").Find(&comments).Count(&count)
@@ -172,7 +166,7 @@ func SelectAllCommentByPage(db *gorm.DB, query string, pageNum int64, pageSize i
 }
 func AddComment(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	mp := make(map[string]interface{})
-	mp["userID"] = values["userID"]
+	mp["id"] = values["userID"]
 	_, count, _ := SelectSingleUserByCondition(db, mp)
 	if count == 0 {
 		return 0, errors.New("要插入的记录有误")

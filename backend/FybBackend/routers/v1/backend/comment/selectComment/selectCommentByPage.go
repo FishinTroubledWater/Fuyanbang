@@ -35,9 +35,9 @@ func SelectCommentByPage(e *gin.Engine, db *gorm.DB) {
 				"code":    code,
 				"message": "请求成功",
 				"data": map[string]interface{}{
-					"total":   count,
-					"pageNum": pageNum,
-					"posts":   posts,
+					"total":    count,
+					"pageNum":  pageNum,
+					"comments": posts,
 				},
 			})
 		} else {
