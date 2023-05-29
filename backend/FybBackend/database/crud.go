@@ -166,7 +166,7 @@ func SelectAllCommentByPage(db *gorm.DB, query string, pageNum int64, pageSize i
 }
 func AddComment(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	mp := make(map[string]interface{})
-	mp["userID"] = values["userID"]
+	mp["id"] = values["userID"]
 	_, count, _ := SelectSingleUserByCondition(db, mp)
 	if count == 0 {
 		return 0, errors.New("要插入的记录有误")
