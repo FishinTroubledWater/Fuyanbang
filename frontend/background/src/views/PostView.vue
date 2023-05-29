@@ -149,20 +149,24 @@ export default {
       const publishTime = this.editForm.PublishTime;
       return this.$moment(publishTime).format('YYYY-MM-DD HH:mm:ss');
     },
+    mappedPartID() {
+      const part = this.parts.find((item) => item.value === this.editForm.Part.PartName);
+      return part ? part.value : '';
+    },
   },
   data() {
     return {
       title: '帖子管理',
       drawerTitle: "帖子详情",
-      //添加帖子对话框
+      //添加对话框
       addDialogVisible: false,
       //控制详情抽屉可见否
       detailsDrawer: false,
-      //控制修改帖子对话框的显示与隐藏
+      //控制修改对话框的显示与隐藏
       editDialogVisible: false,
       //数据总数
       total: 0,
-      //获取帖子列表的参数对象
+      //获取列表的参数对象
       queryInfo: {
         query: '',
         pageNum: 1,
@@ -174,7 +178,7 @@ export default {
         {value:'2',label:'问题'},
         {value:'3',label:'官方'},
       ],
-      //查询到的帖子信息
+      //查询到的信息
       editForm: {
         ID:'',
         Author:{},
@@ -183,7 +187,7 @@ export default {
       },
       //帖子数据集合
       postList: [],
-      //添加帖子的表单数据
+      //添加的表单数据
       addForm: {
         account: '',
         partID: '1',
@@ -191,7 +195,7 @@ export default {
         state: '0',
         content:''
       },
-      // 添加帖子规则
+      // 添加规则
       addFormRules: {
         account: [
           {required: true, message: '请输入用户名', trigger: 'blur'},
@@ -242,7 +246,7 @@ export default {
       this.queryInfo.pageNum = newPage;
       this.getPostList()
     },
-    //删除帖子
+    //删除
     async removePostById(id) {
       const result = await this.$confirm('确定要删除该帖子？', '提示', {
         confirmButtonText: '确定',
@@ -264,7 +268,7 @@ export default {
       this.$message.success('删除帖子成功！')
       await this.getPostList()
     },
-    //审核帖子
+    //审核
     async checkPostById(id) {
       const result = await this.$confirm('确定要通过该帖子？', '提示', {
         confirmButtonText: '确定',
@@ -304,11 +308,11 @@ export default {
     drawerClosed() {
       this.detailsDrawer = false;
     },
-    //添加帖子对话框关闭
+    //添加对话框关闭
     addDialogClosed() {
       this.$refs.addFormRef.resetFields()
     },
-    //点击按钮添加帖子
+    //点击按钮添加
     addPost() {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) return
@@ -328,7 +332,7 @@ export default {
         await this.getPostList()
       })
     },
-    //展示编辑帖子的对话框
+    //展示编辑的对话框
     async showEditDialog(id) {
       console.log(id);
       const {data: res} = await this.axios.get('post/searchById', {
@@ -343,7 +347,7 @@ export default {
       this.editForm = res.data
       this.editDialogVisible = true
     },
-    // 修改帖子对话框关闭
+    // 修改对话框关闭
     editDialogClosed() {
       this.$refs.editFormRef.resetFields()
     },
@@ -356,7 +360,8 @@ export default {
         // 发起修改帖子信息的数据请求
         const {data: res} = await this.axios.patch('post/update', {
           'id': this.editForm.ID,
-          'partID': this.editForm.PartID,
+          // 'partID': this.editForm.PartID,
+          'partID': this.mappedPartID,
           'summary': this.editForm.Summary,
           'content': this.editForm.Content,
           'state': this.editForm.State

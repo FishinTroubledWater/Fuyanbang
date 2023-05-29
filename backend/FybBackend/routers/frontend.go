@@ -35,6 +35,7 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	myPosts.SearchNewQue(r)
 	myPosts.DeletePost(r, db)
 	myFavorites.DeleteFavorite(r, db)
+	register.SendEmail(r)
 
 	//news
 	news.NewsInfo(r, db)
@@ -60,6 +61,8 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	circle.SearchNewQue(r)
 	circle.SearchQueAnswer(r)
 	circle.SearchQueDetails(r)
+	circle.UpdatePostCollected(r, db)
+	circle.UpdatePostLiked(r, db)
 
 	//favorite
 	myFavorites.SearchNewQue(r)

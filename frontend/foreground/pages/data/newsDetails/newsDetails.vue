@@ -10,10 +10,21 @@
 		<!-- <view class="content">
 			<textarea class="uni-title uni-common-pl" v-model="txt"></textarea>
 		</view> -->
-		<u-icon v-if="whetherCollect==='false'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star" @click="clickCollect"></u-icon>
-		<u-icon v-if="whetherCollect==='true'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20" name="star-fill" @click="clickCollect"></u-icon>
-		<u-icon v-if="whetherLike==='false'" style="padding-left: 50rpx;" label="点赞" color="#2979ff" size="20" name="heart" @click="clickLike"></u-icon>
-		<u-icon v-if="whetherLike==='true'" style="padding-left: 50rpx;" label="点赞" color="#2979ff" size="20" name="heart-fill" @click="clickLike"></u-icon>
+		<u-row customstyle="margin-bottom: 10px">
+			<u-col span="6">
+				<u-icon v-if="whetherCollect==='false'" style="padding-left: 50rpx;" label="收藏" color="#808A87"
+					size="20" name="star" @click="clickCollect"></u-icon>
+				<u-icon v-if="whetherCollect==='true'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20"
+					name="star-fill" @click="clickCollect"></u-icon>
+			</u-col>
+			<u-col span="6" offset="-4">
+				<u-icon v-if="whetherLike==='false'" style="padding-left: 50rpx;" :label="this.likeNum" color="#808A87"
+					size="20" name="heart" @click="clickLike"></u-icon>
+				<u-icon v-if="whetherLike==='true'" style="padding-left: 50rpx;" :label="this.likeNum" color="#FF0000"
+					size="20" name="heart-fill" @click="clickLike"></u-icon>
+			</u-col>
+		</u-row>
+
 		<view class="textarea_box">
 			<textarea class="textarea" placeholder="说说你的看法吧,在此处输入评论." placeholder-style="font-size:28rpx"
 				maxlength="200" @input="descInput" v-model="desc" />
@@ -23,8 +34,8 @@
 
 
 		<text style="font-size: 40rpx; font-weight: 800;">评论:</text>
-		<uni-card v-for="(item, index) in comment" :title="item.name" :sub-title="item.time"
-			:thumbnail="item.icon" class="trends-box-item">
+		<uni-card v-for="(item, index) in comment" :title="item.name" :sub-title="item.time" :thumbnail="item.icon"
+			class="trends-box-item">
 			<u--text :text="item.content"></u--text>
 		</uni-card>
 	</view>
@@ -37,17 +48,18 @@
 	import uSection from '../../../uni_modules/uni-section/uni-section.vue'
 	export default {
 		components: {
-		  uCard,
-		  uSteps,
-		  uniIcons:uniIcons,
-		  uSection
+			uCard,
+			uSteps,
+			uniIcons: uniIcons,
+			uSection
 		},
 		data() {
 			return {
-				id:'',
-				postId:'0',
-				whetherLike:'false',
-				whetherCollect:'false',
+				id: '',
+				postId: '0',
+				whetherLike: 'false',
+				whetherCollect: 'false',
+				likeNum: '0',
 				desc: '',
 				myComment: 'null',
 
@@ -78,21 +90,86 @@
 			}
 		},
 		methods: {
-			clickCollect(){
-				if(this.whetherCollect==='true'){
-					this.whetherCollect='false'
-				}else{
-					this.whetherCollect='true'
+			clickCollect() {
+				if (this.whetherCollect === 'true') {
+					this.whetherCollect = 'false'
+				} else {
+					this.whetherCollect = 'true'
 				}
-				
+
+
+				this.id = this.id + '',
+					console.log(this.id),
+					uni.$u.http.post('/v1/frontend/circle/postCollected', {
+						articleID: this.postId,
+						userID: this.id,
+						isCollected: this.whetherCollect,
+					}).then(res => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							uni.showToast({
+								title: "操作成功",
+								duration: 1000,
+							})
+						} else {
+							uni.showToast({
+								title: "操作不成功",
+								duration: 1000,
+							})
+							if (this.whetherCollect === 'true') {
+								this.whetherCollect = 'false'
+							} else {
+								this.whetherCollect = 'true'
+							}
+						}
+
+					}).catch(err => {
+
+					})
 			},
-			clickLike(){
-				if(this.whetherLike==='true'){
-					this.whetherLike='false'
-				}else{
-					this.whetherLike='true'
+			clickLike() {
+				if (this.whetherLike === 'true') {
+					this.whetherLike = 'false'
+					this.likeNum = this.likeNum - 1
+				} else {
+					this.whetherLike = 'true'
+					this.likeNum = this.likeNum + 1
 				}
-				
+
+				this.id = this.id + '',
+					console.log(this.id),
+					uni.$u.http.post('/v1/frontend/circle/postLiked', {
+						postId: this.postId,
+						userId: this.id,
+						isLiked: this.whetherLike,
+					}).then(res => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							uni.showToast({
+								title: "操作成功",
+								duration: 1000,
+							})
+						} else {
+							uni.showToast({
+								title: "操作不成功",
+								duration: 1000,
+							})
+							if (this.whetherLike === 'true') {
+								this.whetherLike = 'false'
+								this.likeNum = this.likeNum - 1
+							} else {
+								this.whetherLike = 'true'
+								this.likeNum = this.likeNum + 1
+							}
+						}
+						// setTimeout(() => {
+						// 	this.$router.go(0)
+						// }, 500)
+
+					}).catch(err => {
+
+					})
+
 			},
 			descInput(e) {
 				console.log(e.detail.value.length, '输入的字数')
@@ -101,11 +178,11 @@
 			clickSent() {
 				console.log(this.myComment)
 				uni.getStorage({
-					key:'userId',   // 储存在本地的变量名
-					success:res => {
+					key: 'userId', // 储存在本地的变量名
+					success: res => {
 						// 成功后的回调
 						// console.log(res.data);   // hello  这里可做赋值的操作
-						this.id=res.data;
+						this.id = res.data;
 						console.log(this.id)
 					}
 				})
@@ -115,14 +192,18 @@
 					comment: this.myComment,
 				}).then(res => {
 					console.log(res.data)
-					if(res.data.code==200){
+					if (res.data.code == 200) {
 						uni.showToast({
-							title:"评论成功",
-							duration:1000,
+							title: "评论成功",
+							duration: 1000,
 						})
 					}
+					setTimeout(() => {
+						this.$router.go(0)
+					}, 500)
+
 				}).catch(err => {
-				
+
 				})
 
 			},
@@ -131,36 +212,48 @@
 
 		onLoad: function(option) {
 			console.log(option.id)
-			this.postId=option.id
+			this.postId = option.id
 		},
 
 		mounted() {
+			uni.getStorage({
+				key: 'userId', // 储存在本地的变量名
+				success: res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.id = res.data;
+					console.log(this.id)
+				}
+			})
 			uni.$u.http.get('/v1/frontend/circle/newinfoComment/' + this.postId, {
 
 				}).then(res => {
 					console.log(res.data.data);
-					this.comment=res.data.data;
+					this.comment = res.data.data;
 				}).catch(err => {
 
 				}),
-			uni.$u.http.get('/v1/frontend/circle/newinfoDetails/' + this.postId, {
-			
+				uni.$u.http.get('/v1/frontend/circle/newinfoDetails/' + this.postId + '/' + this.id, {
+
 				}).then(res => {
 					console.log(res.data.data);
-					this.indexList=res.data.data[0];
+					this.indexList = res.data.data[0];
+					this.whetherLike = this.indexList.isLiked;
+					this.whetherCollect = this.indexList.isCollected;
+					this.likeNum = this.indexList.likeNum;
 				}).catch(err => {
-			
-				})
-				
-				// uni.$u.http.post('/v1/frontend/academy/searchByRule', {
-				// 	region: '福建',
-				// 	level: '985',
-				// 	type: '法学',
-				// }).then(res => {
-				// 	console.log(res.data)
-				// }).catch(err => {
 
-				// })
+				})
+
+			// uni.$u.http.post('/v1/frontend/academy/searchByRule', {
+			// 	region: '福建',
+			// 	level: '985',
+			// 	type: '法学',
+			// }).then(res => {
+			// 	console.log(res.data)
+			// }).catch(err => {
+
+			// })
 		},
 	}
 </script>
@@ -180,7 +273,8 @@
 			color: gray
 		}
 	}
-	.textarea{
+
+	.textarea {
 		width: 100%;
 		height: 100rpx;
 	}

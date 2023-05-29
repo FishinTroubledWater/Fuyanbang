@@ -23,7 +23,8 @@
         </el-input>
       </el-form-item>
       <el-row :gutter="20">
-      <el-col :span="6" :offset="2"><el-checkbox v-model="loginForm.rememberMe" style="margin:0 0 25px 0;">记住密码</el-checkbox></el-col>
+<!--        <el-col :span="6" :offset="3"  class="el-checkbox__label"  style="margin: 0 15px 15px 15px">忘记密码</el-col>-->
+<!--      <el-col :span="6" :offset="2"><el-checkbox v-model="rememberMe" style="margin:0 0 25px 0;" >记住密码</el-checkbox></el-col>-->
       </el-row>
 
       <el-form-item style="width:100%;">
@@ -55,8 +56,8 @@ export default {
     return {
       //表单数据绑定对象
       loginForm: {
-        account: "admin",
-        password: "admin123",
+        account: '',
+        password: '',
       },
       //表单验证规则
       loginRules: {
@@ -108,6 +109,7 @@ export default {
 
 </script>
 <style>
+
 .login {
   display: flex;
   justify-content: center;
@@ -127,6 +129,7 @@ export default {
   background: rgba(255, 255, 255, 0.80);
   width: 400px;
   padding: 25px 25px 5px 25px;
+  box-shadow: 0 0 20px #3e3e3f;
 }
 .el-login-footer {
   height: 40px;
