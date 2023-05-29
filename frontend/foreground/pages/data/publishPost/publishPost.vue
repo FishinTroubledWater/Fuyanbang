@@ -63,29 +63,29 @@
 				console.log(this.synopsis);
 			},
 			test(){
-				// console.log(this.context)
-				if(this.index1 != 0 || this.title != "") {
-					console.log("文章类型：" + this.type);
-					console.log("标题：" + this.title);
-					console.log("内容：" + this.context);
-				}
-				else if(this.title == ""){
-					console.log("请先输入文章标题");
-					uni.showToast({
-						title: '请先输入文章标题',
-						icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
-						duration: 2000    //持续时间为 2秒
-					})  
-				}
-				else{
-					console.log("请先选择文章类型");
-					uni.showToast({
-						title: '请先选择文章类型',
-						icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
-						duration: 2000    //持续时间为 2秒
-					})  
+				console.log(this.context)
+				// if(this.index1 != 0 || this.title != "") {
+				// 	console.log("文章类型：" + this.type);
+				// 	console.log("标题：" + this.title);
+				// 	console.log("内容：" + this.context);
+				// }
+				// else if(this.title == ""){
+				// 	console.log("请先输入文章标题");
+				// 	uni.showToast({
+				// 		title: '请先输入文章标题',
+				// 		icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+				// 		duration: 2000    //持续时间为 2秒
+				// 	})  
+				// }
+				// else{
+				// 	console.log("请先选择文章类型");
+				// 	uni.showToast({
+				// 		title: '请先选择文章类型',
+				// 		icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+				// 		duration: 2000    //持续时间为 2秒
+				// 	})  
 
-				}
+				// }
 				
 			},
 			async chooseImage1(){
