@@ -132,14 +132,16 @@ func DeleteComment(db *gorm.DB, where map[string]interface{}) (int64, error) {
 func UpdateSingleCommentByCondition(db *gorm.DB, where map[string]interface{}, update map[string]interface{}) (int64, error) {
 	var count int64 = 0
 	where1 := make(map[string]interface{})
-	where1["id"] = where["userID"]
+	where1["id"] = update["userID"]
+	fmt.Println(where)
+	_, count, _ = SelectSingleUserByCondition(db, where1)
+
+	if count == 0 {
+		return 0, errors.New("要修改的记录有误")
+	}
 	err := db.Table("comment").Where(where).Count(&count).Error
 	if count == 0 && err == nil {
 		return 0, errors.New("要修改的记录不存在")
-	}
-	_, count, _ = SelectSingleUserByCondition(db, where1)
-	if count == 0 {
-		return 0, errors.New("要修改的记录有误")
 	}
 	err = db.Table("comment").Where(where).Updates(update).Count(&count).Error
 	return count, err
