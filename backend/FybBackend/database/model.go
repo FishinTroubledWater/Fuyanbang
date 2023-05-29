@@ -115,6 +115,7 @@ type Comment struct {
 	TargetPost    int64     `gorm:"column:targetPost"`
 	TargetComment int64     `gorm:"column:targetComment"`
 	PublishTime   time.Time `gorm:"column:publishTime"`
+	State         int64     `gorm:"column:state"`
 	Author        User      `gorm:"foreignKey:UserID"`
 }
 
