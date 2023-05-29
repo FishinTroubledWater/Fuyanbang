@@ -67,7 +67,7 @@
 					top: 10,
 					type: 'success',
 					color: '#000',
-					bgColor: '#55ff7f',
+					bgColor: '#b2cf87',
 					message: '刷新成功',
 					duration: 1000 * 3,
 					fontSize: 20,
