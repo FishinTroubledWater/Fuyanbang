@@ -1,9 +1,9 @@
 <template>
   <view class="content">
 
-    <!-- 倒计时 -->
     <uni-section class="header-box" title="" sub-title="" type="">
 
+      <!-- 倒计时 -->
       <u-row customStyle="margin: 2px 14px">
         <u-col span="4">
           <u--text :text="RemainingTime" size="90rpx" color="#ffffff" class="countDown"></u--text>

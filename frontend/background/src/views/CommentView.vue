@@ -23,6 +23,12 @@
       <div style="font-size: 20px;font-weight: bold"> 评论列表</div>
       <Table :table-data="commentList" :columns="columns" :show-state="true">
         <!--        状态区-->
+        <template #state="scope" >
+          <el-tag v-if="scope.row.State === 0" type="warning">未审核</el-tag>
+          <el-tag v-else type="success">已审核</el-tag>
+
+        </template>
+        <!--        操作区-->
         <template #operation="scope">
           <el-button size="mini" type="success" icon="el-icon-view" round
                      @click="showDetails(scope.row)">详情
@@ -46,8 +52,11 @@
       <!--      内容主体区域-->
       <el-form ref="addFormRef" :model="addForm" label-width="80px"
                :rules="addFormRules">
-        <el-form-item label="用户ID" prop="account">
+        <el-form-item label="用户ID" prop="userID">
           <el-input v-model="addForm.userID"></el-input>
+        </el-form-item>
+        <el-form-item label="帖子ID" prop="targetPost">
+          <el-input v-model="addForm.targetPost"></el-input>
         </el-form-item>
         <el-form-item label="状态" prop="state">
           <el-radio v-model="addForm.state" label='0'>未审核</el-radio>
@@ -94,7 +103,7 @@
         <el-descriptions direction="vertical" :column="2" border class="mg">
           <el-descriptions-item label="用户ID"> {{ editForm.UserID }}</el-descriptions-item>
           <el-descriptions-item label="评论数"> {{ editForm.CommentNum }}</el-descriptions-item>
-          <el-descriptions-item label="帖子"> {{ editForm.Part.TargetPost }}</el-descriptions-item>
+          <el-descriptions-item label="帖子"> {{ editForm.TargetPost }}</el-descriptions-item>
           <el-descriptions-item label="发布时间"> {{ formattedPublishTime}}</el-descriptions-item>
           <el-descriptions-item label="状态">
             <el-tag v-if="editForm.State === 0" type="warning">未审核</el-tag>
@@ -133,22 +142,28 @@ export default {
       total: 0,
       //获取列表的参数对象
       queryInfo: {
-        query: '',
+        query: "",
         pageNum: 1,
         pageSize: 10
       },
       //查询到的信息
-      editForm: {},
+      editForm: {
+
+      },
       //添加的表单数据
       addForm: {
+        targetPost:'',
         userID: '',
         state: '0',
         content:''
       },
       // 添加规则
       addFormRules: {
-        account: [
+        userID: [
           {required: true, message: '请输入用户id', trigger: 'blur'},
+        ],
+        targetPost: [
+          {required: true, message: '请输入帖子id', trigger: 'blur'},
         ],
       },
       commentList:[],
@@ -181,7 +196,7 @@ export default {
       });
       console.log(res)
       if (res.code !== 200) return this.$message.error('获取评论列表失败！')
-      this.commentList = res.data.posts
+      this.commentList = res.data.comments
       this.total = res.data.total
       console.log(this.commentList);
     },

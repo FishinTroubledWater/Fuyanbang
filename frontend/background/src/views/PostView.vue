@@ -356,12 +356,13 @@ export default {
       this.$refs.editFormRef.validate(async valid => {
         console.log(valid)
         if (!valid) return
+        const partID = this.mappedPartID || this.editForm.PartID; // 设置默认值或采取其他处理方式
         console.log(this.editForm)
         // 发起修改帖子信息的数据请求
         const {data: res} = await this.axios.patch('post/update', {
           'id': this.editForm.ID,
           // 'partID': this.editForm.PartID,
-          'partID': this.mappedPartID,
+          'partID': partID,
           'summary': this.editForm.Summary,
           'content': this.editForm.Content,
           'state': this.editForm.State

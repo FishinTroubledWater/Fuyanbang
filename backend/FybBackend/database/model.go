@@ -115,6 +115,7 @@ type Comment struct {
 	TargetPost    int64     `gorm:"column:targetPost"`
 	TargetComment int64     `gorm:"column:targetComment"`
 	PublishTime   time.Time `gorm:"column:publishTime"`
+	State         int64     `gorm:"column:state"`
 	Author        User      `gorm:"foreignKey:UserID"`
 }
 
@@ -128,16 +129,16 @@ type Feedback struct {
 }
 
 type FavoriteRecord struct {
-	ID          int64  `gorm:"column:ID;primaryKey"`
-	UserID      string `gorm:"column:userID"`
-	ArticleID   string `gorm:"column:articleID"`
-	ArticleType string `gorm:"column:articleType"`
-	Article     Post   `gorm:"foreignKey:articleID"`
-	Author      User   `gorm:"foreignKey:UserID"`
+	ID        int64  `gorm:"column:ID;primaryKey"`
+	UserID    string `gorm:"column:userID"`
+	ArticleID string `gorm:"column:articleID"`
+	Article   Post   `gorm:"foreignKey:articleID"`
+	Author    User   `gorm:"foreignKey:UserID"`
 }
 
 type LikeRecord struct {
-	UserId int64  `gorm:"column:userId"`
+	ID     int64  `gorm:"column:ID;primaryKey"`
+	UserId string `gorm:"column:userId"`
 	PostId string `gorm:"column:postId"`
 	Post   Post   `gorm:"foreignKey:postId"`
 	Author User   `gorm:"foreignKey:UserId"`
