@@ -129,7 +129,7 @@
 					uni.navigateTo({
 						//TODO
 						//参数部分未修改
-						url: '/pages/data/newsDetails/newsDetails?' + 'feedback=' + JSON.stringify(item),
+						url: '/pages/data/newsDetails/newsDetails?' + 'id=' + item.id,
 						success: res => {},
 						fail: () => {},
 						complete: () => {}
@@ -138,8 +138,7 @@
 					uni.navigateTo({
 						//TODO
 						//参数部分未修改
-						url: '/pages/data/questionsDetails/questionsDetails?' + 'feedback=' + JSON
-							.stringify(item),
+						url: '/pages/data/questionsDetails/questionsDetails?' + 'id=' + item.id,
 						success: res => {},
 						fail: () => {},
 						complete: () => {}
