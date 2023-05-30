@@ -58,7 +58,7 @@
     },{
       "path": "pages/data/data",
       "style": {
-        "navigationBarTitleText": "圈子",
+        "navigationStyle": "custom",
         "enablePullDownRefresh": true
       }
     },
