@@ -7,8 +7,9 @@ import Table from "@/components/Table";
 import Breadcrumb from "@/components/Breadcrumb";
 import Drawer from "@/components/Drawer";
 import Pagination from "@/components/Pagination";
+import Editor from "@/components/Editor";
 import  VueQuillEditor from 'vue-quill-editor'//调用编辑器
-import {ImageExtend} from "quill-image-extend-module/ImageExtend";//调用图片增强模块
+import {ImageExtend} from "quill-image-extend-module";//调用图片增强模块
 import moment from "moment";
 //全局引入插件
 import './plugins/axios'
@@ -29,8 +30,8 @@ Vue.component("Pagination",Pagination);
 Vue.component("Table",Table);
 Vue.component("Breadcrumb",Breadcrumb);
 Vue.component("Drawer",Drawer);
-Vue.use(VueQuillEditor)
-Vue.use(ImageExtend)
+Vue.component("Editor",Editor);
+Vue.use(VueQuillEditor,ImageExtend)
 Vue.prototype.$moment = moment;
 
 new Vue({

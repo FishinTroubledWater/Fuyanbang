@@ -85,7 +85,8 @@
           <el-radio v-model="editForm.State" :label='1'>已审核</el-radio>
         </el-form-item>
         <el-form-item label="内容" prop="Content">
-          <quill-editor v-model="editForm.Content"></quill-editor>
+          <Editor :value="editForm.Content"></Editor>
+<!--          <quill-editor v-model="editForm.Content" :options="editorOption"></quill-editor>-->
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -345,8 +346,7 @@ export default {
     //获取焦点事件
     focus(event){
       event.enable(false);
-    }
-
+    },
   },
 
 }
