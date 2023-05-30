@@ -80,7 +80,11 @@
 				prevPage.$vm.searchContent = this.searchContent
 				// 关闭当前页面，返回上一页面
 				uni.navigateBack({
-					delta: 1
+					delta: 1,
+					success(event) {
+						prevPage.$vm.reload();
+					},
+					
 				})
 
 			},
