@@ -2,10 +2,10 @@
 	<view>
 
 		<view class="tabs-box">
-			<view class="one-nav" style="padding: 10rpx;" :class="currentSwiperIndex === 0 ? 'nav-actived' : '' "
+			<view class="one-nav" style="padding: 20rpx;font-size: 33rpx;" :class="currentSwiperIndex === 0 ? 'nav-actived' : '' "
 				@tap="swiperChange(0)">加油站
 			</view>
-			<view class="one-nav" style="padding: 10rpx;" :class="currentSwiperIndex === 1 ? 'nav-actived' : '' "
+			<view class="one-nav" style="padding: 20rpx;font-size: 33rpx;" :class="currentSwiperIndex === 1 ? 'nav-actived' : '' "
 				@tap="swiperChange(1)">求解答
 			</view>
 		</view>
@@ -127,6 +127,24 @@
 			}
 
 		},
+		onShow() {
+			uni.$u.http.get('/v1/frontend/circle/newinfo/'+ this.id, {
+					
+				}).then(res => {
+					console.log(res.data.data);
+					this.indexList=res.data.data
+				}).catch(err => {
+					
+				}),
+			uni.$u.http.get('/v1/frontend/circle/newque/'+ this.id, {
+					
+				}).then(res => {
+					console.log(res.data.data);
+					this.questionsList=res.data.data
+				}).catch(err => {
+					
+				})
+		},
 		mounted() {
 			uni.getStorage({
 				key:'userId',   // 储存在本地的变量名
@@ -166,9 +184,9 @@
 			border-radius: 18rpx;
 			
 			/* 边 */
-			border: 1rpx solid #CCBE97;
+			border: 1rpx solid #E0E3DA;
 			/* 阴影 */
-			box-shadow:2rpx 7rpx 0rpx #CCBE97;
+			box-shadow:2rpx 7rpx 0rpx #ebebeb;
 			
 			
 			
@@ -193,8 +211,10 @@
 	}
 
 	.nav-actived {
-		color: #CCBE97;
+		color: #74759b;
 		font-weight: 700;
+		//background-color: #74759b;
+		
 	}
 
 	.appContentTop {
@@ -212,7 +232,7 @@
 		padding-left: 20rpx;
 	}
 	.contentTopWordDetails{
-		color: #CCBE97;
+		color: #74759b;
 		font-size: 40rpx;
 		padding-left: 20rpx;
 	}
