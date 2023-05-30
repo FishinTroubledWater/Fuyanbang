@@ -31,21 +31,24 @@
 	 export default {
 	    data() {
 	        return {
+				id: 0,
 	            placeholder: '开始输入文章内容...',
 				title: '',
 				context: '',
 				synopsis: '',
 				array1: ['请选择文章类型','加油站','求解答','学长学姐说'],
 				index1: 0,
-				type: '',
+				type: 0,
 				baseImageList:[],
+				img: '@/static/academy-icons/sight.png',
 	        }
 	    },
 	    methods: {
 			bindPickerChange1: function(e) {
 				this.index1 = e.target.value;
 				this.jg = this.array1[this.index1];
-				this.type = this.array1[this.index1];
+				// this.type = this.array1[this.index1];
+				this.type = this.index1;
 			},
 	        onEditorReady() {
 	            uni.createSelectorQuery().select('#editor').context((res) => {
@@ -63,33 +66,41 @@
 				console.log(this.synopsis);
 			},
 			test(){
-				console.log(this.context)
-				// if(this.index1 != 0 || this.title != "") {
-				// 	console.log("文章类型：" + this.type);
-				// 	console.log("标题：" + this.title);
-				// 	console.log("内容：" + this.context);
-				// }
-				// else if(this.title == ""){
-				// 	console.log("请先输入文章标题");
-				// 	uni.showToast({
-				// 		title: '请先输入文章标题',
-				// 		icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
-				// 		duration: 2000    //持续时间为 2秒
-				// 	})  
-				// }
-				// else{
-				// 	console.log("请先选择文章类型");
-				// 	uni.showToast({
-				// 		title: '请先选择文章类型',
-				// 		icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
-				// 		duration: 2000    //持续时间为 2秒
-				// 	})  
-
-				// }
-				
+				if(this.title == ""){
+					console.log("请先输入文章标题");
+					uni.showToast({
+						title: '请先输入文章标题',
+						icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+						duration: 2000    //持续时间为 2秒
+					})  
+				}
+				else if(this.context == ""){
+					console.log("请输入文章内容");
+					uni.showToast({
+						title: '请输入文章内容',
+						icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+						duration: 2000    //持续时间为 2秒
+					})  
+				}
+				else if(this.index1 == 0){
+					console.log("请先选择文章类型");
+					uni.showToast({
+						title: '请先选择文章类型',
+						icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+						duration: 2000    //持续时间为 2秒
+					})  
+				}
+				else {
+					console.log("作者id：" + this.id);
+					console.log("文章类型：" + this.type);
+					console.log("标题：" + this.title);
+					console.log("内容：" + this.context);
+					console.log("图片地址：" + this.img)
+					console.log("简介：" + this.synopsis)
+				}
 			},
 			async chooseImage1(){
-				let _this = this;
+				var _this = this;
 				// uni.chooseImage({
 				//     count: 1, //默认9
 				//     sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
@@ -166,6 +177,7 @@
 								}).then(res =>{
 									console.log("图片上传成功");
 									console.log(res.data.url);
+									_this.img = res.data.url;
 									_this.editorCtx.insertImage({
 										width: '100%', //设置宽度为100%防止宽度溢出手机屏幕
 										height: 'auto',
@@ -244,6 +256,16 @@
 			},
 		
 			// 将本地图片文件转换为Base64编码的字符串
+		},
+		mounted() {
+			uni.getStorage({
+				key: 'userId', // 储存在本地的变量名
+				success: res => {
+					// 成功后的回调
+					this.id = res.data;
+					console.log(this.id)
+				}
+			})
 		}
 	}
 </script>

@@ -23,10 +23,7 @@
         </el-input>
       </el-form-item>
       <el-row :gutter="20">
-<!--        <el-col :span="6" :offset="3"  class="el-checkbox__label"  style="margin: 0 15px 15px 15px">忘记密码</el-col>-->
-<!--      <el-col :span="6" :offset="2"><el-checkbox v-model="rememberMe" style="margin:0 0 25px 0;" >记住密码</el-checkbox></el-col>-->
       </el-row>
-
       <el-form-item style="width:100%;">
         <el-button
             :loading="loading"
@@ -109,7 +106,6 @@ export default {
 
 </script>
 <style>
-
 .login {
   display: flex;
   justify-content: center;
@@ -117,7 +113,6 @@ export default {
   height: 100%;
   background-size: 100% 100%;
   background-image: url("../assets/images/login-background.jpg");
-
 }
 .title {
   margin: 0 auto 30px auto;
