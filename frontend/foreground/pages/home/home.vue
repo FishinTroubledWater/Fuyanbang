@@ -5,7 +5,7 @@
 
       <!-- 倒计时 -->
       <u-row customStyle="margin: 2px 14px">
-        <u-col span="4">
+        <u-col span="8">
           <u--text :text="RemainingTime" size="90rpx" color="#ffffff" class="countDown"></u--text>
         </u-col>
       </u-row>
@@ -17,7 +17,7 @@
         <u-col span="4">
           <u--text></u--text>
         </u-col>
-        <u-col span="4">
+        <u-col span="5">
           <u--text :text="ExamYear" size="34rpx" color="#ffffff" class="yearDown"></u--text>
         </u-col>
       </u-row>
