@@ -47,6 +47,8 @@ func InitBackend(r *gin.Engine, db *gorm.DB) {
 	selectComment.SelectCommentByPage(r, db)
 	selectComment.SelectCommentById(r, db)
 	modifyComment.DeleteComment(r, db)
+	modifyComment.UpdateComment(r, db)
+	modifyComment.AddComment(r, db)
 
 	//recipes
 	modifyRecipe.DeleteRecipe(r, db)

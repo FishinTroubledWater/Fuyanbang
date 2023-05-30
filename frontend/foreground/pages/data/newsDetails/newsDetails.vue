@@ -14,7 +14,7 @@
 			<u-col span="6">
 				<u-icon v-if="whetherCollect==='false'" style="padding-left: 50rpx;" label="收藏" color="#808A87"
 					size="20" name="star" @click="clickCollect"></u-icon>
-				<u-icon v-if="whetherCollect==='true'" style="padding-left: 50rpx;" label="收藏" color="#2979ff" size="20"
+				<u-icon v-if="whetherCollect==='true'" style="padding-left: 50rpx;" label="收藏" color="#fed71a" size="20"
 					name="star-fill" @click="clickCollect"></u-icon>
 			</u-col>
 			<u-col span="6" offset="-4">
