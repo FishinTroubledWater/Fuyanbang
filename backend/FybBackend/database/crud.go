@@ -3,6 +3,7 @@ package database
 import (
 	"errors"
 	"fmt"
+	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 	"time"
 )

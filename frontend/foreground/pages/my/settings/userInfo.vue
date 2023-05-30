@@ -65,6 +65,13 @@
 </template>
 
 <script>
+	import Axios from 'axios'
+	Axios.defaults.baseURL = '/'
+	// eslint-disable-next-line no-unused-vars
+	const axios = require('axios')
+	
+	import { pathToBase64, base64ToPath } from '@/js/image-tools/index.js'
+	
 	export default {
 		data() {
 			return {
@@ -142,13 +149,42 @@
 				})
 
 			},
-			changeHead() {
-				uni.chooseImage({
-					count: 1,
-					success: (res) => {
-						this.user.avatarUrl = res.tempFilePaths[0]
-					}
-				});
+			async changeHead() {
+				var _this = this;
+				
+				const res = await new Promise((resolve, reject) => {
+				  uni.chooseImage({
+				    count: 1, // 选择图片的数量，这里选择1张
+				    sourceType: ['album'], // 选择图片的来源，这里选择相册
+				    success: resolve,
+				    fail: reject,
+				  });
+				});			
+				// 从返回结果中获取选中的图片文件路径
+				const imagePath = res.tempFilePaths[0];
+				
+				
+				const res1 = pathToBase64(imagePath)
+				  .then(base64 => {
+					// console.log(base64)
+					var s = base64.substr(base64.indexOf(',') + 1,base64.length);
+					console.log(s)
+					const result = Axios.post('https://api.superbed.cn/upload', {
+							  token: '1000766339bd4c248a8ad625a87f687d',
+							  b64_data: s,
+							}).then(res =>{
+								console.log("图片上传成功");
+								console.log(res.data.url);
+								_this.user.avatarUrl = res.data.url
+							}).catch(error =>{
+							  console.log(error);
+							  console.log("失败")
+							})
+				  }).catch(error => {
+				    console.error(error)
+				  })
+				
+				
 			},
 			bindSexChange(e) {
 				this.user.sex = this.sex[e.target.value]
