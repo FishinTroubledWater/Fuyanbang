@@ -687,11 +687,11 @@ func UpdateSingleAdminByCondition(db *gorm.DB, where map[string]interface{}, val
 
 func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	err := db.Table("admin").Where(where).Count(&count).Error
+	err := db.Table("user").Where(where).Count(&count).Error
 	if count == 0 && err == nil {
 		return 0, errors.New("要修改的记录不存在")
 	}
-	err = db.Table("admin").Where(where).Updates(values).Count(&count).Error
+	err = db.Table("user").Where(where).Updates(values).Count(&count).Error
 	return count, err
 }
 
