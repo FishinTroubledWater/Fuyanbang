@@ -279,7 +279,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #DCE2F1;
+    background-color: #f9f1db;
   }
 
   .text-area {
