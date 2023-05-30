@@ -3,7 +3,6 @@ package database
 import (
 	"errors"
 	"fmt"
-	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
 	"time"
 )
@@ -624,9 +623,9 @@ func SelectAllFeedbackByPage(db *gorm.DB, query string, pageNum int64, pageSize 
 	var feedbacks []Feedback
 	if query != "" {
 		query = query + "%"
-		db = db.Table("feedback").InnerJoins("Author").Where("account like ?", query).Order("state,id asc").Find(&feedbacks).Count(&count)
+		db = db.Table("feedback").InnerJoins("Author").Where("account like ?", query).Order("state, id asc").Find(&feedbacks).Count(&count)
 	} else {
-		db = db.Table("feedback").InnerJoins("Author").Order("state,id asc").Find(&feedbacks).Count(&count)
+		db = db.Table("feedback").InnerJoins("Author").Order("state, id asc").Find(&feedbacks).Count(&count)
 	}
 	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&feedbacks).Error
 	if count == 0 && err == nil {
@@ -675,7 +674,7 @@ func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Ad
 	var admin Admin
 	err := db.Where(where).First(&admin).Count(&count).Error
 	if count == 0 && err == nil {
-		return admin, 0, errors.New("查询的记录不存在")
+		return admin, 0, errors.New("查询的记录不存在！")
 	}
 	return admin, count, err
 }
@@ -689,7 +688,7 @@ func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, valu
 	var count int64 = 0
 	err := db.Table("user").Where(where).Count(&count).Error
 	if count == 0 && err == nil {
-		return 0, errors.New("要修改的记录不存在")
+		return 0, errors.New("要修改的记录不存在！")
 	}
 	err = db.Table("user").Where(where).Updates(values).Count(&count).Error
 	return count, err
