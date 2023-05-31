@@ -228,6 +228,7 @@
 					}, 1500);
 				}).catch(err => {
 					console.log("失败了。。。");
+					console.log(err);
 				})
 			},
 			onUnload: function() {

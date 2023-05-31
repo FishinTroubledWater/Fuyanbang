@@ -90,11 +90,8 @@ type Post struct {
 	Favorite    int64     `gorm:"column:favorite"`
 	Like        int64     `gorm:"column:like"`
 	PublishTime time.Time `gorm:"column:publishTime"`
-}
-
-type PostImg struct {
-	PostID int64  `gorm:"primaryKey"`
-	Img    string `gorm:"primaryKey"`
+	Title       string    `gorm:"column:title"`
+	CoverUrl    string    `gorm:"column:coverUrl"`
 }
 
 type Recipe struct {
