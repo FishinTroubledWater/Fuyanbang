@@ -543,6 +543,31 @@ func IsExistedFavoriteRecord(db *gorm.DB, postId int64, userId int64) (error, bo
 	return result, isExistedFavoriteRecord
 }
 
+func AddPostFrontend(db *gorm.DB, where map[string]interface{}) (bool, error) {
+	var result *multierror.Error
+	var resultSign bool
+
+	p := Post{
+		AuthorID:    int64(where["userId"].(float64)),
+		Title:       where["title"].(string),
+		Content:     where["content"].(string),
+		PartID:      int64(where["type"].(float64)),
+		Summary:     where["summary"].(string),
+		CoverUrl:    where["img"].(string),
+		PublishTime: time.Now(),
+	}
+
+	err := db.Create(&p).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+		resultSign = false
+	} else {
+		resultSign = true
+	}
+
+	return resultSign, result
+}
+
 // User ------------------------------------------------------------
 
 func SelectUserForLogin(db *gorm.DB, account string, password string) (User, int64, error) {
