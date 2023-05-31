@@ -1,7 +1,7 @@
 <template>
   <div>
     <quill-editor  @change="onEditorChange"
-        id="content" ref="quill"  v-model="value" :options="editorOption">
+        id="content" ref="quill"  v-model="content" :options="editorOption">
     </quill-editor>
   </div>
 </template>
@@ -18,8 +18,14 @@ export default {
       type: String,
     }
   },
+  watch:{
+    content(newContent){
+      this.$emit('update:value',newContent)
+    }
+  },
   data(){
     return {
+      content:this.value,
       editorOption: {
         modules: {
           ImageExtend: {
@@ -37,7 +43,7 @@ export default {
             }, // 可选参数  上传成功触发的事件
             change: (xhr, formData) => {
               // xhr.setRequestHeader('myHeader','myValue')
-              formData.append('token', 'f387bdf137f04651bfa69c18910bc2d6')
+              formData.append('token', '1000766339bd4c248a8ad625a87f687d')
             } // 可选参数 每次选择图片触发，也可用来设置头部，但比headers多了一个参数，可设置formData
           },
           // 如果不上传图片到服务器，此处不必配置
