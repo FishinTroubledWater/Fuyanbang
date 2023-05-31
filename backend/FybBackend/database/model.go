@@ -29,7 +29,7 @@ type Admin struct {
 	ID          int64 `gorm:"column:ID;primaryKey"`
 	Account     string
 	Password    string
-	PhoneNumber string `gorm:"phoneNumber"`
+	PhoneNumber string `gorm:"column:phoneNumber"`
 	Token       string
 }
 
