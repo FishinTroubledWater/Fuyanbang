@@ -77,7 +77,36 @@ export default {
 
     }
   },
-  created() {},
+  created() {
+    this.getPostData(),
+    this.getHomeData()
+  },
+  methods:{
+    // 获取dashboard数据
+    async getPostData() {
+      const {data: res} = await this.axios.get('dashboard/getPostData', {
+        headers: {
+          'Authorization': window.sessionStorage.getItem("token")
+        }
+      });
+      console.log(res)
+      if (res.code !== 200) return this.$message.error('获取数据失败！')
+      // this.commentList = res.data.comments
+      // console.log(this.commentList);
+    },
+    // 获取dashboard数据
+    async getHomeData() {
+      const {data: res} = await this.axios.get('home/getPostData', {
+        headers: {
+          'Authorization': window.sessionStorage.getItem("token")
+        }
+      });
+      console.log(res)
+      if (res.code !== 200) return this.$message.error('获取数据失败！')
+      // this.commentList = res.data.comments
+      // console.log(this.commentList);
+    },
+  },
   //等地页面上元素渲染完毕
   mounted() {
     //文章发布统计分析
@@ -131,8 +160,6 @@ export default {
     chart2.setOption(option2);
   },
 
-
-  methods:{}
 }
 </script>
 

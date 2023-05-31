@@ -55,6 +55,9 @@
         <el-form-item label="用户名" prop="account">
           <el-input v-model="addForm.account"></el-input>
         </el-form-item>
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="addForm.account"></el-input>
+        </el-form-item>
         <el-form-item label="板块" prop="partID">
           <el-select v-model="addForm.partID" placeholder="请选择">
             <el-option
@@ -73,7 +76,8 @@
           <el-input type="textarea" v-model="addForm.summary" :rows="5"  resize="none"></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <quill-editor v-model="addForm.content"></quill-editor>
+<!--          <quill-editor v-model="addForm.content"></quill-editor>-->
+          <Editor :value.sync="addForm.content"></Editor>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -105,7 +109,8 @@
           <el-input type="textarea" v-model="editForm.Summary" :rows="5"  resize="none"></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="Content">
-          <quill-editor v-model="editForm.Content"></quill-editor>
+<!--          <quill-editor v-model="editForm.Content"></quill-editor>-->
+          <Editor :value.sync="editForm.Content"></Editor>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -192,6 +197,7 @@ export default {
         account: '',
         partID: '1',
         summary: '',
+        title:'',
         state: '0',
         content:''
       },
@@ -200,6 +206,9 @@ export default {
         account: [
           {required: true, message: '请输入用户名', trigger: 'blur'},
           {min: 3, max: 10, message: '用户名的长度在3~10个字符间', trigger: 'blur'}
+        ],
+        title: [
+          {required: true, message: '标题不能为空', trigger: 'blur'},
         ],
       },
       //表格配置
