@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
+	"strconv"
 	"time"
 )
 
@@ -235,7 +236,6 @@ func SearchCommentByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
 	whereMap["ID"] = queId
 	whereMap["partID"] = 2
 	_, count, err := SelectSingleQueByCondition(db, whereMap)
-	fmt.Println(count)
 	if count == 0 {
 		result = multierror.Append(result, errors.New("帖子id不是问题！"))
 	}
@@ -250,6 +250,29 @@ func SearchCommentByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
 		result = multierror.Append(result, err)
 	}
 	return count, comments, result
+}
+
+func GetAdoptedAnswerByQueId(db *gorm.DB, queId int64) (string, error) {
+	var result *multierror.Error
+	var adoptRecord AdoptRecord
+	var count int64 = 0
+	err := db.Where("postId = ? ", queId).Find(&adoptRecord).Count(&count).Error
+	if count == 0 && err == nil {
+		result = multierror.Append(result, errors.New("要删除的记录不存在"))
+	}
+	return adoptRecord.CommentId, result
+}
+
+func AddAdoptRecord(db *gorm.DB, queId int64, answerId int64) (bool, error) {
+	adoptRecord := AdoptRecord{
+		PostId:    strconv.FormatInt(queId, 10),
+		CommentId: strconv.FormatInt(answerId, 10),
+	}
+	err := db.Create(&adoptRecord).Error
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
 // Recipe
@@ -744,7 +767,7 @@ func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
 	var result *multierror.Error
 	var posts []Post
 	var count int64
-	err := db.Preload("Author").Where("ID = ? ", queId).Find(&posts).Count(&count).Error
+	err := db.Preload("Author").Where("ID = ? and partID = 2", queId).Find(&posts).Count(&count).Error
 	if count == 0 {
 		result = multierror.Append(result, errors.New("找不到该问题！"))
 	}
@@ -801,6 +824,11 @@ func UpdateFavoriteByCondition(db *gorm.DB, where map[string]interface{}) (bool,
 			resultSign = false
 		} else {
 			resultSign = true
+			err = db.Table("post").Where("id = ?", where["articleID"]).UpdateColumn("favorite", gorm.Expr("favorite - ?", 1)).Error
+			if err != nil {
+				result = multierror.Append(result, err)
+				resultSign = false
+			}
 		}
 
 	} else if where["isCollected"] == "true" {
@@ -814,6 +842,11 @@ func UpdateFavoriteByCondition(db *gorm.DB, where map[string]interface{}) (bool,
 			resultSign = false
 		} else {
 			resultSign = true
+			err = db.Table("post").Where("id = ?", where["articleID"]).UpdateColumn("favorite", gorm.Expr("favorite + ?", 1)).Error
+			if err != nil {
+				result = multierror.Append(result, err)
+				resultSign = false
+			}
 		}
 
 	}
@@ -840,6 +873,11 @@ func UpdateLikeByCondition(db *gorm.DB, where map[string]interface{}) (bool, err
 			resultSign = false
 		} else {
 			resultSign = true
+			err = db.Table("post").Where("id = ?", where["postId"]).UpdateColumn("`like`", gorm.Expr("`like` - ?", 1)).Error
+			if err != nil {
+				result = multierror.Append(result, err)
+				resultSign = false
+			}
 		}
 
 	} else if where["isLiked"] == "true" {
@@ -853,6 +891,11 @@ func UpdateLikeByCondition(db *gorm.DB, where map[string]interface{}) (bool, err
 			resultSign = false
 		} else {
 			resultSign = true
+			err = db.Table("post").Where("id = ?", where["postId"]).UpdateColumn("`like`", gorm.Expr("`like` + ?", 1)).Error
+			if err != nil {
+				result = multierror.Append(result, err)
+				resultSign = false
+			}
 		}
 
 	}

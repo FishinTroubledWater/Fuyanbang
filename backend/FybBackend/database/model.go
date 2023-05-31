@@ -92,6 +92,7 @@ type Post struct {
 	PublishTime time.Time `gorm:"column:publishTime"`
 	Title       string    `gorm:"column:title"`
 	CoverUrl    string    `gorm:"column:coverUrl"`
+	Reward      int64     `gorm:"column:reward"`
 }
 
 type Recipe struct {
@@ -105,15 +106,14 @@ type Recipe struct {
 }
 
 type Comment struct {
-	ID            int64     `gorm:"column:ID;primaryKey"`
-	UserID        string    `gorm:"column:userID"`
-	Content       string    `gorm:"column:content"`
-	CommentNum    int64     `gorm:"column:CommentNum"`
-	TargetPost    int64     `gorm:"column:targetPost"`
-	TargetComment int64     `gorm:"column:targetComment"`
-	PublishTime   time.Time `gorm:"column:publishTime"`
-	State         int64     `gorm:"column:state"`
-	Author        User      `gorm:"foreignKey:UserID"`
+	ID          int64     `gorm:"column:ID;primaryKey"`
+	UserID      string    `gorm:"column:userID"`
+	Content     string    `gorm:"column:content"`
+	CommentNum  int64     `gorm:"column:CommentNum"`
+	TargetPost  int64     `gorm:"column:targetPost"`
+	PublishTime time.Time `gorm:"column:publishTime"`
+	State       int64     `gorm:"column:state"`
+	Author      User      `gorm:"foreignKey:UserID"`
 }
 
 type Feedback struct {
@@ -139,4 +139,10 @@ type LikeRecord struct {
 	PostId string `gorm:"column:postId"`
 	Post   Post   `gorm:"foreignKey:postId"`
 	Author User   `gorm:"foreignKey:UserId"`
+}
+
+type AdoptRecord struct {
+	ID        int64  `gorm:"column:ID;primaryKey"`
+	PostId    string `gorm:"column:postId;primaryKey"`
+	CommentId string `gorm:"column:commentId;primaryKey"`
 }

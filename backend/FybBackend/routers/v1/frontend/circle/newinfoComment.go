@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"net/http"
+	"time"
 )
 
 func SearchNewInfoComment(e *gin.Engine) {
@@ -34,7 +35,12 @@ func SearchNewInfoComment(e *gin.Engine) {
 			}
 
 			commentMap["name"] = commentMap["Author"].(map[string]interface{})["NickName"]
-			commentMap["time"] = commentMap["PublishTime"]
+			if publishTime, ok := commentMap["PublishTime"].(string); ok {
+				t, err := time.Parse(time.RFC3339, publishTime)
+				if err == nil {
+					commentMap["time"] = t.Format("2006.01.02 15:04:05")
+				}
+			}
 			commentMap["icon"] = commentMap["Author"].(map[string]interface{})["AvatarUrl"]
 			commentMap["content"] = commentMap["Content"]
 			delete(commentMap, "Content")

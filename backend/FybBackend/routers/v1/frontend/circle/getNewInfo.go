@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func SearchByName(e *gin.Engine) {
@@ -42,8 +43,12 @@ func SearchByName(e *gin.Engine) {
 
 			authorname := postMap["Author"].(map[string]interface{})["NickName"]
 			postMap["name"] = authorname
-			postMap["time"] = postMap["PublishTime"]
-
+			if publishTime, ok := postMap["PublishTime"].(string); ok {
+				t, err := time.Parse(time.RFC3339, publishTime)
+				if err == nil {
+					postMap["time"] = t.Format("2006.01.02 15:04:05")
+				}
+			}
 			postMap["postId"] = postMap["ID"]
 			postMap["isImage"] = "false"
 			postMap["summary"] = postMap["Summary"]
