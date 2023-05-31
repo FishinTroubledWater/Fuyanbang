@@ -243,9 +243,6 @@ func SearchCommentByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
 		result = multierror.Append(result, err)
 	}
 	err = db.Preload("Author").Where("targetPost = ? ", queId).Order("publishTime DESC").Find(&comments).Count(&count).Error
-	if count == 0 {
-		result = multierror.Append(result, errors.New("找不到该问题！"))
-	}
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
@@ -257,8 +254,8 @@ func GetAdoptedAnswerByQueId(db *gorm.DB, queId int64) (string, error) {
 	var adoptRecord AdoptRecord
 	var count int64 = 0
 	err := db.Where("postId = ? ", queId).Find(&adoptRecord).Count(&count).Error
-	if count == 0 && err == nil {
-		result = multierror.Append(result, errors.New("要删除的记录不存在"))
+	if err != nil {
+		result = multierror.Append(result, err)
 	}
 	return adoptRecord.CommentId, result
 }
@@ -610,17 +607,43 @@ func AddPostFrontend(db *gorm.DB, where map[string]interface{}) (bool, error) {
 	var result *multierror.Error
 	var resultSign bool
 
-	p := Post{
-		AuthorID:    int64(where["userId"].(float64)),
-		Title:       where["title"].(string),
-		Content:     where["content"].(string),
-		PartID:      int64(where["type"].(float64)),
-		Summary:     where["summary"].(string),
-		CoverUrl:    where["img"].(string),
-		PublishTime: time.Now(),
-	}
+	userId := int64(where["userId"].(float64))
+	title := where["title"].(string)
+	content := where["content"].(string)
+	partId := int64(where["type"].(float64))
+	summary := where["summary"].(string)
+	coverUrl := where["img"].(string)
+	reward := int64(where["reward"].(float64))
 
-	err := db.Create(&p).Error
+	err := db.Transaction(func(tx *gorm.DB) error {
+		// 创建帖子记录
+		post := Post{
+			AuthorID:    userId,
+			Title:       title,
+			Content:     content,
+			PartID:      partId,
+			Summary:     summary,
+			CoverUrl:    coverUrl,
+			PublishTime: time.Now(),
+			Reward:      reward,
+		}
+		if err := tx.Create(&post).Error; err != nil {
+			return err
+		}
+
+		// 更新用户余额
+		user := User{}
+		if err := tx.Where("ID = ?", userId).First(&user).Error; err != nil {
+			return err
+		}
+		user.Balance -= reward
+		if err := tx.Save(&user).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
+
 	if err != nil {
 		result = multierror.Append(result, err)
 		resultSign = false

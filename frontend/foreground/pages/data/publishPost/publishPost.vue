@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view>
-			<input class="uniInput" placeholder-style="color:#c7c7c7" focus placeholder="标题 (6-30字之间) " v-model="title" />
+			<input class="uniInput" placeholder-style="color:#c7c7c7" focus placeholder="标题 (1-30字之间) " v-model="title" />
 		</view>
 		<view class="container">
 			<editor id="editor" class="qlContainer" :placeholder="placeholder" @input="getText" @ready="onEditorReady"></editor>
@@ -9,8 +9,15 @@
 		<view class="selectForm">
 			<picker @change="bindPickerChange1" :range="array1" :value="index1" class="selectFormItem">
 				<label class="">{{array1[index1]}}</label>
-				<label class="downArrow"> ∨ </label>
+				<!-- <label class="downArrow"> ∨ </label> -->
+				<label class="down">
+					<image class="downArrow" src="@/static/academy-icons/down.png"></image>
+				</label>
 			</picker>
+			<view class="inputNum" v-show="isShow">
+				<label>请输入悬赏的金额：</label>
+				<input type='number' v-model="num" class="intext" />
+			</view>
 		</view>
 		<view class="operator">
 			<button @click="chooseImage1()" class="uploadingBtn">上传图片</button>
@@ -41,6 +48,10 @@
 				type: 0,
 				baseImageList:[],
 				img: '@/static/academy-icons/sight.png',
+				reward: 0,
+				num: 0,
+				isShow: false,
+				coin: 0,
 	        }
 	    },
 	    methods: {
@@ -49,6 +60,8 @@
 				this.jg = this.array1[this.index1];
 				// this.type = this.array1[this.index1];
 				this.type = this.index1;
+				if(this.index1 == 2) this.isShow = true
+				else this.isShow = false
 			},
 	        onEditorReady() {
 	            uni.createSelectorQuery().select('#editor').context((res) => {
@@ -74,6 +87,14 @@
 						duration: 2000    //持续时间为 2秒
 					})  
 				}
+				else if(this.title.length <= 0 || this.title.length >= 31){
+					console.log("标题的字数请控制在1-30之间");
+					uni.showToast({
+						title: '标题的字数请控制在1-30之间',
+						icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+						duration: 2000    //持续时间为 2秒
+					})  
+				}
 				else if(this.context == ""){
 					console.log("请输入文章内容");
 					uni.showToast({
@@ -91,12 +112,63 @@
 					})  
 				}
 				else {
+					// if(typeof(this.num) != "number") {
+					// 	console.log("悬赏金额只能是数字");
+					// 	uni.showToast({
+					// 		title: '悬赏金额只能是数字',
+					// 		icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+					// 		duration: 2000    //持续时间为 2秒
+					// 	}) 
+					// }
+					if(this.index1 == 2 && this.num < 0) {
+						console.log("悬赏的金额不能小于0");
+						uni.showToast({
+							title: '悬赏的金额不能小于0',
+							icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+							duration: 2000    //持续时间为 2秒
+						}) 
+					}
+					else if (this.coin < this.num) {
+						console.log("您的学币不足");
+						uni.showToast({
+							title: '您的学币不足',
+							icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+							duration: 2000    //持续时间为 2秒
+						}) 
+					}
+					else{
+						this.reward = this.num;
+					}
 					console.log("作者id：" + this.id);
 					console.log("文章类型：" + this.type);
 					console.log("标题：" + this.title);
 					console.log("内容：" + this.context);
 					console.log("图片地址：" + this.img)
 					console.log("简介：" + this.synopsis)
+					console.log("悬赏数额：" + this.num)
+					uni.$u.http.post('/v1/frontend/circle/uploadPost', {
+						userId: this.id,
+						title: this.title,
+						content: this.context,
+						type: this.type,
+						summary: this.synopsis,
+						img: this.img,
+						reward: this.reward,
+					}).then(res => {
+						console.log("发布成功")
+						uni.showToast({
+							title: '发布成功',
+							icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+							duration: 2000    //持续时间为 2秒
+						}) 
+					}).catch(err => {
+						console.log("发布失败")
+						uni.showToast({
+							title: '发布失败',
+							icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+							duration: 2000    //持续时间为 2秒
+						}) 
+					})
 				}
 			},
 			async chooseImage1(){
@@ -264,6 +336,15 @@
 					// 成功后的回调
 					this.id = res.data;
 					console.log(this.id)
+					uni.$u.http.get('v1/frontend/user/basicUserInfo?id='+this.id, {
+					
+					}).then(res => {
+						console.log("获取学币成功！");
+						this.coin = res.data.data.user.Balance;
+					
+					}).catch(err => {
+						console.log("获取学币失败！！！");
+					})
 				}
 			})
 		}
@@ -285,6 +366,12 @@
 }
 #editor {
 	
+}
+.downArrow{
+	margin-left: 5rpx;
+	// padding-top: 10rpx;
+	height: 20rpx;
+	width: 20rpx;
 }
 .qlContainer{
 	height: calc(100vh - 460rpx);
@@ -334,5 +421,18 @@
 }
 .downArrow{
 	margin-left: 20rpx;
+}
+.inputNum{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 100rpx;
+}
+.intext{
+	text-align:center;
+	width: 100rpx;
+	background-color: #f1f1f1;
+	border-radius: 10rpx;
+	border: 1rpx solid #E0E3DA;
 }
 </style>

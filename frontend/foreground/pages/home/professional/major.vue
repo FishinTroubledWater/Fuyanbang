@@ -84,21 +84,21 @@
 			})
 		},
 		onShow(){
-			let pages = getCurrentPages();
-			let currPage = pages[pages.length - 1];
-			if(currPage.searchContent && currPage.searchContent != '') {
-				this.majorName = currPage.searchContent;
-				uni.$u.http.get('/v1/frontend/major/searchByName/' + this.majorName, {
+			// let pages = getCurrentPages();
+			// let currPage = pages[pages.length - 1];
+			// if(currPage.searchContent && currPage.searchContent != '') {
+			// 	this.majorName = currPage.searchContent;
+			// 	uni.$u.http.get('/v1/frontend/major/searchByName/' + this.majorName, {
 							
-				}).then(res => {
-					this.mes = res.data.data;
-					console.log(this.mes);
-				}).catch(err => {
-					this.mes = [];
-				})
-				console.log(this.majorName)
-				currPage.searchContent = '';
-			}
+			// 	}).then(res => {
+			// 		this.mes = res.data.data;
+			// 		console.log(this.mes);
+			// 	}).catch(err => {
+			// 		this.mes = [];
+			// 	})
+			// 	console.log(this.majorName)
+			// 	currPage.searchContent = '';
+			// }
 		},
 		methods: {
 			bindPickerChange1: function(e) {
@@ -219,7 +219,23 @@
 			// 		console.log(res.data);   // hello  这里可做赋值的操作
 			// 	}
 			// })
-
+			uni.$on('refreshData1',() => {
+				let pages = getCurrentPages();
+				let currPage = pages[pages.length - 1];
+				if(currPage.searchContent && currPage.searchContent != '') {
+					this.majorName = currPage.searchContent;
+					uni.$u.http.get('/v1/frontend/major/searchByName/' + this.majorName, {
+								
+					}).then(res => {
+						this.mes = res.data.data;
+						console.log(this.mes);
+					}).catch(err => {
+						this.mes = [];
+					})
+					console.log(this.majorName)
+					currPage.searchContent = '';
+				}
+			})
 		}
 	}
 </script>
