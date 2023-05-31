@@ -264,14 +264,54 @@ func GetAdoptedAnswerByQueId(db *gorm.DB, queId int64) (string, error) {
 }
 
 func AddAdoptRecord(db *gorm.DB, queId int64, answerId int64) (bool, error) {
+	tx := db.Begin()
+
 	adoptRecord := AdoptRecord{
 		PostId:    strconv.FormatInt(queId, 10),
 		CommentId: strconv.FormatInt(answerId, 10),
 	}
-	err := db.Create(&adoptRecord).Error
+	err := tx.Create(&adoptRecord).Error
 	if err != nil {
+		tx.Rollback()
 		return false, err
 	}
+
+	var post Post
+	err = tx.Where("ID = ?", queId).First(&post).Error
+	if err != nil {
+		tx.Rollback()
+		return false, err
+	}
+
+	reward := post.Reward
+
+	var comment Comment
+	err = tx.Where("ID = ?", answerId).First(&comment).Error
+	if err != nil {
+		tx.Rollback()
+		return false, err
+	}
+
+	var user User
+	err = tx.Where("ID = ?", comment.UserID).First(&user).Error
+	if err != nil {
+		tx.Rollback()
+		return false, err
+	}
+
+	err = tx.Model(&Post{}).Where("ID = ?", queId).Update("Reward", 0).Error
+	if err != nil {
+		tx.Rollback()
+		return false, err
+	}
+
+	err = tx.Model(&User{}).Where("ID = ?", comment.UserID).Update("Balance", user.Balance+reward).Error
+	if err != nil {
+		tx.Rollback()
+		return false, err
+	}
+
+	tx.Commit()
 	return true, nil
 }
 
