@@ -29,12 +29,17 @@ func SearchQueAnswer(e *gin.Engine) {
 			result = multierror.Append(result, err)
 		}
 
-		adoptedId, err = fybDatabase.GetAdoptedAnswerByQueId(db, queIdInt64)
-		if err != nil {
-			result = multierror.Append(result, err)
+		if len(comments) > 0 {
+			adoptedId, err = fybDatabase.GetAdoptedAnswerByQueId(db, queIdInt64)
+			if err != nil {
+				result = multierror.Append(result, err)
+			}
+		} else {
+			adoptedId = ""
 		}
 
 		var responseBody []map[string]interface{}
+		responseBody = make([]map[string]interface{}, 0)
 		if count > 0 {
 			for i := range comments {
 				data, err := json.Marshal(&comments[i])
@@ -51,9 +56,9 @@ func SearchQueAnswer(e *gin.Engine) {
 				answerIDStr := strconv.FormatInt(answerID, 10) // 将int64转换为字符串
 
 				if adoptedId == answerIDStr {
-					postMap["isAccepted"] = true
+					postMap["isAccepted"] = "已采纳"
 				} else {
-					postMap["isAccepted"] = false
+					postMap["isAccepted"] = "未采纳"
 				}
 
 				postMap["answerId"] = postMap["ID"]
@@ -80,7 +85,7 @@ func SearchQueAnswer(e *gin.Engine) {
 			}
 		}
 
-		if result.ErrorOrNil() == nil && count > 0 {
+		if result.ErrorOrNil() == nil && count >= 0 {
 			context.JSON(http.StatusOK, gin.H{
 				"code":    200,
 				"message": "请求成功",
@@ -90,7 +95,7 @@ func SearchQueAnswer(e *gin.Engine) {
 			context.JSON(http.StatusNotFound, gin.H{
 				"code":    404,
 				"message": result.Error(),
-				"data":    nil,
+				"data":    responseBody,
 			})
 		}
 	})

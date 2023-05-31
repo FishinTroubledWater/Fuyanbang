@@ -403,7 +403,9 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 
 <style lang="scss">
 .container{
-	background-image: linear-gradient(179deg,#83a4d488,#b6fbff88);
+	// background-image: linear-gradient(179deg,#83a4d488,#b6fbff88);
+	// background-image: linear-gradient(178deg, #bac8ff, #c3fae855);
+	background-color: #fafafa;
 }
 .wordSpace{
 	letter-spacing: 4rpx;
@@ -426,7 +428,6 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 	// padding-top: 10rpx;
 	height: 20rpx;
 	width: 20rpx;
-	
 }
 .searchAcademy{
 	background-color: #efefef55;
@@ -455,7 +456,7 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 	/* 边 */
 	border: 1rpx solid #E0E3DA;
 	/* 阴影 */
-	box-shadow:2rpx 7rpx 0rpx #ebebeb;
+	box-shadow:2rpx 7rpx 0rpx #d4d4d4;
 	
 	background-color: #ffffff88;
 	margin-left:30rpx;

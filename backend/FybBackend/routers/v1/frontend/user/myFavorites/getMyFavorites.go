@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func SearchNewQue(e *gin.Engine) {
@@ -40,13 +41,20 @@ func SearchNewQue(e *gin.Engine) {
 
 				articleMap := postMap["Article"].(map[string]interface{})
 				postMap["id"] = articleMap["ID"]
-				postMap["publishTime"] = articleMap["PublishTime"]
+				if publishTime, ok := postMap["PublishTime"].(string); ok {
+					t, err := time.Parse(time.RFC3339, publishTime)
+					if err == nil {
+						postMap["time"] = t.Format("2006.01.02 15:04:05")
+					}
+				}
 				postMap["partID"] = articleMap["PartID"]
-				postMap["title"] = articleMap["Summary"]
+				postMap["title"] = articleMap["Title"]
 				postMap["favorite"] = articleMap["Favorite"]
 				postMap["like"] = articleMap["Like"]
-				postMap["content"] = articleMap["Content"]
+				postMap["content"] = articleMap["Summary"]
 				delete(postMap, "ArticleID")
+				delete(postMap, "Summary")
+				delete(postMap, "Title")
 				delete(postMap, "ArticleType")
 				delete(postMap, "Article")
 				delete(postMap, "Author")

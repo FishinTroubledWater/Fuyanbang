@@ -8075,7 +8075,6 @@ try {
     uRow: __webpack_require__(/*! uview-ui/components/u-row/u-row.vue */ 132).default,
     uCol: __webpack_require__(/*! uview-ui/components/u-col/u-col.vue */ 140).default,
     uIcon: __webpack_require__(/*! uview-ui/components/u-icon/u-icon.vue */ 36).default,
-    "u-Text": __webpack_require__(/*! uview-ui/components/u--text/u--text.vue */ 148).default,
   }
 } catch (e) {
   if (
@@ -8231,20 +8230,23 @@ var render = function () {
         },
         [_vm._v("回答:")]
       ),
-      _vm._l(_vm._$g(16, "f"), function (item, index, $20, $30) {
-        return _c(
-          "uni-card",
-          {
-            key: item,
-            staticClass: _vm._$g("16-" + $30, "sc"),
-            attrs: { _i: "16-" + $30 },
-          },
-          [_c("u--text", { attrs: { _i: "17-" + $30 } })],
-          1
-        )
-      }),
+      _vm._v('" :text="item.answer">'),
+      _c(
+        "u-row",
+        { attrs: { _i: 16 } },
+        [
+          _c(
+            "u-col",
+            { attrs: { _i: 17 } },
+            [_c("v-uni-text", { attrs: { _i: 18 } }, [_vm._v("回答状态：")])],
+            1
+          ),
+          _c("u-col", { attrs: { _i: 19 } }),
+        ],
+        1
+      ),
     ],
-    2
+    1
   )
 }
 var recyclableRender = false
@@ -8429,6 +8431,8 @@ try {
       .default,
     uniCard: __webpack_require__(/*! @/components/uni-card/uni-card.vue */ 105).default,
     "u-Text": __webpack_require__(/*! uview-ui/components/u--text/u--text.vue */ 148).default,
+    uRow: __webpack_require__(/*! uview-ui/components/u-row/u-row.vue */ 132).default,
+    uCol: __webpack_require__(/*! uview-ui/components/u-col/u-col.vue */ 140).default,
   }
 } catch (e) {
   if (
@@ -8604,7 +8608,34 @@ var render = function () {
                             },
                           },
                         },
-                        [_c("u--text", { attrs: { _i: "20-" + $31 } })],
+                        [
+                          _c("u--text", { attrs: { _i: "20-" + $31 } }),
+                          _c(
+                            "u-row",
+                            { attrs: { _i: "21-" + $31 } },
+                            [
+                              _c(
+                                "u-col",
+                                { attrs: { _i: "22-" + $31 } },
+                                [
+                                  _c(
+                                    "v-uni-text",
+                                    { attrs: { _i: "23-" + $31 } },
+                                    [_vm._v("悬赏学币：")]
+                                  ),
+                                ],
+                                1
+                              ),
+                              _c(
+                                "u-col",
+                                { attrs: { _i: "24-" + $31 } },
+                                [_c("u--text", { attrs: { _i: "25-" + $31 } })],
+                                1
+                              ),
+                            ],
+                            1
+                          ),
+                        ],
                         1
                       ),
                     ],
@@ -9066,17 +9097,27 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 
 
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 118);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _uniCard = _interopRequireDefault(__webpack_require__(/*! ../../uni_modules/uni-card/uni-card.vue */ 171));
+var _uniSteps = _interopRequireDefault(__webpack_require__(/*! ../../uni_modules/uni-steps/uni-steps.vue */ 179));
+var _uniIcons = _interopRequireDefault(__webpack_require__(/*! ../../uni_modules/uni-icons/uni-icons.vue */ 197));
+var _uniSection = _interopRequireDefault(__webpack_require__(/*! ../../uni_modules/uni-section/uni-section.vue */ 206));
 var _default = {
   data: function data() {
     return {
       wxsProps: {}
     };
   },
-  components: {}
+  components: {
+    'uCard': _uniCard.default,
+    'uSteps': _uniSteps.default,
+    'uniIcons': _uniIcons.default,
+    'uSection': _uniSection.default
+  }
 };
 exports.default = _default;
 
@@ -9338,7 +9379,12 @@ var render = function () {
                 "my-card",
                 {
                   staticClass: _vm._$g(16, "sc"),
-                  staticStyle: { height: "600rpx" },
+                  staticStyle: {
+                    height: "600rpx",
+                    "border-radius": "24rpx",
+                    "box-shadow": "5rpx 5rpx 5rpx #646464",
+                    border: "none",
+                  },
                   attrs: { _i: 16 },
                   on: {
                     click: function ($event) {
@@ -9391,8 +9437,11 @@ var render = function () {
                   staticClass: _vm._$g(25, "sc"),
                   staticStyle: {
                     "margin-bottom": "-16rpx",
+                    "border-radius": "24rpx",
+                    "box-shadow": "5rpx 5rpx 5rpx #646464",
+                    border: "none",
                     "background-image":
-                      "linear-gradient(270deg, #614385ee, #516395ee)",
+                      "linear-gradient(313deg,#36d1dc,#5b86e5)",
                   },
                   attrs: { _i: 25 },
                   on: {
@@ -9432,8 +9481,11 @@ var render = function () {
                 {
                   staticClass: _vm._$g(31, "sc"),
                   staticStyle: {
+                    "border-radius": "24rpx",
+                    "box-shadow": "5rpx 5rpx 5rpx #646464",
+                    border: "none",
                     "background-image":
-                      "linear-gradient(270deg, #614385ee, #516395ee)",
+                      "linear-gradient(341deg,#f5b502aa,#f8b500)",
                   },
                   attrs: { _i: 31 },
                   on: {
@@ -11256,7 +11308,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* 整体内容样式 */\n.content {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  background-image: linear-gradient(178deg, #bac8ff, #c3fae855);\n}\n.text-area {\n  display: flex;\n  justify-content: center;\n}\n/* 倒计时样式 */\n.header-box {\n  margin: 20rpx 0rpx 10rpx 0rpx;\n  border-radius: 20rpx;\n  width: 672rpx;\n  opacity: 0.8;\n  box-shadow: 5rpx 5rpx 5rpx #646464;\n  /* 背景图片 */\n  /* background: url('../../static/FZU_building.jpg') no-repeat; */\n  /* background-size: 100%; */\n  /* background-attachment: fixed; */\n  background-image: linear-gradient(135deg, #614385, #516395);\n}\n/* 时间轴 */\n.timeline {\n  margin: 30rpx 0rpx;\n  color: #ffffff;\n}\n/* 标签栏样式 */\n.tabs-box {\n  margin: 2rpx 2rpx;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n/* 卡片按钮 */\n.tabs-box-item {\n  opacity: 0.7;\n  border-radius: 32rpx;\n  background-image: linear-gradient(90deg, #614385ee, #516395ee);\n}\n/* 最新动态样式 */\n.trends-box {\n  border-radius: 20rpx;\n  margin: 6rpx 0rpx;\n  width: 646rpx;\n}\n.trends-box-title {\n  /*    margin: 6rpx 16rpx; */\n  margin-left: 16rpx;\n  margin-bottom: 20rpx;\n  font-size: 34rpx;\n  color: #3F3F3F;\n  font-weight: 700;\n  /* \tfont-family: \"思源黑体\"; */\n}\n.trends-box-item {\n  opacity: 0.8;\n  width: 680rpx;\n}\n.downloading {\n  width: 100%;\n  margin-top: 16px;\n}\n.countDown {\n  width: 420rpx;\n  font-family: \"思源黑体\";\n  font-weight: 600;\n}\n.yearDown {\n  width: 320rpx;\n  font-family: \"思源黑体\";\n  font-size: 32rpx;\n  padding-left: 24rpx;\n}\n/*  .remark {\n  margin-top: 50rpx;\n  margin-left: 25rpx;\n  width: 500rpx;\n  color: #f5f5f5;\n  font-size: 28rpx;\n  font-family: \"思源黑体\";\n} */\n.viewUser {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  margin-top: 15rpx;\n}\n.viewSaid {\n  height: auto;\n  width: 600rpx;\n\n  /* 圆角 */\n  border-radius: 20rpx;\n\n  /* 边 */\n  border: 1rpx solid #E0E3DA;\n  /* 阴影 */\n  box-shadow: 6rpx 6rpx 8rpx #ebebeb;\n\n  background-color: #ffffff;\n  margin-left: 4rpx;\n  margin-top: 24rpx;\n\n  /* padding使得文字和图片不至于贴着边框 */\n  padding: 16rpx;\n}\n.headPortrait {\n  height: 100rpx;\n  width: 100rpx;\n  border-radius: 50%;\n}\n.userMes {\n  margin-left: 16rpx;\n  display: flex;\n  flex-direction: column;\n  width: 270rpx;\n}\n.userName {\n  font-size: 30rpx;\n  font-family: \"黑体\";\n}\n.saidContent {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n}\n.textContent {\n  width: 450rpx;\n  margin-top: 0rpx;\n  margin-right: 20rpx;\n  font-size: 20rpx;\n}\n.sights {\n  float: right;\n  width: 190rpx;\n  height: 125rpx;\n  border-radius: 18rpx;\n}\n.publishTime {\n  font-size: 20rpx;\n  color: #9A9A9A;\n  margin-left: 32rpx;\n}\n.title {\n  font-size: 36rpx;\n  font-weight: 600;\n  margin-left: 10rpx;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t/* 整体内容样式 */\n.content {\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\talign-items: center;\n\t\tjustify-content: center;\n\t\tbackground-image: linear-gradient(178deg, #7f7fd5, #c3fae855, #c3fae855);\n\t\t/* background-color: #fafafa; */\n}\n.text-area {\n\t\tdisplay: flex;\n\t\tjustify-content: center;\n}\n\t/* 倒计时样式 */\n.header-box {\n\t\tmargin: 80rpx 0rpx 10rpx 0rpx;\n\t\tborder-radius: 20rpx;\n\t\twidth: 672rpx;\n\t\topacity: 0.8;\n\t\tbox-shadow: 5rpx 5rpx 5rpx #646464;\n\t\t/* 背景图片 */\n\t\t/* background: url('../../static/FZU_building.jpg') no-repeat; */\n\t\t/* background-size: 100%; */\n\t\t/* background-attachment: fixed; */\n\t\tbackground-image: linear-gradient(135deg, #614385, #516395);\n}\n\t/* 时间轴 */\n.timeline {\n\t\tmargin: 30rpx 0rpx;\n\t\tcolor: #ffffff;\n}\n\t/* 标签栏样式 */\n.tabs-box {\n\t\tmargin: 2rpx 2rpx;\n\t\tdisplay: flex;\n\t\tjustify-content: center;\n\t\talign-items: center;\n}\n\t/* 卡片按钮 */\n.tabs-box-item {\n\t\topacity: 0.7;\n\t\tborder-radius: 24rpx;\n\t\tbox-shadow: 5rpx 5rpx 5rpx #646464;\n\t\tbackground-image: linear-gradient(315deg, #f0908d, #f05053);\n}\n\t/* 最新动态样式 */\n.trends-box {\n\t\tborder-radius: 20rpx;\n\t\tmargin: 6rpx 0rpx;\n\t\twidth: 646rpx;\n}\n.trends-box-title {\n\t\t/*    margin: 6rpx 16rpx; */\n\t\tmargin-left: 16rpx;\n\t\tmargin-bottom: 20rpx;\n\t\tfont-size: 34rpx;\n\t\tcolor: #3F3F3F;\n\t\tfont-weight: 700;\n\t\t/* \tfont-family: \"思源黑体\"; */\n}\n.trends-box-item {\n\t\topacity: 0.8;\n\t\twidth: 680rpx;\n}\n.downloading {\n\t\twidth: 100%;\n\t\tmargin-top: 16px;\n}\n.countDown {\n\t\twidth: 420rpx;\n\t\tfont-family: \"思源黑体\";\n\t\tfont-weight: 600;\n}\n.yearDown {\n\t\twidth: 320rpx;\n\t\tfont-family: \"思源黑体\";\n\t\tfont-size: 32rpx;\n\t\tpadding-left: 24rpx;\n}\n\t/*  .remark {\n    margin-top: 50rpx;\n    margin-left: 25rpx;\n    width: 500rpx;\n    color: #f5f5f5;\n    font-size: 28rpx;\n    font-family: \"思源黑体\";\n  } */\n.viewUser {\n\t\tdisplay: flex;\n\t\tflex-direction: row;\n\t\talign-items: center;\n\t\tmargin-top: 15rpx;\n}\n.viewSaid {\n\t\theight: auto;\n\t\twidth: 600rpx;\n\n\t\t/* 圆角 */\n\t\tborder-radius: 20rpx;\n\n\t\t/* 边 */\n\t\tborder: 1rpx solid #E0E3DA;\n\t\t/* 阴影 */\n\t\tbox-shadow: 6rpx 6rpx 8rpx #ebebeb;\n\n\t\tbackground-color: #ffffff;\n\t\tmargin-left: 4rpx;\n\t\tmargin-top: 24rpx;\n\n\t\t/* padding使得文字和图片不至于贴着边框 */\n\t\tpadding: 16rpx;\n}\n.headPortrait {\n\t\theight: 100rpx;\n\t\twidth: 100rpx;\n\t\tborder-radius: 50%;\n}\n.userMes {\n\t\tmargin-left: 16rpx;\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n\t\twidth: 270rpx;\n}\n.userName {\n\t\tfont-size: 30rpx;\n\t\tfont-family: \"黑体\";\n}\n.saidContent {\n\t\tdisplay: flex;\n\t\tflex-direction: row;\n\t\talign-items: center;\n}\n.textContent {\n\t\twidth: 450rpx;\n\t\tmargin-top: 0rpx;\n\t\tmargin-right: 20rpx;\n\t\tfont-size: 20rpx;\n}\n.sights {\n\t\tfloat: right;\n\t\twidth: 190rpx;\n\t\theight: 125rpx;\n\t\tborder-radius: 18rpx;\n}\n.publishTime {\n\t\tfont-size: 20rpx;\n\t\tcolor: #9A9A9A;\n\t\tmargin-left: 32rpx;\n}\n.title {\n\t\tfont-size: 36rpx;\n\t\tfont-weight: 600;\n\t\tmargin-left: 10rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -15341,7 +15393,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\r\n/* 页面左右间距 */\r\n/* 文字尺寸 */\r\n/*文字颜色*/\r\n/* 边框颜色 */\r\n/* 图片加载中颜色 */\r\n/* 行为相关颜色 */\n.container {\r\n  background-image: linear-gradient(179deg, #83a4d488, #b6fbff88);\n}\n.wordSpace {\r\n  letter-spacing: 4rpx;\n}\n.selectForm {\r\n  display: flex;\r\n  justify-content: center;\r\n  margin-left: 10rpx;\n}\n.selectFormItem {\r\n  width: 220rpx;\r\n  height: 100rpx;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  font-size: 30rpx;\n}\n.downArrow {\r\n  margin-left: 5rpx;\r\n  height: 20rpx;\r\n  width: 20rpx;\n}\n.searchAcademy {\r\n  background-color: #efefef55;\n}\n.searchText {\r\n  display: flex;\r\n  align-items: center;\r\n  height: 80rpx;\r\n  margin-left: 30rpx;\r\n  font-size: 30rpx;\n}\n.searchNum {\r\n  color: #bd3124;\n}\n.viewAcademy {\r\n  height: 120rpx;\r\n  display: flex;\r\n  flex-direction: row;\r\n  align-items: center;\r\n  /* 圆角 */\r\n  border-radius: 18rpx;\r\n  /* 边 */\r\n  border: 1rpx solid #E0E3DA;\r\n  /* 阴影 */\r\n  box-shadow: 2rpx 7rpx 0rpx #ebebeb;\r\n  background-color: #ffffff88;\r\n  margin-left: 30rpx;\r\n  margin-right: 30rpx;\r\n  margin-top: 25rpx;\r\n  /* padding使得文字和图片不至于贴着边框 */\r\n  padding: 25rpx;\n}\n.academyLogo {\r\n  height: 120rpx;\r\n  width: 120rpx;\n}\n.viewText {\r\n  margin-left: 30rpx;\r\n  display: flex;\r\n  flex-direction: column;\n}\n.academyName {\r\n  font-size: 36rpx;\r\n  font-family: \"黑体\";\n}\n.academyType {\r\n  display: flex;\r\n  margin-top: 5rpx;\n}\n.typeOfScoreLine {\r\n  width: 150rpx;\r\n  height: 50rpx;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  border-radius: 18rpx;\r\n  background-color: #91d5ff;\r\n  font-size: 26rpx;\r\n  color: #ffffff;\r\n  font-family: \"黑体\";\n}\n.typeOfInstitution {\r\n  width: 100rpx;\r\n  height: 50rpx;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-left: 20rpx;\r\n  border-radius: 18rpx;\r\n  background-color: #8fc9ff;\r\n  font-size: 26rpx;\r\n  color: #ffffff;\r\n  font-family: \"黑体\";\n}\n.lacation {\r\n  margin-left: 30rpx;\r\n  width: 200rpx;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  font-family: \"黑体\";\r\n  font-size: 36rpx;\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\r\n/* 页面左右间距 */\r\n/* 文字尺寸 */\r\n/*文字颜色*/\r\n/* 边框颜色 */\r\n/* 图片加载中颜色 */\r\n/* 行为相关颜色 */\n.container {\r\n  background-color: #fafafa;\n}\n.wordSpace {\r\n  letter-spacing: 4rpx;\n}\n.selectForm {\r\n  display: flex;\r\n  justify-content: center;\r\n  margin-left: 10rpx;\n}\n.selectFormItem {\r\n  width: 220rpx;\r\n  height: 100rpx;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  font-size: 30rpx;\n}\n.downArrow {\r\n  margin-left: 5rpx;\r\n  height: 20rpx;\r\n  width: 20rpx;\n}\n.searchAcademy {\r\n  background-color: #efefef55;\n}\n.searchText {\r\n  display: flex;\r\n  align-items: center;\r\n  height: 80rpx;\r\n  margin-left: 30rpx;\r\n  font-size: 30rpx;\n}\n.searchNum {\r\n  color: #bd3124;\n}\n.viewAcademy {\r\n  height: 120rpx;\r\n  display: flex;\r\n  flex-direction: row;\r\n  align-items: center;\r\n  /* 圆角 */\r\n  border-radius: 18rpx;\r\n  /* 边 */\r\n  border: 1rpx solid #E0E3DA;\r\n  /* 阴影 */\r\n  box-shadow: 2rpx 7rpx 0rpx #d4d4d4;\r\n  background-color: #ffffff88;\r\n  margin-left: 30rpx;\r\n  margin-right: 30rpx;\r\n  margin-top: 25rpx;\r\n  /* padding使得文字和图片不至于贴着边框 */\r\n  padding: 25rpx;\n}\n.academyLogo {\r\n  height: 120rpx;\r\n  width: 120rpx;\n}\n.viewText {\r\n  margin-left: 30rpx;\r\n  display: flex;\r\n  flex-direction: column;\n}\n.academyName {\r\n  font-size: 36rpx;\r\n  font-family: \"黑体\";\n}\n.academyType {\r\n  display: flex;\r\n  margin-top: 5rpx;\n}\n.typeOfScoreLine {\r\n  width: 150rpx;\r\n  height: 50rpx;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  border-radius: 18rpx;\r\n  background-color: #91d5ff;\r\n  font-size: 26rpx;\r\n  color: #ffffff;\r\n  font-family: \"黑体\";\n}\n.typeOfInstitution {\r\n  width: 100rpx;\r\n  height: 50rpx;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  margin-left: 20rpx;\r\n  border-radius: 18rpx;\r\n  background-color: #8fc9ff;\r\n  font-size: 26rpx;\r\n  color: #ffffff;\r\n  font-family: \"黑体\";\n}\n.lacation {\r\n  margin-left: 30rpx;\r\n  width: 200rpx;\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  font-family: \"黑体\";\r\n  font-size: 36rpx;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -15729,6 +15781,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uRow: __webpack_require__(/*! uview-ui/components/u-row/u-row.vue */ 132).default,
+    uCol: __webpack_require__(/*! uview-ui/components/u-col/u-col.vue */ 140).default,
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function () {
   var _vm = this
   var _h = _vm.$createElement
@@ -15742,68 +15816,84 @@ var render = function () {
         { attrs: { _i: 1 } },
         [
           _c(
-            "uni-view",
-            { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } },
+            "u-row",
+            { attrs: { _i: 2 } },
             [
+              _c("u-col", { attrs: { _i: 3 } }),
               _c(
-                "uni-view",
-                { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
+                "u-col",
+                { attrs: { _i: 4 } },
                 [
-                  _c(
-                    "uni-view",
-                    { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } },
-                    [_vm._v("院校类型")]
-                  ),
                   _c(
                     "uni-view",
                     { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
-                    [_vm._v(_vm._$g(5, "t0-0"))]
+                    [
+                      _c(
+                        "uni-view",
+                        { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
+                        [_vm._v("院校类型")]
+                      ),
+                      _c(
+                        "uni-view",
+                        { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
+                        [_vm._v(_vm._$g(7, "t0-0"))]
+                      ),
+                    ],
+                    1
                   ),
                 ],
                 1
               ),
               _c(
-                "uni-view",
-                { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
+                "u-col",
+                { attrs: { _i: 8 } },
                 [
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
-                    [_vm._v("院校隶属")]
-                  ),
-                  _c(
-                    "uni-view",
-                    { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
-                    [_vm._v(_vm._$g(8, "t0-0"))]
+                    { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+                    [
+                      _c(
+                        "uni-view",
+                        { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
+                        [_vm._v("院校隶属")]
+                      ),
+                      _c(
+                        "uni-view",
+                        { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
+                        [_vm._v(_vm._$g(11, "t0-0"))]
+                      ),
+                    ],
+                    1
                   ),
                 ],
                 1
               ),
+              _c("u-col", { attrs: { _i: 12 } }),
             ],
             1
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+            { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
             [
               _c(
                 "uni-view",
-                { attrs: { _i: 10 } },
+                { attrs: { _i: 14 } },
                 [
                   _c(
                     "v-uni-text",
-                    { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
+                    { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
                     [_vm._v("院校简介")]
                   ),
                   _c(
                     "v-uni-text",
-                    { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+                    { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
                     [
                       _vm._v(
                         "院校代码：" +
-                          _vm._$g(12, "t0-0") +
+                          _vm._$g(16, "t0-0") +
                           " " +
-                          _vm._$g(12, "t0-1")
+                          _vm._$g(16, "t0-1")
                       ),
                     ]
                   ),
@@ -15815,15 +15905,15 @@ var render = function () {
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+            { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
             [
               _c(
                 "v-uni-text",
                 {
-                  staticClass: _vm._$g(14, "sc"),
-                  attrs: { space: "ensp", _i: 14 },
+                  staticClass: _vm._$g(18, "sc"),
+                  attrs: { space: "ensp", _i: 18 },
                 },
-                [_vm._v(_vm._$g(14, "t0-0"))]
+                [_vm._v(_vm._$g(18, "t0-0"))]
               ),
             ],
             1
@@ -15930,7 +16020,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.mes[data-v-6eb7ce44]{\n\tdisplay: flex;\n\tjustify-content: center;\n\theight: 220rpx;\n}\n.academyMes[data-v-6eb7ce44]{\n\twidth: 240rpx;\n\theight: 150rpx;\n\tborder: 2rpx solid #BBBBBB;\n\tmargin: 20rpx;\n\tborder-radius: 18rpx;\n}\n.type[data-v-6eb7ce44]{\n\tdisplay: flex;\n\tjustify-content: center;\n\tmargin-top: 30rpx;\n\tfont-size: 30rpx;\n\tcolor: #767676;\n}\n.typeName[data-v-6eb7ce44]{\n\tdisplay: flex;\n\tjustify-content: center;\n\tmargin-top: 5rpx;\n\tfont-size: 38rpx;\n\tfont-weight: 600;\n}\n.introduction[data-v-6eb7ce44]{\n\theight:70rpx;\n}\n.introduct[data-v-6eb7ce44]{\n\tfont-size: 38rpx;\n\tfont-weight: 600;\n\tmargin-left: 20rpx;\n}\n.code[data-v-6eb7ce44]{\n\tfont-size: 30rpx;\n\tfloat: right;\n\tmargin-right: 20rpx;\n\tcolor: #767676;\n}\n.introductionMes[data-v-6eb7ce44]{\n\tmargin: 0rpx 20rpx;\n}\n.mesText[data-v-6eb7ce44]{\n\tcolor: #434343;\n\twhite-space: pre-wrap;\n\tword-break: break-word;\n}\n", ""]);
+exports.push([module.i, "\n.mes[data-v-6eb7ce44] {\n/* \t\tdisplay: flex;\n\t\tjustify-content: center; */\n\t\theight: 220rpx;\n}\n.academyMes[data-v-6eb7ce44] {\n\t\t/* display: flex; */\n\t\t/* justify-content: center; */\n\t\twidth: 240rpx;\n\t\theight: 150rpx;\n\t\tborder: 2rpx solid #BBBBBB;\n\t\tmargin: 20rpx;\n\t\tborder-radius: 18rpx;\n}\n.type[data-v-6eb7ce44] {\n\t\tdisplay: block;\n\t\ttext-align: center;\n\t\twidth: 200rpx;\n\t\tmargin-top: 30rpx;\n\t\tfont-size: 30rpx;\n\t\tcolor: #767676;\n}\n.typeName[data-v-6eb7ce44] {\n\t\tdisplay: block;\n\t\ttext-align: center;\n\t\tmargin-top: 5rpx;\n\t\tfont-size: 38rpx;\n\t\tfont-weight: 600;\n}\n.introduction[data-v-6eb7ce44] {\n\t\theight: 70rpx;\n}\n.introduct[data-v-6eb7ce44] {\n\t\tfont-size: 38rpx;\n\t\tfont-weight: 600;\n\t\tmargin-left: 20rpx;\n}\n.code[data-v-6eb7ce44] {\n\t\tfont-size: 30rpx;\n\t\tfloat: right;\n\t\tmargin-right: 20rpx;\n\t\tcolor: #767676;\n}\n.introductionMes[data-v-6eb7ce44] {\n\t\tmargin: 0rpx 20rpx;\n}\n.mesText[data-v-6eb7ce44] {\n\t\tcolor: #434343;\n\t\twhite-space: pre-wrap;\n\t\tword-break: break-word;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -17101,6 +17191,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uRow: __webpack_require__(/*! uview-ui/components/u-row/u-row.vue */ 132).default,
+    uCol: __webpack_require__(/*! uview-ui/components/u-col/u-col.vue */ 140).default,
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function () {
   var _vm = this
   var _h = _vm.$createElement
@@ -17114,68 +17226,84 @@ var render = function () {
         { attrs: { _i: 1 } },
         [
           _c(
-            "uni-view",
-            { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } },
+            "u-row",
+            { attrs: { _i: 2 } },
             [
+              _c("u-col", { attrs: { _i: 3 } }),
               _c(
-                "uni-view",
-                { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
+                "u-col",
+                { attrs: { _i: 4 } },
                 [
-                  _c(
-                    "uni-view",
-                    { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } },
-                    [_vm._v("院校类型")]
-                  ),
                   _c(
                     "uni-view",
                     { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
-                    [_vm._v(_vm._$g(5, "t0-0"))]
+                    [
+                      _c(
+                        "uni-view",
+                        { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
+                        [_vm._v("院校类型")]
+                      ),
+                      _c(
+                        "uni-view",
+                        { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
+                        [_vm._v(_vm._$g(7, "t0-0"))]
+                      ),
+                    ],
+                    1
                   ),
                 ],
                 1
               ),
               _c(
-                "uni-view",
-                { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
+                "u-col",
+                { attrs: { _i: 8 } },
                 [
                   _c(
                     "uni-view",
-                    { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
-                    [_vm._v("院校隶属")]
-                  ),
-                  _c(
-                    "uni-view",
-                    { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
-                    [_vm._v(_vm._$g(8, "t0-0"))]
+                    { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+                    [
+                      _c(
+                        "uni-view",
+                        { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
+                        [_vm._v("院校隶属")]
+                      ),
+                      _c(
+                        "uni-view",
+                        { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
+                        [_vm._v(_vm._$g(11, "t0-0"))]
+                      ),
+                    ],
+                    1
                   ),
                 ],
                 1
               ),
+              _c("u-col", { attrs: { _i: 12 } }),
             ],
             1
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+            { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
             [
               _c(
                 "uni-view",
-                { attrs: { _i: 10 } },
+                { attrs: { _i: 14 } },
                 [
                   _c(
                     "v-uni-text",
-                    { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
+                    { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
                     [_vm._v("院校简介")]
                   ),
                   _c(
                     "v-uni-text",
-                    { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+                    { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
                     [
                       _vm._v(
                         "院校代码：" +
-                          _vm._$g(12, "t0-0") +
+                          _vm._$g(16, "t0-0") +
                           " " +
-                          _vm._$g(12, "t0-1")
+                          _vm._$g(16, "t0-1")
                       ),
                     ]
                   ),
@@ -17187,15 +17315,15 @@ var render = function () {
           ),
           _c(
             "uni-view",
-            { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+            { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
             [
               _c(
                 "v-uni-text",
                 {
-                  staticClass: _vm._$g(14, "sc"),
-                  attrs: { space: "ensp", _i: 14 },
+                  staticClass: _vm._$g(18, "sc"),
+                  attrs: { space: "ensp", _i: 18 },
                 },
-                [_vm._v(_vm._$g(14, "t0-0"))]
+                [_vm._v(_vm._$g(18, "t0-0"))]
               ),
             ],
             1
@@ -17302,7 +17430,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.mes{\n\tdisplay: flex;\n\tjustify-content: center;\n\theight: 220rpx;\n}\n.academyMes{\n\twidth: 240rpx;\n\theight: 150rpx;\n\tborder: 2rpx solid #BBBBBB;\n\tmargin: 20rpx;\n\tborder-radius: 18rpx;\n}\n.type{\n\tdisplay: flex;\n\tjustify-content: center;\n\tmargin-top: 30rpx;\n\tfont-size: 30rpx;\n\tcolor: #767676;\n}\n.typeName{\n\tdisplay: flex;\n\tjustify-content: center;\n\tmargin-top: 5rpx;\n\tfont-size: 38rpx;\n\tfont-weight: 600;\n}\n.introduction{\n\theight:70rpx;\n}\n.introduct{\n\tfont-size: 38rpx;\n\tfont-weight: 600;\n\tmargin-left: 20rpx;\n}\n.code{\n\tfont-size: 30rpx;\n\tfloat: right;\n\tmargin-right: 20rpx;\n\tcolor: #767676;\n}\n.introductionMes{\n\tmargin: 0rpx 20rpx;\n}\n.mesText{\n\tcolor: #434343;\n\twhite-space: pre-wrap;\n\tword-break: break-word;\n}\n", ""]);
+exports.push([module.i, "\n.mes {\n/* \t\tdisplay: flex;\n\t\tjustify-content: center; */\n\t\theight: 220rpx;\n}\n.academyMes {\n\t\t/* display: flex; */\n\t\t/* justify-content: center; */\n\t\twidth: 240rpx;\n\t\theight: 150rpx;\n\t\tborder: 2rpx solid #BBBBBB;\n\t\tmargin: 20rpx;\n\t\tborder-radius: 18rpx;\n}\n.type {\n\t\tdisplay: block;\n\t\ttext-align: center;\n\t\twidth: 200rpx;\n\t\tmargin-top: 30rpx;\n\t\tfont-size: 30rpx;\n\t\tcolor: #767676;\n}\n.typeName {\n\t\tdisplay: block;\n\t\ttext-align: center;\n\t\tmargin-top: 5rpx;\n\t\tfont-size: 38rpx;\n\t\tfont-weight: 600;\n}\n.introduction {\n\t\theight: 70rpx;\n}\n.introduct {\n\t\tfont-size: 38rpx;\n\t\tfont-weight: 600;\n\t\tmargin-left: 20rpx;\n}\n.code {\n\t\tfont-size: 30rpx;\n\t\tfloat: right;\n\t\tmargin-right: 20rpx;\n\t\tcolor: #767676;\n}\n.introductionMes {\n\t\tmargin: 0rpx 20rpx;\n}\n.mesText {\n\t\tcolor: #434343;\n\t\twhite-space: pre-wrap;\n\t\tword-break: break-word;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -20402,7 +20530,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\r\n/* 页面左右间距 */\r\n/* 文字尺寸 */\r\n/*文字颜色*/\r\n/* 边框颜色 */\r\n/* 图片加载中颜色 */\r\n/* 行为相关颜色 */\n.background {\r\n  width: 100%;\r\n  height: 2000rpx;\r\n  background-color: #fafafa;\n}\n.cellWithRadius {\r\n  width: auto;\r\n  height: 100%;\r\n  margin: 25rpx;\r\n  margin-top: 60rpx;\r\n  background-color: #fff;\r\n  box-shadow: 5rpx 10rpx 10rpx #bfbfbf;\r\n  border-radius: 20rpx;\n}\n.box {\r\n  display: flex;\r\n  flex-direction: column;\r\n  padding: 10px;\n}\n.box1 {\r\n  display: flex;\r\n  flex-direction: row;\n}\n.days {\r\n  font-size: 70rpx;\r\n  color: #00bcd4;\n}\n.cellTitle {\r\n  margin-left: 20rpx;\n}\n.u-cell {\r\n  border-color: rgba(0, 0, 0, 0.1);\n}\r\n", ""]);
+exports.push([module.i, "@charset \"UTF-8\";\r\n/**\r\n * 这里是uni-app内置的常用样式变量\r\n *\r\n * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量\r\n * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App\r\n *\r\n */\r\n/**\r\n * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能\r\n *\r\n * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件\r\n */\r\n/* 颜色变量 */\r\n/* 行为相关颜色 */\r\n/* 文字基本颜色 */\r\n/* 背景颜色 */\r\n/* 边框颜色 */\r\n/* 尺寸变量 */\r\n/* 文字尺寸 */\r\n/* 图片尺寸 */\r\n/* Border Radius */\r\n/* 水平间距 */\r\n/* 垂直间距 */\r\n/* 透明度 */\r\n/* 文章场景相关 */\r\n/* 页面左右间距 */\r\n/* 文字尺寸 */\r\n/*文字颜色*/\r\n/* 边框颜色 */\r\n/* 图片加载中颜色 */\r\n/* 行为相关颜色 */\n.background {\r\n  width: 100%;\r\n  height: 2000rpx;\r\n  background-color: #fafafa;\n}\n.cellWithRadius1 {\r\n  width: auto;\r\n  height: 100%;\r\n  margin: 25rpx;\r\n  margin-top: 100rpx;\r\n  background-color: #fff;\r\n  box-shadow: 5rpx 10rpx 10rpx #bfbfbf;\r\n  border-radius: 20rpx;\n}\n.cellWithRadius {\r\n  width: auto;\r\n  height: 100%;\r\n  margin: 25rpx;\r\n  margin-top: 60rpx;\r\n  background-color: #fff;\r\n  box-shadow: 5rpx 10rpx 10rpx #bfbfbf;\r\n  border-radius: 20rpx;\n}\n.box {\r\n  display: flex;\r\n  flex-direction: column;\r\n  padding: 10px;\n}\n.box1 {\r\n  display: flex;\r\n  flex-direction: row;\n}\n.days {\r\n  font-size: 70rpx;\r\n  color: #00bcd4;\n}\n.cellTitle {\r\n  margin-left: 20rpx;\n}\n.u-cell {\r\n  border-color: rgba(0, 0, 0, 0.1);\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -25341,7 +25469,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.backGround{\n\twidth: 100%;\n\theight: 1200rpx;\n\tbackground-color:#fafafa\n}\n.right {\n\ttext-align: right;\n}\n.box {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\tpadding-top: 8px;\n\tpadding-left: 20px;\n\tpadding-right: 20px;\n}\n.slogan {\n\twidth: 25%;\n\theight: 30px;\n\tmargin-left: 30rpx;\n\tfont-size: 15px;\n}\n.upButton {\n\twidth: 80%;\n\theight: 50px;\n\tbackground-image: linear-gradient(112deg, #08507880, #85d8ce);\n\tborder-radius: 20px;\n\tmargin-top: 100rpx;\n\tmargin-bottom: 50rpx;\n\tcolor: #fff;\n\tborder: none;\n\n\tbox-shadow: 5rpx 10rpx 5rpx #bfbfbf;\n}\n.u-cell {\n\tpadding-left: 20px;\n\tpadding-right: 20px;\n}\n.infoCard {\n\twidth: auto;\n\theight: 1100rpx;\n\tmargin: 25rpx;\n\tmargin-top: 60rpx;\n\tmargin-bottom: 60rpx;\n\tbackground-color: #fff;\n\tbox-shadow: 12rpx 12rpx 10rpx #bfbfbf;\n\tborder-radius: 20rpx;\n}\n", ""]);
+exports.push([module.i, "\n.backGround{\n\twidth: 100%;\n\theight: 1600rpx;\n\tbackground-color:#fafafa\n}\n.right {\n\ttext-align: right;\n}\n.box {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\tpadding-top: 8px;\n\tpadding-left: 20px;\n\tpadding-right: 20px;\n}\n.slogan {\n\twidth: 25%;\n\theight: 30px;\n\tmargin-left: 30rpx;\n\tfont-size: 15px;\n}\n.upButton {\n\twidth: 80%;\n\theight: 50px;\n\tbackground-image: linear-gradient(112deg, #08507880, #85d8ce);\n\tborder-radius: 20px;\n\tmargin-top: 100rpx;\n\t/* margin-bottom: 50rpx; */\n\tcolor: #fff;\n\tborder: none;\n\tbox-shadow: 5rpx 10rpx 5rpx #bfbfbf;\n}\n.u-cell {\n\tpadding-left: 20px;\n\tpadding-right: 20px;\n}\n.infoCard {\n\twidth: auto;\n\theight: 1000rpx;\n\tmargin: 25rpx;\n\tmargin-top: 60rpx;\n\tmargin-bottom: 60rpx;\n\tbackground-color: #fff;\n\tbox-shadow: 12rpx 12rpx 10rpx #bfbfbf;\n\tborder-radius: 20rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -25456,95 +25584,212 @@ var render = function () {
     { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
     [
       _c(
-        "u-popup",
-        {
-          attrs: { _i: 1 },
-          on: {
-            close: function ($event) {
-              return _vm.$handleViewEvent($event)
-            },
-          },
-        },
+        "uni-view",
+        { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } },
         [
           _c(
             "uni-view",
             { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } },
             [
               _c(
-                "uni-view",
-                { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
+                "u-popup",
+                {
+                  attrs: { _i: 3 },
+                  on: {
+                    close: function ($event) {
+                      return _vm.$handleViewEvent($event)
+                    },
+                  },
+                },
                 [
                   _c(
-                    "v-uni-text",
+                    "uni-view",
                     { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } },
-                    [_vm._v("旧密码")]
+                    [
+                      _c(
+                        "uni-view",
+                        { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
+                        [
+                          _c(
+                            "v-uni-text",
+                            { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
+                            [_vm._v("旧密码")]
+                          ),
+                        ],
+                        1
+                      ),
+                      _c(
+                        "u-cell",
+                        { attrs: { _i: 7 } },
+                        [
+                          _c("v-uni-input", {
+                            attrs: {
+                              slot: "value",
+                              password: "true",
+                              placeholder: "请输入旧密码",
+                              _i: 8,
+                            },
+                            slot: "value",
+                            model: {
+                              value: _vm._$g(8, "v-model"),
+                              callback: function ($$v) {
+                                _vm.$handleVModelEvent(8, $$v)
+                              },
+                              expression: "oldPassword",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _c(
+                        "uni-view",
+                        { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+                        [
+                          _c(
+                            "v-uni-text",
+                            {
+                              staticClass: _vm._$g(10, "sc"),
+                              attrs: { _i: 10 },
+                            },
+                            [_vm._v("新密码")]
+                          ),
+                        ],
+                        1
+                      ),
+                      _c(
+                        "u-cell",
+                        { attrs: { _i: 11 } },
+                        [
+                          _c("v-uni-input", {
+                            attrs: {
+                              slot: "value",
+                              password: "true",
+                              placeholder: "请输入新密码",
+                              _i: 12,
+                            },
+                            slot: "value",
+                            model: {
+                              value: _vm._$g(12, "v-model"),
+                              callback: function ($$v) {
+                                _vm.$handleVModelEvent(12, $$v)
+                              },
+                              expression: "newPassword",
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _c(
+                        "v-uni-button",
+                        {
+                          staticClass: _vm._$g(13, "sc"),
+                          attrs: { _i: 13 },
+                          on: {
+                            click: function ($event) {
+                              return _vm.$handleViewEvent($event)
+                            },
+                          },
+                        },
+                        [_vm._v("确定")]
+                      ),
+                    ],
+                    1
                   ),
                 ],
                 1
               ),
               _c(
-                "u-cell",
-                { attrs: { _i: 5 } },
-                [
-                  _c("v-uni-input", {
-                    attrs: {
-                      slot: "value",
-                      password: "true",
-                      placeholder: "请输入旧密码",
-                      _i: 6,
-                    },
-                    slot: "value",
-                    model: {
-                      value: _vm._$g(6, "v-model"),
-                      callback: function ($$v) {
-                        _vm.$handleVModelEvent(6, $$v)
-                      },
-                      expression: "oldPassword",
-                    },
-                  }),
-                ],
-                1
-              ),
-              _c(
-                "uni-view",
-                { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
+                "u-cell-group",
+                { attrs: { _i: 14 } },
                 [
                   _c(
-                    "v-uni-text",
-                    { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
-                    [_vm._v("新密码")]
+                    "uni-view",
+                    { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
+                    [
+                      _c(
+                        "v-uni-text",
+                        { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
+                        [_vm._v("密码设置")]
+                      ),
+                    ],
+                    1
                   ),
-                ],
-                1
-              ),
-              _c(
-                "u-cell",
-                { attrs: { _i: 9 } },
-                [
-                  _c("v-uni-input", {
-                    attrs: {
-                      slot: "value",
-                      password: "true",
-                      placeholder: "请输入新密码",
-                      _i: 10,
-                    },
-                    slot: "value",
-                    model: {
-                      value: _vm._$g(10, "v-model"),
-                      callback: function ($$v) {
-                        _vm.$handleVModelEvent(10, $$v)
-                      },
-                      expression: "newPassword",
-                    },
-                  }),
+                  _c(
+                    "u-cell",
+                    { attrs: { _i: 17 } },
+                    [
+                      _c(
+                        "v-uni-text",
+                        { attrs: { slot: "title", _i: 18 }, slot: "title" },
+                        [_vm._v("重置密码")]
+                      ),
+                      _c(
+                        "v-uni-button",
+                        {
+                          staticClass: _vm._$g(19, "sc"),
+                          attrs: { slot: "value", _i: 19 },
+                          on: {
+                            click: function ($event) {
+                              return _vm.$handleViewEvent($event)
+                            },
+                          },
+                          slot: "value",
+                        },
+                        [_vm._v("*****")]
+                      ),
+                    ],
+                    1
+                  ),
+                  _c("u-gap", { attrs: { _i: 20 } }),
+                  _c(
+                    "uni-view",
+                    { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
+                    [
+                      _c(
+                        "v-uni-text",
+                        { staticClass: _vm._$g(22, "sc"), attrs: { _i: 22 } },
+                        [_vm._v("绑定邮箱账号 ( 有助于账号找回 )")]
+                      ),
+                    ],
+                    1
+                  ),
+                  _c(
+                    "u-cell",
+                    { attrs: { _i: 23 } },
+                    [
+                      _c(
+                        "v-uni-text",
+                        { attrs: { slot: "title", _i: 24 }, slot: "title" },
+                        [_vm._v("绑定邮箱")]
+                      ),
+                      _c("v-uni-input", {
+                        staticClass: _vm._$g(25, "sc"),
+                        attrs: {
+                          slot: "value",
+                          placeholder: "请输入邮箱",
+                          _i: 25,
+                        },
+                        slot: "value",
+                        model: {
+                          value: _vm._$g(25, "v-model"),
+                          callback: function ($$v) {
+                            _vm.$handleVModelEvent(25, $$v)
+                          },
+                          expression: "user.account",
+                        },
+                      }),
+                      _vm._v(_vm._$g(23, "t2-0")),
+                    ],
+                    1
+                  ),
                 ],
                 1
               ),
               _c(
                 "v-uni-button",
                 {
-                  staticClass: _vm._$g(11, "sc"),
-                  attrs: { _i: 11 },
+                  staticClass: _vm._$g(26, "sc"),
+                  attrs: { _i: 26 },
                   on: {
                     click: function ($event) {
                       return _vm.$handleViewEvent($event)
@@ -25558,102 +25803,6 @@ var render = function () {
           ),
         ],
         1
-      ),
-      _c(
-        "u-cell-group",
-        { attrs: { _i: 12 } },
-        [
-          _c(
-            "uni-view",
-            { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
-            [
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
-                [_vm._v("密码设置")]
-              ),
-            ],
-            1
-          ),
-          _c(
-            "u-cell",
-            { attrs: { _i: 15 } },
-            [
-              _c(
-                "v-uni-text",
-                { attrs: { slot: "title", _i: 16 }, slot: "title" },
-                [_vm._v("重置密码")]
-              ),
-              _c(
-                "v-uni-button",
-                {
-                  staticClass: _vm._$g(17, "sc"),
-                  attrs: { slot: "value", _i: 17 },
-                  on: {
-                    click: function ($event) {
-                      return _vm.$handleViewEvent($event)
-                    },
-                  },
-                  slot: "value",
-                },
-                [_vm._v("*****")]
-              ),
-            ],
-            1
-          ),
-          _c("u-gap", { attrs: { _i: 18 } }),
-          _c(
-            "uni-view",
-            { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
-            [
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
-                [_vm._v("绑定邮箱账号 ( 有助于账号找回 )")]
-              ),
-            ],
-            1
-          ),
-          _c(
-            "u-cell",
-            { attrs: { _i: 21 } },
-            [
-              _c(
-                "v-uni-text",
-                { attrs: { slot: "title", _i: 22 }, slot: "title" },
-                [_vm._v("绑定邮箱")]
-              ),
-              _c("v-uni-input", {
-                staticClass: _vm._$g(23, "sc"),
-                attrs: { slot: "value", placeholder: "请输入邮箱", _i: 23 },
-                slot: "value",
-                model: {
-                  value: _vm._$g(23, "v-model"),
-                  callback: function ($$v) {
-                    _vm.$handleVModelEvent(23, $$v)
-                  },
-                  expression: "user.account",
-                },
-              }),
-              _vm._v(_vm._$g(21, "t2-0")),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _c(
-        "v-uni-button",
-        {
-          staticClass: _vm._$g(24, "sc"),
-          attrs: { _i: 24 },
-          on: {
-            click: function ($event) {
-              return _vm.$handleViewEvent($event)
-            },
-          },
-        },
-        [_vm._v("确定")]
       ),
     ],
     1
@@ -25753,7 +25902,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.box {\n\tborder-radius: 10px;\n}\n.division {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\theight: 30px;\n}\n.notion {\n\tmargin-left: 20px;\n\twidth: 80%;\n\tfont-size: 13px;\n\tcolor: darkgrey;\n}\n.upButton {\n\twidth: 80%;\n\theight: 50px;\n\tbackground-color: bisque;\n\tborder-radius: 20px;\n\tmargin-top: 200px;\n}\n.changePasswordBtn {\n\tbackground-color: white;\n}\n.changePasswordBtn::after {\n\tborder: none;\n}\n.Btn {\n\twidth: 80%;\n\theight: 50px;\n\tbackground-color: bisque;\n\tborder-radius: 20px;\n\tmargin-top: 50px;\n\tmargin-bottom: 20px;\n}\n.right {\n\ttext-align: right;\n}\n\n", ""]);
+exports.push([module.i, "\n.backGround {\n\twidth: 100%;\n\theight: 1600rpx;\n\tbackground-color: #fafafa\n}\n.box {\n\tborder-radius: 20rpx;\n\theight: 500rpx;\n}\n.division {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\theight: 30px;\n}\n.notion {\n\tmargin-left: 20px;\n\twidth: 80%;\n\tfont-size: 13px;\n\tcolor: darkgrey;\n}\n.upButton {\n\t\n\twidth: 80%;\n\theight: 50px;\n\tbackground-image: linear-gradient(112deg, #08507880, #85d8ce);\n\tborder-radius: 20px;\n\tmargin-top: 200rpx;\n\t/* margin-bottom: 50rpx; */\n\tcolor: #fff;\n\tborder: none;\n\tbox-shadow: 5rpx 10rpx 5rpx #bfbfbf;\n}\n.changePasswordBtn {\n\tbackground-color: white;\n}\n.changePasswordBtn::after {\n\tborder: none;\n}\n.Btn {\n\twidth: 80%;\n\theight: 50px;\n\tbackground-image: linear-gradient(112deg, #08507880, #85d8ce);\n\tborder-radius: 20px;\n\tmargin-top: 50rpx;\n\tcolor: #fff;\n\tborder: none;\n\tbox-shadow: 5rpx 10rpx 5rpx #bfbfbf;\n}\n.right {\n\ttext-align: right;\n}\n.u-cell {\n\tpadding-left: 20px;\n\tpadding-right: 20px;\n}\n.infoCard {\n\twidth: auto;\n\theight: 400rpx;\n\tmargin: 25rpx;\n\tmargin-top: 60rpx;\n\tmargin-bottom: 60rpx;\n\tbackground-color: #fff;\n\tbox-shadow: 12rpx 12rpx 10rpx #bfbfbf;\n\tborder-radius: 20rpx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -25867,264 +26016,271 @@ var render = function () {
     { staticClass: _vm._$g(0, "sc"), attrs: { _i: 0 } },
     [
       _c(
-        "u-popup",
-        {
-          attrs: { _i: 1 },
-          on: {
-            close: function ($event) {
-              return _vm.$handleViewEvent($event)
-            },
-          },
-        },
-        [
-          _c(
-            "uni-view",
-            { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } },
-            [
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
-                [_vm._v("通过下方邮箱联系我们")]
-              ),
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } },
-                [_vm._v("1xxxxxxxxxxxx@qq.com")]
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _c(
-        "u-popup",
-        {
-          attrs: { _i: 5 },
-          on: {
-            close: function ($event) {
-              return _vm.$handleViewEvent($event)
-            },
-          },
-        },
-        [
-          _c(
-            "uni-view",
-            { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
-            [
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
-                [_vm._v("合作请联系下方邮箱")]
-              ),
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
-                [_vm._v("1xxxxxxxxxxxx@qq.com")]
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _c(
-        "u-popup",
-        {
-          attrs: { _i: 9 },
-          on: {
-            close: function ($event) {
-              return _vm.$handleViewEvent($event)
-            },
-          },
-        },
-        [
-          _c(
-            "uni-view",
-            { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
-            [
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
-                [_vm._v("举报电话")]
-              ),
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
-                [_vm._v("16546516xxxxx")]
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _c(
-        "u-popup",
-        {
-          attrs: { _i: 13 },
-          on: {
-            close: function ($event) {
-              return _vm.$handleViewEvent($event)
-            },
-          },
-        },
-        [
-          _c(
-            "uni-view",
-            { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
-            [
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
-                [_vm._v("当前版本")]
-              ),
-              _c(
-                "v-uni-text",
-                { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
-                [_vm._v(_vm._$g(16, "t0-0"))]
-              ),
-            ],
-            1
-          ),
-        ],
-        1
-      ),
-      _c(
         "uni-view",
-        { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+        { staticClass: _vm._$g(1, "sc"), attrs: { _i: 1 } },
         [
+          _c(
+            "u-popup",
+            {
+              attrs: { _i: 2 },
+              on: {
+                close: function ($event) {
+                  return _vm.$handleViewEvent($event)
+                },
+              },
+            },
+            [
+              _c(
+                "uni-view",
+                { staticClass: _vm._$g(3, "sc"), attrs: { _i: 3 } },
+                [
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } },
+                    [_vm._v("通过下方邮箱联系我们")]
+                  ),
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
+                    [_vm._v("1xxxxxxxxxxxx@qq.com")]
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _c(
+            "u-popup",
+            {
+              attrs: { _i: 6 },
+              on: {
+                close: function ($event) {
+                  return _vm.$handleViewEvent($event)
+                },
+              },
+            },
+            [
+              _c(
+                "uni-view",
+                { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
+                [
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
+                    [_vm._v("合作请联系下方邮箱")]
+                  ),
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+                    [_vm._v("1xxxxxxxxxxxx@qq.com")]
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _c(
+            "u-popup",
+            {
+              attrs: { _i: 10 },
+              on: {
+                close: function ($event) {
+                  return _vm.$handleViewEvent($event)
+                },
+              },
+            },
+            [
+              _c(
+                "uni-view",
+                { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
+                [
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+                    [_vm._v("举报电话")]
+                  ),
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+                    [_vm._v("16546516xxxxx")]
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
+          _c(
+            "u-popup",
+            {
+              attrs: { _i: 14 },
+              on: {
+                close: function ($event) {
+                  return _vm.$handleViewEvent($event)
+                },
+              },
+            },
+            [
+              _c(
+                "uni-view",
+                { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
+                [
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
+                    [_vm._v("当前版本")]
+                  ),
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+                    [_vm._v(_vm._$g(17, "t0-0"))]
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          ),
           _c(
             "uni-view",
             { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
             [
-              _c("v-uni-image", {
-                staticClass: _vm._$g(19, "sc"),
-                attrs: {
-                  src: "/static/my-assets//about//Logo.jpg",
-                  mode: "scaleToFill",
-                  border: "0",
-                  _i: 19,
-                },
-              }),
               _c(
-                "v-uni-text",
-                {
-                  staticClass: _vm._$g(20, "sc"),
-                  attrs: { decode: "true", _i: 20 },
-                },
-                [_vm._v("福研帮")]
-              ),
-              _c(
-                "v-uni-text",
-                {
-                  staticClass: _vm._$g(21, "sc"),
-                  attrs: { decode: "true", _i: 21 },
-                },
-                [_vm._v(_vm._$g(21, "t0-0"))]
+                "uni-view",
+                { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
+                [
+                  _c("v-uni-image", {
+                    staticClass: _vm._$g(20, "sc"),
+                    attrs: {
+                      src: "/static/my-assets//about//Logo.jpg",
+                      mode: "scaleToFill",
+                      border: "0",
+                      _i: 20,
+                    },
+                  }),
+                  _c(
+                    "v-uni-text",
+                    {
+                      staticClass: _vm._$g(21, "sc"),
+                      attrs: { decode: "true", _i: 21 },
+                    },
+                    [_vm._v("福研帮")]
+                  ),
+                  _c(
+                    "v-uni-text",
+                    {
+                      staticClass: _vm._$g(22, "sc"),
+                      attrs: { decode: "true", _i: 22 },
+                    },
+                    [_vm._v(_vm._$g(22, "t0-0"))]
+                  ),
+                ],
+                1
               ),
             ],
             1
           ),
-        ],
-        1
-      ),
-      _c(
-        "uni-view",
-        { staticClass: _vm._$g(22, "sc"), attrs: { _i: 22 } },
-        [
           _c(
-            "u-cell-group",
-            { attrs: { _i: 23 } },
+            "uni-view",
+            { staticClass: _vm._$g(23, "sc"), attrs: { _i: 23 } },
             [
               _c(
-                "u-cell",
-                {
-                  attrs: { _i: 24 },
-                  on: {
-                    click: function ($event) {
-                      return _vm.$handleViewEvent($event)
-                    },
-                  },
-                },
+                "u-cell-group",
+                { attrs: { _i: 24 } },
                 [
                   _c(
-                    "v-uni-text",
+                    "u-cell",
                     {
-                      staticClass: _vm._$g(25, "sc"),
-                      attrs: { slot: "title", _i: 25 },
-                      slot: "title",
+                      attrs: { _i: 25 },
+                      on: {
+                        click: function ($event) {
+                          return _vm.$handleViewEvent($event)
+                        },
+                      },
                     },
-                    [_vm._v("检查更新")]
+                    [
+                      _c(
+                        "v-uni-text",
+                        {
+                          staticClass: _vm._$g(26, "sc"),
+                          attrs: { slot: "title", _i: 26 },
+                          slot: "title",
+                        },
+                        [_vm._v("检查更新")]
+                      ),
+                    ],
+                    1
                   ),
-                ],
-                1
-              ),
-              _c(
-                "u-cell",
-                {
-                  attrs: { _i: 26 },
-                  on: {
-                    click: function ($event) {
-                      return _vm.$handleViewEvent($event)
-                    },
-                  },
-                },
-                [
                   _c(
-                    "v-uni-text",
+                    "u-cell",
                     {
-                      staticClass: _vm._$g(27, "sc"),
-                      attrs: { slot: "title", _i: 27 },
-                      slot: "title",
+                      attrs: { _i: 27 },
+                      on: {
+                        click: function ($event) {
+                          return _vm.$handleViewEvent($event)
+                        },
+                      },
                     },
-                    [_vm._v("合作商洽")]
+                    [
+                      _c(
+                        "v-uni-text",
+                        {
+                          staticClass: _vm._$g(28, "sc"),
+                          attrs: { slot: "title", _i: 28 },
+                          slot: "title",
+                        },
+                        [_vm._v("合作商洽")]
+                      ),
+                    ],
+                    1
                   ),
-                ],
-                1
-              ),
-              _c(
-                "u-cell",
-                {
-                  attrs: { _i: 28 },
-                  on: {
-                    click: function ($event) {
-                      return _vm.$handleViewEvent($event)
-                    },
-                  },
-                },
-                [
                   _c(
-                    "v-uni-text",
+                    "u-cell",
                     {
-                      staticClass: _vm._$g(29, "sc"),
-                      attrs: { slot: "title", _i: 29 },
-                      slot: "title",
+                      attrs: { _i: 29 },
+                      on: {
+                        click: function ($event) {
+                          return _vm.$handleViewEvent($event)
+                        },
+                      },
                     },
-                    [_vm._v("申诉举报")]
+                    [
+                      _c(
+                        "v-uni-text",
+                        {
+                          staticClass: _vm._$g(30, "sc"),
+                          attrs: { slot: "title", _i: 30 },
+                          slot: "title",
+                        },
+                        [_vm._v("申诉举报")]
+                      ),
+                    ],
+                    1
                   ),
-                ],
-                1
-              ),
-              _c(
-                "u-cell",
-                {
-                  attrs: { _i: 30 },
-                  on: {
-                    click: function ($event) {
-                      return _vm.$handleViewEvent($event)
-                    },
-                  },
-                },
-                [
                   _c(
-                    "v-uni-text",
+                    "u-cell",
                     {
-                      staticClass: _vm._$g(31, "sc"),
-                      attrs: { slot: "title", _i: 31 },
-                      slot: "title",
+                      attrs: { _i: 31 },
+                      on: {
+                        click: function ($event) {
+                          return _vm.$handleViewEvent($event)
+                        },
+                      },
                     },
-                    [_vm._v("联系我们")]
+                    [
+                      _c(
+                        "v-uni-text",
+                        {
+                          staticClass: _vm._$g(32, "sc"),
+                          attrs: { slot: "title", _i: 32 },
+                          slot: "title",
+                        },
+                        [_vm._v("联系我们")]
+                      ),
+                    ],
+                    1
                   ),
                 ],
                 1
@@ -26233,7 +26389,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.box {\n\twidth: 600upx;\n\theight: 530upx;\n\tborder-radius: 10px;\n\tbackground-color: #eeeeee;\n\tposition: relative;\n\ttop: 240px;\n\tmargin: 0 auto;\n}\n.contact {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\tborder-radius: 10px;\n}\n.ttext {\n\tmargin: 20px;\n}\n.title {\n\tmargin: 10px;\n}\n.about_60 {\n\twhite-space: normal;\n\twidth: 749upx;\n\tposition: relative;\n\theight: 100%;\n\tpadding: 0upx;\n\tclear: both;\n\tfloat: left;\n\tbackground-color: #ffffff;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n}\n.about_60 .about_62 {\n\twhite-space: normal;\n\twidth: 609upx;\n\theight: 300upx;\n\tpadding: 0upx;\n\tmargin-top: 100upx;\n\tmargin-left: 9%;\t\n\tfloat: left;\n\tposition: absolute;\n\ttop: 0upx;\n\tleft: 0upx;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n}\n.about_60 .about_62 .about_22 {\n\twhite-space: normal;\n\twidth: 180upx;\n\theight: 180upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 10upx;\n\tmargin-left: 200upx;\n\tfloat: left;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n\tline-height: 127upx;\n}\n.about_60 .about_62 .about_35 {\n\twhite-space: normal;\n\twidth: 97upx;\n\theight: 36upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 29upx;\n\tmargin-left: 241upx;\n\tfloat: left;\n\ttext-align: center;\n\tjustify-content: center;\n\tborder-radius: 0upx;\n\tcolor: #000000;\n\tfont-size: 31upx;\n\tline-height: 36upx;\n}\n.about_60 .about_62 .about_36 {\n\twhite-space: normal;\n\twidth: 473upx;\n\theight: 26upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 18upx;\n\tmargin-left: 52upx;\n\tfloat: left;\n\ttext-align: center;\n\tjustify-content: center;\n\tborder-radius: 0upx;\n\tcolor: #5c5f66;\n\tfont-size: 20upx;\n\tline-height: 26upx;\n}\n", ""]);
+exports.push([module.i, "\n.backGround {\n\twidth: 100%;\n\theight: 2000rpx;\n\t/* // background-image: linear-gradient(2deg, #ffeeee, #eafff4) */\n\tbackground-color: #fafafa\n}\n.box {\n\twidth: 600rpx;\n\theight: 490rpx;\n\tposition: relative;\n\ttop: 240px;\n\tmargin: 0 auto;\n\tbackground-color: #fff;\n\tbox-shadow: 12rpx 12rpx 10rpx #bfbfbf;\n\tborder-radius: 20rpx;\n}\n.u-popup{\n\tborder: 1rpx;\n\tbox-shadow: 12rpx 12rpx 10rpx #bfbfbf;\n\tborder-radius: 20rpx;\n}\n.contact {\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: space-around;\n\tborder-radius: 10px;\n}\n.ttext {\n\tmargin: 20px;\n}\n.title {\n\tmargin: 10px;\n}\n.about_60 {\n\twhite-space: normal;\n\twidth: 749upx;\n\tposition: relative;\n\theight: 100%;\n\tpadding: 0upx;\n\tclear: both;\n\tfloat: left;\n\tbackground-color: #ffffff;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n}\n.about_60 .about_62 {\n\twhite-space: normal;\n\twidth: 609upx;\n\theight: 300upx;\n\tpadding: 0upx;\n\tmargin-top: 100upx;\n\tmargin-left: 9%;\n\tfloat: left;\n\tposition: absolute;\n\ttop: 0upx;\n\tleft: 0upx;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n}\n.about_60 .about_62 .about_22 {\n\twhite-space: normal;\n\twidth: 180upx;\n\theight: 180upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 10upx;\n\tmargin-left: 200upx;\n\tfloat: left;\n\ttext-align: left;\n\tborder-radius: 0upx;\n\tfont-size: 8upx;\n\tline-height: 127upx;\n\topacity: 0.3;\n}\n.about_60 .about_62 .about_35 {\n\twhite-space: normal;\n\twidth: 97upx;\n\theight: 36upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 29upx;\n\tmargin-left: 241upx;\n\tfloat: left;\n\ttext-align: center;\n\tjustify-content: center;\n\tborder-radius: 0upx;\n\tcolor: #000000;\n\tfont-size: 31upx;\n\tline-height: 36upx;\n}\n.about_60 .about_62 .about_36 {\n\twhite-space: normal;\n\twidth: 473upx;\n\theight: 26upx;\n\tpadding: 0upx;\n\tclear: both;\n\tmargin-top: 18upx;\n\tmargin-left: 52upx;\n\tfloat: left;\n\ttext-align: center;\n\tjustify-content: center;\n\tborder-radius: 0upx;\n\tcolor: #5c5f66;\n\tfont-size: 20upx;\n\tline-height: 26upx;\n}\n.u-cell {\n\tpadding-left: 20px;\n\tpadding-right: 20px;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -26331,7 +26487,7 @@ var render = function () {
             attrs: {
               "placeholder-style": "color:#c7c7c7",
               focus: true,
-              placeholder: "标题 (6-30字之间) ",
+              placeholder: "标题 (1-30字之间) ",
               _i: 2,
             },
             model: {
@@ -26394,8 +26550,46 @@ var render = function () {
               _c(
                 "v-uni-label",
                 { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
-                [_vm._v("∨")]
+                [
+                  _c("v-uni-image", {
+                    staticClass: _vm._$g(9, "sc"),
+                    attrs: { src: "/static/academy-icons/down.png", _i: 9 },
+                  }),
+                ],
+                1
               ),
+            ],
+            1
+          ),
+          _c(
+            "uni-view",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm._$g(10, "v-show"),
+                  expression: "_$g(10,'v-show')",
+                },
+              ],
+              staticClass: _vm._$g(10, "sc"),
+              attrs: { _i: 10 },
+            },
+            [
+              _c("v-uni-label", { attrs: { _i: 11 } }, [
+                _vm._v("请输入悬赏的金额："),
+              ]),
+              _c("v-uni-input", {
+                staticClass: _vm._$g(12, "sc"),
+                attrs: { type: "number", _i: 12 },
+                model: {
+                  value: _vm._$g(12, "v-model"),
+                  callback: function ($$v) {
+                    _vm.$handleVModelEvent(12, $$v)
+                  },
+                  expression: "num",
+                },
+              }),
             ],
             1
           ),
@@ -26404,13 +26598,13 @@ var render = function () {
       ),
       _c(
         "uni-view",
-        { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
+        { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
         [
           _c(
             "v-uni-button",
             {
-              staticClass: _vm._$g(10, "sc"),
-              attrs: { _i: 10 },
+              staticClass: _vm._$g(14, "sc"),
+              attrs: { _i: 14 },
               on: {
                 click: function ($event) {
                   return _vm.$handleViewEvent($event)
@@ -26422,8 +26616,8 @@ var render = function () {
           _c(
             "v-uni-button",
             {
-              staticClass: _vm._$g(11, "sc"),
-              attrs: { _i: 11 },
+              staticClass: _vm._$g(15, "sc"),
+              attrs: { _i: 15 },
               on: {
                 click: function ($event) {
                   return _vm.$handleViewEvent($event)
@@ -26533,7 +26727,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../../../../../HBuilderX.3.7.11.20230427/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.uniInput{\r\n\theight: 120rpx;\r\n\tfont-size: 40rpx;\r\n\tborder-width:2px;\r\n\tborder-bottom-style:solid;\r\n\tborder-color:#f0f0f0;\r\n\tmargin-left: 20rpx;\r\n\tmargin-right: 20rpx;\n}\n.container{\r\n\tpadding: 10px;\n}\n#editor {\n}\n.qlContainer{\r\n\theight: calc(100vh - 460rpx);\r\n\tline-height: 160%;\r\n\tfont-size: 34rpx;\r\n\toverflow-y: auto;\n}\n.operator{\r\n\tdisplay: flex;\r\n\tmargin-top: 10rpx;\n}\n.selectForm{\r\n\tdisplay: flex;\r\n\talign-items: center;\r\n\tborder-width:2px;\r\n\tborder-style:solid;\r\n\tborder-color:#f0f0f0;\r\n\theight: 80rpx;\n}\n.selectFormItem{\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n\tmargin-left: 10rpx;\n}\n.publishBtn{\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n\tbackground-color: #3a8afb;\r\n\tcolor: #ffffff;\r\n\twidth: 320rpx;\r\n\theight: 100rpx;\r\n\tmargin-right: 25rpx;\n}\n.uploadingBtn{\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n\twidth: 320rpx;\r\n\theight: 100rpx;\r\n\tcolor: #3a8afb;\r\n\tborder-style:solid;\r\n\tborder-width:1px;\r\n\tborder-color:#3a8afb;\n}\n.downArrow{\r\n\tmargin-left: 20rpx;\n}\r\n", ""]);
+exports.push([module.i, "\n.uniInput{\r\n\theight: 120rpx;\r\n\tfont-size: 40rpx;\r\n\tborder-width:2px;\r\n\tborder-bottom-style:solid;\r\n\tborder-color:#f0f0f0;\r\n\tmargin-left: 20rpx;\r\n\tmargin-right: 20rpx;\n}\n.container{\r\n\tpadding: 10px;\n}\n#editor {\n}\n.downArrow{\r\n\tmargin-left: 5rpx;\r\n\t/* padding-top: 10rpx;\r\n */\r\n\theight: 20rpx;\r\n\twidth: 20rpx;\n}\n.qlContainer{\r\n\theight: calc(100vh - 460rpx);\r\n\tline-height: 160%;\r\n\tfont-size: 34rpx;\r\n\toverflow-y: auto;\n}\n.operator{\r\n\tdisplay: flex;\r\n\tmargin-top: 10rpx;\n}\n.selectForm{\r\n\tdisplay: flex;\r\n\talign-items: center;\r\n\tborder-width:2px;\r\n\tborder-style:solid;\r\n\tborder-color:#f0f0f0;\r\n\theight: 80rpx;\n}\n.selectFormItem{\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n\tmargin-left: 10rpx;\n}\n.publishBtn{\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n\tbackground-color: #3a8afb;\r\n\tcolor: #ffffff;\r\n\twidth: 320rpx;\r\n\theight: 100rpx;\r\n\tmargin-right: 25rpx;\n}\n.uploadingBtn{\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n\twidth: 320rpx;\r\n\theight: 100rpx;\r\n\tcolor: #3a8afb;\r\n\tborder-style:solid;\r\n\tborder-width:1px;\r\n\tborder-color:#3a8afb;\n}\n.downArrow{\r\n\tmargin-left: 20rpx;\n}\n.inputNum{\r\n\tdisplay: flex;\r\n\tjustify-content: center;\r\n\talign-items: center;\r\n\tmargin-left: 100rpx;\n}\n.intext{\r\n\ttext-align:center;\r\n\twidth: 100rpx;\r\n\tbackground-color: #f1f1f1;\r\n\tborder-radius: 10rpx;\r\n\tborder: 1rpx solid #E0E3DA;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
