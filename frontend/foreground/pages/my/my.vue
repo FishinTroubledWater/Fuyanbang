@@ -1,37 +1,53 @@
 <template>
-	<view class="content">
-		<u-notify ref="uNotify"></u-notify>
-		<!-- 个人信息 -->
-		<u-cell-group>
-			<u-cell class="blankBox">
-			</u-cell>
-			<u-cell isLink url="/pages/my/settings/userInfo">
-				<u-image width='140rpx' height='140rpx' slot="icon" :src="user.avatarUrl" shape="circle"></u-image>
-				<view class="box" slot="title">
-					<view class="box1">
-						<text style="margin-right:10px;">{{user.nickName}}</text>
-						<u-tag :text="user.level" size="mini" shape="circle"></u-tag>
-					</view>
-					<text style="color: darkgray;">{{user.slogan}}</text>
-				</view>
-			</u-cell>
-			<u-cell>
-				<text slot="title">{{user.college}}</text>
-				<text slot="title">{{user.major}}</text>
-				<text slot="value">福研帮已经陪伴了您</text>
-				<text slot="value" class="days">{{user.useageDays}}</text>
-				<text slot="value">天了</text>
-			</u-cell>
-			<u-gap height="15" bg-color="#f9f9f9"></u-gap>
-			<u-cell icon="edit-pen" title="我的创作" isLink url="/pages/my/posts/posts"></u-cell>
-			<u-cell icon="rmb-circle" title="我的学币" isLink url="/pages/my/coin/coin"></u-cell>
-			<u-cell icon="star" title="我的收藏" isLink url="/pages/my/posts/favorites"></u-cell>
-			<u-gap height="15" bg-color="#f9f9f9"></u-gap>
-			<u-cell icon="question-circle" title="帮助与反馈" isLink url="/pages/my/helpAndFeedback/feedbackIndex"></u-cell>
-			<u-cell icon="setting" title="设置" isLink url="/pages/my/settings/setting"></u-cell>
-		</u-cell-group>
+	<view class="background">
+		<view class="content">
+			<!-- 个人信息 -->
+			<u-cell-group>
 
+				<view class="cellWithRadius">
+					<u-cell isLink url="/pages/my/settings/userInfo">
+						<u-image width='140rpx' height='140rpx' slot="icon" :src="user.avatarUrl"
+							shape="circle"></u-image>
+						<view class="box" slot="title">
+							<view class="box1">
+								<text style="margin-right:10px;">{{user.nickName}}</text>
+								<u-tag borderColor="#00bcd4" bgColor="#00bcd4" :text="user.level" size="mini"
+									shape="circle"></u-tag>
+							</view>
+							<text style="color: darkgray;">{{user.slogan}}</text>
+						</view>
+					</u-cell>
+
+					<u-cell>
+						<text slot="title">{{user.college}}</text>
+						<text slot="title">{{user.major}}</text>
+						<text slot="value">福研帮已经陪伴了您</text>
+						<text slot="value" class="days">{{user.useageDays}}</text>
+						<text slot="value">天了</text>
+					</u-cell>
+				</view>
+				<!-- <u-gap height="15" bg-color="#f9f9f933"></u-gap> -->
+				<view class="cellWithRadius">
+					<u-cell iconStyle="color:#876800;" icon="edit-pen" titleStyle="margin-left: 20rpx;" title="我的创作"
+						isLink url="/pages/my/posts/posts"></u-cell>
+					<u-cell iconStyle="color:#faad14;" icon="rmb-circle" titleStyle="margin-left: 20rpx;" title="我的学币"
+						isLink url="/pages/my/coin/coin"></u-cell>
+					<u-cell iconStyle="color:#fa8c16;" icon="star-fill" titleStyle="margin-left: 20rpx;" title="我的收藏"
+						isLink url="/pages/my/posts/favorites"></u-cell>
+					<!-- <u-gap height="15" bg-color="#f9f9f933"></u-gap> -->
+				</view>
+				<view class="cellWithRadius">
+					<u-cell iconStyle="color:#73d13d;" icon="question-circle"
+						titleStyle="margin-left: 20rpx;" title="帮助与反馈" isLink
+						url="/pages/my/helpAndFeedback/feedbackIndex"></u-cell>
+					<u-cell iconStyle="color:#7cb305;" icon="setting" titleStyle="margin-left: 20rpx;" title="设置" isLink
+						url="/pages/my/settings/setting"></u-cell>
+				</view>
+			</u-cell-group>
+
+		</view>
 	</view>
+
 </template>
 
 <script>
@@ -57,19 +73,10 @@
 			setTimeout(() => {
 				this.refresh();
 				uni.stopPullDownRefresh();
-				this.$refs.uNotify.show({
-					top: 10,
-					type: 'success',
-					color: '#000',
-					bgColor: '#b2cf87',
-					message: '刷新成功',
-					duration: 1000 * 2,
-					fontSize: 20,
-					safeAreaInsetTop: true
-				})
+			
 			}, 1000)
 		},
-		mounted(){
+		mounted() {
 			this.refresh();
 		},
 		methods: {
@@ -109,9 +116,23 @@
 </script>
 
 <style lang="scss">
-	.blankBox {
-		height: 100rpx;
+	.background {
+		width: 100%;
+		height: 2000rpx;
+		// background-image: linear-gradient(2deg, #ffeeee, #eafff4)
+		background-color:#fafafa
 	}
+
+	.cellWithRadius {
+		width: auto;
+		height: 100%;
+		margin: 25rpx;
+		margin-top: 60rpx;
+		background-color: #fff;
+		box-shadow: 5rpx 10rpx 10rpx #bfbfbf;
+		border-radius: 20rpx;
+	}
+
 
 	.box {
 		display: flex;
@@ -125,7 +146,17 @@
 	}
 
 	.days {
-		font-size: 25px;
-		color: crimson;
+		font-size: 70rpx;
+		color:#00bcd4;
+	}
+
+	.cellTitle {
+		margin-left: 20rpx;
+	}
+
+	.u-cell {
+		
+		border-color: rgba(0, 0, 0, 0.1);
+
 	}
 </style>

@@ -65,6 +65,7 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	circle.UpdatePostCollected(r, db)
 	circle.UpdatePostLiked(r, db)
 	circle.UploadPost(r, db)
+	circle.PostAnswerStatus(r, db)
 
 	//favorite
 	myFavorites.SearchNewQue(r)

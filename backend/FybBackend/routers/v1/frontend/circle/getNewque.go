@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func SearchNewQue(e *gin.Engine) {
@@ -41,12 +42,24 @@ func SearchNewQue(e *gin.Engine) {
 				}
 
 				postMap["name"] = postMap["Author"].(map[string]interface{})["NickName"]
-				postMap["time"] = postMap["PublishTime"]
+				if publishTime, ok := postMap["PublishTime"].(string); ok {
+					t, err := time.Parse(time.RFC3339, publishTime)
+					if err == nil {
+						postMap["time"] = t.Format("2006.01.02 15:04:05")
+					}
+				}
 				postMap["queId"] = postMap["ID"]
 				postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
 				postMap["summary"] = postMap["Summary"]
-				postMap["isImage"] = false
-				postMap["img"] = nil
+				postMap["title"] = postMap["Title"]
+				if (postMap["CoverUrl"]) == "" {
+					postMap["isImage"] = false
+				} else {
+					postMap["isImage"] = true
+				}
+				postMap["img"] = postMap["CoverUrl"]
+				delete(postMap, "CoverUrl")
+				delete(postMap, "Title")
 				delete(postMap, "Answer")
 				delete(postMap, "Content")
 				delete(postMap, "Summary")

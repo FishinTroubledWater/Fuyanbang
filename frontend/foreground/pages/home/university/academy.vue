@@ -243,6 +243,26 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 		// 	this.$forceUpdate();
 		// },
 		methods: {
+			reload() {
+				this.$nextTick(() => {
+					let pages = getCurrentPages();
+					let currPage = pages[pages.length - 1];
+					if(currPage.searchContent && currPage.searchContent != '') {
+						this.academyName = currPage.searchContent;
+						uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+									
+						}).then(res => {
+							this.isExist = true;
+							this.mes = res.data.data;
+							console.log(this.mes);
+						}).catch(err => {
+							this.mes = [];
+							this.isExist = false;
+						})
+						currPage.searchContent = '';
+					}
+				})
+			},
 			touchStart(){
 				this.active="background-color:#e6eff9"
 			},
