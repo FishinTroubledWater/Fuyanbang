@@ -67,8 +67,12 @@
             <u--text :lines="1" :text="item.content"></u--text>
           </uni-card>
         </u-list-item>
-
       </u-list> -->
+
+      <u-skeleton v-if="isArticleLoading" class="downloading" rows="5" title
+        :rowsWidth="['640rpx', '640rpx', '640rpx', '640rpx', '640rpx']"
+        :rowsHeight="['20px', '20px', '20px', '20px', '20px']" loading></u-skeleton>
+
       <u-list @scrolltolower="scrolltolower">
         <u-list-item v-for="(item, index) in indexList" :key="index">
           <view class="viewSaid" @click="gotoDetail('/pages/home/information/detail', item.id)">
@@ -119,6 +123,9 @@
       return {
         // 时间轴
         active: 3,
+
+        //文章是否显示
+        isArticleLoading: true,
 
         // 最新动态
         indexList: [
@@ -224,6 +231,7 @@
       uni.$u.http.get('/v1/frontend/news/detail', {
 
       }).then(res => {
+        this.isArticleLoading = false;
         console.log(res.data.data)
         for (var i = 0; i < res.data.data.newses.length; i++) {
           let tmp = res.data.data.newses[i];
@@ -279,7 +287,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #DCE2F1;
+    background-color: #f9f1db;
   }
 
   .text-area {
@@ -321,11 +329,12 @@
   .trends-box {
     border-radius: 15rpx;
     margin: 6rpx 0rpx;
+    width: 640rpx;
   }
 
   .trends-box-title {
     /*    margin: 6rpx 16rpx; */
-    margin-left: 40rpx;
+    margin-left: 16rpx;
     margin-bottom: 20rpx;
     font-size: 34rpx;
     color: #3F3F3F;
@@ -336,6 +345,11 @@
   .trends-box-item {
     opacity: 0.8;
     width: 680rpx;
+  }
+
+  .downloading {
+    width: 100%;
+    margin-top: 16px;
   }
 
   .countDown {
@@ -368,6 +382,7 @@
 
   .viewSaid {
     height: auto;
+    width: 600rpx;
 
     /* 圆角 */
     border-radius: 18rpx;
@@ -378,12 +393,11 @@
     box-shadow: 2rpx 7rpx 0rpx #ebebeb;
 
     background-color: #ffffff;
-    margin-left: 30rpx;
-    margin-right: 30rpx;
-    margin-top: 25rpx;
+    margin-left: 4rpx;
+    margin-top: 24rpx;
 
     /* padding使得文字和图片不至于贴着边框 */
-    padding: 25rpx;
+    padding: 16rpx;
 
   }
 
@@ -394,7 +408,7 @@
   }
 
   .userMes {
-    margin-left: 30rpx;
+    margin-left: 16rpx;
     display: flex;
     flex-direction: column;
     width: 270rpx;
@@ -428,7 +442,7 @@
   .publishTime {
     font-size: 20rpx;
     color: #9A9A9A;
-    margin-left: 40rpx;
+    margin-left: 36rpx;
   }
 
   .title {

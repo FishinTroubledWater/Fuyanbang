@@ -57,7 +57,9 @@
 					account: this.email,
 					code: this.code
 				}).then(res => {
-					if (res.data.state == true) {
+					// console.log("这里有吗？");/
+					if (res.data.code == 200) {
+						// console.log("这里呢？");
 						uni.navigateTo({
 							url: './setPassword?email=' + this.email.toString(),
 						})
