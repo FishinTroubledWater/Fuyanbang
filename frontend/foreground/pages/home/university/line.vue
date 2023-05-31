@@ -3,15 +3,18 @@
 		<view class="selectForm">
 			<picker @change="bindPickerChange1" :range="array1" :value="index1" class="selectFormItem">
 				<label class="">{{array1[index1]}}</label>
-				<label class="downArrow">∨</label>
+				<!-- <label class="downArrow">∨</label> -->
+				<image class="downArrow" src="@/static/academy-icons/down.png"></image>
 			</picker>
 			<picker @change="bindPickerChange2" :range="array2" :value="index2" class="selectFormItem">
 				<label class="">{{array2[index2]}}</label>
-				<label class="downArrow">∨</label>
+				<!-- <label class="downArrow">∨</label> -->
+				<image class="downArrow" src="@/static/academy-icons/down.png"></image>
 			</picker>
 			<picker @change="bindPickerChange3" :range="array3" :value="index3" class="selectFormItem">
 				<label class="">{{array3[index3]}}</label>
-				<label class="downArrow">∨</label>
+				<!-- <label class="downArrow">∨</label> -->
+				<image class="downArrow" src="@/static/academy-icons/down.png"></image>
 			</picker>
 		</view>
 		<view>
@@ -253,5 +256,12 @@
 		width: 650rpx;
 		margin-left: 50rpx;
 		margin-top: 30rpx;
+	}
+	.downArrow{
+		margin-left: 5rpx;
+		// padding-top: 10rpx;
+		height: 20rpx;
+		width: 20rpx;
+		
 	}
 </style>
