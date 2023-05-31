@@ -47,8 +47,6 @@
 					});
 					return;
 				}
-
-
 				// 如果两次密码一致，可以在这里进行注册逻辑
 				// ...
 				this.registerTime = this.getTime();

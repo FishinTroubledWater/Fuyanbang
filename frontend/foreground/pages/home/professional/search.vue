@@ -79,9 +79,12 @@
 				// })
 				prevPage.$vm.searchContent = this.searchContent
 				// 关闭当前页面，返回上一页面
-				uni.navigateBack({
-					delta: 1
-				})
+				setTimeout(() => {
+					uni.$emit('refreshData1');
+					uni.navigateBack({
+						delta: 1
+					})
+				}, 250)
 			},
 			selectItem(index){
 				this.searchContent = index;
