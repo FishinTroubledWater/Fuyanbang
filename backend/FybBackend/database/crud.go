@@ -722,6 +722,34 @@ func DeleteUser(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	return count, err
 }
 
+func AddBalance(db *gorm.DB, userID int64, sum int64) (bool, error) {
+	err := db.Model(&User{}).Where("id = ?", userID).Update("balance", gorm.Expr("balance + ?", sum)).Error
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func DecreaseBalance(db *gorm.DB, userID int64, amount int64) (string, bool, error) {
+	var user User
+	err := db.First(&user, userID).Error
+	if err != nil {
+		return "", false, err
+	}
+
+	if user.Balance < amount {
+		return "", false, errors.New("学币余额不足")
+	}
+
+	user.Balance -= amount
+	err = db.Save(&user).Error
+	if err != nil {
+		return "", false, err
+	}
+
+	return user.Account, true, nil
+}
+
 // Feedback
 
 func AddFeedback(db *gorm.DB, values map[string]interface{}) (int64, error) {

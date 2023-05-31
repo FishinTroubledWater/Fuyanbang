@@ -5,10 +5,13 @@ import (
 	"FybBackend/routers/v1/frontend/circle"
 	"FybBackend/routers/v1/frontend/major"
 	"FybBackend/routers/v1/frontend/news"
+	"FybBackend/routers/v1/frontend/recipe"
+	"FybBackend/routers/v1/frontend/user/exchange"
 	"FybBackend/routers/v1/frontend/user/login"
 	"FybBackend/routers/v1/frontend/user/myFavorites"
 	"FybBackend/routers/v1/frontend/user/myFeedbacks"
 	"FybBackend/routers/v1/frontend/user/myPosts"
+	"FybBackend/routers/v1/frontend/user/recharge"
 	"FybBackend/routers/v1/frontend/user/register"
 	"FybBackend/routers/v1/frontend/user/selectUsers"
 	"FybBackend/routers/v1/frontend/user/userInfo"
@@ -37,6 +40,8 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	myFavorites.DeleteFavorite(r, db)
 	register.SendEmail(r)
 	register.ValidateEmailCode(r)
+	recharge.Recharge(r)
+	exchange.Exchange(r)
 
 	//news
 	news.NewsInfo(r, db)
@@ -69,4 +74,8 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 
 	//favorite
 	myFavorites.SearchNewQue(r)
+
+	//Recipe
+	recipe.GetRecipeList(r)
+	recipe.GetRecipeDetail(r)
 }
