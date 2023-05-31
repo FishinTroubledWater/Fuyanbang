@@ -4,9 +4,9 @@
     <uni-section class="header-box" title="" sub-title="" type="">
 
       <!-- 倒计时 -->
-      <u-row customStyle="margin: 2px 14px">
+      <u-row customStyle="margin: 0rpx 24rpx">
         <u-col span="8">
-          <u--text :text="RemainingTime" size="90rpx" color="#ffffff" class="countDown"></u--text>
+          <u--text :text="RemainingTime" size="72rpx" color="#ffffff" class="countDown"></u--text>
         </u-col>
       </u-row>
 
@@ -18,43 +18,74 @@
           <u--text></u--text>
         </u-col>
         <u-col span="5">
-          <u--text :text="ExamYear" size="34rpx" color="#ffffff" class="yearDown"></u--text>
+          <u--text :text="ExamYear" size="30rpx" color="#ffffff" class="yearDown"></u--text>
         </u-col>
       </u-row>
 
       <!--      <u-row style="margin: 16rpx 8rpx; padding: 0rpx 12rpx;">
         <u--text :line="2" text="满怀激情地投入到对事理的探究中来，至于建筑变成了自然而然的结果" size="30rpx" lineHeight="30rpx" color="#f1f1f1"></u--text>
       </u-row> -->
-      <view class="remark">
+      <!-- <view class="remark">
         满怀激情地投入到对事理的探究中来，至于建筑变成了自然而然的结果。
-      </view>
+      </view> -->
 
       <!-- 时间轴 -->
       <view class="timeline">
-        <uni-steps :options="TimeList" active-icon="flag" :active="active" />
+        <uni-steps deactive-color="#ffffff" active-color="#00aa00" :options="TimeList" active-icon="flag"
+          :active="active" />
       </view>
 
     </uni-section>
 
     <!-- 标签按钮 -->
-    <my-card :is-shadow="true" style="opacity: 0.6;width: 620rpx;">
-      <view class="tabs-box">
-        <view class="tabs-box-item" style="margin-right: 22px;">
-          <u-icon label="院校" labelPos="bottom" labelSize="34rpx" labelColor="#000" margin="2" size="40"
-            name="/static/home-images/academy.png" @click="gotoPage('/pages/home/university/academy')"></u-icon>
-        </view>
+    <u-row class="tabs-box">
+      <!-- 院校 -->
+      <u-col span="6" style="margin: 0 -40rpx 0 24rpx;height: 256rpx;">
+        <my-card :is-shadow="true" class="tabs-box-item" @click="gotoPage('/pages/home/university/academy')"
+          style="height: 600rpx;">
+          <u-row style="margin: 2rpx 2rpx;">
+            <u-col span="7">
+              <u--text text="院 校" size="20" color="#ffffff"></u--text>
+            </u-col>
+            <u-col span="5" offset="1">
+              <u-avatar src="/static/home-images/academy.png" shape="square" size="36"></u-avatar>
+            </u-col>
+          </u-row>
+          <u-row>
+            <u--text text="选院校的确是一件十分不容易的事情，专业的选择为我们敲定了努力的方向，学校的选择才是给我们确定了准确的目标。" :lines="2" size="12"
+              color="#e3e3e3"></u--text>
+          </u-row>
+        </my-card>
+      </u-col>
 
-        <view class="tabs-box-item" style="margin: 0px 22px;">
-          <u-icon label="专业" labelPos="bottom" labelSize="34rpx" labelColor="#000" margin="2" size="40"
-            name="/static/home-images/major.png" @click="gotoPage('/pages/home/professional/major')"></u-icon>
-        </view>
+      <!-- 专业和资讯 -->
+      <u-col span="6" style="margin: 0 4rpx 0 -4rpx;height: 256rpx;">
+        <my-card :is-shadow="true" class="tabs-box-item" @click="gotoPage('/pages/home/professional/major')" style="margin-bottom: -16rpx;
+          background-image: linear-gradient(270deg, #614385ee, #516395ee);">
+          <u-row style="margin-top: -4rpx;">
+            <u-col span="7" offset="1">
+              <u--text text="专 业" size="20" color="#ffffff"></u--text>
+            </u-col>
+            <u-col span="5" offset="-1">
+              <u-avatar src="/static/home-images/major.png" shape="square" size="36"></u-avatar>
+            </u-col>
+          </u-row>
+        </my-card>
 
-        <view class="tabs-box-item" style="margin-left: 22px;">
-          <u-icon label="资讯" labelPos="bottom" labelSize="34rpx" labelColor="#000" margin="2" size="40"
-            name="/static/home-images/news.png" @click="gotoPage('/pages/home/information/news')"></u-icon>
-        </view>
-      </view>
-    </my-card>
+        <my-card :is-shadow="true" class="tabs-box-item" @click="gotoPage('/pages/home/information/news')" style="
+          background-image: linear-gradient(270deg, #614385ee, #516395ee);">
+          <u-row style="margin-top: -6rpx;">
+            <u-col span="7" offset="1">
+              <u--text text="资 讯" size="20" color="#ffffff"></u--text>
+            </u-col>
+            <u-col span="5" offset="-1">
+              <u-avatar src="/static/home-images/news.png" shape="square" size="36"></u-avatar>
+            </u-col>
+          </u-row>
+        </my-card>
+      </u-col>
+
+    </u-row>
 
     <!-- 动态 -->
     <view class="trends-box">
@@ -248,6 +279,9 @@
         console.log("出错了...")
       })
     },
+    async onReachBottom() {
+      console.log("整个页面到底了！");
+    },
     methods: {
       // 页面跳转
       gotoPage(url) {
@@ -287,7 +321,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #f9f1db;
+    background-image: linear-gradient(178deg, #bac8ff, #c3fae855);
   }
 
   .text-area {
@@ -297,39 +331,44 @@
 
   /* 倒计时样式 */
   .header-box {
-    margin: 10rpx 0rpx;
-    border-radius: 10rpx;
-    width: 690rpx;
+    margin: 20rpx 0rpx 10rpx 0rpx;
+    border-radius: 20rpx;
+    width: 672rpx;
     opacity: 0.8;
+    box-shadow: 5rpx 5rpx 5rpx #646464;
     /* 背景图片 */
-    background: url('../../static/FZU_building.jpg') no-repeat;
-    background-size: 100%;
-    background-attachment: fixed;
+    /* background: url('../../static/FZU_building.jpg') no-repeat; */
+    /* background-size: 100%; */
+    /* background-attachment: fixed; */
+    background-image: linear-gradient(135deg, #614385, #516395);
   }
 
   /* 时间轴 */
   .timeline {
-    margin: 34rpx 0rpx;
+    margin: 30rpx 0rpx;
+    color: #ffffff;
   }
 
   /* 标签栏样式 */
   .tabs-box {
-    margin: 8rpx 8rpx;
+    margin: 2rpx 2rpx;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  /* 标签栏子元素 */
+  /* 卡片按钮 */
   .tabs-box-item {
-    margin: 0 20rpx;
+    opacity: 0.7;
+    border-radius: 32rpx;
+    background-image: linear-gradient(90deg, #614385ee, #516395ee);
   }
 
   /* 最新动态样式 */
   .trends-box {
-    border-radius: 15rpx;
+    border-radius: 20rpx;
     margin: 6rpx 0rpx;
-    width: 640rpx;
+    width: 646rpx;
   }
 
   .trends-box-title {
@@ -353,25 +392,26 @@
   }
 
   .countDown {
-    width: 300rpx;
+    width: 420rpx;
     font-family: "思源黑体";
-    font-weight: 700;
+    font-weight: 600;
   }
 
   .yearDown {
-    width: 300rpx;
+    width: 320rpx;
     font-family: "思源黑体";
     font-size: 32rpx;
+    padding-left: 24rpx;
   }
 
-  .remark {
+  /*  .remark {
     margin-top: 50rpx;
     margin-left: 25rpx;
     width: 500rpx;
     color: #f5f5f5;
     font-size: 28rpx;
     font-family: "思源黑体";
-  }
+  } */
 
   .viewUser {
     display: flex;
@@ -385,12 +425,12 @@
     width: 600rpx;
 
     /* 圆角 */
-    border-radius: 18rpx;
+    border-radius: 20rpx;
 
     /* 边 */
     border: 1rpx solid #E0E3DA;
     /* 阴影 */
-    box-shadow: 2rpx 7rpx 0rpx #ebebeb;
+    box-shadow: 6rpx 6rpx 8rpx #ebebeb;
 
     background-color: #ffffff;
     margin-left: 4rpx;
@@ -442,7 +482,7 @@
   .publishTime {
     font-size: 20rpx;
     color: #9A9A9A;
-    margin-left: 36rpx;
+    margin-left: 32rpx;
   }
 
   .title {
