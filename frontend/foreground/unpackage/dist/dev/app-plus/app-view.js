@@ -8230,7 +8230,7 @@ var render = function () {
         },
         [_vm._v("回答:")]
       ),
-      _vm._v('">'),
+      _vm._v('" :text="item.answer">'),
       _c(
         "u-row",
         { attrs: { _i: 16 } },
@@ -8241,23 +8241,7 @@ var render = function () {
             [_c("v-uni-text", { attrs: { _i: 18 } }, [_vm._v("回答状态：")])],
             1
           ),
-          _c(
-            "u-col",
-            { attrs: { _i: 19 } },
-            [
-              _c(
-                "v-uni-text",
-                { attrs: { "v-if": _vm._$g(20, "a-v-if"), _i: 20 } },
-                [_vm._v("暂未采纳")]
-              ),
-              _c(
-                "v-uni-text",
-                { attrs: { "v-if": _vm._$g(21, "a-v-if"), _i: 21 } },
-                [_vm._v("已采纳")]
-              ),
-            ],
-            1
-          ),
+          _c("u-col", { attrs: { _i: 19 } }),
         ],
         1
       ),
