@@ -193,6 +193,17 @@
 					// console.log(res.data);   // hello  这里可做赋值的操作
 					this.id = res.data;
 					console.log(this.id)
+					uni.$u.http.get('/v1/frontend/circle/queDetails/' + this.queID + '/' + this.id, {
+					
+					}).then(res => {
+						console.log(res.data.data);
+						this.indexList = res.data.data[0];
+						this.whetherLike = this.indexList.isLiked;
+						this.whetherCollect = this.indexList.isCollected;
+						this.likeNum = this.indexList.likeNum;
+					}).catch(err => {
+					
+					})
 				}
 			})
 			uni.$u.http.get('/v1/frontend/circle/queAnswer/' + this.queID, {

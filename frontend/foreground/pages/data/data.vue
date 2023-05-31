@@ -127,14 +127,40 @@
 			}
 
 		},
-		onShow() {
+		
+		mounted() {
+			uni.getStorage({
+				key:'userId',   // 储存在本地的变量名
+				success:res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.id=res.data;
+					console.log(this.id)
+					uni.$u.http.get('/v1/frontend/circle/newinfo/'+ this.id, {
+							
+						}).then(res => {
+							console.log(res.data.data);
+							this.indexList=res.data.data
+						}).catch(err => {
+							
+						}),
+					uni.$u.http.get('/v1/frontend/circle/newque/'+ this.id, {
+							
+						}).then(res => {
+							console.log(res.data.data);
+							this.questionsList=res.data.data
+						}).catch(err => {
+							
+						})
+				}
+			})
 			uni.$u.http.get('/v1/frontend/circle/newinfo/'+ this.id, {
-					
+		
 				}).then(res => {
 					console.log(res.data.data);
 					this.indexList=res.data.data
 				}).catch(err => {
-					
+		
 				}),
 			uni.$u.http.get('/v1/frontend/circle/newque/'+ this.id, {
 					
@@ -145,23 +171,14 @@
 					
 				})
 		},
-		mounted() {
-			uni.getStorage({
-				key:'userId',   // 储存在本地的变量名
-				success:res => {
-					// 成功后的回调
-					// console.log(res.data);   // hello  这里可做赋值的操作
-					this.id=res.data;
-					console.log(this.id)
-				}
-			})
+		onShow() {
 			uni.$u.http.get('/v1/frontend/circle/newinfo/'+ this.id, {
-		
+					
 				}).then(res => {
 					console.log(res.data.data);
 					this.indexList=res.data.data
 				}).catch(err => {
-		
+					
 				}),
 			uni.$u.http.get('/v1/frontend/circle/newque/'+ this.id, {
 					
