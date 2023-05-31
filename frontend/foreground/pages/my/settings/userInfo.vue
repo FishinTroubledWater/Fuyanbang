@@ -1,66 +1,71 @@
 <template>
-	<view class="content">
-		<u-notify ref="uNotify"></u-notify>
-		<u-cell-group>
-			<u-cell>
-				<text slot="title">修改头像</text>
-				<u-image @click="changeHead()" width='100rpx' height='100rpx' slot="value" :src="user.avatarUrl"
-					shape="circle"></u-image>
-			</u-cell>
-			<u-cell>
-				<text slot="title">修改昵称</text>
-				<input class="right" slot="value" v-model="user.nickName" placeholder="请输入昵称">{{user.nickName}}</input>
-			</u-cell>
+	<view class="backGround">
+		<view class="infoCard">
+			<view class="content">
+				<u-cell-group>
+					<u-cell>
+						<text slot="title">修改头像</text>
+						<u-image @click="changeHead()" width='100rpx' height='100rpx' slot="value" :src="user.avatarUrl"
+							shape="circle"></u-image>
+					</u-cell>
+					<u-cell>
+						<text slot="title">修改昵称</text>
+						<input class="right" slot="value" v-model="user.nickName"
+							placeholder="请输入昵称">{{user.nickName}}</input>
+					</u-cell>
+
+					<picker :range="sex" @confirm="bindSexChange($event)" @change="bindSexChange($event)">
+						<u-cell>
+							<text slot="title">设置性别</text>
+							<text slot="value">{{user.sex}}</text>
+						</u-cell>
+					</picker>
 
 
-			<picker :range="sex" @confirm="bindSexChange($event)" @change="bindSexChange($event)">
-				<u-cell>
-					<text slot="title">设置性别</text>
-					<text slot="value">{{user.sex}}</text>
-				</u-cell>
-			</picker>
+					<u-cell>
+						<text slot="title">所在地区</text>
+						<input class="right" slot="value" v-model="user.area" placeholder="请输入地区">{{user.area}}</input>
+					</u-cell>
 
 
-			<u-cell>
-				<text slot="title">所在地区</text>
-				<input class="right" slot="value" v-model="user.area" placeholder="请输入地区">{{user.area}}</input>
-			</u-cell>
+					<picker :range="colleges" @confirm="bindCollegeChange($event)" @change="bindCollegeChange($event)">
+						<u-cell>
+							<text slot="title">本科院校</text>
+							<text slot="value">{{user.college}}</text>
+						</u-cell>
 
+					</picker>
 
-			<picker :range="colleges" @confirm="bindCollegeChange($event)" @change="bindCollegeChange($event)">
-				<u-cell>
-					<text slot="title">本科院校</text>
-					<text slot="value">{{user.college}}</text>
-				</u-cell>
+					<picker :range="majors" @confirm="bindMajorChange($event)" @change="bindMajorChange($event)">
+						<u-cell>
+							<text slot="title">本科专业</text>
+							<text slot="value">{{user.major}}</text>
+						</u-cell>
+					</picker>
 
-			</picker>
+					<u-cell>
+						<text slot="title">考研年份</text>
+						<input class="right" slot="value" v-model="user.year"
+							placeholder="请输入考研年份">{{user.year}}</input>
+					</u-cell>
 
-			<picker :range="majors" @confirm="bindMajorChange($event)" @change="bindMajorChange($event)">
-				<u-cell>
-					<text slot="title">本科专业</text>
-					<text slot="value">{{user.major}}</text>
-				</u-cell>
-			</picker>
+					<picker :range="colleges" @confirm="bindTargetCollegeChange($event)"
+						@change="bindTargetCollegeChange($event)">
+						<u-cell>
+							<text slot="title">报考院校</text>
+							<text slot="value">{{user.targetCollege}}</text>
+						</u-cell>
+					</picker>
 
-			<u-cell>
-				<text slot="title">考研年份</text>
-				<input class="right" slot="value" v-model="user.year" placeholder="请输入考研年份">{{user.year}}</input>
-			</u-cell>
-
-			<picker :range="colleges" @confirm="bindTargetCollegeChange($event)"
-				@change="bindTargetCollegeChange($event)">
-				<u-cell>
-					<text slot="title">报考院校</text>
-					<text slot="value">{{user.targetCollege}}</text>
-				</u-cell>
-			</picker>
-
-			<view class="box">
-				<text class="slogan">个性签名</text>
-				<u--textarea v-model="user.slogan" placeholder="请在此处编辑您的个性签名" count>{{user.slogan}}</u--textarea>
+					<view class="box">
+						<text class="slogan">个性签名</text>
+						<u--textarea v-model="user.slogan" placeholder="请在此处编辑您的个性签名"
+							count>{{user.slogan}}</u--textarea>
+					</view>
+					<button class="upButton" @click="upInfo()">保存</button>
+				</u-cell-group>
 			</view>
-			<button class="upButton" @click="upInfo()">保存</button>
-		</u-cell-group>
+		</view>
 	</view>
 </template>
 
@@ -69,9 +74,12 @@
 	Axios.defaults.baseURL = '/'
 	// eslint-disable-next-line no-unused-vars
 	const axios = require('axios')
-	
-	import { pathToBase64, base64ToPath } from '@/js/image-tools/index.js'
-	
+
+	import {
+		pathToBase64,
+		base64ToPath
+	} from '@/js/image-tools/index.js'
+
 	export default {
 		data() {
 			return {
@@ -104,16 +112,6 @@
 			setTimeout(() => {
 				this.refresh();
 				uni.stopPullDownRefresh();
-				this.$refs.uNotify.show({
-					top: 10,
-					type: 'success',
-					color: '#000',
-					bgColor: '#55ff7f',
-					message: '刷新成功',
-					duration: 1000 * 2,
-					fontSize: 20,
-					safeAreaInsetTop: true
-				})
 			}, 1000)
 		},
 		mounted() {
@@ -151,40 +149,40 @@
 			},
 			async changeHead() {
 				var _this = this;
-				
+
 				const res = await new Promise((resolve, reject) => {
-				  uni.chooseImage({
-				    count: 1, // 选择图片的数量，这里选择1张
-				    sourceType: ['album'], // 选择图片的来源，这里选择相册
-				    success: resolve,
-				    fail: reject,
-				  });
-				});			
+					uni.chooseImage({
+						count: 1, // 选择图片的数量，这里选择1张
+						sourceType: ['album'], // 选择图片的来源，这里选择相册
+						success: resolve,
+						fail: reject,
+					});
+				});
 				// 从返回结果中获取选中的图片文件路径
 				const imagePath = res.tempFilePaths[0];
-				
-				
+
+
 				const res1 = pathToBase64(imagePath)
-				  .then(base64 => {
-					// console.log(base64)
-					var s = base64.substr(base64.indexOf(',') + 1,base64.length);
-					console.log(s)
-					const result = Axios.post('https://api.superbed.cn/upload', {
-							  token: '1000766339bd4c248a8ad625a87f687d',
-							  b64_data: s,
-							}).then(res =>{
-								console.log("图片上传成功");
-								console.log(res.data.url);
-								_this.user.avatarUrl = res.data.url
-							}).catch(error =>{
-							  console.log(error);
-							  console.log("失败")
-							})
-				  }).catch(error => {
-				    console.error(error)
-				  })
-				
-				
+					.then(base64 => {
+						// console.log(base64)
+						var s = base64.substr(base64.indexOf(',') + 1, base64.length);
+						console.log(s)
+						const result = Axios.post('https://api.superbed.cn/upload', {
+							token: '1000766339bd4c248a8ad625a87f687d',
+							b64_data: s,
+						}).then(res => {
+							console.log("图片上传成功");
+							console.log(res.data.url);
+							_this.user.avatarUrl = res.data.url
+						}).catch(error => {
+							console.log(error);
+							console.log("失败")
+						})
+					}).catch(error => {
+						console.error(error)
+					})
+
+
 			},
 			bindSexChange(e) {
 				this.user.sex = this.sex[e.target.value]
@@ -243,6 +241,11 @@
 </script>
 
 <style>
+	.backGround{
+		width: 100%;
+		height: 1200rpx;
+		background-color:#fafafa
+	}
 	.right {
 		text-align: right;
 	}
@@ -252,22 +255,44 @@
 		flex-direction: column;
 		justify-content: space-around;
 		padding-top: 8px;
-		padding-left: 15px;
-		padding-right: 15px;
+		padding-left: 20px;
+		padding-right: 20px;
 
 	}
 
 	.slogan {
-		width: 20%;
+		width: 25%;
 		height: 30px;
+		margin-left: 30rpx;
 		font-size: 15px;
 	}
 
 	.upButton {
 		width: 80%;
 		height: 50px;
-		background-color: bisque;
+		background-image: linear-gradient(112deg, #08507880, #85d8ce);
 		border-radius: 20px;
-		margin-top: 50px;
+		margin-top: 100rpx;
+		margin-bottom: 50rpx;
+		color: #fff;
+		border: none;
+
+		box-shadow: 5rpx 10rpx 5rpx #bfbfbf;
+	}
+
+	.u-cell {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	.infoCard {
+		width: auto;
+		height: 1100rpx;
+		margin: 25rpx;
+		margin-top: 60rpx;
+		margin-bottom: 60rpx;
+		background-color: #fff;
+		box-shadow: 12rpx 12rpx 10rpx #bfbfbf;
+		border-radius: 20rpx;
 	}
 </style>
