@@ -56,9 +56,9 @@ func SearchQueAnswer(e *gin.Engine) {
 				answerIDStr := strconv.FormatInt(answerID, 10) // 将int64转换为字符串
 
 				if adoptedId == answerIDStr {
-					postMap["isAccepted"] = true
+					postMap["isAccepted"] = "已采纳"
 				} else {
-					postMap["isAccepted"] = false
+					postMap["isAccepted"] = "未采纳"
 				}
 
 				postMap["answerId"] = postMap["ID"]
