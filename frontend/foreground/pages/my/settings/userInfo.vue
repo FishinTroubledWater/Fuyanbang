@@ -243,7 +243,7 @@
 <style>
 	.backGround{
 		width: 100%;
-		height: 1200rpx;
+		height: 1600rpx;
 		background-color:#fafafa
 	}
 	.right {
@@ -273,10 +273,9 @@
 		background-image: linear-gradient(112deg, #08507880, #85d8ce);
 		border-radius: 20px;
 		margin-top: 100rpx;
-		margin-bottom: 50rpx;
+		/* margin-bottom: 50rpx; */
 		color: #fff;
 		border: none;
-
 		box-shadow: 5rpx 10rpx 5rpx #bfbfbf;
 	}
 
@@ -287,7 +286,7 @@
 
 	.infoCard {
 		width: auto;
-		height: 1100rpx;
+		height: 1000rpx;
 		margin: 25rpx;
 		margin-top: 60rpx;
 		margin-bottom: 60rpx;
