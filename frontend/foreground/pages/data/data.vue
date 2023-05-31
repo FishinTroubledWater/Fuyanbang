@@ -47,7 +47,7 @@
 								<u-col span="6">
 									<text style="">悬赏学币：</text>
 								</u-col>
-								<u-col span="6" offset="-5">
+								<u-col span="6" offset="-4">
 									<u--text :lines="1" :text="item.Reward"></u--text>
 								</u-col>
 							</u-row>
