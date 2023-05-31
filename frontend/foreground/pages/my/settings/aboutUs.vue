@@ -1,67 +1,70 @@
 <template>
-	<view class="content">
-		<u-popup :show="showCon" mode="center" @close="close">
-			<view class="contact">
-				<text class="ttext">
-					通过下方邮箱联系我们
-				</text>
-				<text class="ttext">
-					1xxxxxxxxxxxx@qq.com
-				</text>
+	<view class="backGround">
+		<view class="content">
+			<u-popup :show="showCon" mode="center" @close="close">
+				<view class="contact">
+					<text class="ttext">
+						通过下方邮箱联系我们
+					</text>
+					<text class="ttext">
+						1xxxxxxxxxxxx@qq.com
+					</text>
+				</view>
+			</u-popup>
+			<u-popup :show="showCopr" mode="center" @close="close">
+				<view class="contact">
+					<text class="ttext">
+						合作请联系下方邮箱
+					</text>
+					<text class="ttext">
+						1xxxxxxxxxxxx@qq.com
+					</text>
+				</view>
+			</u-popup>
+			<u-popup :show="showRep" mode="center" @close="close">
+				<view class="contact">
+					<text class="ttext">
+						举报电话
+					</text>
+					<text class="ttext">
+						16546516xxxxx
+					</text>
+				</view>
+			</u-popup>
+			<u-popup :show="showVer" mode="center" @close="close">
+				<view class="contact">
+					<text class="ttext">
+						当前版本
+					</text>
+					<text class="ttext">
+						{{version}}
+					</text>
+				</view>
+			</u-popup>
+			<view class="about_60">
+				<view class="about_62">
+					<image src="/static/my-assets//about//Logo.jpg" mode="scaleToFill" border="0" class="about_22">
+					</image>
+					<text decode="true" class="about_35">福研帮</text>
+					<text decode="true" class="about_36">{{version}}</text>
+				</view>
 			</view>
-		</u-popup>
-		<u-popup :show="showCopr" mode="center" @close="close">
-			<view class="contact">
-				<text class="ttext">
-					合作请联系下方邮箱
-				</text>
-				<text class="ttext">
-					1xxxxxxxxxxxx@qq.com
-				</text>
+			<view class="box">
+				<u-cell-group>
+					<u-cell isLink @click='showVersion()'>
+						<text slot="title" class="title">检查更新</text>
+					</u-cell>
+					<u-cell isLink @click='showCooperate()'>
+						<text slot="title" class="title">合作商洽</text>
+					</u-cell>
+					<u-cell isLink @click='showReport()'>
+						<text slot="title" class="title">申诉举报</text>
+					</u-cell>
+					<u-cell isLink @click='showContact()'>
+						<text slot="title" class="title">联系我们</text>
+					</u-cell>
+				</u-cell-group>
 			</view>
-		</u-popup>
-		<u-popup :show="showRep" mode="center" @close="close">
-			<view class="contact">
-				<text class="ttext">
-					举报电话
-				</text>
-				<text class="ttext">
-					16546516xxxxx
-				</text>
-			</view>
-		</u-popup>
-		<u-popup :show="showVer" mode="center" @close="close">
-			<view class="contact">
-				<text class="ttext">
-					当前版本
-				</text>
-				<text class="ttext">
-					{{version}}
-				</text>
-			</view>
-		</u-popup>
-		<view class="about_60">
-			<view class="about_62">
-				<image src="/static/my-assets//about//Logo.jpg" mode="scaleToFill" border="0" class="about_22"></image>
-				<text decode="true" class="about_35">福研帮</text>
-				<text decode="true" class="about_36">{{version}}</text>
-			</view>
-		</view>
-		<view class="box">
-			<u-cell-group>
-				<u-cell isLink @click='showVersion()'>
-					<text slot="title" class="title">检查更新</text>
-				</u-cell>
-				<u-cell isLink @click='showCooperate()'>
-					<text slot="title" class="title">合作商洽</text>
-				</u-cell>
-				<u-cell isLink @click='showReport()'>
-					<text slot="title" class="title">申诉举报</text>
-				</u-cell>
-				<u-cell isLink @click='showContact()'>
-					<text slot="title" class="title">联系我们</text>
-				</u-cell>
-			</u-cell-group>
 		</view>
 	</view>
 </template>
@@ -70,7 +73,7 @@
 	export default {
 		data() {
 			return {
-				version:'V1.0.0',
+				version: 'V1.0.0',
 				showVer: false,
 				showCopr: false,
 				showCon: false,
@@ -102,16 +105,28 @@
 </script>
 
 <style>
+	.backGround {
+		width: 100%;
+		height: 2000rpx;
+		/* // background-image: linear-gradient(2deg, #ffeeee, #eafff4) */
+		background-color: #fafafa
+	}
+
 	.box {
-		width: 600upx;
-		height: 530upx;
-		border-radius: 10px;
-		background-color: #eeeeee;
+		width: 600rpx;
+		height: 490rpx;
 		position: relative;
 		top: 240px;
 		margin: 0 auto;
+		background-color: #fff;
+		box-shadow: 12rpx 12rpx 10rpx #bfbfbf;
+		border-radius: 20rpx;
 	}
-
+	.u-popup{
+		border: 1rpx;
+		box-shadow: 12rpx 12rpx 10rpx #bfbfbf;
+		border-radius: 20rpx;
+	}
 	.contact {
 		display: flex;
 		flex-direction: column;
@@ -147,7 +162,7 @@
 		height: 300upx;
 		padding: 0upx;
 		margin-top: 100upx;
-		margin-left: 9%;	
+		margin-left: 9%;
 		float: left;
 		position: absolute;
 		top: 0upx;
@@ -170,6 +185,7 @@
 		border-radius: 0upx;
 		font-size: 8upx;
 		line-height: 127upx;
+		opacity: 0.3;
 	}
 
 	.about_60 .about_62 .about_35 {
@@ -204,5 +220,10 @@
 		color: #5c5f66;
 		font-size: 20upx;
 		line-height: 26upx;
+	}
+
+	.u-cell {
+		padding-left: 20px;
+		padding-right: 20px;
 	}
 </style>

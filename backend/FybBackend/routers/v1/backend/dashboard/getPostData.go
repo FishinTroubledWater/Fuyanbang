@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
+	"time"
 )
 
 type MonthData struct {
@@ -22,18 +23,26 @@ func GetPostData(e *gin.Engine, db *gorm.DB) {
 			})
 			return
 		}
-
 		var result *multierror.Error
-		var data []MonthData
-		var err1 error
-		err1 = db.Raw("SELECT DATE_FORMAT(publishTime,'%Y%m') as months , count(*) as monthCount FROM post GROUP BY months").Scan(&data).Error
-		//for rows.Next() {
-		//	var monthData MonthData
-		//	rows.Scan(&monthData.Months, &monthData.MonthCount)
-		//	fmt.Println(monthData)
-		//}
-		result = multierror.Append(result, err1)
+		var monthData []MonthData
+		const countNeed = 6
+		endTime := time.Now()
+		beginTime := time.Date(time.Now().Year()-1, time.Now().Month(), 1, 0, 0, 0, 0, time.Local)
 
+		err1 := db.Raw("SELECT DATE_FORMAT(publishTime,'%Y-%m') as months , count(*) as monthCount FROM post  where publishTime > ?  and publishTime < ? GROUP BY months", beginTime, endTime).Scan(&monthData).Error
+
+		var data [countNeed]int64
+		for i := 0; i < countNeed; i++ {
+			tmpTime := time.Date(time.Now().Year(), time.Now().Month()-time.Month(countNeed-i-1), 1, 0, 0, 0, 0, time.Local)
+			date := tmpTime.Format("2006-01")
+			data[i] = 0
+			for j := 0; j < len(monthData); j++ {
+				if monthData[j].Months == date {
+					data[i] = monthData[j].MonthCount
+				}
+			}
+		}
+		result = multierror.Append(result, err1)
 		code, msg := exceptionHandler.Handle(result)
 		if code == 200 {
 			context.JSON(code, gin.H{

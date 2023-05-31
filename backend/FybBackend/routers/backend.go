@@ -62,5 +62,5 @@ func InitBackend(r *gin.Engine, db *gorm.DB) {
 
 	//dashboard
 	dashboard.GetPostData(r, db)
-
+	dashboard.GetHomeData(r, db)
 }
