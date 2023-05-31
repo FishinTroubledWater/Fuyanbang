@@ -29,9 +29,13 @@ func SearchQueAnswer(e *gin.Engine) {
 			result = multierror.Append(result, err)
 		}
 
-		adoptedId, err = fybDatabase.GetAdoptedAnswerByQueId(db, queIdInt64)
-		if err != nil {
-			result = multierror.Append(result, err)
+		if count > 0 {
+			adoptedId, err = fybDatabase.GetAdoptedAnswerByQueId(db, queIdInt64)
+			if err != nil {
+				result = multierror.Append(result, err)
+			}
+		} else {
+			adoptedId = ""
 		}
 
 		var responseBody []map[string]interface{}
@@ -80,7 +84,7 @@ func SearchQueAnswer(e *gin.Engine) {
 			}
 		}
 
-		if result.ErrorOrNil() == nil && count > 0 {
+		if result.ErrorOrNil() == nil && count >= 0 {
 			context.JSON(http.StatusOK, gin.H{
 				"code":    200,
 				"message": "请求成功",
