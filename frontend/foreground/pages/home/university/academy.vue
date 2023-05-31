@@ -404,7 +404,8 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 <style lang="scss">
 .container{
 	// background-image: linear-gradient(179deg,#83a4d488,#b6fbff88);
-	background-image: linear-gradient(178deg, #bac8ff, #c3fae855);
+	// background-image: linear-gradient(178deg, #bac8ff, #c3fae855);
+	background-color: #fafafa;
 }
 .wordSpace{
 	letter-spacing: 4rpx;
