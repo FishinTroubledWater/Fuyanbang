@@ -264,14 +264,54 @@ func GetAdoptedAnswerByQueId(db *gorm.DB, queId int64) (string, error) {
 }
 
 func AddAdoptRecord(db *gorm.DB, queId int64, answerId int64) (bool, error) {
+	tx := db.Begin()
+
 	adoptRecord := AdoptRecord{
 		PostId:    strconv.FormatInt(queId, 10),
 		CommentId: strconv.FormatInt(answerId, 10),
 	}
-	err := db.Create(&adoptRecord).Error
+	err := tx.Create(&adoptRecord).Error
 	if err != nil {
+		tx.Rollback()
 		return false, err
 	}
+
+	var post Post
+	err = tx.Where("ID = ?", queId).First(&post).Error
+	if err != nil {
+		tx.Rollback()
+		return false, err
+	}
+
+	reward := post.Reward
+
+	var comment Comment
+	err = tx.Where("ID = ?", answerId).First(&comment).Error
+	if err != nil {
+		tx.Rollback()
+		return false, err
+	}
+
+	var user User
+	err = tx.Where("ID = ?", comment.UserID).First(&user).Error
+	if err != nil {
+		tx.Rollback()
+		return false, err
+	}
+
+	err = tx.Model(&Post{}).Where("ID = ?", queId).Update("Reward", 0).Error
+	if err != nil {
+		tx.Rollback()
+		return false, err
+	}
+
+	err = tx.Model(&User{}).Where("ID = ?", comment.UserID).Update("Balance", user.Balance+reward).Error
+	if err != nil {
+		tx.Rollback()
+		return false, err
+	}
+
+	tx.Commit()
 	return true, nil
 }
 
@@ -570,17 +610,43 @@ func AddPostFrontend(db *gorm.DB, where map[string]interface{}) (bool, error) {
 	var result *multierror.Error
 	var resultSign bool
 
-	p := Post{
-		AuthorID:    int64(where["userId"].(float64)),
-		Title:       where["title"].(string),
-		Content:     where["content"].(string),
-		PartID:      int64(where["type"].(float64)),
-		Summary:     where["summary"].(string),
-		CoverUrl:    where["img"].(string),
-		PublishTime: time.Now(),
-	}
+	userId := int64(where["userId"].(float64))
+	title := where["title"].(string)
+	content := where["content"].(string)
+	partId := int64(where["type"].(float64))
+	summary := where["summary"].(string)
+	coverUrl := where["img"].(string)
+	reward := int64(where["reward"].(float64))
 
-	err := db.Create(&p).Error
+	err := db.Transaction(func(tx *gorm.DB) error {
+		// 创建帖子记录
+		post := Post{
+			AuthorID:    userId,
+			Title:       title,
+			Content:     content,
+			PartID:      partId,
+			Summary:     summary,
+			CoverUrl:    coverUrl,
+			PublishTime: time.Now(),
+			Reward:      reward,
+		}
+		if err := tx.Create(&post).Error; err != nil {
+			return err
+		}
+
+		// 更新用户余额
+		user := User{}
+		if err := tx.Where("ID = ?", userId).First(&user).Error; err != nil {
+			return err
+		}
+		user.Balance -= reward
+		if err := tx.Save(&user).Error; err != nil {
+			return err
+		}
+
+		return nil
+	})
+
 	if err != nil {
 		result = multierror.Append(result, err)
 		resultSign = false
