@@ -258,7 +258,7 @@ func GetAdoptedAnswerByQueId(db *gorm.DB, queId int64) (string, error) {
 	var count int64 = 0
 	err := db.Where("postId = ? ", queId).Find(&adoptRecord).Count(&count).Error
 	if count == 0 && err == nil {
-		result = multierror.Append(result, errors.New("要删除的记录不存在"))
+		result = multierror.Append(result, errors.New("问题不存在！"))
 	}
 	return adoptRecord.CommentId, result
 }
