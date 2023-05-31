@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func SearchQueAnswer(e *gin.Engine) {
@@ -14,6 +15,7 @@ func SearchQueAnswer(e *gin.Engine) {
 	e.GET("/v1/frontend/circle/queAnswer/:queID", func(context *gin.Context) {
 		var result *multierror.Error
 		var count int64
+		var adoptedId string
 		var comments []fybDatabase.Comment
 		queID := context.Param("queID")
 
@@ -23,6 +25,11 @@ func SearchQueAnswer(e *gin.Engine) {
 		}
 
 		count, comments, err = fybDatabase.SearchCommentByQueId(db, queIdInt64)
+		if err != nil {
+			result = multierror.Append(result, err)
+		}
+
+		adoptedId, err = fybDatabase.GetAdoptedAnswerByQueId(db, queIdInt64)
 		if err != nil {
 			result = multierror.Append(result, err)
 		}
@@ -40,8 +47,23 @@ func SearchQueAnswer(e *gin.Engine) {
 					result = multierror.Append(result, err)
 				}
 
+				answerID := int64(postMap["ID"].(float64))     // 将float64转换为int64
+				answerIDStr := strconv.FormatInt(answerID, 10) // 将int64转换为字符串
+
+				if adoptedId == answerIDStr {
+					postMap["isAccepted"] = true
+				} else {
+					postMap["isAccepted"] = false
+				}
+
+				postMap["answerId"] = postMap["ID"]
 				postMap["name"] = postMap["Author"].(map[string]interface{})["NickName"]
-				postMap["time"] = postMap["PublishTime"]
+				if publishTime, ok := postMap["PublishTime"].(string); ok {
+					t, err := time.Parse(time.RFC3339, publishTime)
+					if err == nil {
+						postMap["time"] = t.Format("2006.01.02 15:04:05")
+					}
+				}
 				postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
 				postMap["answer"] = postMap["Content"]
 				delete(postMap, "Author")
@@ -52,6 +74,7 @@ func SearchQueAnswer(e *gin.Engine) {
 				delete(postMap, "TargetPost")
 				delete(postMap, "UserID")
 				delete(postMap, "ID")
+				delete(postMap, "State")
 
 				responseBody = append(responseBody, postMap)
 			}
@@ -67,7 +90,7 @@ func SearchQueAnswer(e *gin.Engine) {
 			context.JSON(http.StatusNotFound, gin.H{
 				"code":    404,
 				"message": result.Error(),
-				"data":    responseBody,
+				"data":    nil,
 			})
 		}
 	})

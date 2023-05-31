@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
+	"strconv"
 	"time"
 )
 
@@ -235,7 +236,6 @@ func SearchCommentByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
 	whereMap["ID"] = queId
 	whereMap["partID"] = 2
 	_, count, err := SelectSingleQueByCondition(db, whereMap)
-	fmt.Println(count)
 	if count == 0 {
 		result = multierror.Append(result, errors.New("帖子id不是问题！"))
 	}
@@ -250,6 +250,29 @@ func SearchCommentByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
 		result = multierror.Append(result, err)
 	}
 	return count, comments, result
+}
+
+func GetAdoptedAnswerByQueId(db *gorm.DB, queId int64) (string, error) {
+	var result *multierror.Error
+	var adoptRecord AdoptRecord
+	var count int64 = 0
+	err := db.Where("postId = ? ", queId).Find(&adoptRecord).Count(&count).Error
+	if count == 0 && err == nil {
+		result = multierror.Append(result, errors.New("要删除的记录不存在"))
+	}
+	return adoptRecord.CommentId, result
+}
+
+func AddAdoptRecord(db *gorm.DB, queId int64, answerId int64) (bool, error) {
+	adoptRecord := AdoptRecord{
+		PostId:    strconv.FormatInt(queId, 10),
+		CommentId: strconv.FormatInt(answerId, 10),
+	}
+	err := db.Create(&adoptRecord).Error
+	if err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
 // Recipe
@@ -543,6 +566,31 @@ func IsExistedFavoriteRecord(db *gorm.DB, postId int64, userId int64) (error, bo
 	return result, isExistedFavoriteRecord
 }
 
+func AddPostFrontend(db *gorm.DB, where map[string]interface{}) (bool, error) {
+	var result *multierror.Error
+	var resultSign bool
+
+	p := Post{
+		AuthorID:    int64(where["userId"].(float64)),
+		Title:       where["title"].(string),
+		Content:     where["content"].(string),
+		PartID:      int64(where["type"].(float64)),
+		Summary:     where["summary"].(string),
+		CoverUrl:    where["img"].(string),
+		PublishTime: time.Now(),
+	}
+
+	err := db.Create(&p).Error
+	if err != nil {
+		result = multierror.Append(result, err)
+		resultSign = false
+	} else {
+		resultSign = true
+	}
+
+	return resultSign, result
+}
+
 // User ------------------------------------------------------------
 
 func SelectUserForLogin(db *gorm.DB, account string, password string) (User, int64, error) {
@@ -624,9 +672,9 @@ func SelectAllFeedbackByPage(db *gorm.DB, query string, pageNum int64, pageSize 
 	var feedbacks []Feedback
 	if query != "" {
 		query = query + "%"
-		db = db.Table("feedback").InnerJoins("Author").Where("account like ?", query).Order("state,id asc").Find(&feedbacks).Count(&count)
+		db = db.Table("feedback").InnerJoins("Author").Where("account like ?", query).Order("state, id asc").Find(&feedbacks).Count(&count)
 	} else {
-		db = db.Table("feedback").InnerJoins("Author").Order("state,id asc").Find(&feedbacks).Count(&count)
+		db = db.Table("feedback").InnerJoins("Author").Order("state, id asc").Find(&feedbacks).Count(&count)
 	}
 	err := db.Limit(int(pageSize)).Offset(int((pageNum - 1) * pageSize)).Find(&feedbacks).Error
 	if count == 0 && err == nil {
@@ -675,7 +723,7 @@ func SelectSingleAdminByCondition(db *gorm.DB, where map[string]interface{}) (Ad
 	var admin Admin
 	err := db.Where(where).First(&admin).Count(&count).Error
 	if count == 0 && err == nil {
-		return admin, 0, errors.New("查询的记录不存在")
+		return admin, 0, errors.New("查询的记录不存在！")
 	}
 	return admin, count, err
 }
@@ -687,11 +735,11 @@ func UpdateSingleAdminByCondition(db *gorm.DB, where map[string]interface{}, val
 
 func UpdateSingleUserByCondition(db *gorm.DB, where map[string]interface{}, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	err := db.Table("admin").Where(where).Count(&count).Error
+	err := db.Table("user").Where(where).Count(&count).Error
 	if count == 0 && err == nil {
-		return 0, errors.New("要修改的记录不存在")
+		return 0, errors.New("要修改的记录不存在！")
 	}
-	err = db.Table("admin").Where(where).Updates(values).Count(&count).Error
+	err = db.Table("user").Where(where).Updates(values).Count(&count).Error
 	return count, err
 }
 
@@ -719,7 +767,7 @@ func SearchQueByQueId(db *gorm.DB, queId int64) (int64, []Post, error) {
 	var result *multierror.Error
 	var posts []Post
 	var count int64
-	err := db.Preload("Author").Where("ID = ? ", queId).Find(&posts).Count(&count).Error
+	err := db.Preload("Author").Where("ID = ? and partID = 2", queId).Find(&posts).Count(&count).Error
 	if count == 0 {
 		result = multierror.Append(result, errors.New("找不到该问题！"))
 	}
@@ -776,6 +824,11 @@ func UpdateFavoriteByCondition(db *gorm.DB, where map[string]interface{}) (bool,
 			resultSign = false
 		} else {
 			resultSign = true
+			err = db.Table("post").Where("id = ?", where["articleID"]).UpdateColumn("favorite", gorm.Expr("favorite - ?", 1)).Error
+			if err != nil {
+				result = multierror.Append(result, err)
+				resultSign = false
+			}
 		}
 
 	} else if where["isCollected"] == "true" {
@@ -789,6 +842,11 @@ func UpdateFavoriteByCondition(db *gorm.DB, where map[string]interface{}) (bool,
 			resultSign = false
 		} else {
 			resultSign = true
+			err = db.Table("post").Where("id = ?", where["articleID"]).UpdateColumn("favorite", gorm.Expr("favorite + ?", 1)).Error
+			if err != nil {
+				result = multierror.Append(result, err)
+				resultSign = false
+			}
 		}
 
 	}
@@ -815,6 +873,11 @@ func UpdateLikeByCondition(db *gorm.DB, where map[string]interface{}) (bool, err
 			resultSign = false
 		} else {
 			resultSign = true
+			err = db.Table("post").Where("id = ?", where["postId"]).UpdateColumn("`like`", gorm.Expr("`like` - ?", 1)).Error
+			if err != nil {
+				result = multierror.Append(result, err)
+				resultSign = false
+			}
 		}
 
 	} else if where["isLiked"] == "true" {
@@ -828,6 +891,11 @@ func UpdateLikeByCondition(db *gorm.DB, where map[string]interface{}) (bool, err
 			resultSign = false
 		} else {
 			resultSign = true
+			err = db.Table("post").Where("id = ?", where["postId"]).UpdateColumn("`like`", gorm.Expr("`like` + ?", 1)).Error
+			if err != nil {
+				result = multierror.Append(result, err)
+				resultSign = false
+			}
 		}
 
 	}

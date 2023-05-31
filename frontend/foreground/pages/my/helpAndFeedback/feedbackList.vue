@@ -1,6 +1,5 @@
 <template>
 	<view class="page">
-		<u-notify ref="uNotify"></u-notify>
 
 		<view v-for="(item,index) in feedbacks" :key="index" @click="feedbackClick(item)">
 			<view class="list-box">
@@ -34,16 +33,6 @@
 			setTimeout(() => {
 				this.refresh();
 				uni.stopPullDownRefresh();
-				this.$refs.uNotify.show({
-					top: 10,
-					type: 'success',
-					color: '#000',
-					bgColor: '#55ff7f',
-					message: '刷新成功',
-					duration: 1000 * 2,
-					fontSize: 20,
-					safeAreaInsetTop: true
-				})
 			}, 1000)
 		},
 		mounted() {

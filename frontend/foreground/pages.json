@@ -298,7 +298,7 @@
   },
   "tabBar": {
     "color": "#000",
-    "selectedColor": "#f5a623",
+    "selectedColor": "#20c997",
     "list": [{
         "iconPath": "/static/tabbar-icons/home.png",
         "selectedIconPath": "/static/tabbar-icons/home_active.png",

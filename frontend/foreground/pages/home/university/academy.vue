@@ -1,17 +1,25 @@
 <template>
-	<view>
+	<view class="container">
 		<view class="selectForm">
 			<picker @change="bindPickerChange1" :range="array1" :value="index1" class="selectFormItem">
-				<label class="">{{array1[index1]}}</label>
-				<label class="downArrow">∨</label>
+				<label class="wordSpace">{{array1[index1]}}</label>
+				<label class="down">
+					<image class="downArrow" src="@/static/academy-icons/down.png"></image>
+				</label>
 			</picker>
 			<picker @change="bindPickerChange2" :range="array2" :value="index2" class="selectFormItem">
-				<label class="">{{array2[index2]}}</label>
-				<label class="downArrow">∨</label>
+				<label class="wordSpace">{{array2[index2]}}</label>
+				<!-- <label class="downArrow">∨</label> -->
+				<label class="down">
+					<image class="downArrow" src="@/static/academy-icons/down.png"></image>
+				</label>
 			</picker>
 			<picker @change="bindPickerChange3" :range="array3" :value="index3" class="selectFormItem">
-				<label class="">{{array3[index3]}}</label>
-				<label class="downArrow">∨</label>
+				<label class="wordSpace">{{array3[index3]}}</label>
+				<!-- <label class="downArrow">∨</label> -->
+				<label class="down">
+					<image class="downArrow" src="@/static/academy-icons/down.png"></image>
+				</label>
 			</picker>
 		</view>
 		<view class="searchAcademy">
@@ -174,7 +182,24 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 			// 		  console.log(error);
 			// 		  console.log("失败")
 			// 		})
-		
+			uni.$on('refreshData',() => {
+				let pages = getCurrentPages();
+				let currPage = pages[pages.length - 1];
+				if(currPage.searchContent && currPage.searchContent != '') {
+					this.academyName = currPage.searchContent;
+					uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+								
+					}).then(res => {
+						this.isExist = true;
+						this.mes = res.data.data;
+						console.log(this.mes);
+					}).catch(err => {
+						this.mes = [];
+						this.isExist = false;
+					})
+					currPage.searchContent = '';
+				}
+			})
 		
 		},
 		
@@ -377,12 +402,19 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 </script>
 
 <style lang="scss">
+.container{
+	background-image: linear-gradient(179deg,#83a4d488,#b6fbff88);
+}
+.wordSpace{
+	letter-spacing: 4rpx;
+}
 .selectForm{
 	display: flex;
 	justify-content: center;
+	margin-left: 10rpx;
 }
 .selectFormItem{
-	width: 200rpx;
+	width: 220rpx;
 	height: 100rpx;
 	display: flex;
 	justify-content: center;
@@ -391,9 +423,13 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 }
 .downArrow{
 	margin-left: 5rpx;
+	// padding-top: 10rpx;
+	height: 20rpx;
+	width: 20rpx;
+	
 }
 .searchAcademy{
-	background-color: #efefef;
+	background-color: #efefef55;
 }
 .searchText{
 	display: flex;
@@ -421,7 +457,7 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 	/* 阴影 */
 	box-shadow:2rpx 7rpx 0rpx #ebebeb;
 	
-	background-color: #ffffff;
+	background-color: #ffffff88;
 	margin-left:30rpx;
 	margin-right:30rpx;
 	margin-top: 25rpx;
@@ -454,7 +490,7 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 	justify-content: center;
 	align-items: center;
 	border-radius: 18rpx;
-	background-color: #96C5F1;
+	background-color: #91d5ff;
 	font-size: 26rpx;
 	color: #ffffff;
 	font-family: "黑体";
@@ -467,7 +503,7 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 	align-items: center;
 	margin-left: 20rpx;
 	border-radius: 18rpx;
-	background-color: #96C5F1;
+	background-color: #8fc9ff;
 	font-size: 26rpx;
 	color: #ffffff;
 	font-family: "黑体";

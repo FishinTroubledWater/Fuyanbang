@@ -1,21 +1,25 @@
 <template>
-	<view>
+	<view class="container">
 		<view class="selectForm">
 			<picker @change="bindPickerChange1" :range="array1" :value="index1" class="selectFormItem">
-				<label class="">{{array1[index1]}}</label>
-				<label class="downArrow">∨</label>
+				<label class="wordSpace">{{array1[index1]}}</label>
+				<!-- <label class="downArrow">∨</label> -->
+				<image class="downArrow" src="@/static/academy-icons/down.png"></image>
 			</picker>
 			<picker @change="bindPickerChange2" :range="array2" :value="index2" class="selectFormItem">
-				<label class="">{{array2[index2]}}</label>
-				<label class="downArrow">∨</label>
+				<label class="wordSpace">{{array2[index2]}}</label>
+				<!-- <label class="downArrow">∨</label> -->
+				<image class="downArrow" src="@/static/academy-icons/down.png"></image>
 			</picker>
 			<picker @change="bindPickerChange3" :range="array3" :value="index3" class="selectFormItem">
-				<label class="">{{array3[index3]}}</label>
-				<label class="downArrow">∨</label>
+				<label class="wordSpace">{{array3[index3]}}</label>
+				<!-- <label class="downArrow">∨</label> -->
+				<image class="downArrow" src="@/static/academy-icons/down.png"></image>
 			</picker>
 			<picker @change="bindPickerChange4" :range="array4" :value="index4" class="selectFormItem">
-				<label class="">{{array4[index4]}}</label>
-				<label class="downArrow">∨</label>
+				<label class="wordSpace">{{array4[index4]}}</label>
+				<!-- <label class="downArrow">∨</label> -->
+				<image class="downArrow" src="@/static/academy-icons/down.png"></image>
 			</picker>
 		</view>
 		
@@ -221,9 +225,15 @@
 </script>
 
 <style lang="scss">
+.container{
+	// background-image: linear-gradient(179deg,#83a4d488,#b6fbff88);
+}
 .selectForm{
 	display: flex;
 	justify-content: center;
+}
+.wordSpace{
+	letter-spacing: 2rpx;
 }
 .selectFormItem{
 	width: 200rpx;
@@ -272,7 +282,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: #F06977;
+	background-color: #8ac068;
 	font-size: 26rpx;
 	color: #ffffff;
 	font-family: "思源黑体";
@@ -281,6 +291,7 @@
 	border-style:solid;
 	border-width:3rpx;
 	border-color:#c3c3c3;
+	border-radius: 10rpx;
 }
 .typeAndSubject{
 	margin-top: 10rpx;
@@ -288,5 +299,10 @@
 	font-size: 28rpx;
 	font-family: "思源黑体";
 	color: #A8A8A8;
+}
+.downArrow{
+	margin-left: 5rpx;
+	height: 20rpx;
+	width: 20rpx;
 }
 </style>

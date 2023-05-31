@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp/go-multierror"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func SearchQueDetails(e *gin.Engine) {
@@ -68,13 +69,24 @@ func SearchQueDetails(e *gin.Engine) {
 					postMap["isCollected"] = "false"
 				}
 
+				if strconv.Itoa(int(postMap["AuthorID"].(float64))) == userId {
+					postMap["isMine"] = true
+				} else {
+					postMap["isMine"] = false
+				}
+
 				err, postMap["likeNum"] = fybDatabase.GetLikeNumByPostId(db, queIdInt64)
 				if err != nil {
 					result = multierror.Append(result, err)
 				}
 
 				postMap["name"] = postMap["Author"].(map[string]interface{})["NickName"]
-				postMap["time"] = postMap["PublishTime"]
+				if publishTime, ok := postMap["PublishTime"].(string); ok {
+					t, err := time.Parse(time.RFC3339, publishTime)
+					if err == nil {
+						postMap["time"] = t.Format("2006.01.02 15:04:05")
+					}
+				}
 				postMap["queId"] = postMap["ID"]
 				postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
 				postMap["content"] = postMap["Content"]

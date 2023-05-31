@@ -3,7 +3,6 @@
 	<view class="page">
 		<!-- 弹出提示窗 -->
 		<u-toast ref="uToast"></u-toast>
-		<u-notify ref="uNotify"></u-notify>
 		<view v-for="(item,index) in posts" :key="index" @click="postsClick(item)">
 			<view class="list-box">
 				<view class="text-delete" @click.native.stop="postsDelete(item.id)">×</view>
@@ -63,16 +62,6 @@
 			setTimeout(() => {
 				this.refresh();
 				uni.stopPullDownRefresh();
-				this.$refs.uNotify.show({
-					top: 10,
-					type: 'success',
-					color: '#000',
-					bgColor: '#b2cf87',
-					message: '刷新成功',
-					duration: 1000 * 3,
-					fontSize: 20,
-					safeAreaInsetTop: true
-				})
 			}, 1000)
 		},
 		mounted() {
