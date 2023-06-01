@@ -18,6 +18,7 @@ func SearchQueDetails(e *gin.Engine) {
 		var posts []fybDatabase.Post
 		var isExistedLikeRecord bool
 		var isExistedFavoriteRecord bool
+		var isExistedAdoptRecord bool
 
 		queId := context.Param("queId")
 		userId := context.Param("userId")
@@ -57,6 +58,11 @@ func SearchQueDetails(e *gin.Engine) {
 					result = multierror.Append(result, err)
 				}
 
+				isExistedAdoptRecord, err = fybDatabase.IsExistedAdoptRecord(db, queIdInt64)
+				if err != nil {
+					result = multierror.Append(result, err)
+				}
+
 				if isExistedLikeRecord == true {
 					postMap["isLiked"] = "true"
 				} else {
@@ -67,6 +73,12 @@ func SearchQueDetails(e *gin.Engine) {
 					postMap["isCollected"] = "true"
 				} else {
 					postMap["isCollected"] = "false"
+				}
+
+				if isExistedAdoptRecord == true {
+					postMap["isSolved"] = "true"
+				} else {
+					postMap["isSolved"] = "false"
 				}
 
 				if strconv.Itoa(int(postMap["AuthorID"].(float64))) == userId {
