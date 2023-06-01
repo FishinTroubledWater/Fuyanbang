@@ -223,7 +223,7 @@
       "path": "pages/my/coin/coin",
       "style": {
         "navigationBarTitleText": "我的学币",
-        "enablePullDownRefresh": false
+        "enablePullDownRefresh": true
       }
     }, {
       "path": "pages/my/posts/favorites",
