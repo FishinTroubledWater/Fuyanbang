@@ -1,61 +1,80 @@
 <template>
 	<view class="container">
-		<view class="selectForm">
-			<picker @change="bindPickerChange1" :range="array1" :value="index1" class="selectFormItem">
-				<label class="wordSpace">{{array1[index1]}}</label>
-				<label class="down">
-					<image class="downArrow" src="@/static/academy-icons/down.png"></image>
-				</label>
-			</picker>
-			<picker @change="bindPickerChange2" :range="array2" :value="index2" class="selectFormItem">
-				<label class="wordSpace">{{array2[index2]}}</label>
-				<!-- <label class="downArrow">∨</label> -->
-				<label class="down">
-					<image class="downArrow" src="@/static/academy-icons/down.png"></image>
-				</label>
-			</picker>
-			<picker @change="bindPickerChange3" :range="array3" :value="index3" class="selectFormItem">
-				<label class="wordSpace">{{array3[index3]}}</label>
-				<!-- <label class="downArrow">∨</label> -->
-				<label class="down">
-					<image class="downArrow" src="@/static/academy-icons/down.png"></image>
-				</label>
-			</picker>
-		</view>
-		<view class="searchAcademy">
-			<text class="searchText" v-if="isExist == true">
-				共搜索到 <text class="searchNum">{{mes.num}}</text> 所院校
-			</text>
-			<text class="searchText" v-if="isExist == false">
-				共搜索到 <text class="searchNum">0</text> 所院校
-			</text>
-		</view>
-		<view>
-			<view  class="viewAcademy" v-for="m in mes.list" @click="goUniverity(m.Code)" @touchstart="touchStart" @touchend="touchEnd" :style="active">
-				<image class="academyLogo" :src="m.Logo"></image>
-				<view class="viewText">
-					<text class="academyName">{{m.Name}}</text>
-					<view class="academyType">
-						<view class="typeOfScoreLine">{{m.LineType}}</view>
-						<text class="typeOfInstitution">{{m.Level}}</text>
-					</view>
-				</view>
-				<text class="lacation">{{m.Region}}</text>
+		<view class="search" v-show="isShow">
+			<view class="searchContainer">
+				<uni-search-bar @input="input" :radius="20" placeholder="请输入搜索内容" bgColor="#F7F7F7" cancelButton="none" class="searchBox" v-model="searchContent"></uni-search-bar>
+				<button class="searchButton" @click="search()">搜索</button>
 			</view>
-			
-<!-- 			<view class="viewAcademy" v-for="m in mes.list" bindtap="click" @click="goUniverity">
-				<image class="academyLogo" src="@/static/academy-icons/清华大学.png"></image>
-				<view class="viewText">
-					<text class="academyName">清华大学</text>
-					<view class="academyType">
-						<view class="typeOfScoreLine">自划线</view>
-						<text class="typeOfInstitution">985</text>
+			<!-- 搜索列表 -->
+			<view v-if="searchList.length!=0">
+				<view class="searchList" v-for="(searchItem,searchIndex) in searchList" :key="searchIndex" >
+					<uni-icons type="search" size="18" color="#C0C0C0"/>
+					<view class="searchItem" >
+						{{searchItem.word}}
 					</view>
 				</view>
-				<text class="lacation">北京</text>
-			</view> -->
-			
+			</view>
+			<view v-else>
+				<view class="found">
+					<view class="foundTitle">
+						<text>热门搜索</text>
+						<uni-icons type="" size="20" color="#C0C0C0"></uni-icons>
+					</view>
+					<view class="foundContent">
+						<view class="foundItem" v-for="(foundItem,foundIndex) in foundList" :key="foundIndex" @click="selectItem(foundItem)">
+							{{foundItem}}
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>	
+		
+		<view v-show="!isShow">
+			<view class="selectForm">
+				<picker @change="bindPickerChange1" :range="array1" :value="index1" class="selectFormItem">
+					<label class="wordSpace">{{array1[index1]}}</label>
+					<label class="down">
+						<image class="downArrow" src="@/static/academy-icons/down.png"></image>
+					</label>
+				</picker>
+				<picker @change="bindPickerChange2" :range="array2" :value="index2" class="selectFormItem">
+					<label class="wordSpace">{{array2[index2]}}</label>
+					<!-- <label class="downArrow">∨</label> -->
+					<label class="down">
+						<image class="downArrow" src="@/static/academy-icons/down.png"></image>
+					</label>
+				</picker>
+				<picker @change="bindPickerChange3" :range="array3" :value="index3" class="selectFormItem">
+					<label class="wordSpace">{{array3[index3]}}</label>
+					<!-- <label class="downArrow">∨</label> -->
+					<label class="down">
+						<image class="downArrow" src="@/static/academy-icons/down.png"></image>
+					</label>
+				</picker>
+			</view>
+			<view class="searchAcademy">
+				<text class="searchText" v-if="isExist == true">
+					共搜索到 <text class="searchNum">{{mes.num}}</text> 所院校
+				</text>
+				<text class="searchText" v-if="isExist == false">
+					共搜索到 <text class="searchNum">0</text> 所院校
+				</text>
+			</view>
+			<view>
+				<view  class="viewAcademy" v-for="m in mes.list" @click="goUniverity(m.Code)" @touchstart="touchStart" @touchend="touchEnd" :style="active">
+					<image class="academyLogo" :src="m.Logo"></image>
+					<view class="viewText">
+						<text class="academyName">{{m.Name}}</text>
+						<view class="academyType">
+							<view class="typeOfScoreLine">{{m.LineType}}</view>
+							<text class="typeOfInstitution">{{m.Level}}</text>
+						</view>
+					</view>
+					<text class="lacation">{{m.Region}}</text>
+				</view>
+			</view>
 		</view>
+		
 	</view>
 </template>
 
@@ -69,6 +88,8 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 	export default {
 		data() {
 			return {
+				isShow: false,
+				
 				array1: ['院校地区','北京','福建','天津','上海','重庆',
 				'内蒙古','广西','西藏','宁夏','新疆','山西','辽宁','吉林',
 				'黑龙江','江苏','浙江','安徽','江西','山东','河北','河南','湖北',
@@ -83,18 +104,32 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				
 				mes: [],
 				sendMes: [],
+				saidMes: [],
 				isExist: false,
 				
 				region: '院校地区',
 				level: '院校层次',
 				type: '院校类型',
-				academyName: '福州大学'
+				academyName: '福州大学',
+				
+				// 初始化定时器为空
+				time:null,
+				// 用户输入的关键词
+				keyword:'',
+				//搜索数据的数组初始化
+				searchList:[],
+				//搜索历史初始化
+				historyList:[],
+				// 初始化搜索发现列表
+				foundList:['福州大学','北京大学','清华大学','厦门大学','电子科技大学','浙江大学','复旦大学','南京大学'],
+				searchContent: '',
 			};
 		},
 		onNavigationBarButtonTap:function(e){
-			uni.navigateTo({
-				url: "/pages/home/university/search"
-			})
+			this.isShow = true;
+			// uni.navigateTo({
+			// 	url: "/pages/home/university/search"
+			// })
 		},
 		async onLoad() {
 			const oMeta = document.createElement('meta');
@@ -182,24 +217,26 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 			// 		  console.log(error);
 			// 		  console.log("失败")
 			// 		})
-			uni.$on('refreshData',() => {
-				let pages = getCurrentPages();
-				let currPage = pages[pages.length - 1];
-				if(currPage.searchContent && currPage.searchContent != '') {
-					this.academyName = currPage.searchContent;
-					uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+			
+			
+			// uni.$on('refreshData',() => {
+			// 	let pages = getCurrentPages();
+			// 	let currPage = pages[pages.length - 1];
+			// 	if(currPage.searchContent && currPage.searchContent != '') {
+			// 		this.academyName = currPage.searchContent;
+			// 		uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
 								
-					}).then(res => {
-						this.isExist = true;
-						this.mes = res.data.data;
-						console.log(this.mes);
-					}).catch(err => {
-						this.mes = [];
-						this.isExist = false;
-					})
-					currPage.searchContent = '';
-				}
-			})
+			// 		}).then(res => {
+			// 			this.isExist = true;
+			// 			this.mes = res.data.data;
+			// 			console.log(this.mes);
+			// 		}).catch(err => {
+			// 			this.mes = [];
+			// 			this.isExist = false;
+			// 		})
+			// 		currPage.searchContent = '';
+			// 	}
+			// })
 		
 		},
 		
@@ -243,6 +280,39 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 		// 	this.$forceUpdate();
 		// },
 		methods: {
+			selectItem(index){
+				this.searchContent = index;
+			},
+			//用户输入时可以获取用户输入的内容
+			input:function(e){
+				//每次使用先清空定时器，优化
+				clearTimeout(this.timer);
+				this.timer=setTimeout(()=>{
+					this.keyword=e
+					//获取搜索数据
+					this.getSearchContent()
+				},500)
+				console.log(e)
+			},
+			search() { 
+				this.isShow = false;
+				if(this.searchContent != '') {
+					this.academyName = this.searchContent;
+					uni.$u.http.get('/v1/frontend/academy/searchByName/' + this.academyName, {
+								
+					}).then(res => {
+						this.isExist = true;
+						this.mes = res.data.data;
+						console.log(this.mes);
+					}).catch(err => {
+						this.mes = [];
+						this.isExist = false;
+					})
+					this.searchContent = '';
+				}
+			},
+			
+			
 			reload() {
 				this.$nextTick(() => {
 					let pages = getCurrentPages();
@@ -342,6 +412,15 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 				}).catch(err => {
 					
 				})
+				uni.$u.http.get('/v1/frontend/recipe/list/' + c, {
+					
+				}).then(res => {
+					_this.saidMes = res.data.data;
+					console.log("成功")
+					console.log(_this.saidMes);
+				}).catch(err => {
+					console.log("失败")
+				})
 				setTimeout(function() {
 					uni.$emit('code1',{ 
 						codeID: c ,
@@ -355,6 +434,7 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 						name: _this.sendMes.Name,
 						profile: _this.sendMes.Profile,
 						region: _this.sendMes.Region,
+						saidMes: _this.saidMes,
 						})
 				}, 500)
 				// uni.setStorage({
@@ -517,6 +597,114 @@ import { onLoad } from 'uview-ui/libs/mixin/mixin';
 	align-items: center;
 	font-family: "黑体";
 	font-size: 36rpx;
+}
+
+
+
+.search{
+	width: 100%;
+	height: 100vh;
+	background-color: #FFF;
+	.searchContainer{
+		width: 100%;
+		display: flex;
+		.searchBox{
+			width: 550rpx;
+		}
+		.searchButton{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 120rpx;
+			height: 65rpx;
+			margin-top: 20rpx;
+			border-radius: 40rpx;
+			background-color: #4ca9e7;
+			color: #ffffff;
+			font-size: 30rpx;
+		}
+	}
+	.searchList{
+		width: 100%;
+		height: 80rpx;
+		line-height: 80rpx;
+		display: flex;
+		border-bottom: 1px solid #eee;
+		uni-icons{
+			margin:0 20rpx;
+		}
+	}
+	.history{
+		.history-title{
+			width: 90%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin: 0 auto;
+			.text{
+				font-weight: bold;
+				font-size: 34rpx;
+			}
+		}
+		.history-content{
+			width: 90%;
+			margin: 10rpx auto;
+			display: flex;
+			flex-wrap: wrap;
+			.history-item{
+				height: 50rpx;
+				line-height: 50rpx;
+				background-color: #F8F8F8;
+				margin-top: 10rpx;
+				margin-right: 20rpx;
+				padding:0 20rpx;
+				border-radius: 20rpx;
+			}
+		}
+		.history-none{
+			width: 100%;
+			height: 100rpx;
+			text-align: center;
+			line-height: 100rpx;
+		}
+	}
+	.found{
+		margin-top: 50rpx;
+		.foundTitle{
+			width: 90%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin: 0 auto;
+			.text{
+				font-weight: bold;
+				font-size: 34rpx;
+			}
+		}
+		.foundContent{
+			width: 90%;
+			margin: 10rpx auto;
+			display: flex;
+			flex-wrap: wrap;
+			.foundItem{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 60rpx;
+				line-height: 50rpx;
+				background-color: #ffffff;
+				margin-top: 20rpx;
+				margin-right: 20rpx;
+				padding:0 30rpx;
+				border-radius: 20rpx;
+				border-style:solid;
+				border-width:1px;
+				border-color: #CECECE;
+				color: #CECECE;
+				font-size: 26rpx;
+			}
+		}
+	}
 }
 
 </style>

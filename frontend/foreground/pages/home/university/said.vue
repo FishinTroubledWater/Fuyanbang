@@ -1,32 +1,26 @@
 <template>
 	<view>
-		<uni-list>
-			<view class="viewSaid" @click="goPost(1)">
+		<view v-for = "m in mes1">
+			<view class="viewSaid" @click="goPost(m.ID)">
 				<view class="viewUser">
 					<image class="headPortrait" src="@/static/academy-icons/photo.jpg"></image>
 					<view class="userMes">
-						<text class="userName">玲玲学姐</text>
-						<!-- <view class="typeOfAdmission"><text class="textOfAdmission">本科专业成功上岸</text></view> -->
+						<text class="userName">{{m.Author}}</text>
 					</view>
 				</view>
 				<view class="saidContent">
-
-					<!-- <view class="textContent">致所有考研的学弟学妹，见字如面：写下这封长信只因为我知道作为一个跨考者，孤独是很难避免的，
-					</view> -->
-					<u--text :lines="3" :text="this.content" size="24rpx" lineHeight="34rpx" margin="20rpx 6rpx 0rpx 0rpx" padding="6px 4px"
-					  height="94px"></u--text>
-					<image class="sights" src="@/static/academy-icons/sight.png"></image>
-
+					<u--text :lines="3" :text="m.Content" size="24rpx" lineHeight="34rpx" margin="20rpx 6rpx 0rpx 0rpx" padding="6px 4px"
+						height="94px"></u--text>
+					<image class="sights" :src="m.PageUrl"></image>
 				</view>
-<!-- 				<view class="readingQuantity">3317阅读</view> -->
 			</view>
+		</view>
 			
-			<view class="viewSaid">
+<!-- 			<view class="viewSaid">
 				<view class="viewUser">
 					<image class="headPortrait" src="@/static/academy-icons/photo.jpg"></image>
 					<view class="userMes">
 						<text class="userName">玲玲学姐</text>
-						<!-- <view class="typeOfAdmission"><text class="textOfAdmission">本科专业成功上岸</text></view> -->
 					</view>
 				</view>
 				<view class="saidContent">
@@ -35,9 +29,7 @@
 					<image class="sights" src="@/static/academy-icons/sight.png"></image>
 
 				</view>
-<!-- 				<view class="readingQuantity">3317阅读</view> -->
-			</view>
-		</uni-list>
+			</view> -->
 	</view>
 </template>
 
@@ -45,8 +37,8 @@
 	export default{
 		data() {
 			return {
-				mes: [],
-				code: 0,
+				mes1: [],
+				code: 1,
 				content: "致所有考研的学弟学妹，见字如面：写下这封长信只因为我知道作为一个跨考者，孤独是很难避免的，"
 			}
 		},
@@ -61,19 +53,35 @@
 		onShow() {
 			// console.log('eee')
 		},
-		created() {
-			uni.$on('code',res=>{
-				this.code = res
-				uni.$u.http.get('/v1/frontend/academy/detail/' + this.code, {
+		created() {	
+			var _this = this;
+			const on = uni.$on('code1', function(data) {
+				_this.mes1 = data.saidMes;
+				console.log("said内部的Mes是：");
+				console.log(_this.mes1)
 				
-				}).then(res => {
-					this.mes = res.data.data;
-					console.log("成功4")
-					console.log(this.mes);
-				}).catch(err => {
-					console.log("失败")
-				})
+				// uni.$u.http.get('/v1/frontend/recipe/list/1', {
+					
+				// }).then(res => {
+				// 	this.mes = res.data.data;
+				// 	console.log("成功")
+				// 	console.log(this.mes);
+				// }).catch(err => {
+				// 	console.log("失败")
+				// })
 			})
+			
+		},
+		mounted() {
+			// uni.$u.http.get('/v1/frontend/recipe/list/1', {
+				
+			// }).then(res => {
+			// 	this.mes = res.data;
+			// 	console.log("成功")
+			// 	console.log(this.mes);
+			// }).catch(err => {
+			// 	console.log("失败")
+			// })
 		},
 	}
 </script>

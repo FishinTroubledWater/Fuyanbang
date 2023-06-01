@@ -1,15 +1,17 @@
 <template>
 	<view>
-		<view class="title">{{title}}</view>
-		<view class="user">
-			<image class="headPortrait" src="@/static/academy-icons/photo.jpg"></image>
-			<view class="mes">
-				<view class="name">咸鱼学长</view>
-				<view class="time">2023-06-01</view>
+		<view v-for="m in mes">
+			<view class="title">{{m.Title}}</view>
+			<view class="user">
+				<image class="headPortrait" src="@/static/academy-icons/photo.jpg"></image>
+				<view class="mes">
+					<view class="name">{{m.Author}}</view>
+					<view class="time">{{m.PublishTime}}</view>
+				</view>
 			</view>
-		</view>
-		<view class="content">
-			<u-parse :content="this.content"></u-parse>
+			<view class="content">
+				<u-parse :content="m.Content"></u-parse>
+			</view>
 		</view>
 	</view>
 </template>
@@ -25,11 +27,21 @@
 				publishTime: "2023-06-01",
 				pageUrl: "@/static/academy-icons/sight.png",
 				content: "写下这封长信只因为我知道作为一个跨考者，孤独是很难避免的，这种感觉真实，但它没什么坏处——无处也无需回避。如果你恰是一名“三跨”（跨专业、跨学校、跨地区）考生，那么基本不会有概率遇到同行者，考研之路必然会要你去独自走完,这其实是件挺酷的事。",
+				mes: [],
 			}
 		},
 		onLoad:function(option){
 			var _this = this
 			this.id = option.id;
+			uni.$u.http.get('/v1/frontend/recipe/detail/' + this.id, {
+				
+			}).then(res => {
+				this.mes = res.data.data;
+				console.log("成功")
+				console.log(this.mes);
+			}).catch(err => {
+				console.log("失败")
+			})
 		},
 	}
 </script>
