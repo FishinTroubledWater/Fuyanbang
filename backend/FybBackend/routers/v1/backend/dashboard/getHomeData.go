@@ -20,7 +20,7 @@ type HomeData struct {
 }
 
 func GetHomeData(e *gin.Engine, db *gorm.DB) {
-	e.GET("/v1/backend/dashboard/getHomeData", func(context *gin.Context) {
+	e.POST("/v1/backend/dashboard/getHomeData", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,

@@ -20,7 +20,7 @@ type HourData struct {
 }
 
 func GetPostData(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/dashboard/getPostData", func(context *gin.Context) {
+	e.GET("/v1/backend/dashboard/getPostData", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,
