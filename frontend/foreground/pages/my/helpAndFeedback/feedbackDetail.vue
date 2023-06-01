@@ -37,14 +37,14 @@
 
 <style>
 	page {
-		background-color: #F8F8F8;
+		background-color: #fafafa;
 		padding-bottom: 30rpx;
 	}
 
 	.white {
 		background-color: #FFFFFF;
 		padding: 45rpx 40rpx;
-		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+		box-shadow: 0 12rpx 10rpx #d0d0d0;
 	}
 
 	.text-grey {
@@ -72,6 +72,9 @@
 		border-radius: 30rpx;
 		margin: 50rpx 30rpx;
 		padding: 30rpx 30rpx;
+		
+		box-shadow: 12rpx 12rpx 10rpx #bfbfbf;
+		border-radius: 20rpx;
 	}
 
 	.icon-normal {

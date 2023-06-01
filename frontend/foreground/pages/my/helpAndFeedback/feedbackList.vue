@@ -103,7 +103,7 @@
 
 <style lang="scss">
 	page {
-		background-color: #F8F8F8;
+		background-color: #fafafa;
 	}
 
 	.text-title {
@@ -151,11 +151,13 @@
 	.list-box {
 		position: relative;
 		background-color: #FFFFFF;
-		border-radius: 10rpx;
 		margin-top: 30rpx;
 		margin-left: 30rpx;
 		margin-right: 30rpx;
 		padding: 30rpx;
+		
+		box-shadow: 12rpx 12rpx 10rpx #bfbfbf;
+		border-radius: 20rpx;
 	}
 
 
