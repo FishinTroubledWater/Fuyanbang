@@ -2,7 +2,7 @@
 	<view>
 		<view class="directionText">就业方向</view>
 		<view class="directionItem">
-			<view v-for="direction in jobOrientation.substr(0,jobOrientation.length).split(' ')">
+			<view v-for="direction in jobOrientation.substr(0,jobOrientation.length).split('、')">
 				<view class="Item">{{direction}}</view>
 			</view>
 		</view>
@@ -55,7 +55,7 @@
 	}
 	.Item{
 		width: auto;
-		height: 50rpx;
+		height: 60rpx;
 		display: flex;
 		justify-content: center;
 		align-items: center;

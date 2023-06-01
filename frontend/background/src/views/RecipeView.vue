@@ -54,6 +54,9 @@
         <el-form-item label="标题" prop="title">
           <el-input v-model="addForm.title"></el-input>
         </el-form-item>
+        <el-form-item label="院校代码" prop="code">
+          <el-input v-model="addForm.code"></el-input>
+        </el-form-item>
         <el-form-item label="内容" prop="content">
 <!--          <quill-editor v-model="addForm.content"></quill-editor>-->
           <Editor :value.sync="addForm.content"></Editor>
@@ -69,12 +72,15 @@
                @close="editDialogClosed">
       <!--      内容主体区域-->
       <el-form ref="editFormRef" :model="editForm" label-width="80px"
-               :rules="addFormRules">
+               :rules="editFormRules">
         <el-form-item label="作者" prop="Author">
           <el-input v-model="editForm.Author" disabled></el-input>
         </el-form-item>
         <el-form-item label="标题" prop="Title">
           <el-input v-model="editForm.Title"></el-input>
+        </el-form-item>
+        <el-form-item label="院校代码" prop="Code">
+          <el-input v-model="editForm.Code"></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="Content">
 <!--          <quill-editor v-model="editForm.Content"></quill-editor>-->
@@ -89,9 +95,11 @@
     <!--    抽屉-->
     <Drawer :drawer="detailsDrawer" :title="drawerTitle" @closed="drawerClosed">
       <template #details="scope">
+        <div class="mg setcenter"><el-image :src="editForm.PageUrl" style="width: 70%"></el-image></div>
         <el-descriptions direction="vertical" :column="2" border class="mg">
           <el-descriptions-item label="作者"> {{ editForm.Author }}</el-descriptions-item>
           <el-descriptions-item label="标题" > {{ editForm.Title }}</el-descriptions-item>
+          <el-descriptions-item label="院校代码" > {{ editForm.Code }}</el-descriptions-item>
           <el-descriptions-item label="收藏数" > {{ editForm.Favorite }}</el-descriptions-item>
           <el-descriptions-item label="发布时间"> {{ formattedPublishTime }}</el-descriptions-item>
         </el-descriptions>
@@ -138,6 +146,7 @@ export default {
       addForm: {
         author: '',
         title: '',
+        code:'',
         content: '',
       },
       // 添加规则
@@ -146,9 +155,15 @@ export default {
           {required: true, message: '请输入作者名', trigger: 'blur'},
           {min: 2, max: 10, message: '作者名的长度在2~10个字符间', trigger: 'blur'}
         ],
-        title:[
-          {required: true, message: '标题不能为空', trigger: 'blur'},
-        ],
+        title: {required: true, message: '标题不能为空', trigger: 'blur'},
+        content: {required: true, message: '内容不能为空', trigger: 'blur'},
+        code:{required: true, message: '院校代码不能为空', trigger: 'blur'},
+      },
+      // 修改规则
+      editFormRules: {
+        Title: {required: true, message: '标题不能为空', trigger: 'blur'},
+        Content:{required: true, message: '内容不能为空', trigger: 'blur'},
+        Code:{required: true, message: '院校代码不能为空', trigger: 'blur'},
       },
       //学长学姐说数据集合
       recipeList:[],
@@ -281,7 +296,8 @@ export default {
           'id':this.editForm.ID,
           'author': this.editForm.Author,
           'title': this.editForm.Title,
-          'Content': this.editForm.Content,
+          'content': this.editForm.Content,
+          'code':this.editForm.Code
         },{
           headers: {
             'Authorization': window.sessionStorage.getItem("token")

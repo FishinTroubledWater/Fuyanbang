@@ -189,6 +189,7 @@
 		justify-content: center;
 		align-items: center;
 		font-size: 30rpx;
+		border-radius: 20rpx;
 	}
 	.barItem:nth-child(n+3){
 		width: 200rpx;
@@ -197,6 +198,7 @@
 		justify-content: center;
 		align-items: center;
 		font-size: 30rpx;
+		border-radius: 20rpx;
 	}
 	.active {
 		color: #ffffff;
