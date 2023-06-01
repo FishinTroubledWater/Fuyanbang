@@ -1,4 +1,4 @@
-package modifyNews
+package modifyRecipe
 
 import (
 	fybDatabase "FybBackend/database"
@@ -11,8 +11,8 @@ import (
 	"time"
 )
 
-func AddNews(e *gin.Engine, db *gorm.DB) {
-	e.POST("/v1/backend/news/add", func(context *gin.Context) {
+func AddRecipe(e *gin.Engine, db *gorm.DB) {
+	e.POST("/v1/backend/recipe/add", func(context *gin.Context) {
 		if err := token.JwtVerify(context); err != nil {
 			context.JSON(403, gin.H{
 				"code":    403,
@@ -25,6 +25,8 @@ func AddNews(e *gin.Engine, db *gorm.DB) {
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
 
+		mp["like"] = 0
+		mp["favorite"] = 0
 		mp["publishTime"] = time.Now()
 		_, err3 := fybDatabase.AddNews(db, mp)
 		result = multierror.Append(result, err1, err2, err3)

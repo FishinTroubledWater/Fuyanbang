@@ -424,7 +424,6 @@ func UpdateSingleNewsByCondition(db *gorm.DB, where map[string]interface{}, upda
 
 func AddNews(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	values["publishTime"] = time.Now()
 	err := db.Table("news").Create(values).Count(&count).Error
 	return count, err
 }

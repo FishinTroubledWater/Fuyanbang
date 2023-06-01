@@ -48,7 +48,7 @@ type Academy struct {
 }
 
 type News struct {
-	ID int64 `gorm:"column:ID;primaryKey"`··············
+	ID          int64 `gorm:"column:ID;primaryKey"`
 	Author      string
 	Title       string
 	Content     string
