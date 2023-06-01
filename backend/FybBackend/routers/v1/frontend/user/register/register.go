@@ -14,6 +14,7 @@ func UserRegister(e *gin.Engine, db *gorm.DB) {
 		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
 		err2 := json.Unmarshal(b, &mp)
+		mp["balance"] = 0
 		_, err3 := fybDatabase.AddUser(db, mp)
 		result = multierror.Append(result, err1, err2, err3)
 		if result.ErrorOrNil() == nil {
