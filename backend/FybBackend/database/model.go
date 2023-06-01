@@ -48,7 +48,7 @@ type Academy struct {
 }
 
 type News struct {
-	ID          int64 `gorm:"column:ID;primaryKey"`
+	ID int64 `gorm:"column:ID;primaryKey"`··············
 	Author      string
 	Title       string
 	Content     string
@@ -100,10 +100,11 @@ type Recipe struct {
 	Author      string    `gorm:"column:author"`
 	Title       string    `gorm:"column:title"`
 	Content     string    `gorm:"column:content"`
-	PageUrl     string    `gorm:"column:pageUrl"`
 	Favorite    int64     `gorm:"column:favorite"`
 	Like        int64     `gorm:"column:like"`
 	PublishTime time.Time `gorm:"column:publishTime"`
+	Code        string    `gorm:"column:code"`
+	PageUrl     string    `gorm:"column:pageUrl"`
 }
 
 type Comment struct {
