@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/go-multierror"
 	"gorm.io/gorm"
+	"time"
 )
 
 func AddNews(e *gin.Engine, db *gorm.DB) {
@@ -20,11 +21,12 @@ func AddNews(e *gin.Engine, db *gorm.DB) {
 			return
 		}
 		var result *multierror.Error
-		mp1 := make(map[string]interface{})
+		mp := make(map[string]interface{})
 		b, err1 := context.GetRawData()
-		err2 := json.Unmarshal(b, &mp1)
+		err2 := json.Unmarshal(b, &mp)
 
-		_, err3 := fybDatabase.AddNews(db, mp1)
+		mp["publishTime"] = time.Now()
+		_, err3 := fybDatabase.AddNews(db, mp)
 		result = multierror.Append(result, err1, err2, err3)
 
 		code, msg := exceptionHandler.Handle(result)

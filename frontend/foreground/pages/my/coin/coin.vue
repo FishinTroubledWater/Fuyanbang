@@ -46,7 +46,7 @@
 			<u-popup :show="show2" @close="close3" @open="open2">
 				<view class="exchange-content">
 					<view class="exchange-options">
-						<radio-group v-model="selectedOption">
+						<!-- <radio-group v-model="selectedOption">
 							<label class="option-label">
 								<radio class="option-radio" value="option1"></radio>
 								<text class="option-text">1个月bilibili大会员(200学币)</text>
@@ -59,7 +59,12 @@
 								<radio class="option-radio" value="option3"></radio>
 								<text class="option-text">1个月百度网盘会员(149学币)</text>
 							</label>
-						</radio-group>
+						</radio-group> -->
+						<u-radio-group v-model="selectedOption" placement="column" @change="groupChange">
+							<u-radio :customStyle="{marginBottom: '8px'}" v-for="(item, index) in options" :key="index"
+								:label="item.name" :name="item.name" @change="radioChange">
+							</u-radio>
+						</u-radio-group>
 					</view>
 
 					<view class="input-container">
@@ -83,13 +88,33 @@
 				selectedOption: '',
 				inputValue: '',
 				id: '',
+				cost: 0,
 				user: {
 					balance: '100',
 				},
 				selectedAmount: 0, // 新增的属性，保存当前选择的充值金额
+				options: [{
+						name: '1个月bilibili大会员(200学币)',
+						disabled: false
+					},
+					{
+						name: '1个月网易云音乐会员(149学币)',
+						disabled: false
+					},
+					{
+						name: '1个月百度网盘会员(149学币)',
+						disabled: false
+					}
+				],
 			}
 		},
+		onPullDownRefresh() {
+			setTimeout(() => {
+				this.refresh();
+				uni.stopPullDownRefresh();
 
+			}, 1000)
+		},
 		onShow() {
 			this.refresh();
 		},
@@ -97,10 +122,40 @@
 			this.refresh();
 		},
 		methods: {
+			groupChange(n) {
+				console.log('groupChange', n);
+			},
+			radioChange(n) {
+				console.log('radioChange', n);
+			},
+			updateSelectedOption(option) {
+				this.selectedOption = option;
+			},
 			submitExchange() {
 				// 提交兑换操作，可以在这里处理相关的逻辑
-				console.log('选项:', this.selectedOption);
-				console.log('输入值:', this.inputValue);
+				// this.$emit('update:selectedOption', this.selectedOption);
+				console.log('选项:' + this.selectedOption);
+				console.log('输入值:' + this.inputValue);
+				if (this.selectedOption === "1个月bilibili大会员(200学币)") {
+					this.cost = 200;
+				} else if (this.selectedOption === "1个月网易云音乐会员(149学币)" || this.selectedOption === "1个月百度网盘会员(149学币)") {
+					this.cost = 149;
+				}
+				console.log(this.cost);
+				uni.$u.http.post('v1/frontend/user/exchange', {
+					userID: this.id,
+					amount: this.cost,
+					name: this.selectedOption
+				}).then(res => {
+					// console.log("这里有吗？");/
+					if (res.data.code == 200) {
+						// console.log("这里呢？");
+						uni.$u.toast('申请成功');
+					}
+				}).catch(err => {
+					// this.loginError = true; // 设置登录错误标志
+				});
+
 			},
 			calculateAmount(coin) {
 				return coin / 10; // 假设每十学币对应1人民币
@@ -126,7 +181,18 @@
 				console.log(`充值学币: ${amount}（${actualAmount}元）`);
 				this.selectedAmount = amount;
 				// 其他充值操作的逻辑代码...
-
+				uni.$u.http.post('v1/frontend/user/recharge', {
+					userID: this.id,
+					amount: this.selectedAmount
+				}).then(res => {
+					// console.log("这里有吗？");/
+					if (res.data.code == 200) {
+						// console.log("这里呢？");
+						uni.$u.toast('充值成功，请刷新页面查看余额');
+					}
+				}).catch(err => {
+					// this.loginError = true; // 设置登录错误标志
+				});
 				// 关闭充值弹窗
 				this.showGet = false;
 			},
@@ -238,7 +304,7 @@
 		background-color: #f4ce69;
 		color: #ffffff;
 	}
-	
+
 	.exchange-button {
 		width: 250rpx;
 		height: 100rpx;

@@ -52,6 +52,7 @@ func InitBackend(r *gin.Engine, db *gorm.DB) {
 
 	//recipes
 	modifyRecipe.DeleteRecipe(r, db)
+	modifyRecipe.AddRecipe(r, db)
 	modifyRecipe.UpdateRecipe(r, db)
 	selectRecipe.SelectRecipeByPage(r, db)
 	selectRecipe.SelectRecipeByAccount(r, db)

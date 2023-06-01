@@ -365,6 +365,12 @@ func UpdateSingleRecipeByCondition(db *gorm.DB, where map[string]interface{}, up
 	return count, err
 }
 
+func AddRecipe(db *gorm.DB, values map[string]interface{}) (int64, error) {
+	var count int64 = 0
+	err := db.Table("recipe").Create(values).Count(&count).Error
+	return 0, err
+}
+
 // News
 
 func DeleteNews(db *gorm.DB, where map[string]interface{}) (int64, error) {
@@ -424,7 +430,6 @@ func UpdateSingleNewsByCondition(db *gorm.DB, where map[string]interface{}, upda
 
 func AddNews(db *gorm.DB, values map[string]interface{}) (int64, error) {
 	var count int64 = 0
-	values["publishTime"] = time.Now()
 	err := db.Table("news").Create(values).Count(&count).Error
 	return count, err
 }
@@ -601,6 +606,15 @@ func IsExistedFavoriteRecord(db *gorm.DB, postId int64, userId int64) (error, bo
 		isExistedFavoriteRecord = false
 	}
 	return result, isExistedFavoriteRecord
+}
+
+func IsExistedAdoptRecord(db *gorm.DB, postId int64) (bool, error) {
+	var count int64
+	err := db.Model(&AdoptRecord{}).Where("postId = ?", postId).Count(&count).Error
+	if err != nil {
+		return false, err
+	}
+	return count > 0, nil
 }
 
 func AddPostFrontend(db *gorm.DB, where map[string]interface{}) (bool, error) {
