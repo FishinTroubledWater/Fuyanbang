@@ -603,6 +603,15 @@ func IsExistedFavoriteRecord(db *gorm.DB, postId int64, userId int64) (error, bo
 	return result, isExistedFavoriteRecord
 }
 
+func IsExistedAdoptRecord(db *gorm.DB, postId int64) (bool, error) {
+	var count int64
+	err := db.Model(&AdoptRecord{}).Where("postId = ?", postId).Count(&count).Error
+	if err != nil {
+		return false, err
+	}
+	return count > 0, nil
+}
+
 func AddPostFrontend(db *gorm.DB, where map[string]interface{}) (bool, error) {
 	var result *multierror.Error
 	var resultSign bool
