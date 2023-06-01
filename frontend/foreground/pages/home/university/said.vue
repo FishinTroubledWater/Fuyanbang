@@ -6,7 +6,7 @@
 					<image class="headPortrait" src="@/static/academy-icons/photo.jpg"></image>
 					<view class="userMes">
 						<text class="userName">玲玲学姐</text>
-						<view class="typeOfAdmission"><text class="textOfAdmission">本科专业成功上岸</text></view>
+						<!-- <view class="typeOfAdmission"><text class="textOfAdmission">本科专业成功上岸</text></view> -->
 					</view>
 				</view>
 				<view class="saidContent">
@@ -26,7 +26,7 @@
 					<image class="headPortrait" src="@/static/academy-icons/photo.jpg"></image>
 					<view class="userMes">
 						<text class="userName">玲玲学姐</text>
-						<view class="typeOfAdmission"><text class="textOfAdmission">本科专业成功上岸</text></view>
+						<!-- <view class="typeOfAdmission"><text class="textOfAdmission">本科专业成功上岸</text></view> -->
 					</view>
 				</view>
 				<view class="saidContent">

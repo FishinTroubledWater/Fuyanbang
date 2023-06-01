@@ -184,9 +184,13 @@
 		margin: 30rpx 30rpx 60rpx 30rpx;
 	}
 	.Btn{
+		
 		width: 80%;
 		height: 50px;
-		background-color: bisque;
+		background-image: linear-gradient(112deg, #08507880, #85d8ce);
 		border-radius: 20px;
+		color: #fff;
+		border: none;
+		box-shadow: 5rpx 10rpx 5rpx #bfbfbf;
 	}
 </style>

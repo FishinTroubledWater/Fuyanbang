@@ -1,5 +1,5 @@
 <template>
-	<view class="background">
+	<view>
 		<view class="content">
 			<!-- 个人信息 -->
 			<u-cell-group>
@@ -115,10 +115,7 @@
 </script>
 
 <style lang="scss">
-	.background {
-		width: 100%;
-		height: 2000rpx;
-		// background-image: linear-gradient(2deg, #ffeeee, #eafff4)
+	page {
 		background-color: #fafafa
 	}
 
@@ -136,7 +133,7 @@
 		width: auto;
 		height: 100%;
 		margin: 25rpx;
-		margin-top: 60rpx;
+		margin-top: 35rpx;
 		background-color: #fff;
 		box-shadow: 5rpx 10rpx 10rpx #bfbfbf;
 		border-radius: 20rpx;

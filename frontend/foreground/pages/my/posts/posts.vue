@@ -5,7 +5,7 @@
 		<u-toast ref="uToast"></u-toast>
 		<view v-for="(item,index) in posts" :key="index" @click="postsClick(item)">
 			<view class="list-box">
-				<view class="text-delete" @click.native.stop="postsDelete(item.id)">×</view>
+				<view class="text-delete" @click.stop="postsDelete(item.id)">×</view>
 				<view class="text-title">{{item.title}}</view>
 				<view class="text-tips">{{item.content}}</view>
 				<view class="item-bottom">
@@ -92,7 +92,7 @@
 			},
 			// 删除创作
 			postsDelete(postId) {
-
+				var _this=this;
 				// 基本用法，注意：post的第三个参数才为配置项
 				uni.$u.http.post('/v1/frontend/user/deleteMyPost', {
 					id: postId
@@ -105,7 +105,7 @@
 					})
 					setTimeout(function() {
 					  // 这里写要延时执行的代码
-					  location.reload();
+					 _this.refresh();
 					}, 1500);
 					
 
@@ -142,9 +142,8 @@
 
 <style lang="scss">
 	page {
-		background-color: #F8F8F8;
+		background-color: #fafafa;
 	}
-
 	.list-box {
 		position: relative;
 		background-color: #FFFFFF;
@@ -153,6 +152,9 @@
 		margin-left: 30rpx;
 		margin-right: 30rpx;
 		padding: 30rpx;
+		
+		box-shadow: 5rpx 10rpx 10rpx #bfbfbf;
+		border-radius: 20rpx;
 	}
 
 	.text-title {
