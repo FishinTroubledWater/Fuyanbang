@@ -21,8 +21,8 @@ import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
-// axios.defaults.baseURL = 'http://124.222.141.238:8088/v1/backend/'
-axios.defaults.baseURL = 'http://localhost:8088/v1/backend/'
+axios.defaults.baseURL = 'http://124.222.141.238:8088/v1/backend/'
+// axios.defaults.baseURL = 'http://localhost:8088/v1/backend/'
 Vue.config.productionTip = false
 
 //封装组件的全局引入

@@ -23,7 +23,7 @@
       <div style="font-size: 20px;font-weight: bold"> 帖子列表</div>
       <Table :table-data="postList" :columns="columns" :show-state="true">
         <!--        状态区-->
-        <template #state="scope" >
+        <template #state="scope">
           <el-tag v-if="scope.row.State === 0" type="warning">未审核</el-tag>
           <el-tag v-else type="success">已审核</el-tag>
 
@@ -56,7 +56,7 @@
           <el-input v-model="addForm.account"></el-input>
         </el-form-item>
         <el-form-item label="标题" prop="title">
-          <el-input v-model="addForm.account"></el-input>
+          <el-input v-model="addForm.title"></el-input>
         </el-form-item>
         <el-form-item label="板块" prop="partID">
           <el-select v-model="addForm.partID" placeholder="请选择">
@@ -73,10 +73,10 @@
           <el-radio v-model="addForm.state" label='1'>已审核</el-radio>
         </el-form-item>
         <el-form-item label="概要" prop="summary">
-          <el-input type="textarea" v-model="addForm.summary" :rows="5"  resize="none"></el-input>
+          <el-input type="textarea" v-model="addForm.summary" :rows="5" resize="none"></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="content">
-<!--          <quill-editor v-model="addForm.content"></quill-editor>-->
+          <!--          <quill-editor v-model="addForm.content"></quill-editor>-->
           <Editor :value.sync="addForm.content"></Editor>
         </el-form-item>
       </el-form>
@@ -90,14 +90,17 @@
                @close="editDialogClosed">
       <!--      内容主体区域-->
       <el-form ref="editFormRef" :model="editForm" label-width="80px"
-               :rules="addFormRules">
-        <el-form-item label="用户名" prop="Author">
+               :rules="editFormRules">
+        <el-form-item label="用户名" prop="Account">
           <el-input v-model="editForm.Author.Account" disabled></el-input>
         </el-form-item>
-        <el-form-item label="板块" prop="PartID">
+        <el-form-item label="标题" prop="Title">
+          <el-input v-model="editForm.Title"></el-input>
+        </el-form-item>
+        <el-form-item label="板块" prop="PartId">
           <el-select v-model="editForm.Part.PartName" placeholder="请选择">
             <el-option v-for="item in parts" :key="item.value"
-                       :label="item.label" :value="item.value" >
+                       :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </el-form-item>
@@ -106,10 +109,10 @@
           <el-radio v-model="editForm.State" :label='1'>已审核</el-radio>
         </el-form-item>
         <el-form-item label="概要" prop="Summary">
-          <el-input type="textarea" v-model="editForm.Summary" :rows="5"  resize="none"></el-input>
+          <el-input type="textarea" v-model="editForm.Summary" :rows="5" resize="none"></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="Content">
-<!--          <quill-editor v-model="editForm.Content"></quill-editor>-->
+          <!--          <quill-editor v-model="editForm.Content"></quill-editor>-->
           <Editor :value.sync="editForm.Content"></Editor>
         </el-form-item>
       </el-form>
@@ -125,11 +128,13 @@
     <!--    抽屉-->
     <Drawer :drawer="detailsDrawer" :title="drawerTitle" @closed="drawerClosed">
       <template #details="scope">
+        <div class="mg setcenter"><el-image :src="editForm.CoverUrl" style="width: 70%"></el-image></div>
         <el-descriptions direction="vertical" :column="2" border class="mg">
           <el-descriptions-item label="用户名"> {{ editForm.Author.Account }}</el-descriptions-item>
           <el-descriptions-item label="收藏数"> {{ editForm.Favorite }}</el-descriptions-item>
           <el-descriptions-item label="板块"> {{ editForm.Part.PartName }}</el-descriptions-item>
-          <el-descriptions-item label="发布时间"> {{ formattedPublishTime}}</el-descriptions-item>
+          <el-descriptions-item label="发布时间"> {{ formattedPublishTime }}</el-descriptions-item>
+          <el-descriptions-item label="悬赏"> {{ editForm.Reward }}</el-descriptions-item>
           <el-descriptions-item label="状态">
             <el-tag v-if="editForm.State === 0" type="warning">未审核</el-tag>
             <el-tag v-else type="success">已审核</el-tag>
@@ -149,7 +154,7 @@
 
 export default {
   name: "post",
-  computed:{
+  computed: {
     formattedPublishTime() {
       const publishTime = this.editForm.PublishTime;
       return this.$moment(publishTime).format('YYYY-MM-DD HH:mm:ss');
@@ -178,17 +183,17 @@ export default {
         pageSize: 10
       },
       //板块数据集合
-      parts:[
-        {value:'1',label:'帖子'},
-        {value:'2',label:'问题'},
-        {value:'3',label:'官方'},
+      parts: [
+        {value: '1', label: '帖子'},
+        {value: '2', label: '问题'},
+        {value: '3', label: '官方'},
       ],
       //查询到的信息
       editForm: {
-        ID:'',
-        Author:{},
-        Part:{},
-        State:'',
+        ID: '',
+        Author: {},
+        Part: {},
+        State: '',
       },
       //帖子数据集合
       postList: [],
@@ -197,9 +202,9 @@ export default {
         account: '',
         partID: '1',
         summary: '',
-        title:'',
+        title: '',
         state: '0',
-        content:''
+        content: ''
       },
       // 添加规则
       addFormRules: {
@@ -207,20 +212,28 @@ export default {
           {required: true, message: '请输入用户名', trigger: 'blur'},
           {min: 3, max: 10, message: '用户名的长度在3~10个字符间', trigger: 'blur'}
         ],
-        title: [
-          {required: true, message: '标题不能为空', trigger: 'blur'},
-        ],
+        title: {required: true, message: '标题不能为空', trigger: 'blur'},
+        summary: {required: true, message: '概要不能为空', trigger: 'blur'},
+        content: {required: true, message: '内容不能为空', trigger: 'blur'},
+      },
+      // 修改规则
+      editFormRules: {
+        Title: {required: true, message: '标题不能为空', trigger: 'blur'},
+        Summary: {required: true, message: '概要不能为空', trigger: 'blur'},
+        Content: {required: true, message: '内容不能为空', trigger: 'blur'},
       },
       //表格配置
       columns: [
         {prop: 'Author.Account', label: '用户名', width: '150px'},
-        {prop: 'PublishTime', label: '发布时间', width: '200px', sortable: true,
-          formatter:(row, column)=>{
+        {
+          prop: 'PublishTime', label: '发布时间', width: '200px', sortable: true,
+          formatter: (row, column) => {
             const publishTime = row[column.property];
             return this.$moment(publishTime).format('YYYY-MM-DD HH:mm:ss');
-          }},
-        {prop: 'Part.PartName', label: '板块', width: '150px', sortable: true},
-        {prop: 'Summary', label: '概要', width: '180px', showOverflowTooltip: true},
+          }
+        },
+        {prop: 'Part.PartName', label: '板块', width: '100px', sortable: true},
+        {prop: 'Title', label: '标题', width: '200px', showOverflowTooltip: true},
       ],
     }
   },
@@ -295,7 +308,7 @@ export default {
       const {data: res} = await this.axios.patch('post/update', {
         'id': id,
         'state': this.editForm.State
-      },{
+      }, {
         headers: {
           'Authorization': window.sessionStorage.getItem("token")
         }
@@ -310,7 +323,7 @@ export default {
     // 显示详情
     showDetails(row) {
       console.log(row);
-      this.editForm=row;
+      this.editForm = row;
       this.detailsDrawer = true;
     },
     //关闭详情
@@ -345,7 +358,7 @@ export default {
     async showEditDialog(id) {
       console.log(id);
       const {data: res} = await this.axios.get('post/searchById', {
-        params: {'id':id},
+        params: {'id': id},
         headers: {
           'Authorization': window.sessionStorage.getItem("token")
         }
@@ -375,7 +388,7 @@ export default {
           'summary': this.editForm.Summary,
           'content': this.editForm.Content,
           'state': this.editForm.State
-        },{
+        }, {
           headers: {
             'Authorization': window.sessionStorage.getItem("token")
           }
@@ -391,7 +404,7 @@ export default {
       })
     },
     //获取焦点事件
-    focus(event){
+    focus(event) {
       event.enable(false);
     }
   }

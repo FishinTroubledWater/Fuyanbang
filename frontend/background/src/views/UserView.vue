@@ -54,6 +54,9 @@
         <el-form-item label="手机号" prop="phonenumber">
           <el-input v-model="addForm.phonenumber"></el-input>
         </el-form-item>
+        <el-form-item label="昵称" prop="nickName">
+          <el-input v-model="addForm.nickName"></el-input>
+        </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
          <el-button @click="addDialogVisible = false">取 消</el-button>
@@ -69,8 +72,14 @@
         <el-form-item label="用户名" prop="Account">
           <el-input v-model="editForm.Account" disabled></el-input>
         </el-form-item>
-        <el-form-item label="手机号" prop="Phonenumber">
+        <el-form-item label="密码" prop="Password">
+          <el-input v-model="editForm.Password"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号" prop="PhoneNumber">
           <el-input v-model="editForm.PhoneNumber"></el-input>
+        </el-form-item>
+        <el-form-item label="昵称" prop="NickName">
+          <el-input v-model="editForm.NickName"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -144,12 +153,17 @@ export default {
         account: '',
         password: '',
         phonenumber: '',
+        nickName:''
       },
       // 添加用户的规则
       addFormRules: {
         account: [
           {required: true, message: '请输入用户名', trigger: 'blur'},
           {min: 3, max: 10, message: '用户名的长度在3~10个字符间', trigger: 'blur'}
+        ],
+        nickName: [
+          {required: true, message: '请输入用户昵称', trigger: 'blur'},
+          {min: 1, max: 10, message: '用户昵称的长度在1~10个字符间', trigger: 'blur'}
         ],
         password: [
           {required: true, message: '请输入密码', trigger: 'blur'},
@@ -162,10 +176,18 @@ export default {
       },
       //编辑用户的规则
       editFormRules: {
-        phonenumber: [
+        PhoneNumber:[
           {required: true, message: '请输入手机号', trigger: 'blur'},
-          {validator: checkPhoneNumber,  trigger: 'blur'}
-        ]
+          {validator: checkPhoneNumber, trigger: 'blur'}
+        ],
+        NickName: [
+          {required: true, message: '请输入用户昵称', trigger: 'blur'},
+          {min: 1, max: 10, message: '用户昵称的长度在1~10个字符间', trigger: 'blur'}
+        ],
+        Password: [
+          {required: true, message: '请输入密码', trigger: 'blur'},
+          {min: 6, max: 20, message: '密码的长度在6~20个字符间', trigger: 'blur'}
+        ],
       },
       //假数据
       // 获取用户列表的参数对象
@@ -280,7 +302,9 @@ export default {
         // 发起修改用户信息的数据请求
         const {data: res} = await this.axios.patch('user/update', {
           'account': this.editForm.Account,
-          'phoneNumber': this.editForm.PhoneNumber
+          'phoneNumber': this.editForm.PhoneNumber,
+          'nickName': this.editForm.NickName,
+          'passWord': this.editForm.Password
         },{
           headers: {
             'Authorization': window.sessionStorage.getItem("token")
