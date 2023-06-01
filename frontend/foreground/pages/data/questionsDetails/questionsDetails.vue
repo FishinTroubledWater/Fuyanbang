@@ -53,6 +53,7 @@
 				queID: '',
 				whetherLike: 'false',
 				whetherCollect: 'false',
+				isSolved:'false',
 				likeNum: '0',
 				desc: '',
 				myanswer: 'null',
@@ -74,7 +75,7 @@
 		methods: {
 			clickanswer(index,isAccepted,queID) {
 				var _this = this
-				if(this.isMine==true&& isAccepted=="未采纳"){
+				if(this.isMine==true&& isAccepted=="未采纳"&& _this.isSolved=="false"){
 					uni.showModal({
 						title: '',
 						confirmText: '采纳',
@@ -115,6 +116,12 @@
 							
 						}
 					});
+				}
+				else if( _this.isSolved=="true"){
+					uni.showModal({
+						title: '',
+						confirmText: '确定',
+						content: '该问题已被采纳',})
 				}
 				
 			},
@@ -252,6 +259,7 @@
 						this.whetherLike = this.indexList.isLiked;
 						this.whetherCollect = this.indexList.isCollected;
 						this.likeNum = this.indexList.likeNum;
+						this.isSolved=this.indexList.isSolved;
 					}).catch(err => {
 					
 					})
@@ -282,6 +290,7 @@
 				this.whetherCollect = this.indexList.isCollected;
 				this.likeNum = this.indexList.likeNum;
 				this.isMine = this.indexList.isMine;
+				this.isSolved=this.indexList.isSolved;
 			}).catch(err => {
 
 			})
