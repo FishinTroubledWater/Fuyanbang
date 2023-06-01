@@ -31,7 +31,7 @@
 		</view>
 		<text style="font-size: 40rpx; font-weight: 800;">回答:</text>
 		<uni-card v-for="(item, index) in answer" :title="item.name" :sub-title="item.time" :thumbnail="item.icon"
-			class="trends-box-item" @click="clickanswer(item.answerId,item.isAccepted)">
+			class="trends-box-item" @click="clickanswer(item.answerId,item.isAccepted,queID)">
 			<u--text lines="3" :text="item.answer"></u--text>
 			<u-row customstyle="margin-bottom: 10px">
 				<u-col span="3">
@@ -72,7 +72,8 @@
 			}
 		},
 		methods: {
-			clickanswer(index,isAccepted) {
+			clickanswer(index,isAccepted,queID) {
+				var _this = this
 				if(this.isMine==true&& isAccepted=="未采纳"){
 					uni.showModal({
 						title: '',
@@ -81,9 +82,11 @@
 						content: '是否采纳该回答？',
 						success: function(res) {
 							if (res.confirm) {
+								console.log(this.queID)
+								index=index+'',
 								uni.$u.http.post('/v1/frontend/circle/postAnswerStatus', {
-									queId: this.queID,
 									answerId: index,
+									queId: queID,
 								}).then(res => {
 									console.log(res.data)
 									if (res.data.code == 200) {
@@ -91,19 +94,25 @@
 											title: "操作成功",
 											duration: 1000,
 										})
+										setTimeout(() => {
+										 	_this.$router.go(0)
+										 }, 500)
 									} else {
 										uni.showToast({
 											title: "操作不成功",
 											duration: 1000,
 										})
+										
 									}
 								
 								}).catch(err => {
 								
 								})
+								
 							} else if (res.cancel) {
 								console.log('用户点击取消');
 							}
+							
 						}
 					});
 				}
