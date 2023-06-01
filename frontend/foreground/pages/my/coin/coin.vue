@@ -132,8 +132,6 @@
 				this.selectedOption = option;
 			},
 			submitExchange() {
-				// 提交兑换操作，可以在这里处理相关的逻辑
-				// this.$emit('update:selectedOption', this.selectedOption);
 				console.log('选项:' + this.selectedOption);
 				console.log('输入值:' + this.inputValue);
 				if (this.selectedOption === "1个月bilibili大会员(200学币)") {
@@ -147,15 +145,12 @@
 					amount: this.cost,
 					name: this.selectedOption
 				}).then(res => {
-					// console.log("这里有吗？");/
 					if (res.data.code == 200) {
-						// console.log("这里呢？");
 						uni.$u.toast('申请成功');
 					}
+					this.show2 = false;
 				}).catch(err => {
-					// this.loginError = true; // 设置登录错误标志
 				});
-
 			},
 			calculateAmount(coin) {
 				return coin / 10; // 假设每十学币对应1人民币
