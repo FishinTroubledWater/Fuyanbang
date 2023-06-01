@@ -28,7 +28,7 @@ func AddRecipe(e *gin.Engine, db *gorm.DB) {
 		mp["like"] = 0
 		mp["favorite"] = 0
 		mp["publishTime"] = time.Now()
-		_, err3 := fybDatabase.AddNews(db, mp)
+		_, err3 := fybDatabase.AddRecipe(db, mp)
 		result = multierror.Append(result, err1, err2, err3)
 
 		code, msg := exceptionHandler.Handle(result)
