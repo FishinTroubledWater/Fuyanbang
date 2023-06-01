@@ -243,9 +243,6 @@ func SearchCommentByQueId(db *gorm.DB, queId int64) (int64, []Comment, error) {
 		result = multierror.Append(result, err)
 	}
 	err = db.Preload("Author").Where("targetPost = ? ", queId).Order("publishTime DESC").Find(&comments).Count(&count).Error
-	if count == 0 {
-		result = multierror.Append(result, errors.New("找不到该问题！"))
-	}
 	if err != nil {
 		result = multierror.Append(result, err)
 	}
@@ -257,8 +254,8 @@ func GetAdoptedAnswerByQueId(db *gorm.DB, queId int64) (string, error) {
 	var adoptRecord AdoptRecord
 	var count int64 = 0
 	err := db.Where("postId = ? ", queId).Find(&adoptRecord).Count(&count).Error
-	if count == 0 && err == nil {
-		result = multierror.Append(result, errors.New("要删除的记录不存在"))
+	if err != nil {
+		result = multierror.Append(result, err)
 	}
 	return adoptRecord.CommentId, result
 }
@@ -723,6 +720,34 @@ func DeleteUser(db *gorm.DB, where map[string]interface{}) (int64, error) {
 	}
 	err = db.Delete(&user).Error
 	return count, err
+}
+
+func AddBalance(db *gorm.DB, userID int64, sum int64) (bool, error) {
+	err := db.Model(&User{}).Where("id = ?", userID).Update("balance", gorm.Expr("balance + ?", sum)).Error
+	if err != nil {
+		return false, err
+	}
+	return true, nil
+}
+
+func DecreaseBalance(db *gorm.DB, userID int64, amount int64) (string, bool, error) {
+	var user User
+	err := db.First(&user, userID).Error
+	if err != nil {
+		return "", false, err
+	}
+
+	if user.Balance < amount {
+		return "", false, errors.New("学币余额不足")
+	}
+
+	user.Balance -= amount
+	err = db.Save(&user).Error
+	if err != nil {
+		return "", false, err
+	}
+
+	return user.Account, true, nil
 }
 
 // Feedback

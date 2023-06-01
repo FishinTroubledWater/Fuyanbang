@@ -33,8 +33,16 @@
 
 		<text style="font-size: 40rpx; font-weight: 800;">回答:</text>
 		<uni-card v-for="(item, index) in answer" :title="item.name" :sub-title="item.time" :thumbnail="item.icon"
-			class="trends-box-item">
-			<u--text :text="item.answer"></u--text>
+			class="trends-box-item" @click="clickanswer(item.answerId)>
+			<u--text :lines="3" :text="item.answer"></u--text>
+			<u-row customstyle="margin-bottom: 10px">
+				<u-col span="6">
+					<text style="">回答状态：</text>
+				</u-col>
+				<u-col span="6" offset="-5">
+					
+				</u-col>
+			</u-row>
 		</uni-card>
 	</view>
 </template>
@@ -50,7 +58,7 @@
 				likeNum: '0',
 				desc: '',
 				myanswer: 'null',
-
+				isMine: '',
 				txt: "txt",
 				academyName: '福州大学',
 				indexList: {},
@@ -66,7 +74,21 @@
 			}
 		},
 		methods: {
-
+			clickanswer(index) {
+				uni.showModal({
+					title: '提示',
+					confirmText: '注册账号',
+					cancelText: '登录绑定',
+					content: '当前微信还未绑定账号,请使用账号密码登录进行绑定或注册',
+					success: function(res) {
+						if (res.confirm) {
+							console.log('用户点击确定');
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+			},
 			clickCollect() {
 				if (this.whetherCollect === 'true') {
 					this.whetherCollect = 'false'
@@ -204,6 +226,14 @@
 					}).catch(err => {
 					
 					})
+					uni.$u.http.get('/v1/frontend/circle/queAnswer/' + this.queID, {
+					
+					}).then(res => {
+						console.log(res.data.data);
+						this.answer = res.data.data;
+					}).catch(err => {
+					
+					})
 				}
 			})
 			uni.$u.http.get('/v1/frontend/circle/queAnswer/' + this.queID, {
@@ -222,6 +252,7 @@
 				this.whetherLike = this.indexList.isLiked;
 				this.whetherCollect = this.indexList.isCollected;
 				this.likeNum = this.indexList.likeNum;
+				this.isMine = this.indexList.isMine;
 			}).catch(err => {
 
 			})

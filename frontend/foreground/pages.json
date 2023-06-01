@@ -67,14 +67,14 @@
       "style": {
         // custorm 取消顶部的 navBar 显示
         "navigationStyle": "custom",
-        "enablePullDownRefresh": true
+        "enablePullDownRefresh": false
       }
     },
     {
       "path": "pages/home/information/news",
       "style": {
         "navigationBarTitleText": "资讯",
-        "enablePullDownRefresh": true
+        "enablePullDownRefresh": false
       }
     }, {
       "path": "pages/home/information/detail",

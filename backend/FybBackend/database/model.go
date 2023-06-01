@@ -29,7 +29,7 @@ type Admin struct {
 	ID          int64 `gorm:"column:ID;primaryKey"`
 	Account     string
 	Password    string
-	PhoneNumber string `gorm:"phoneNumber"`
+	PhoneNumber string `gorm:"column:phoneNumber"`
 	Token       string
 }
 
@@ -100,6 +100,7 @@ type Recipe struct {
 	Author      string    `gorm:"column:author"`
 	Title       string    `gorm:"column:title"`
 	Content     string    `gorm:"column:content"`
+	PageUrl     string    `gorm:"column:pageUrl"`
 	Favorite    int64     `gorm:"column:favorite"`
 	Like        int64     `gorm:"column:like"`
 	PublishTime time.Time `gorm:"column:publishTime"`

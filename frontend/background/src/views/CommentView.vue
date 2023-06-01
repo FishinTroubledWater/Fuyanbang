@@ -63,7 +63,8 @@
           <el-radio v-model="addForm.state" label='1'>已审核</el-radio>
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <quill-editor v-model="addForm.content"></quill-editor>
+          <Editor :value.sync="addForm.content"> </Editor>
+<!--          <quill-editor v-model="addForm.content"></quill-editor>-->
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -85,8 +86,7 @@
           <el-radio v-model="editForm.State" :label='1'>已审核</el-radio>
         </el-form-item>
         <el-form-item label="内容" prop="Content">
-          <Editor :value="editForm.Content"></Editor>
-<!--          <quill-editor v-model="editForm.Content" :options="editorOption"></quill-editor>-->
+          <Editor :value.sync="editForm.Content"> </Editor>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -112,7 +112,7 @@
           </el-descriptions-item>
         </el-descriptions>
         <div class="mg">内容</div>
-        <quill-editor v-model="editForm.Content" @focus="focus($event)" class="mg"></quill-editor>
+        <quill-editor v-model="editForm.Content" @focus="focus($event)" class="mg" ></quill-editor>
       </template>
     </Drawer>
 
@@ -149,7 +149,7 @@ export default {
       },
       //查询到的信息
       editForm: {
-
+        Content:"",
       },
       //添加的表单数据
       addForm: {

@@ -1,10 +1,10 @@
 <template>
-	<view class="background">
+	<view>
 		<view class="content">
 			<!-- 个人信息 -->
 			<u-cell-group>
 
-				<view class="cellWithRadius">
+				<view class="cellWithRadius1">
 					<u-cell isLink url="/pages/my/settings/userInfo">
 						<u-image width='140rpx' height='140rpx' slot="icon" :src="user.avatarUrl"
 							shape="circle"></u-image>
@@ -37,9 +37,8 @@
 					<!-- <u-gap height="15" bg-color="#f9f9f933"></u-gap> -->
 				</view>
 				<view class="cellWithRadius">
-					<u-cell iconStyle="color:#73d13d;" icon="question-circle"
-						titleStyle="margin-left: 20rpx;" title="帮助与反馈" isLink
-						url="/pages/my/helpAndFeedback/feedbackIndex"></u-cell>
+					<u-cell iconStyle="color:#73d13d;" icon="question-circle" titleStyle="margin-left: 20rpx;"
+						title="帮助与反馈" isLink url="/pages/my/helpAndFeedback/feedbackIndex"></u-cell>
 					<u-cell iconStyle="color:#7cb305;" icon="setting" titleStyle="margin-left: 20rpx;" title="设置" isLink
 						url="/pages/my/settings/setting"></u-cell>
 				</view>
@@ -73,7 +72,7 @@
 			setTimeout(() => {
 				this.refresh();
 				uni.stopPullDownRefresh();
-			
+
 			}, 1000)
 		},
 		mounted() {
@@ -116,18 +115,25 @@
 </script>
 
 <style lang="scss">
-	.background {
-		width: 100%;
-		height: 2000rpx;
-		// background-image: linear-gradient(2deg, #ffeeee, #eafff4)
-		background-color:#fafafa
+	page {
+		background-color: #fafafa
+	}
+
+	.cellWithRadius1 {
+		width: auto;
+		height: 100%;
+		margin: 25rpx;
+		margin-top: 100rpx;
+		background-color: #fff;
+		box-shadow: 5rpx 10rpx 10rpx #bfbfbf;
+		border-radius: 20rpx;
 	}
 
 	.cellWithRadius {
 		width: auto;
 		height: 100%;
 		margin: 25rpx;
-		margin-top: 60rpx;
+		margin-top: 35rpx;
 		background-color: #fff;
 		box-shadow: 5rpx 10rpx 10rpx #bfbfbf;
 		border-radius: 20rpx;
@@ -147,7 +153,7 @@
 
 	.days {
 		font-size: 70rpx;
-		color:#00bcd4;
+		color: #00bcd4;
 	}
 
 	.cellTitle {
@@ -155,7 +161,7 @@
 	}
 
 	.u-cell {
-		
+
 		border-color: rgba(0, 0, 0, 0.1);
 
 	}

@@ -39,10 +39,20 @@
 			<swiper-item class="swiper-item sns-oil">
 				<u-list>
 					<u-list-item v-for="(item, index) in questionsList" :key="index">
-						<uni-card @click="clickquestions(item.queId)" :title="item.name"
-							sub-title="教育部" :extra="item.time" :thumbnail="item.icon"
+						<uni-card @click="clickquestions(item.queId)" :title="item.title"
+							:sub-title="item.time" :extra="item.name" :thumbnail="item.icon"
 							class="trends-box-item">
 							<u--text :lines="3" :text="item.summary"></u--text>
+							<u-row customstyle="margin-bottom: 10px">
+								<u-col span="6">
+									<text style="">悬赏学币：</text>
+								</u-col>
+								<u-col span="6" offset="-4">
+									<u--text :lines="1" :text="item.Reward"></u--text>
+								</u-col>
+							</u-row>
+							<!-- <u-icon style="padding-left: 50rpx;" :label="this.likeNum" color="#808A87"
+								size="20" name="heart" ></u-icon> -->
 							<!-- <view class="u-content">
 								<u-parse :content="questionsList[index].summary"></u-parse>
 							</view> -->
@@ -56,7 +66,17 @@
 </template>
 
 <script>
+	import uCard from '../../uni_modules/uni-card/uni-card.vue'
+	import uSteps from '../../uni_modules/uni-steps/uni-steps.vue'
+	import uniIcons from '../../uni_modules/uni-icons/uni-icons.vue'
+	import uSection from '../../uni_modules/uni-section/uni-section.vue'
 	export default {
+		components: {
+			uCard,
+			uSteps,
+			uniIcons: uniIcons,
+			uSection
+		},
 		data() {
 			return {
 				id:'',
@@ -127,7 +147,33 @@
 			}
 
 		},
-		
+		onShow() {
+			uni.getStorage({
+				key:'userId',   // 储存在本地的变量名
+				success:res => {
+					// 成功后的回调
+					// console.log(res.data);   // hello  这里可做赋值的操作
+					this.id=res.data;
+					console.log(this.id)
+				}
+			})
+			uni.$u.http.get('/v1/frontend/circle/newinfo/'+ this.id, {
+					
+				}).then(res => {
+					console.log(res.data.data);
+					this.indexList=res.data.data
+				}).catch(err => {
+					
+				}),
+			uni.$u.http.get('/v1/frontend/circle/newque/'+ this.id, {
+					
+				}).then(res => {
+					console.log(res.data.data);
+					this.questionsList=res.data.data
+				}).catch(err => {
+					
+				})
+		},
 		mounted() {
 			uni.getStorage({
 				key:'userId',   // 储存在本地的变量名
@@ -171,24 +217,7 @@
 					
 				})
 		},
-		onShow() {
-			uni.$u.http.get('/v1/frontend/circle/newinfo/'+ this.id, {
-					
-				}).then(res => {
-					console.log(res.data.data);
-					this.indexList=res.data.data
-				}).catch(err => {
-					
-				}),
-			uni.$u.http.get('/v1/frontend/circle/newque/'+ this.id, {
-					
-				}).then(res => {
-					console.log(res.data.data);
-					this.questionsList=res.data.data
-				}).catch(err => {
-					
-				})
-		},
+		
 	}
 </script>
 
