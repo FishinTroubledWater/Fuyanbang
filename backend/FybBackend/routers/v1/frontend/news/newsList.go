@@ -7,8 +7,8 @@ import (
 	"gorm.io/gorm"
 )
 
-func NewsInfo(e *gin.Engine, db *gorm.DB) {
-	e.GET("/v1/frontend/news/detail", func(context *gin.Context) {
+func NewsList(e *gin.Engine, db *gorm.DB) {
+	e.GET("/v1/frontend/news/list", func(context *gin.Context) {
 		var result *multierror.Error
 		mp := make(map[string]interface{})
 		newses, count, err1 := fybDatabase.SelectAllNewsByCondition(db, mp)

@@ -20,7 +20,6 @@
         </el-menu-item>
         <el-menu-item index="feedback"><i class="el-icon-message-solid"/> <span class="el-menu-text">反馈中心</span>
         </el-menu-item>
-
       </el-menu>
     </el-aside>
     <!--    主体头部-->
@@ -30,9 +29,7 @@
           <div class="top_right">
             <el-avatar :size="'large'" :src="avatar" :fit="'cover'"
                        style="margin-right: 10px"></el-avatar>
-
             <span class="el-dropdown-link">{{ account }}<i class="el-icon-caret-bottom el-icon--right"></i></span></div>
-
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item class="clearfix" @click.native="toAbout">个人页面</el-dropdown-item>
             <el-dropdown-item class="clearfix" @click.native="logout">退出</el-dropdown-item>

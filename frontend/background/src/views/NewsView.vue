@@ -63,7 +63,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="内容" prop="summary">
-          <quill-editor v-model="addForm.content"></quill-editor>
+<!--          <quill-editor v-model="addForm.content"></quill-editor>-->
+          <Editor :value.sync="addForm.content"></Editor>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -94,7 +95,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="内容" prop="summary">
-          <quill-editor v-model="editForm.Content"></quill-editor>
+<!--          <quill-editor v-model="editForm.Content"></quill-editor>-->
+          <Editor :value.sync="editForm.Content"></Editor>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">

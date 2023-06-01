@@ -29,18 +29,16 @@
 			<view class="num">{{ desc.length }}/200</view>
 			<button @click="clickSent">发送回答</button>
 		</view>
-
-
 		<text style="font-size: 40rpx; font-weight: 800;">回答:</text>
 		<uni-card v-for="(item, index) in answer" :title="item.name" :sub-title="item.time" :thumbnail="item.icon"
-			class="trends-box-item" @click="clickanswer(item.answerId)>
-			<u--text :lines="3" :text="item.answer"></u--text>
+			class="trends-box-item" @click="clickanswer(item.answerId,item.isAccepted,queID)">
+			<u--text lines="3" :text="item.answer"></u--text>
 			<u-row customstyle="margin-bottom: 10px">
-				<u-col span="6">
-					<text style="">回答状态：</text>
+				<u-col span="3">
+					<text>回答状态：</text>
 				</u-col>
-				<u-col span="6" offset="-5">
-					
+				<u-col span="3" >
+					<u--text lines="1" :text="item.isAccepted"></u--text>
 				</u-col>
 			</u-row>
 		</uni-card>
@@ -55,6 +53,7 @@
 				queID: '',
 				whetherLike: 'false',
 				whetherCollect: 'false',
+				isSolved:'false',
 				likeNum: '0',
 				desc: '',
 				myanswer: 'null',
@@ -74,20 +73,57 @@
 			}
 		},
 		methods: {
-			clickanswer(index) {
-				uni.showModal({
-					title: '提示',
-					confirmText: '注册账号',
-					cancelText: '登录绑定',
-					content: '当前微信还未绑定账号,请使用账号密码登录进行绑定或注册',
-					success: function(res) {
-						if (res.confirm) {
-							console.log('用户点击确定');
-						} else if (res.cancel) {
-							console.log('用户点击取消');
+			clickanswer(index,isAccepted,queID) {
+				var _this = this
+				if(this.isMine==true&& isAccepted=="未采纳"&& _this.isSolved=="false"){
+					uni.showModal({
+						title: '',
+						confirmText: '采纳',
+						cancelText: '取消',
+						content: '是否采纳该回答？',
+						success: function(res) {
+							if (res.confirm) {
+								console.log(this.queID)
+								index=index+'',
+								uni.$u.http.post('/v1/frontend/circle/postAnswerStatus', {
+									answerId: index,
+									queId: queID,
+								}).then(res => {
+									console.log(res.data)
+									if (res.data.code == 200) {
+										uni.showToast({
+											title: "操作成功",
+											duration: 1000,
+										})
+										setTimeout(() => {
+										 	_this.$router.go(0)
+										 }, 500)
+									} else {
+										uni.showToast({
+											title: "操作不成功",
+											duration: 1000,
+										})
+										
+									}
+								
+								}).catch(err => {
+								
+								})
+								
+							} else if (res.cancel) {
+								console.log('用户点击取消');
+							}
+							
 						}
-					}
-				});
+					});
+				}
+				else if( _this.isSolved=="true"){
+					uni.showModal({
+						title: '',
+						confirmText: '确定',
+						content: '该问题已被采纳',})
+				}
+				
 			},
 			clickCollect() {
 				if (this.whetherCollect === 'true') {
@@ -223,6 +259,7 @@
 						this.whetherLike = this.indexList.isLiked;
 						this.whetherCollect = this.indexList.isCollected;
 						this.likeNum = this.indexList.likeNum;
+						this.isSolved=this.indexList.isSolved;
 					}).catch(err => {
 					
 					})
@@ -253,6 +290,7 @@
 				this.whetherCollect = this.indexList.isCollected;
 				this.likeNum = this.indexList.likeNum;
 				this.isMine = this.indexList.isMine;
+				this.isSolved=this.indexList.isSolved;
 			}).catch(err => {
 
 			})

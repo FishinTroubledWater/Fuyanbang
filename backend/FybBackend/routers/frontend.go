@@ -44,7 +44,7 @@ func InitFrontend(r *gin.Engine, db *gorm.DB) {
 	exchange.Exchange(r)
 
 	//news
-	news.NewsInfo(r, db)
+	news.NewsList(r, db)
 	news.NewsDetail(r, db)
 
 	//major
