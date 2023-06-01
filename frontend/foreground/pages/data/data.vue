@@ -1,6 +1,5 @@
 <template>
   <view>
-
     <view class="tabs-box">
       <view class="one-nav" style="padding: 20rpx;font-size: 33rpx;"
         :class="currentSwiperIndex === 0 ? 'nav-actived' : '' " @tap="swiperChange(0)">加油站
@@ -9,20 +8,21 @@
         :class="currentSwiperIndex === 1 ? 'nav-actived' : '' " @tap="swiperChange(1)">求解答
       </view>
     </view>
-    <swiper class="swiper-box" style="height: 2000upx" :current="currentSwiperIndex">
+    <swiper class="swiper-box" style="height: 2000rpx" :current="currentSwiperIndex">
       <!-- 加油站 -->
       <swiper-item class="swiper-item sns-que">
         <view class="topic" @click="gotoPage('/pages/data/activityDetail/activityDetail')">
           <text class="contentTopWord">攒图计划招募令</text>
           <text>\n</text>
-          <text style="color:#efefef;margin-left: 20rpx;font-size: 24rpx;">每日一画，不画就出局\n</text>
-         <!-- <navigator class="contentTopWordDetails" url="/pages/data/activityDetail/activityDetail">了解详情</navigator> -->
+          <text style="color:#d8a373;margin-left: 20rpx;font-size: 24rpx;">每日一画，不画就出局\n</text>
+          <!-- <navigator class="contentTopWordDetails" url="/pages/data/activityDetail/activityDetail">了解详情</navigator> -->
         </view>
-    
+
         <u-list>
           <u-list-item v-for="(item, index) in indexList" :key="index">
             <uni-card @click="clicknews(item.postId)" :title="item.name" sub-title="帖子信息" :extra="item.time"
-              :thumbnail="item.icon" class="trends-box-item">
+              :thumbnail="item.icon" class="trends-box-item"
+              style="border-radius: 24rpx;margin-bottom: -4rpx;box-shadow: 12rpx 12rpx 10rpx #bfbfbf;">
               <u-text :lines="3" :text="item.summary"></u-text>
               <!-- <image class="newsimage" :src="indexList[index].img[0]"></image> -->
               <!-- <view class="u-content">
@@ -32,25 +32,26 @@
           </u-list-item>
         </u-list>
       </swiper-item>
-    
+
       <!-- 求解答 -->
       <swiper-item class="swiper-item sns-oil">
         <view class="topic" @click="gotoPage('/pages/data/activityDetail/activityDetail')">
-          <text class="contentTopWord">21天攒图计划招募令</text>
+          <text class="contentTopWord">攒图计划招募令</text>
           <text>\n</text>
-          <text style="color:#FFFFFF;margin-left: 20rpx;">每日一画，不画就出局\n</text>
-      <!--    <navigator class="contentTopWordDetails" url="/pages/data/activityDetail/activityDetail">了解详情</navigator> -->
+          <text style="color:#d8a373;margin-left: 20rpx; font-size: 24rpx;">每日一画，不画就出局\n</text>
+          <!--    <navigator class="contentTopWordDetails" url="/pages/data/activityDetail/activityDetail">了解详情</navigator> -->
         </view>
         <u-list>
           <u-list-item v-for="(item, index) in questionsList" :key="index">
             <uni-card @click="clickquestions(item.queId)" :title="item.title" :sub-title="item.time" :extra="item.name"
-              :thumbnail="item.icon" class="trends-box-item">
+              :thumbnail="item.icon" class="trends-box-item"
+              style="border-radius: 24rpx;margin-bottom: -4rpx;box-shadow: 12rpx 12rpx 10rpx #bfbfbf;">
               <u-text :lines="3" :text="item.summary"></u-text>
               <u-row customstyle="margin-bottom: 10px">
                 <u-col span="6">
-                  <text style="">悬赏学币：</text>
+                  <text>悬赏学币：</text>
                 </u-col>
-                <u-col span="6" offset="-4">
+                <u-col span="6" offset="-3.5">
                   <u-text lines="1" :text="item.Reward"></u-text>
                 </u-col>
               </u-row>
@@ -68,7 +69,7 @@
   import uSteps from '../../uni_modules/uni-steps/uni-steps.vue'
   import uniIcons from '../../uni_modules/uni-icons/uni-icons.vue'
   import uSection from '../../uni_modules/uni-section/uni-section.vue'
-  
+
   export default {
     components: {
       uCard,
@@ -138,7 +139,7 @@
       };
     },
     methods: {
-      gotoPage(url){
+      gotoPage(url) {
         uni.navigateTo({
           url
         })
