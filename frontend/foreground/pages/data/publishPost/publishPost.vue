@@ -112,14 +112,7 @@
 					})  
 				}
 				else {
-					// if(typeof(this.num) != "number") {
-					// 	console.log("悬赏金额只能是数字");
-					// 	uni.showToast({
-					// 		title: '悬赏金额只能是数字',
-					// 		icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
-					// 		duration: 2000    //持续时间为 2秒
-					// 	}) 
-					// }
+					this.num = parseInt(this.num);
 					if(this.index1 == 2 && this.num < 0) {
 						console.log("悬赏的金额不能小于0");
 						uni.showToast({
@@ -137,38 +130,39 @@
 						}) 
 					}
 					else{
-						this.reward = this.num;
+						this.reward = parseInt(this.num);
+						console.log("作者id：" + this.id);
+						console.log("文章类型：" + this.type);
+						console.log("标题：" + this.title);
+						console.log("内容：" + this.context);
+						console.log("图片地址：" + this.img)
+						console.log("简介：" + this.synopsis)
+						console.log("悬赏数额：" + this.reward)
+						uni.$u.http.post('/v1/frontend/circle/uploadPost', {
+							userId: this.id,
+							title: this.title,
+							content: this.context,
+							type: this.type,
+							summary: this.synopsis,
+							img: this.img,
+							reward: this.reward,
+						}).then(res => {
+							console.log("发布成功")
+							uni.showToast({
+								title: '发布成功',
+								icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+								duration: 2000    //持续时间为 2秒
+							}) 
+						}).catch(err => {
+							console.log("发布失败")
+							uni.showToast({
+								title: '发布失败',
+								icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
+								duration: 2000    //持续时间为 2秒
+							}) 
+						})
 					}
-					console.log("作者id：" + this.id);
-					console.log("文章类型：" + this.type);
-					console.log("标题：" + this.title);
-					console.log("内容：" + this.context);
-					console.log("图片地址：" + this.img)
-					console.log("简介：" + this.synopsis)
-					console.log("悬赏数额：" + this.num)
-					uni.$u.http.post('/v1/frontend/circle/uploadPost', {
-						userId: this.id,
-						title: this.title,
-						content: this.context,
-						type: this.type,
-						summary: this.synopsis,
-						img: this.img,
-						reward: this.reward,
-					}).then(res => {
-						console.log("发布成功")
-						uni.showToast({
-							title: '发布成功',
-							icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
-							duration: 2000    //持续时间为 2秒
-						}) 
-					}).catch(err => {
-						console.log("发布失败")
-						uni.showToast({
-							title: '发布失败',
-							icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
-							duration: 2000    //持续时间为 2秒
-						}) 
-					})
+				
 				}
 			},
 			async chooseImage1(){
@@ -341,6 +335,7 @@
 					}).then(res => {
 						console.log("获取学币成功！");
 						this.coin = res.data.data.user.Balance;
+						console.log(this.coin);
 					
 					}).catch(err => {
 						console.log("获取学币失败！！！");

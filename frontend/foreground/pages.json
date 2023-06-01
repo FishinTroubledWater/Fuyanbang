@@ -86,7 +86,7 @@
       "path": "pages/home/professional/major",
       "style": {
         "navigationBarTitleText": "专业",
-        "enablePullDownRefresh": true,
+        "enablePullDownRefresh": false,
         "app-plus": {
           "titleNView": {
             "buttons": [{
@@ -136,7 +136,7 @@
       "path": "pages/home/university/academy",
       "style": {
         "navigationBarTitleText": "院校",
-        "enablePullDownRefresh": true,
+        "enablePullDownRefresh": false,
         "app-plus": {
           "titleNView": {
             "buttons": [{
