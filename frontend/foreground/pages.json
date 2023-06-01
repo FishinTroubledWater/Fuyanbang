@@ -41,25 +41,25 @@
       "path": "pages/data/activityDetail/activityDetail",
       "style": {
         "navigationBarTitleText": "21天攒图计划",
-        "enablePullDownRefresh": true
+        "enablePullDownRefresh": false
       }
     }, {
       "path": "pages/data/newsDetails/newsDetails",
       "style": {
         "navigationBarTitleText": "详情",
-        "enablePullDownRefresh": true
+        "enablePullDownRefresh": false
       }
     },{
       "path": "pages/data/questionsDetails/questionsDetails",
       "style": {
         "navigationBarTitleText": "求助详情",
-        "enablePullDownRefresh": true
+        "enablePullDownRefresh": false
       }
     },{
       "path": "pages/data/data",
       "style": {
         "navigationStyle": "custom",
-        "enablePullDownRefresh": true
+        "enablePullDownRefresh": false
       }
     },
     {
