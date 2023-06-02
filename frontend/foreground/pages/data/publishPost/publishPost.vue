@@ -43,7 +43,7 @@
 				title: '',
 				context: '',
 				synopsis: '',
-				array1: ['请选择文章类型','加油站','求解答','学长学姐说'],
+				array1: ['请选择文章类型','加油站','求解答'],
 				index1: 0,
 				type: 0,
 				baseImageList:[],
