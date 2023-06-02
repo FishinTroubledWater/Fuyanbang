@@ -279,26 +279,35 @@
             console.log(this.id)
           }
         })
-        uni.$u.http.post('/v1/frontend/circle/postAnswer', {
-          queId: this.queID,
-          userId: this.id,
-          answer: this.myanswer,
-        }).then(res => {
-          console.log(res.data)
-          if (res.data.code == 200) {
-            uni.showToast({
-              title: "回答成功",
-              duration: 1000,
-            })
-            setTimeout(() => {
-              _this.refresh();
-              _this.desc = '';
-            }, 500)
-
-          }
-        }).catch(err => {
-
-        })
+		if(this.myanswer!==null&&this.myanswer!=="null"){
+			uni.$u.http.post('/v1/frontend/circle/postAnswer', {
+			  queId: this.queID,
+			  userId: this.id,
+			  answer: this.myanswer,
+			}).then(res => {
+			  console.log(res.data)
+			  if (res.data.code == 200) {
+			    uni.showToast({
+			      title: "回答成功",
+			      duration: 1000,
+			    })
+				this.myanswer=null
+			    setTimeout(() => {
+			      _this.refresh();
+			      _this.desc = '';
+			    }, 500)
+			
+			  }
+			}).catch(err => {
+			
+			})
+		}else{
+			uni.showToast({
+			  title: "回答不能为空",
+			  duration: 1000,
+			})
+		}
+       
       },
     },
 
