@@ -30,16 +30,21 @@
 				</u-col>
 				<u-col span="5">
 					<view class="academyMes">
-						<view class="type">院校类型</view>
-						<view class="typeName">综合类</view>
-						<!-- <view class="typeName">{{this.type}}</view> -->
+						<view>
+							<view class="type">院校类型</view>
+							<view class="typeName">{{this.type}}</view>
+						</view>
 					</view>
+					
 				</u-col>
 				<u-col span="5">
-					<view class="academyMes">
-						<view class="type">院校隶属</view>
-						<view class="typeName">{{this.belong}}</view>
+					<view  class="academyMes">
+						<view>
+							<view class="type">院校隶属</view>
+							<view class="typeName">{{this.belong}}</view>
+						</view>
 					</view>
+					
 				</u-col>
 				<u-col span="1">
 					
@@ -189,7 +194,8 @@
 	}
 
 	.type {
-		display: block;
+		/* display: block; */
+		/* display: flex; */
 		text-align: center;
 		width: 200rpx;
 		margin-top: 30rpx;
@@ -198,9 +204,10 @@
 	}
 
 	.typeName {
-		display: block;
+		/* display: block; */
+		/* display: flex; */
 		text-align: center;
-		margin-top: 5rpx;
+		margin-top: 20rpx;
 		font-size: 38rpx;
 		font-weight: 600;
 	}
