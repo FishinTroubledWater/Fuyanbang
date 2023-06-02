@@ -180,8 +180,8 @@
 	.academyMes {
 		/* display: flex; */
 		/* justify-content: center; */
-		width: 240rpx;
-		height: 150rpx;
+		width: 250rpx;
+		height: 170rpx;
 		border: 2rpx solid #BBBBBB;
 		margin: 20rpx;
 		border-radius: 18rpx;

@@ -52,7 +52,7 @@
         <el-form-item label="标题" prop="title">
           <el-input v-model="addForm.title"></el-input>
         </el-form-item>
-        <el-form-item label="分类" prop="part">
+        <el-form-item label="分类" prop="type">
           <el-select v-model="addForm.type" placeholder="请选择">
             <el-option
                 v-for="item in types"
@@ -62,7 +62,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="内容" prop="summary">
+        <el-form-item label="内容" prop="content">
 <!--          <quill-editor v-model="addForm.content"></quill-editor>-->
           <Editor :value.sync="addForm.content"></Editor>
         </el-form-item>
@@ -77,14 +77,14 @@
                @close="editDialogClosed">
       <!--      内容主体区域-->
       <el-form ref="editFormRef" :model="editForm" label-width="80px"
-               >
-        <el-form-item label="作者" prop="author">
+               :rules="editFormRules">
+        <el-form-item label="作者" prop="Author">
           <el-input v-model="editForm.Author"></el-input>
         </el-form-item>
-        <el-form-item label="标题" prop="title">
+        <el-form-item label="标题" prop="Title">
           <el-input v-model="editForm.Title"></el-input>
         </el-form-item>
-        <el-form-item label="分类" prop="part">
+        <el-form-item label="分类" prop="Type">
           <el-select v-model="editForm.Type" placeholder="请选择">
             <el-option
                 v-for="item in types"
@@ -94,7 +94,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="内容" prop="summary">
+        <el-form-item label="内容" prop="Content">
 <!--          <quill-editor v-model="editForm.Content"></quill-editor>-->
           <Editor :value.sync="editForm.Content"></Editor>
         </el-form-item>
@@ -163,7 +163,7 @@ export default {
         author: '',
         title: '',
         content: '',
-        type: '1',
+        type: '考研常识',
       },
       // 添加规则
       addFormRules: {
@@ -171,9 +171,17 @@ export default {
           {required: true, message: '请输入作者名', trigger: 'blur'},
           {min: 2, max: 10, message: '作者名的长度在2~10个字符间', trigger: 'blur'}
         ],
-        title:[
-          {required: true, message: '标题不能为空', trigger: 'blur'},
+        title: {required: true, message: '标题不能为空', trigger: 'blur'},
+        content: {required: true, message: '内容不能为空', trigger: 'blur'},
+      },
+      //修改规则
+      editFormRules: {
+        Author: [
+          {required: true, message: '请输入作者名', trigger: 'blur'},
+          {min: 2, max: 10, message: '作者名的长度在2~10个字符间', trigger: 'blur'}
         ],
+        Title: {required: true, message: '标题不能为空', trigger: 'blur'},
+        Content: {required: true, message: '内容不能为空', trigger: 'blur'},
       },
       //资讯数据集合
       newsList:[],

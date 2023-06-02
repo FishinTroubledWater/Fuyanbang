@@ -58,7 +58,7 @@
 					avatarUrl: '/static/my-assets/taiku.png',
 					nickName: '张三',
 					level: 'Lv.10',
-					slogan: '一定上岸！！',
+					slogan: '一定上岸！！！',
 					useageDays: '50',
 					college: '福州大学',
 					major: '软件工程',
