@@ -4,24 +4,26 @@
 			<input class="uniInput" placeholder-style="color:#c7c7c7" focus placeholder="标题 (1-30字之间) " v-model="title" />
 		</view>
 		<view class="container">
-			<editor id="editor" class="qlContainer" :placeholder="placeholder" @input="getText" @ready="onEditorReady"></editor>
+			<editor id="editor" class="qlContainer" :placeholder="placeholder" @input="getText" @ready="onEditorReady" :adjust-position="false"></editor>
 		</view>
-		<view class="selectForm">
-			<picker @change="bindPickerChange1" :range="array1" :value="index1" class="selectFormItem">
-				<label class="">{{array1[index1]}}</label>
-				<!-- <label class="downArrow"> ∨ </label> -->
-				<label class="down">
-					<image class="downArrow" src="@/static/academy-icons/down.png"></image>
-				</label>
-			</picker>
-			<view class="inputNum" v-show="isShow">
-				<label>请输入悬赏的金额：</label>
-				<input type='number' v-model="num" class="intext" />
+		<view class="below">
+			<view class="selectForm">
+				<picker @change="bindPickerChange1" :range="array1" :value="index1" class="selectFormItem">
+					<label class="">{{array1[index1]}}</label>
+					<!-- <label class="downArrow"> ∨ </label> -->
+					<label class="down">
+						<image class="downArrow" src="@/static/academy-icons/down.png"></image>
+					</label>
+				</picker>
+				<view class="inputNum" v-show="isShow">
+					<label>请输入悬赏的金额：</label>
+					<input type='number' v-model="num" class="intext" />
+				</view>
 			</view>
-		</view>
-		<view class="operator">
-			<button @click="chooseImage1()" class="uploadingBtn">上传图片</button>
-			<button @click="test()" class="publishBtn">发布</button>
+			<view class="operator">
+				<button @click="chooseImage1()" class="uploadingBtn">上传图片</button>
+				<button @click="publish()" class="publishBtn">发布</button>
+			</view>
 		</view>
 	</view>
 	
@@ -78,7 +80,7 @@
 				console.log(this.context);//带标签内容
 				console.log(this.synopsis);
 			},
-			test(){
+			publish(){
 				if(this.title == ""){
 					console.log("请先输入文章标题");
 					uni.showToast({
@@ -152,7 +154,10 @@
 								title: '发布成功',
 								icon: 'none',    //如果要纯文本，不要icon，将值设为'none'
 								duration: 2000    //持续时间为 2秒
-							}) 
+							})
+							 uni.navigateBack({
+							 	// delta: 1
+							 })
 						}).catch(err => {
 							console.log("发布失败")
 							uni.showToast({
@@ -370,9 +375,14 @@
 }
 .qlContainer{
 	height: calc(100vh - 460rpx);
+	/* height: 800rpx; */
 	line-height: 160%;
 	font-size: 34rpx;
-	overflow-y: auto;
+/* 	border-style:solid;
+	border-width:2px;
+	border-color:#f0f0f0; */
+	
+/* 	overflow-y: auto; */
 }
 .operator{
 	display: flex;
@@ -429,5 +439,7 @@
 	background-color: #f1f1f1;
 	border-radius: 10rpx;
 	border: 1rpx solid #E0E3DA;
+}
+.below{
 }
 </style>
