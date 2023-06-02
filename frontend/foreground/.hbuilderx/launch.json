@@ -6,6 +6,7 @@
             "type" : "uni-app:app-android"
         },
 	{
+
     	"app-plus" : 
     	{
     		"launchtype" : "local"

@@ -106,6 +106,9 @@
 
 
 <style>
+	page{
+		background-color: #fafafa;
+	}
 	.login-page {
 		margin-top: 180rpx;
 		display: flex;
@@ -129,8 +132,8 @@
 		padding: 70rpx;
 		height: 800rpx;
 		background-color: #f2f2f2;
-		border-radius: 20rpx;
-		box-shadow: 0 0 30rpx rgba(0, 0, 0, 0.2);
+		border-radius: 24rpx;
+		box-shadow: 12rpx 12rpx 10rpx #bfbfbf;
 	}
 
 	.form-item {
@@ -148,17 +151,6 @@
 		/* align-self: flex-end; */
 		padding: 20px;
 		justify-content: center;
-	}
-
-	.button {
-		flex: 1 0 auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		align-self: flex-end;
-		padding: 20rpx 0;
-		/* margin-bottom: 50%; */
-		/* justify-content: center; */
 	}
 
 	.handoff {
@@ -185,16 +177,27 @@
 	}
 
 	button {
-		background-color: #4CAF50;
-		border: none;
-		color: white;
-		padding: 12rpx;
-		width: 350rpx;
 		text-align: center;
 		text-decoration: none;
-		display: inline-block;
-		font-size: 38rpx;
-		border-radius: 30rpx;
 		cursor: pointer;
+		
+		
+		flex: 1 0 auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		align-self: flex-end;
+		padding: 10rpx 0;
+		
+		
+		width: 70%;
+		height: 50px;
+		background-image: linear-gradient(112deg, #08507880, #85d8ce);
+		border-radius: 20px;
+		margin-top: 40rpx;
+		color: #fff;
+		font-size: 28rpx;
+		border: none;
+		box-shadow: 5rpx 10rpx 5rpx #bfbfbf;
 	}
 </style>
