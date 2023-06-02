@@ -232,26 +232,35 @@ import { onMounted } from "vue"
             console.log(this.id)
           }
         })
-        uni.$u.http.post('/v1/frontend/circle/postComment', {
-          postId: this.postId,
-          userId: this.id,
-          comment: this.myComment,
-        }).then(res => {
-          console.log(res.data)
-          if (res.data.code == 200) {
-            uni.showToast({
-              title: "评论成功",
-              duration: 1000,
-            })
-          }
-          setTimeout(() => {
-            _this.refresh();
-            _this.desc='';
-          }, 500)
-
-        }).catch(err => {
-
-        })
+		if(this.myComment!==null&&this.myComment!=="null"){
+			uni.$u.http.post('/v1/frontend/circle/postComment', {
+			  postId: this.postId,
+			  userId: this.id,
+			  comment: this.myComment,
+			}).then(res => {
+			  console.log(res.data)
+			  if (res.data.code == 200) {
+			    uni.showToast({
+			      title: "评论成功",
+			      duration: 1000,
+			    })
+				this.myComment=null
+			  }
+			  setTimeout(() => {
+			    _this.refresh();
+			    _this.desc='';
+			  }, 500)
+			
+			}).catch(err => {
+			
+			})
+		}else{
+			uni.showToast({
+			  title: "评论不能为空",
+			  duration: 1000,
+			})
+		}
+        
 
       },
 
