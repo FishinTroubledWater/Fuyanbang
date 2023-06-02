@@ -60,7 +60,13 @@
         </u-list>
       </swiper-item>
     </swiper>
-
+	<uni-fab
+				:pattern="pattern"
+				horizontal="right"
+				vertical="bottom"
+				direction="horizontal"
+				@fabClick="fabClick"
+	/>
   </view>
 </template>
 
@@ -139,6 +145,11 @@
       };
     },
     methods: {
+	  fabClick(){
+		  uni.navigateTo({
+		    url: '/pages/data/publishPost/publishPost',
+		  })
+	  },
       gotoPage(url) {
         uni.navigateTo({
           url
