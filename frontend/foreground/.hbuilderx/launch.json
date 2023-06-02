@@ -6,11 +6,16 @@
             "type" : "uni-app:app-android"
         },
 	{
-		"h5" : 
-		{
-			"launchtype" : "local"
-		},
-		"type" : "uniCloud"
-	}
+
+    	"app-plus" : 
+    	{
+    		"launchtype" : "local"
+    	},
+    	"h5" : 
+    	{
+    		"launchtype" : "local"
+    	},
+    	"type" : "uniCloud"
+    }
     ]
 }

@@ -23,7 +23,7 @@
       <div style="font-size: 20px;font-weight: bold"> 评论列表</div>
       <Table :table-data="commentList" :columns="columns" :show-state="true">
         <!--        状态区-->
-        <template #state="scope" >
+        <template #state="scope">
           <el-tag v-if="scope.row.State === 0" type="warning">未审核</el-tag>
           <el-tag v-else type="success">已审核</el-tag>
 
@@ -63,8 +63,8 @@
           <el-radio v-model="addForm.state" label='1'>已审核</el-radio>
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <Editor :value.sync="addForm.content"> </Editor>
-<!--          <quill-editor v-model="addForm.content"></quill-editor>-->
+          <Editor :value.sync="addForm.content"></Editor>
+          <!--          <quill-editor v-model="addForm.content"></quill-editor>-->
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -77,7 +77,7 @@
                @close="editDialogClosed">
       <!--      内容主体区域-->
       <el-form ref="editFormRef" :model="editForm" label-width="80px"
-               :rules="addFormRules">
+               :rules="editFormRules">
         <el-form-item label="用户ID" prop="Author">
           <el-input v-model="editForm.UserID" disabled></el-input>
         </el-form-item>
@@ -86,7 +86,7 @@
           <el-radio v-model="editForm.State" :label='1'>已审核</el-radio>
         </el-form-item>
         <el-form-item label="内容" prop="Content">
-          <Editor :value.sync="editForm.Content"> </Editor>
+          <Editor :value.sync="editForm.Content"></Editor>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -105,14 +105,14 @@
           <el-descriptions-item label="用户ID"> {{ editForm.UserID }}</el-descriptions-item>
           <el-descriptions-item label="评论数"> {{ editForm.CommentNum }}</el-descriptions-item>
           <el-descriptions-item label="帖子"> {{ editForm.TargetPost }}</el-descriptions-item>
-          <el-descriptions-item label="发布时间"> {{ formattedPublishTime}}</el-descriptions-item>
+          <el-descriptions-item label="发布时间"> {{ formattedPublishTime }}</el-descriptions-item>
           <el-descriptions-item label="状态">
             <el-tag v-if="editForm.State === 0" type="warning">未审核</el-tag>
             <el-tag v-else type="success">已审核</el-tag>
           </el-descriptions-item>
         </el-descriptions>
         <div class="mg">内容</div>
-        <quill-editor v-model="editForm.Content" @focus="focus($event)" class="mg" ></quill-editor>
+        <quill-editor v-model="editForm.Content" @focus="focus($event)" class="mg"></quill-editor>
       </template>
     </Drawer>
 
@@ -123,14 +123,14 @@
 
 export default {
   name: "CommentView",
-  computed:{
+  computed: {
     formattedPublishTime() {
       const publishTime = this.editForm.PublishTime;
       return this.$moment(publishTime).format('YYYY-MM-DD HH:mm:ss');
     }
   },
-  data(){
-    return{
+  data() {
+    return {
       title: '评论管理',
       drawerTitle: "评论详情",
       //添加对话框
@@ -149,33 +149,36 @@ export default {
       },
       //查询到的信息
       editForm: {
-        Content:"",
+        Content: "",
       },
       //添加的表单数据
       addForm: {
-        targetPost:'',
+        targetPost: '',
         userID: '',
         state: '0',
-        content:''
+        content: ''
       },
       // 添加规则
       addFormRules: {
-        userID: [
-          {required: true, message: '请输入用户id', trigger: 'blur'},
-        ],
-        targetPost: [
-          {required: true, message: '请输入帖子id', trigger: 'blur'},
-        ],
+        userID: {required: true, message: '请输入用户id', trigger: 'blur'},
+        targetPost: {required: true, message: '请输入帖子id', trigger: 'blur'},
+        content: {required: true, message: '内容不能为空', trigger: 'blur'},
       },
-      commentList:[],
+      // 修改规则
+      editFormRules: {
+        Content: {required: true, message: '内容不能为空', trigger: 'blur'},
+      },
+      commentList: [],
       columns: [
         {prop: 'UserID', label: '用户ID', width: '150px'},
-        {prop: 'PublishTime', label: '发布时间', width: '200px', sortable: true,
-          formatter:(row, column)=>{
+        {
+          prop: 'PublishTime', label: '发布时间', width: '200px', sortable: true,
+          formatter: (row, column) => {
             const publishTime = row[column.property];
             return this.$moment(publishTime).format('YYYY-MM-DD HH:mm:ss');
-          }},
-        {prop: 'Content', label: '评论', width: '180px',showOverflowTooltip:true },
+          }
+        },
+        {prop: 'Content', label: '评论', width: '180px', showOverflowTooltip: true},
         {prop: 'CommentNum', label: '评论数', width: '180px', sortable: true},
       ],
     }
@@ -183,7 +186,7 @@ export default {
   created() {
     this.getCommentList()
   },
-  methods:{
+  methods: {
     // 查询方法
     async getCommentList() {
       const {data: res} = await this.axios.post('comment/list', {
@@ -252,7 +255,7 @@ export default {
       const {data: res} = await this.axios.patch('comment/update', {
         'id': id,
         'state': this.editForm.State
-      },{
+      }, {
         headers: {
           'Authorization': window.sessionStorage.getItem("token")
         }
@@ -267,7 +270,7 @@ export default {
     // 显示详情
     showDetails(row) {
       console.log(row);
-      this.editForm=row;
+      this.editForm = row;
       this.detailsDrawer = true;
     },
     //关闭详情
@@ -302,7 +305,7 @@ export default {
     async showEditDialog(id) {
       console.log(id);
       const {data: res} = await this.axios.get('comment/searchById', {
-        params: {'id':id},
+        params: {'id': id},
         headers: {
           'Authorization': window.sessionStorage.getItem("token")
         }
@@ -328,7 +331,7 @@ export default {
           'id': this.editForm.ID,
           'content': this.editForm.Content,
           'state': this.editForm.State
-        },{
+        }, {
           headers: {
             'Authorization': window.sessionStorage.getItem("token")
           }
@@ -344,7 +347,7 @@ export default {
       })
     },
     //获取焦点事件
-    focus(event){
+    focus(event) {
       event.enable(false);
     },
   },
