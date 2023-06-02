@@ -167,7 +167,7 @@
 						// console.log(base64)
 						var s = base64.substr(base64.indexOf(',') + 1, base64.length);
 						console.log(s)
-						const result = Axios.post('https://api.superbed.cn/upload', {
+						uni.$u.http.post('https://api.superbed.cn/upload', {
 							token: '1000766339bd4c248a8ad625a87f687d',
 							b64_data: s,
 						}).then(res => {
