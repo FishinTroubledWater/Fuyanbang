@@ -77,7 +77,7 @@ func SearchNewInfoDetails(e *gin.Engine) {
 			}
 			postMap["postId"] = postMap["ID"]
 			postMap["icon"] = postMap["Author"].(map[string]interface{})["AvatarUrl"]
-			postMap["summary"] = postMap["Summary"]
+			postMap["summary"] = postMap["Content"]
 			delete(postMap, "Content")
 			delete(postMap, "Summary")
 			delete(postMap, "Part")
