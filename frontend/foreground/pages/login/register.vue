@@ -13,16 +13,24 @@
 			</view> -->
 			<view class="sendCode">
 				<u-code :seconds="seconds" ref="uCode" @change="codeChange">后重新获取</u-code>
-				<u-button @tap="getCode()">{{tips}}</u-button>
+				<u-button style="
+				width: 75%;
+				height: 35px;
+				border-radius: 20px;
+				margin-top: 20rpx;
+				margin-bottom: 20rpx;
+				font-size: 28rpx;
+				border: none;
+				box-shadow: 5rpx 10rpx 5rpx #bfbfbf;" @tap="getCode()">{{tips}}</u-button>
 			</view>
 			<view class="form-item" style="margin-top: 20rpx;">
-				<label for="code">请输入验证码：</label>
+				<label style="margin-top: 30rpx;" for="code">请输入验证码：</label>
 				<u-code-input mode="line" :space="20" :maxlength="4" hairline v-model="code"></u-code-input>
 			</view>
 
 
 			<view class="button">
-				<button type="submit" @click="toSetPassword()">下一步</button>
+				<button class="nextBtn" type="submit" @click="toSetPassword()">下一步</button>
 			</view>
 		</form>
 	</view>
@@ -116,8 +124,12 @@
 		},
 	};
 </script>
-
+``
 <style>
+	page {
+		background-color: #fafafa;
+	}
+
 	.login-page {
 		margin-top: 180rpx;
 		display: flex;
@@ -141,8 +153,9 @@
 		padding: 70rpx;
 		height: 800rpx;
 		background-color: #f2f2f2;
-		border-radius: 20rpx;
-		box-shadow: 0 0 30rpx rgba(0, 0, 0, 0.2);
+		opacity: 0.8;
+		border-radius: 24rpx;
+		box-shadow: 12rpx 12rpx 10rpx #bfbfbf;
 	}
 
 	.form-item {
@@ -181,6 +194,18 @@
 		margin-top: 5px;
 	}
 
+	.nextBtn {
+		width: 70%;
+		height: 50px;
+		background-image: linear-gradient(112deg, #08507880, #85d8ce);
+		border-radius: 20px;
+		margin-top: 40rpx;
+		color: #fff;
+		font-size: 36rpx;
+		border: none;
+		box-shadow: 5rpx 10rpx 5rpx #bfbfbf;
+	}
+
 	label {
 		font-weight: bold;
 		margin-bottom: 10rpx;
@@ -208,5 +233,6 @@
 		font-size: 38rpx;
 		border-radius: 30rpx;
 		cursor: pointer;
+
 	}
 </style>

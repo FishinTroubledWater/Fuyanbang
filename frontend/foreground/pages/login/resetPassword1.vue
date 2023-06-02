@@ -12,14 +12,21 @@
 			</view> -->
 			<view class="sendCode">
 				<u-code :seconds="seconds" ref="uCode" @change="codeChange">后重新获取</u-code>
-				<u-button @tap="getCode" >{{tips}}</u-button>
+				<u-button style="width: 75%;
+				height: 35px;
+				border-radius: 20px;
+				margin-top: 20rpx;
+				margin-bottom: 20rpx;
+				font-size: 28rpx;
+				border: none;
+				box-shadow: 5rpx 10rpx 5rpx #bfbfbf;" @tap="getCode">{{tips}}</u-button>
 			</view>
 			<view class="form-item" style="margin-top: 20rpx;">
 				<label for="code">请输入验证码：</label>
-				<u-code-input mode="line" :space="20" :maxlength="4" hairline></u-code-input>
+				<u-code-input mode="line" :space="20" :maxlength="4" hairline  v-model="code"></u-code-input>
 			</view>
 			<view class="button">
-				<button type="submit" @click="toResetPassword2()">下一步</button>
+				<button class="nextBtn" type="submit" @click="toResetPassword2()">下一步</button>
 			</view>
 		</form>
 	</view>
@@ -38,6 +45,10 @@
 			};
 		},
 		methods: {
+			validateEmail() {
+				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				return emailRegex.test(this.email);
+			},
 			toResetPassword2() {
 				if (!this.validateEmail()) {
 					uni.showToast({
@@ -46,20 +57,22 @@
 					});
 					return;
 				}
+				console.log(this.email);
+				console.log(this.code);
 				uni.$u.http.post('/v1/frontend/codeVerify', {
 					account: this.email,
 					code: this.code
 				}).then(res => {
-					if (res.data.state == true) {
+					if (res.data.code == 200) {
 						uni.navigateTo({
-							url: './resetPassword2?email='+this.email.toString(),
+							url: './resetPassword2?email=' + this.email.toString(),
 						})
 					}
 				}).catch(err => {
 					uni.$u.toast('验证码错误');
 					// this.loginError = true; // 设置登录错误标志
 				});
-				
+
 			},
 			codeChange(text) {
 				this.tips = text;
@@ -91,7 +104,7 @@
 						uni.$u.toast('验证码发送失败');
 						// this.loginError = true; // 设置登录错误标志
 					});
-				
+
 				} else {
 					uni.$u.toast('倒计时结束后再发送');
 				}
@@ -124,8 +137,8 @@
 		padding: 70rpx;
 		height: 800rpx;
 		background-color: #f2f2f2;
-		border-radius: 20rpx;
-		box-shadow: 0 0 30rpx rgba(0, 0, 0, 0.2);
+		border-radius: 24rpx;
+		box-shadow: 12rpx 12rpx 10rpx #bfbfbf;
 	}
 
 	.form-item {
@@ -144,6 +157,19 @@
 		padding: 20rpx 0;
 		/* margin-bottom: 50%; */
 		/* justify-content: center; */
+	}
+
+
+	.nextBtn {
+		width: 70%;
+		height: 50px;
+		background-image: linear-gradient(112deg, #08507880, #85d8ce);
+		border-radius: 20px;
+		margin-top: 40rpx;
+		color: #fff;
+		font-size: 36rpx;
+		border: none;
+		box-shadow: 5rpx 10rpx 5rpx #bfbfbf;
 	}
 
 	.handoff {

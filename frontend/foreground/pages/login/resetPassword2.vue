@@ -10,7 +10,7 @@
 				<view class="label">确认密码：</view>
 				<input class="input" v-model="confirmPassword" type="password" placeholder="请再次输入密码" />
 			</view>
-			<button class="button" type="primary" @tap="submitForm">确定</button>
+			<button  type="primary" @tap="submitForm">确定</button>
 		</form>
 	</view>
 </template>
@@ -129,17 +129,6 @@
 		justify-content: center;
 	}
 
-	.button {
-		flex: 1 0 auto;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		align-self: flex-end;
-		padding: 20rpx 0;
-		/* margin-bottom: 50%; */
-		/* justify-content: center; */
-	}
-
 	.handoff {
 		display: flex;
 		flex-direction: column;
@@ -164,16 +153,27 @@
 	}
 
 	button {
-		background-color: #4CAF50;
-		border: none;
-		color: white;
-		padding: 12rpx;
-		width: 350rpx;
 		text-align: center;
 		text-decoration: none;
-		display: inline-block;
-		font-size: 38rpx;
-		border-radius: 30rpx;
 		cursor: pointer;
+		
+		
+		flex: 1 0 auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		align-self: flex-end;
+		padding: 10rpx 0;
+		
+		
+		width: 70%;
+		height: 50px;
+		background-image: linear-gradient(112deg, #08507880, #85d8ce);
+		border-radius: 20px;
+		margin-top: 80rpx;
+		color: #fff;
+		font-size: 28rpx;
+		border: none;
+		box-shadow: 5rpx 10rpx 5rpx #bfbfbf;
 	}
 </style>
