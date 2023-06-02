@@ -20,7 +20,6 @@ type User struct {
 	Slogan        string
 	Balance       int64
 	College       string
-	Role          string
 	State         int64     `gorm:"column:state"`
 	RegisterTime  time.Time `gorm:"column:registerTime"`
 }
