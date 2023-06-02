@@ -31,7 +31,8 @@
 				<u-col span="5">
 					<view class="academyMes">
 						<view class="type">院校类型</view>
-						<view class="typeName">{{this.type}}</view>
+						<view class="typeName">综合类</view>
+						<!-- <view class="typeName">{{this.type}}</view> -->
 					</view>
 				</u-col>
 				<u-col span="5">

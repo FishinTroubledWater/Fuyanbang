@@ -1,12 +1,5 @@
 <template>
 	<view class="content">
-		<u-popup :show="showGet" mode="center" @close="close">
-			<view class="pop">
-				<text class="title">当前获取方式</text>
-				<hr class='divider' />
-				<text class="ans">1.每日签到可获得1学币</text>
-			</view>
-		</u-popup>
 		<view class="box1">
 			<text class="coin">
 				{{user.balance}}
@@ -14,7 +7,7 @@
 			<text class="balen">
 				学币余额
 			</text>
-			<button class="getBtn" @click="show1 = true">充值</button>
+			<button  style="margin-top: 50rpx;"  class="getBtn" @click="show1 = true">充值</button>
 			<view>
 				<button class="getBtn" @click="show2 = true">兑换</button>
 			</view>
@@ -46,20 +39,6 @@
 			<u-popup :show="show2" @close="close3" @open="open2">
 				<view class="exchange-content">
 					<view class="exchange-options">
-						<!-- <radio-group v-model="selectedOption">
-							<label class="option-label">
-								<radio class="option-radio" value="option1"></radio>
-								<text class="option-text">1个月bilibili大会员(200学币)</text>
-							</label>
-							<label class="option-label">
-								<radio class="option-radio" value="option2"></radio>
-								<text class="option-text">1个月网易云音乐会员(149学币)</text>
-							</label>
-							<label class="option-label">
-								<radio class="option-radio" value="option3"></radio>
-								<text class="option-text">1个月百度网盘会员(149学币)</text>
-							</label>
-						</radio-group> -->
 						<u-radio-group v-model="selectedOption" placement="column" @change="groupChange">
 							<u-radio :customStyle="{marginBottom: '8px'}" v-for="(item, index) in options" :key="index"
 								:label="item.name" :name="item.name" @change="radioChange">
@@ -94,7 +73,7 @@
 				},
 				selectedAmount: 0, // 新增的属性，保存当前选择的充值金额
 				options: [{
-						name: '1个月bilibili大会员(200学币)',
+						name: '1个月bilibili大会员(199学币)',
 						disabled: false
 					},
 					{
@@ -294,18 +273,26 @@
 
 	.recharge-button {
 		width: 200rpx;
-		height: 100rpx;
-		border-radius: 20px;
-		background-color: #f4ce69;
+		height: 80rpx;
 		color: #ffffff;
+		
+		background-image: linear-gradient(112deg, #08507880, #85d8ce);
+		border-radius: 20px;
+		border: none;
+		box-shadow: 5rpx 10rpx 5rpx #bfbfbf;
 	}
 
 	.exchange-button {
 		width: 250rpx;
-		height: 100rpx;
-		border-radius: 20px;
-		background-color: #f4ce69;
+		height: 80rpx;
 		color: #ffffff;
+		
+		margin-bottom: 30rpx;
+		
+		background-image: linear-gradient(112deg, #08507880, #85d8ce);
+		border-radius: 20px;
+		border: none;
+		box-shadow: 5rpx 10rpx 5rpx #bfbfbf;
 	}
 
 	.content {
@@ -319,7 +306,6 @@
 		display: flex;
 		flex-direction: column;
 		text-align: center;
-
 	}
 
 	.box2 {
@@ -350,7 +336,7 @@
 	.coin {
 		font-size: 100upx;
 		margin-top: 50px;
-		color: #f9bd10;
+		color: #00bcd4;
 	}
 
 	.balen {
@@ -360,10 +346,20 @@
 	}
 
 	.getBtn {
-		margin-top: 20px;
+/* 		margin-top: 20px;
 		width: 40%;
 		border-radius: 50px;
-		background-color: #f4ce69;
+		background-color: #f4ce69; */
+		
+		width: 40%;
+
+		background-image: linear-gradient(112deg, #08507880, #85d8ce);
+		border-radius: 20px;
+		margin-top: 25rpx;
+		/* margin-bottom: 50rpx; */
+		color: #fff;
+		border: none;
+		box-shadow: 5rpx 10rpx 5rpx #bfbfbf;
 	}
 
 	.divider {

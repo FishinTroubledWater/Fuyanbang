@@ -61,7 +61,7 @@
 				</text>
 			</view>
 			<view>
-				<view  class="viewAcademy" v-for="m in mes.list" @click="goUniverity(m.Code)" @touchstart="touchStart" @touchend="touchEnd" :style="active">
+				<view  class="viewAcademy" v-for="m in mes.list" @click="goUniverity(m.Code)" :style="active">
 					<image class="academyLogo" :src="m.Logo"></image>
 					<view class="viewText">
 						<text class="academyName">{{m.Name}}</text>

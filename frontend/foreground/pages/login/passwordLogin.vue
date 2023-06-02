@@ -11,8 +11,8 @@
         <input type="password" id="password" v-model="password">
       </view>
       <view class="handoff">
-        <text @click="toRegister()">立即注册</text>
-        <text class="resetPassword" @click="toResetPassword()">忘记密码</text>
+        <text  style="margin-left: 60rpx;" @click="toRegister()">立即注册</text>
+        <text style="margin-left: 100rpx;" @click="toResetPassword()">忘记密码</text>
       </view>
       <view class="button">
         <button type="submit" class="loginButton" @click="login()">登录</button>
@@ -165,7 +165,7 @@
     height: 50px;
     background-image: linear-gradient(112deg, #08507880, #85d8ce);
     border-radius: 20px;
-    margin-top: 40rpx;
+    margin-top: 16rpx;
     color: #fff;
     font-size: 36rpx;
     border: none;
@@ -179,13 +179,12 @@
   }
 
   .form {
-    opacity: 0.8;
     display: flex;
     flex-direction: column;
     align-items: center;
     /* justify-content: center; */
     padding: 70rpx;
-    height: 800rpx;
+    height: 750rpx;
     background-color: #f2f2f2;
     border-radius: 24rpx;
     box-shadow: 12rpx 12rpx 10rpx #bfbfbf;
@@ -212,12 +211,12 @@
   .handoff {
     display: flex;
     flex-direction: row;
-    margin-top: 80rpx;
+    margin-top: 50rpx;
     margin-left: -10rpx;
   }
 
   .resetPassword {
-    margin-left: auto;
+    /* margin-left: auto; */
   }
 
   .error {
