@@ -25,7 +25,7 @@
 			</view>
 			<view class="form-item" style="margin-top: 20rpx;">
 				<label style="margin-top: 30rpx;" for="code">请输入验证码：</label>
-				<u-code-input mode="line" :space="20" :maxlength="4" hairline v-model="code"></u-code-input>
+				<u-code-input mode="line" :space="20" :maxlength="4" v-model="code"></u-code-input>
 			</view>
 
 
